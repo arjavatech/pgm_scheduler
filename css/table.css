@@ -134,16 +134,16 @@ table.dataTable tbody tr:hover {
     margin-right: 5px;
 }
 
-#rejectedTicketTable td .issue-type.ac .circle,
-#unassignedTicketTable td .issue-type.ac .circle,
-#ticketTable td .issue-type.ac .circle{
+#rejectedTicketTable td .issue-type.AC .circle,
+#unassignedTicketTable td .issue-type.AC .circle,
+#ticketTable td .issue-type.AC .circle{
     background-color: #daba1ece; /* AC color */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-#rejectedTicketTable td .issue-type.fridge .circle,
-#unassignedTicketTable td .issue-type.fridge .circle,
-#ticketTable td .issue-type.fridge .circle{
+#rejectedTicketTable td .issue-type.Fridge .circle,
+#unassignedTicketTable td .issue-type.Fridge .circle,
+#ticketTable td .issue-type.Fridge .circle{
     background-color: #04b9f6; /* Fridge color */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
