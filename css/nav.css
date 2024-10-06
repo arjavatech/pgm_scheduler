@@ -90,6 +90,9 @@
 
  /* Show navigation bar on mobile devices */
  @media (max-width: 998px) {
+    #header{
+        display: none;
+    }
     #nav {
         display: block;
         position: fixed;
@@ -104,6 +107,9 @@
 
     #sidebar-header {
         display: none;
+    }
+    #fix{
+        margin-top:8%;
     }
 
     #left {
@@ -136,6 +142,10 @@
 
     body.active {
         overflow: hidden;
+    }
+
+    #logo{
+        width: 50% !important;
     }
  }
 

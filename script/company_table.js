@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', viewcompanydetails);
-  
+
 function viewcompanydetails() {
     const tableBody = document.getElementById("tBody");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/getall`;
@@ -37,12 +37,14 @@ function viewcompanydetails() {
                         </div>
                     </td>
                     <td><i class="fa fa-paper-plane" aria-hidden="true" style="color: #006103;"></i></td>
+                    
                 `;
-                tableBody.appendChild(newRow);
+                tableBody.innerHTML += newRow;
+                index++;
             });
 
             // Initialize DataTable after populating data
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#ticketTable').DataTable({
                     // Optional configurations
                     "paging": true,
@@ -52,7 +54,7 @@ function viewcompanydetails() {
                     "info": true,
                     "autoWidth": false,
                     "responsive": true,
-                   
+
                 });
             });
         })
