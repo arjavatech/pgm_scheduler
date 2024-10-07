@@ -39,8 +39,7 @@ function viewcompanydetails() {
                     <td><i class="fa fa-paper-plane" aria-hidden="true" style="color: #006103;"></i></td>
                     
                 `;
-                tableBody.innerHTML += newRow;
-                index++;
+                tableBody.appendChild(newRow);
             });
 
             // Initialize DataTable after populating data
