@@ -1,60 +1,98 @@
  /* Custom styles for the sidebar */
  #left {
-    background-image: radial-gradient(#004102, #131313 50%);
-    height: 150vh !important;
-}
+     background-image: radial-gradient(#004102, #131313 50%);
+     height: 150vh !important;
+ }
 
-.list-group-item {
-    color: white;
-    border: none;
-}
+ .list-group-item {
+     color: white;
+     border: none;
+ }
 
-.list-group-item:hover {
-    background-color: transparent;
-    color: white !important;
-}
+ .list-group-item:hover {
+     background-color: transparent;
+     color: white !important;
+ }
 
-.list-group-item:focus {
-    background-color: transparent;
-    color: white !important;
-}
+ .list-group-item:focus {
+     background-color: transparent;
+     color: white !important;
+ }
 
-.bg-purple {
-    background-color: transparent !important;
-}
+ .bg-purple {
+     background-color: transparent !important;
+ }
 
-a {
-    color: white;
-    text-decoration: none;
-}
+ a {
+     color: white;
+     text-decoration: none;
+ }
 
-/* Hide navigation bar on larger screens */
-#nav {
-    display: none;
-}
+ /* Hide navigation bar on larger screens */
+ #nav {
+     display: none;
+ }
 
-.list-group-item {
-    background: transparent;
-    color: white;
-    font-size: small;
-    border: none;
-}
+ .list-group-item {
+     background: transparent;
+     color: white;
+     font-size: small;
+     border: none;
+ }
 
-.list-group-item span {
-    padding-left: 10px;
-}
+ .list-group-item span {
+     padding-left: 10px;
+ }
 
-#list-group-flush {
-    margin-left: 40px;
-}
+ #list-group-flush {
+     margin-left: 40px !important;
+ }
 
-#nav {
-    background-image: radial-gradient(#004102, #131313 50%);
-    padding: 20px;
-}
+ #nav {
+     background-image: radial-gradient(#004102, #131313 50%);
+     padding: 20px;
+ }
 
-/* Show navigation bar on mobile devices */
-@media (max-width: 998px) {
+ /* Loading   start*/
+ .overlay {
+     display: none;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgba(0, 0, 0, 0.5);
+     z-index: 9999;
+     justify-content: center;
+     align-items: center;
+ }
+
+ .overlay .spinner {
+     border: 4px solid #f3f3f3;
+     border-top: 4px solid #02066F;
+     border-radius: 50%;
+     width: 40px;
+     height: 40px;
+     animation: spin 1s linear infinite;
+ }
+
+ @keyframes spin {
+     0% {
+         transform: rotate(0deg);
+     }
+
+     100% {
+         transform: rotate(360deg);
+     }
+ }
+
+ /* loading end */
+
+ /* Show navigation bar on mobile devices */
+ @media (max-width: 998px) {
+    #header{
+        display: none;
+    }
     #nav {
         display: block;
         position: fixed;
@@ -62,12 +100,16 @@ a {
         top: 0;
         z-index: 1000;
     }
-    #header_admin{
+
+    #header_admin {
         display: none;
     }
 
     #sidebar-header {
         display: none;
+    }
+    #fix{
+        margin-top:8%;
     }
 
     #left {
@@ -101,41 +143,45 @@ a {
     body.active {
         overflow: hidden;
     }
-}
 
-/* Adjustments for smaller screens */
-@media (max-width: 530px) {
-    #left {
-        width: 40%;
-        margin-top: 13%;
+    #logo{
+        width: 50% !important;
     }
-}
+ }
 
-@media (max-width: 450px) {
-    #left {
-        width: 50%;
-        margin-top: 14%;
-    }
-}
+ /* Adjustments for smaller screens */
+ @media (max-width: 530px) {
+     #left {
+         width: 40%;
+         margin-top: 13%;
+     }
+ }
+
+ @media (max-width: 450px) {
+     #left {
+         width: 50%;
+         margin-top: 14%;
+     }
+ }
 
 
-@media (max-width:330px) {
-    #left {
-        width: 70%;
-        padding-top: 20%;
-    }
-   
-}
+ @media (max-width:330px) {
+     #left {
+         width: 70%;
+         padding-top: 20%;
+     }
 
-/* Default for desktop view */
-@media (min-width: 998px) {
-    .sidebar-toggle {
-        display: none;
-    }
+ }
 
-    #left {
-        position: static;
-        left: 0;
-        height: 100vh;
-    }
-}
+ /* Default for desktop view */
+ @media (min-width: 998px) {
+     .sidebar-toggle {
+         display: none;
+     }
+
+     #left {
+         position: static;
+         left: 0;
+         height: 100vh;
+     }
+ }

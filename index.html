@@ -59,53 +59,53 @@
         </div>
     </div>
     <script>
-        let responsePayload;
+    let responsePayload;
 
-        function handleCredentialResponse(response) {
-            responsePayload = decodeJwtResponse(response.credential);
+    function handleCredentialResponse(response) {
+        responsePayload = decodeJwtResponse(response.credential);
 
-            fetch('/tokensignin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id_token: response.credential })
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
+        fetch('/tokensignin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id_token: response.credential })
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
-        function decodeJwtResponse(token) {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        }
+    function decodeJwtResponse(token) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    }
 
 
 
-        window.onload = function () {
-            google.accounts.id.initialize({
-                client_id: '295710833844-mjor84ol48tusi2jfm1se8so8g5lpcqm.apps.googleusercontent.com', // Replace with your Client ID
-                callback: handleCredentialResponse
-            });
-            google.accounts.id.renderButton(
-                document.querySelector(".g_id_signin"),
-                { theme: "outline", size: "large" }
-            );
-            google.accounts.id.prompt();
-        };
+    window.onload = function () {
+        google.accounts.id.initialize({
+            client_id: '205468551568-ue3e9jao80jn8ums8d24vsdolsi55m48.apps.googleusercontent.com', 
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.querySelector(".g_id_signin"),
+            { theme: "outline", size: "large" }
+        );
+        google.accounts.id.prompt();
+    };
+    
+</script>
 
-    </script>
-
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </body>
 
 </html>

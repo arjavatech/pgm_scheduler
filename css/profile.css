@@ -15,7 +15,7 @@ body {
 }
 
 #left {
-    background-color: #7706CD;
+    background-color: #006103;
     height: 140vh; 
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 .login-button {
-    background-color: #7706CD;
+    background-color: #006103;
     color: white;
     width: 100%;
     border: none;
@@ -64,7 +64,6 @@ body {
 
 .upload-label::after {
     content:url("icon/upload-icon.png");
-    font-family: "FontAwesome";
     margin-left: auto;
     font-size: 18px;
     color: #b3aea9;
@@ -91,6 +90,10 @@ a{
 }
 #list-group-flush{
     margin-left: 60px;
+}
+
+a{
+    text-decoration: none;
 }
 
 @media (max-width: 1200px) {
@@ -138,8 +141,4 @@ a{
     #left {
         padding: 20px 0;
     }
-}
-
-a{
-    text-decoration: none;
 }

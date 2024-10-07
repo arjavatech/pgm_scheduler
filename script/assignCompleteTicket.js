@@ -15,42 +15,82 @@ $(document).ready(function () {
                         <div class="col-md-4">
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px;text-align: left;">${rowData.address}</p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
-                            <select class="form-select mt-2 employee-select" disabled>
-                                ${employeeOptions}
-                            </select>
-                            <small class="text-muted mt-2">Pending work: <span class="pending-work">${rowData.employees[0].pending}</span></small>
                         </div>
+                        
+                    
                         <div class="col-md-1"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-6">                        
                             <strong class="d-flex justify-content-left">Description:</strong>
-                            <p style="font-size: 16px;text-align: left;" class="pt-2">${rowData.description}</p>
-                            <div class="row">
-                               <div class="col-6">
-                                     <div class="image-gallery">
-                                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                                        <div class="image-container">
-                                            <img src="images/profile img.png" alt="Image 1">
-                                            <div class="overlay">+3</div>
-                                        </div>
-                                        <div class="thumbnail-container" id="additional-images" style="display: none;">
-                                            <img src="images/profile img.png" alt="Additional Image 1">
-                                            <img src="images/profile img.png" alt="Additional Image 2">
-                                        
-                                        </div>
-                                    </div>
-                                </div>
-                                 <div class="col-6">
-                                    <button class="btn btn-assign" ${rowData.employees.every(e => e.pending > 5) ? 'disabled' : ''}>
-                                        ReAssign
-                                    </button>
-                                </div>
+                            <p style="font-size: 13px;text-align: left;" class="pt-2">${rowData.description}</p>                                
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                         <strong class="d-flex justify-content-left">Customer Address:</strong>
+                          <div class="col-md-1 mt-3" ></div>
+                             <input type="text" placeholder="Start Time" class="input-bottom"></input>
+                              <div class="col-md-1 mt-3" ></div>
+                               <input type="text" placeholder="End Time" class="input-bottom"></input>
+                        </div>
+    
+                        <div class="col-md-6">                        
+                            <div class="image-set d-flex">
+                                <img src="../images/profile img.png" alt="Image 1" width="100px">
+                                <img src="../images/profile img.png"  width="100px">
+                                                  
+                                  <label for="uploadLogo" class="upload-label ">
+                                    <input type="file" id="uploadLogo" class="form-control-file mt-4">
+                                </label>       
+                            </div>
+                        </div>
+
+                    </div>
+
+                   
+                    <div class="d-flex justify-content-center align-items-center mt-3">
+                        <div class="row">
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <button class="form-control mt-2 employee-select comform" style="width:250px">Completed</button>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-center">
+                                <button class="form-control mt-2 employee-select cancel" style="width:250px">Cancel</button>
+                            </div>
+
                         </div>
                     </div>
                 </td>
             </div>`;
     }
 
+
+    // // Define the API endpoint
+    // const apiEndpoint = ''; // Change this to your actual API URL
+
+    // // Fetch data from the API
+    // fetch(apiEndpoint)
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(data => {
+    //         // Assuming data is an array of ticket details similar to rowDetails structure
+    //         const rowDetails = data; // Store fetched data into rowDetails
+
+    //         // Set the initial assigned employee name in the main table rows
+    //         $('#ticketTable tbody tr').each(function () {
+    //             const ticketID = $(this).find('td:nth-child(2)').text();
+    //             const details = rowDetails.find(detail => detail.ticketID === ticketID);
+
+    //             // Set initial assigned employee in the table's main row
+    //             if (details && details.employees.length > 0) {
+    //                 const initialEmployee = details.employees[0].name;
+    //                 $(this).find('.assigned-employee').text(initialEmployee);
+    //             }
+    //         });
 
 
     // Sample data for dynamic row details
@@ -101,7 +141,7 @@ $(document).ready(function () {
         },
         {
             ticketID: '005',
-            address: '45, 2nd Cross, Koramangala, Bangalore, Karnataka 560034', 
+            address: '45, 2nd Cross, Koramangala, Bangalore, Karnataka 560034',
             description: 'The air conditioner is running but not cooling the room effectively, blowing warm air despite long cooling cycles. This could be due to low refrigerant levels, a dirty air filter, a malfunctioning compressor, or a faulty thermostat. To address this issue, check and replace the air filter, and have a professional inspect.',
 
             employees: [

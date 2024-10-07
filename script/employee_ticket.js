@@ -1,57 +1,18 @@
 $(document).ready(function () {
-    console.log("Document is ready!");
+    const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/getall";
+    let rowDetails = [];
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(ticket => {
+                rowDetails.push(ticket);
+                addTicket(ticket);
+                addCard(ticket); // Add the card for mobile view
+            });
+        })
+        .catch(error => console.error('Error fetching tickets:', error));
 
-        // // Function to fetch employee data from API
-        // async function fetchEmployeeData() {
-        //     try {
-        //         const response = await fetch('YOUR_API_ENDPOINT_HERE'); // Replace with your API endpoint
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-        //         const employeeData = await response.json(); // Assuming the API returns JSON
-    
-        //         // Call a function to populate the table and cards
-        //         populateEmployeeTableAndCards(employeeData);
-        //     } catch (error) {
-        //         console.error('There was a problem with the fetch operation:', error);
-        //     }
-        // }
-
-    // Sample static data
-    const employeeData = [
-        {
-            id: "001",
-            name: "Rohith",
-            phone: "01234 56789",
-            specialization: "AC",
-            email: "rohith@gmail.com",
-            location: "Washington",
-            completedWork: 7,
-            pendingWork: 3
-        },
-        {
-            id: "002",
-            name: "Sham",
-            phone: "78654 65523",
-            specialization: "Refrigerator",
-            email: "sham@gmail.com",
-            location: "Sammamish",
-            completedWork: 4,
-            pendingWork: 2
-        },
-        {
-            id: "003",
-            name: "Maaz",
-            phone: "98098 76543",
-            specialization: "AC",
-            email: "maaz@gmail.com",
-            location: "Lynnwood",
-            completedWork: 4,
-            pendingWork: 2
-        }
-    ];
-
-    // Initialize DataTables for larger screens
+    // Initialize DataTable
     const table = $('#ticketTable').DataTable({
         paging: true,
         lengthChange: true,
@@ -62,80 +23,134 @@ $(document).ready(function () {
         responsive: true
     });
 
-    // Insert data into the table and card layout dynamically
-    const tableBody = document.querySelector("#employeeTableBody");
-    const cardContainer = document.querySelector("#employeeCards");
+    // Function to add a ticket to the DataTable
+    function addTicket(ticket) {
+        const rowNode = table.row.add([
+            ticket.first_name,
+            ticket.phone_number,
+            `<div class="issue-type ${ticket.specialization.toLowerCase()}"><span class="circle"></span>${ticket.specialization}</div>`,
+            ticket.email,
+            ticket.assigned_locations,
+            ticket.employee_no_of_completed_work,
+            ticket.no_of_pending_works,
+          
+        ]).draw(false).node(); // Get the row node after adding
 
-    employeeData.forEach((employee, index) => {
-        // Table Row for larger screens
-        const tableRow = `
-            <tr data-bs-toggle="collapse" data-bs-target="#details${index + 1}" class="clickable">
-                <td class="details-control"></td>
-                <td>${employee.id}</td>
-                <td>${employee.name}</td>
-                <td>${employee.phone}</td>
-                <td>${employee.specialization}</td>
-                <td>${employee.email}</td>
-                <td>${employee.location}</td>
-                <td>${employee.completedWork}</td>
-                <td>${employee.pendingWork}</td>
-            </tr>
-            <tr class="collapse details-row" id="details${index + 1}">
-                <td colspan="9">
+        // $(rowNode).find('td:first').addClass('details-control');
+    }
+
+    // Format the row details
+    function format(rowData) {
+        return `
+            <tr class="collapse-content details-row">
+                <td colspan="8">
                     <div class="row">
-                        <div class="col-md-12 d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary modify" onclick="modifyEmployee(${index})">Modify</button>
-                            <button type="button" class="btn btn-danger remove" onclick="removeEmployee(${index})">Remove</button>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <strong class="d-flex justify-content-left">Customer Address</strong>
+                            <p class="pt-2" style="font-size: 13px; text-align: left;">
+                                ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}, ${rowData.state}
+                            </p>
+                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
+                            <small>Pending work: <span class="pending-work">
+                                ${rowData.employees && rowData.employees.length > 0 ? rowData.employees[0].pending : 'N/A'}
+                            </span></small>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-6">
+                            <strong>Description:</strong>
+                            <p class="description">${rowData.description}</p>
+                            <div class="image-gallery d-flex justify-content-center">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                        <div class="image-container d-inline justify-content-center">
+                            <img src="images/profile img.png" alt="Image 1" width="100px">
+                            <div class="overlay">+3</div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </td>
-            </tr>
-        `;
-        tableBody.innerHTML += tableRow;
+            </tr>`;
+    }
 
-        // Card Layout for smaller screens
-        const card = `
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Employee ID: ${employee.id}</h5>
-                    <p class="card-text"><strong>Name:</strong> ${employee.name}</p>
-                    <p class="card-text"><strong>Phone:</strong> ${employee.phone}</p>
-                    <p class="card-text"><strong>Specialization:</strong> ${employee.specialization}</p>
-                    <p class="card-text"><strong>Email:</strong> ${employee.email}</p>
-                    <p class="card-text"><strong>Location:</strong> ${employee.location}</p>
-                    <p class="card-text"><strong>Completed Work:</strong> ${employee.completedWork}</p>
-                    <p class="card-text"><strong>Pending Work:</strong> ${employee.pendingWork}</p>
-                    <div class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary modify me-2" onclick="modifyEmployee(${index})">Modify</button>
-                        <button type="button" class="btn btn-danger remove" onclick="removeEmployee(${index})">Remove</button>
-                    </div>
-                </div>
-            </div>
-        `;
-        cardContainer.innerHTML += card;
-    });
+    // Expand row details on click
+    $('#ticketTable tbody').on('click', 'td.details-control', function () {
+        const tr = $(this).closest('tr');
+        const row = table.row(tr);
+        const ticket_id = tr.find('td:nth-child(2)').text();
+        const details = rowDetails.find(detail => detail.ticket_id == ticket_id);
 
-    // fetchEmployeeData();
-
-
-    // Add event listener for opening and closing details in the table
-    $('#ticketTable tbody').on('click', 'tr.clickable', function () {
-        const target = $(this).data('bs-target');
-        $(target).collapse('toggle');
-    });
-
-    // Event listener for Modify button
-    $('#ticketTable tbody').on('click', '.modify', function () {
-        const row = $(this).closest('tr').prev();
-        alert(`Modify clicked for employee: ${row.find('td:eq(2)').text()}`);
-        // Add your modify logic here
-    });
-
-    // Event listener for Remove button
-    $('#ticketTable tbody').on('click', '.remove', function () {
-        const row = $(this).closest('tr').prev();
-        if (confirm(`Are you sure you want to remove employee: ${row.find('td:eq(2)').text()}?`)) {
-            table.row(row).remove().draw();
+        if (row.child.isShown()) {
+            row.child.hide();
+            tr.removeClass('shown');
+        } else {
+            row.child(format(details)).show();
+            tr.addClass('shown');
         }
     });
+
+    // Function to create and append the card for mobile view
+    function addCard(employee) {
+        const cardHtml = `
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Name </strong>  ${employee.name}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Ticket ID </strong>  ${employee.ticket_id}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Issue type </strong>  ${employee.ticket_type}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Date </strong>  ${employee.complain_raised_date}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Phone </strong> ${employee.phone_number}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>City:</strong> ${employee.city}</p>
+                    </div>
+                </div>
+                <p class="text-center mb-2" onclick="showmore(this)">show more ⮟</p>
+                <div class="show-more" style="display:none">
+                    <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
+                    <p><strong>Description:</strong> ${employee.description}</p>
+                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
+                    <div class="image-gallery d-flex justify-content-center">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                        <div class="image-container d-inline justify-content-center">
+                            <img src="images/profile img.png" alt="Image 1" width="100px">
+                            <div class="overlay">+3</div>
+                        </div>
+                    </div>
+                    <p class="text-center pt-3 mb-2" onclick="showless(this)">show less </p>       
+                </div>
+            </div>
+        </div>
+        `;
+
+        // Append the card to the card container for mobile view
+        $('#card-container').append(cardHtml);
+    }
+
+    // Function to show more details in card
+    window.showmore = function(button) {
+        const showMoreDiv = $(button).next('.show-more');
+        showMoreDiv.slideDown(); // Show the additional details
+        $(button).hide(); // Hide the "show more" button
+    }
+
+    // Function to show less details in card
+    window.showless = function(button) {
+        const showMoreDiv = $(button).parent('.show-more');
+        showMoreDiv.slideUp(); // Hide the additional details
+        $(button).show(); // Show the "show more" button again
+    }
 });
