@@ -14,6 +14,29 @@
 </head>
 
 <body>
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1564179824527181', 
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v12.0' 
+    });
+      
+    FB.AppEvents.logPageView();   
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
     <div class="container-fluid">
         <div class="row">
             <div class="container">
@@ -46,7 +69,7 @@
                                     <i class="fab fa-apple fa-2x"></i>
                                 </div>
                                 <div class="col-2">
-                                    <i class="fab fa-facebook fa-2x"></i>
+                                    <i class="fab fa-facebook fa-2x" onclick="loginWithFacebook()"></i>
                                 </div>
                                 <div class="col-2">
                                     <i class="fab fa-google fa-2x"></i>
@@ -59,6 +82,20 @@
             </div>
         </div>
     </div>
+    <script>
+
+        function loginWithFacebook() {
+          FB.login(function(response) {
+            if (response.status === 'connected') {
+              // Redirect to your desired URL
+              window.location.href = 'https://arjavatech.github.io/pgm_scheduler/dashboard.html';
+            } else {
+              console.log('User did not authorize the app');
+            }
+          }, {scope: 'public_profile,email'});
+        }
+      
+      </script>
 </body>
 
 </html>

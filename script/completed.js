@@ -38,6 +38,11 @@ $(document).ready(function () {
 
         $(rowNode).find('td:first').addClass('details-control');
     }
+    
+    //function for toggle arrow 
+    $(document).on('click', 'td.details-control', function () {
+        $(this).toggleClass('active');
+      });
 
     // Format the row details
     function format(rowData) {

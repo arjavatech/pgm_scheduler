@@ -7,7 +7,7 @@ $(document).ready(function () {
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
-                addCard(ticket); // Add the card for mobile view
+                addCard(ticket); 
             });
         })
         .catch(error => console.error('Error fetching tickets:', error));
@@ -66,12 +66,19 @@ $(document).ready(function () {
                             <img src="images/profile img.png" alt="Image 1" width="100px">
                             <div class="overlay">+3</div>
                         </div>
+                        <div class=" button-container">
+                           <button>Reassign</button>
+                        </div>
                     </div>
                         </div>
                     </div>
                 </td>
             </tr>`;
     }
+    //toggle arrow 
+    $(document).on('click', 'td.details-control', function () {
+        $(this).toggleClass('active');
+      });
 
     // Expand row details on click
     $('#ticketTable tbody').on('click', 'td.details-control', function () {
@@ -150,7 +157,7 @@ $(document).ready(function () {
     // Function to show less details in card
     window.showless = function(button) {
         const showMoreDiv = $(button).parent('.show-more');
-        showMoreDiv.slideUp(); // Hide the additional details
-        $(button).show(); // Show the "show more" button again
+        showMoreDiv.slideUp(); 
+        $(button).show(); 
     }
 });

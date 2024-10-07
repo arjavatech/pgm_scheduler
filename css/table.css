@@ -82,22 +82,22 @@ table.dataTable.table-striped>tbody>tr.odd {
     /* Remove the default shadow */
 }
 
-/* Apply a white background for even rows */
+
 table.dataTable.table-striped>tbody>tr.even {
     background-color: #ffffff !important;
-    /* White */
+   
 }
 
-/* Override the default box-shadow for all odd rows */
+
 table.dataTable.table-striped>tbody>tr.odd>* {
     box-shadow: none;
-    /* Remove default shadow for all cells in odd rows */
+    
 }
 
-/* Custom hover effect for all rows */
+
 table.dataTable tbody tr:hover {
     background-color: #f1f1f1 !important;
-    /* Light gray for hover */
+   
 }
 
 .details-row {
@@ -110,10 +110,9 @@ table.dataTable tbody tr:hover {
 }
 
 .button-container {
-    /* Use Flexbox to align the buttons horizontally */
-    /* Optional: Adds space between the buttons */
+
     justify-content: flex-start;
-    /* Align the buttons to the left (or you can use 'center' or 'flex-end') */
+   
 }
 
 .details-row .btn {
@@ -147,20 +146,25 @@ table.dataTable tbody tr:hover {
     margin-right: 5px;
 }
 
-#rejectedTicketTable td .issue-type.AC .circle,
-#unassignedTicketTable td .issue-type.AC .circle,
-#ticketTable td .issue-type.AC .circle {
+#rejectedTicketTable td .issue-type.ac .circle,
+#unassignedTicketTable td .issue-type.ac .circle,
+#ticketTable td .issue-type.ac .circle {
     background-color: #daba1ece;
-    /* AC color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(91, 89, 89, 0.2);
 }
 
-#rejectedTicketTable td .issue-type.Fridge .circle,
-#unassignedTicketTable td .issue-type.Fridge .circle,
-#ticketTable td .issue-type.Fridge .circle {
+#rejectedTicketTable td .issue-type.fridge .circle,
+#unassignedTicketTable td .issue-type.fridge .circle,
+#ticketTable td .issue-type.fridge .circle {
     background-color: #04b9f6;
-    /* Fridge color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+   
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(91, 89, 89, 0.2);
 }
 
 #rejectedTicketTable tbody td .issue-type,
@@ -232,7 +236,7 @@ table.dataTable tbody tr:hover {
 
 #sidebar a {
     color: #fff;
-    /* Link color */
+  
 }
 
 #searchbar {
@@ -314,67 +318,48 @@ a {
     content: "⮟";
 }
 
-
-/* DataTables Pagination Styles */
-
-
-/* Pagination styles */
-
-
-
-
-
-
-
-
-/* Pagination button styles */
-/* Main pagination container */
 .dataTables_wrapper .dataTables_paginate {
     display: flex !important;
-    /* Use flexbox for alignment */
     justify-content: center;
-    /* Center pagination */
     margin: 20px 0;
-    /* Margin around the pagination */
 }
 
 /* Pagination list */
 .dataTables_wrapper .dataTables_paginate .pagination {
     display: flex;
-    /* Flexbox layout */
+
     padding: 0;
-    /* Remove padding */
+
     margin: 0;
-    /* Remove margin */
+
     list-style: none;
-    /* No bullet points */
+
 }
 
 /* Pagination buttons */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item {
     margin: 0 3px;
-    /* Reduced space between buttons */
+
 }
 
 /* Page links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-link {
     color: #006103 !important;
-    /* Default text color */
+
     background-color: transparent !important;
-    /* No background */
+
     border: 1px solid #006103;
-    /* Green border */
+
     border-radius: 0px;
-    /* Rounded corners */
+
     padding: 8px 15px;
-    /* Reduced padding */
+
     font-size: 0.85rem;
-    /* Reduced font size */
+
     text-align: center;
-    /* Center text */
-    /* Ensure inline-block display */
+ 
     transition: background-color 0.3s, color 0.3s;
-    /* Transition for hover effects */
+   
 }
 
 
@@ -382,9 +367,9 @@ a {
 /* Hover styles for pagination links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-link:hover {
     color: white !important;
-    /* Text color on hover */
+
     background-color: #006103 !important;
-    /* Background color on hover */
+ 
 }
 
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.active {
@@ -392,18 +377,18 @@ a {
     padding: none;
     box-shadow: none;
     background: none;
-    /* Hide the active page number */
+
 }
 
 
 /* Disabled button styles */
 .dataTables_wrapper .dataTables_paginate .pagination .disabled .page-link {
     color: rgb(255, 253, 253) !important;
-    /* Color for disabled links */
-    background-color: #99b29a !important;
-    /* Ensure no background */
+
+    background-color: #68a46a !important;
+
     pointer-events: none;
-    /* Disable pointer events */
+
     border: transparent;
 }
 
@@ -411,31 +396,31 @@ a {
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next {
     font-weight: bold;
-    /* Make text bold */
+  
 }
 
 /* Styles for the Previous and Next links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous .page-link,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next .page-link {
     background-color: #f8f9fa;
-    /* Light background for Previous and Next */
+ 
     color: #006103;
-    /* Text color */
+ 
     border-radius: 10px;
-    /* Rounded corners */
+  
     padding: 8px 15px;
-    /* Reduced padding for Previous and Next */
+
     font-size: 0.85rem;
-    /* Reduced font size for Previous and Next */
+   
 }
 
 /* Hover styles for Previous and Next links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous .page-link:hover,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next .page-link:hover {
     background-color: #006103 !important;
-    /* Dark green background on hover */
+
     color: white !important;
-    /* White text on hover */
+ 
 }
 
 #addEmployee {
@@ -549,10 +534,25 @@ td.details-control {
 
 /* Default down arrow */
 td.details-control::before {
-    content: ' ⮟ ';
-    /* Smooth transition */
+    content: '';
+    border: solid rgb(72, 70, 70);
+    border-width: 0 2px 1px 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg); /* Arrow */
+   
 }
 
+td.details-control.active::before {
+    content: '';
+    border: solid rgb(72, 70, 70);
+    border-width: 0 1px 2px 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
 /* When toggled, show up arrow */
 tr.shown td.details-control {
     content: ' ';
