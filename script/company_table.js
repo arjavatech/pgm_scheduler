@@ -37,8 +37,11 @@ function viewcompanydetails() {
                             </span>
                         </div>
                     </td>
-                    <td><i class="fa fa-paper-plane" aria-hidden="true" style="color: #006103;"></i></td>
-                    
+                    <td>
+    <button class="btn btn-send" ${element.invite_status == "Accepted" ? "disabled" : ""}>
+    ${element.invite_status == "Accepted" ? "Send" : "Resend"}
+    </button>
+</td>
                 `;
                 tableBody.appendChild(newRow);
                 index++;

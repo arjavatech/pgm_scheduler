@@ -97,12 +97,11 @@
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
+                alert("User ID not found");
             }
             return response.json();
         })
         .then(data => {
-            // Check if user is a super admin
             if (data.isSuperAdmin) {
                 // Redirect to company.html
                 window.location.href = 'company.html';
@@ -120,7 +119,6 @@
         })
         .catch(error => {
             console.error('Fetch error:', error);
-            // document.getElementById('overlay').style.display = 'none';
         });
 
 
