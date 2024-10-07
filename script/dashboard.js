@@ -134,3 +134,9 @@ let chart2 = new Chart(ctx2, {
         }
     }
 });
+
+
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('left');
+    sidebar.classList.toggle('active');
+});

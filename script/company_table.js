@@ -66,3 +66,8 @@ function viewcompanydetails() {
 
 
 
+
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('left');
+    sidebar.classList.toggle('active');
+});
