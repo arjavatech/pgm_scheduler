@@ -14,6 +14,7 @@ function viewcompanydetails() {
         .then(data => {
             // Store the fetched data
             employeesData = data;
+            let index = 0;
 
             // Clear the existing table body content
             tableBody.innerHTML = '';
@@ -39,7 +40,7 @@ function viewcompanydetails() {
                     <td><i class="fa fa-paper-plane" aria-hidden="true" style="color: #006103;"></i></td>
                     
                 `;
-                tableBody.innerHTML += newRow;
+                tableBody.appendChild(newRow);
                 index++;
             });
 
@@ -62,3 +63,6 @@ function viewcompanydetails() {
             console.error('Fetch error:', error);
         });
 }
+
+
+

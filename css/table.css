@@ -632,6 +632,30 @@ strong{
     font-weight: 600;
     color: #004102;
 }
+
+
+.assign{
+    border: none !important;
+    background-color: #006103 !important;
+    color: white !important;
+}
+
+.assign:hover{
+    border: none !important;
+    background-color: #006103 !important;
+    color: white !important;
+}
+
+.assign:focus{
+    border: none !important;
+    background-color: #006103 !important;
+    color: white !important;
+}
+.reject , .reject:hover{
+    border: 1px solid #006103 !important;
+    color: #006103 !important;
+    background-color: transparent !important;
+}
 @media (max-width:930px) {
 
     #rejectedTicketTable thead th,

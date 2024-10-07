@@ -43,7 +43,7 @@ $(document).ready(function () {
     function format(rowData) {
         return `
             <tr class="collapse-content details-row">
-                <td colspan="8">
+                <td colspan="10">
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-4">
@@ -57,18 +57,23 @@ $(document).ready(function () {
                             </span></small>
                         </div>
                         <div class="col-md-1"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
                             <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
+                                <img src="images/profile img.png" alt="Image 1" width="100px">
+                                <div class="image-container d-inline justify-content-center">
+                                    <img src="images/profile img.png" alt="Image 1" width="100px">
+                                    <div class="overlay">+3</div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="col-md-2 mt-4">
+                            <button class="btn assign">Assign</button><br>
+                            <button class="btn reject">Reject</button>
                     </div>
-                        </div>
-                    </div>
+                    
                 </td>
             </tr>`;
     }
