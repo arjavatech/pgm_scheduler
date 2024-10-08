@@ -159,3 +159,9 @@ $(document).ready(function () {
         $(button).show(); // Show the "show more" button again
     }
 });
+
+
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('left');
+    sidebar.classList.toggle('active');
+});

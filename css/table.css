@@ -78,7 +78,7 @@ table.dataTable.table-striped>thead {
 table.dataTable.table-striped>tbody>tr.odd {
     background-color: #def8de !important;
     /* Light green */
-    box-shadow: none;
+    /* box-shadow: none; */
     /* Remove the default shadow */
 }
 
@@ -87,12 +87,12 @@ table.dataTable.table-striped>tbody>tr.even {
     background-color: #ffffff !important;
    
 }
-
+/* 
 
 table.dataTable.table-striped>tbody>tr.odd>* {
     box-shadow: none;
     
-}
+} */
 
 
 table.dataTable tbody tr:hover {
@@ -153,18 +153,15 @@ table.dataTable tbody tr:hover {
     height: 5px;
     width: 5px;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(91, 89, 89, 0.2);
 }
 
 #rejectedTicketTable td .issue-type.fridge .circle,
 #unassignedTicketTable td .issue-type.fridge .circle,
 #ticketTable td .issue-type.fridge .circle {
-    background-color: #04b9f6;
-   
+    background-color: #04b9f6;   
     height: 5px;
     width: 5px;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(91, 89, 89, 0.2);
 }
 
 #rejectedTicketTable tbody td .issue-type,
@@ -174,7 +171,6 @@ table.dataTable tbody tr:hover {
     align-items: center;
     border-radius: 10px;
     background-color: #f6eec9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #rejectedTicketTable td .issue-type.fridge,
@@ -189,7 +185,6 @@ table.dataTable tbody tr:hover {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -208,7 +203,7 @@ table.dataTable tbody tr:hover {
 #ticketTable tbody tr {
     background-color: #fff;
     transition: background-color 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 #rejectedTicketTable tbody tr:hover,
@@ -309,7 +304,7 @@ a {
 #whole-table {
     border: 1px;
     padding: 20px;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);  */
 }
 
 
@@ -375,7 +370,7 @@ a {
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.active {
 
     padding: none;
-    box-shadow: none;
+    /* box-shadow: none; */
     background: none;
 
 }

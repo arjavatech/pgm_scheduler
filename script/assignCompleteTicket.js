@@ -267,3 +267,8 @@ $(document).ready(function () {
         table.row(mainRow).invalidate().draw();
     });
 });
+
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('left');
+    sidebar.classList.toggle('active');
+});
