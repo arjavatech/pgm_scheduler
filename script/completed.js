@@ -51,22 +51,26 @@ $(document).ready(function () {
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
-                            <small>Pending work: <span class="pending-work">
-                                ${rowData.employees && rowData.employees.length > 0 ? rowData.employees[0].pending : 'N/A'}
-                            </span></small>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
-                            <strong>Description:</strong>
+                            <strong >Description:</strong>
                             <p class="description">${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
-                        </div>
-                    </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                    <div class="image-gallery d-flex justify-content-left">
+                                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                                        <div class="image-container d-inline justify-content-center">
+                                            <img src="images/profile img.png" alt="Image 1" width="150px">
+                                            <div class="overlay">+3</div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
+                                   <h5>$100</h5>                              
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </td>

@@ -52,21 +52,24 @@ $(document).ready(function () {
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
                             <label class="mt-3 d-flex justify-content-left">Employee Name</label>
-                            <small>Pending work: <span class="pending-work">
-                                ${rowData.employees && rowData.employees.length > 0 ? rowData.employees[0].pending : 'N/A'}
-                            </span></small>
+                            <select class="form-select mt-2 employee-select">
+                               <option value="employeeName">ganesh</option>
+                                <option value="employeeName">Rohith</option>
+                                 <option value="employeeName">Meera</option>
+                                  <option value="employeeName">Arun</option>
+                            </select>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
-                            <strong>Description:</strong>
-                            <p class="description">${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
-                        </div>
-                    </div>
+                            <strong class=" d-flex justify-content-left">Description:</strong>
+                            <p class="description  d-flex justify-content-left">${rowData.description}</p>
+                            <div class="image-gallery d-flex justify-content-left">
+                                <img src="images/profile img.png" alt="Image 1" width="100px">
+                                <div class="image-container d-inline justify-content-left">
+                                    <img src="images/profile img.png" alt="Image 1" width="100px">
+                                    <div class="overlay">+3</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </td>
@@ -118,7 +121,7 @@ $(document).ready(function () {
                         <p><strong>City:</strong> ${employee.city}</p>
                     </div>
                 </div>
-                <p class="text-center mb-2" onclick="showmore(this)">show more ⮟</p>
+                <p class="text-center mb-2" onclick="showmore(this)" id="showMore">show more ⮟</p>
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
@@ -152,6 +155,7 @@ $(document).ready(function () {
         const showMoreDiv = $(button).parent('.show-more');
         showMoreDiv.slideUp(); // Hide the additional details
         $(button).show(); // Show the "show more" button again
+        document.getElementById("showMore").style.display="block"
     }
 });
 

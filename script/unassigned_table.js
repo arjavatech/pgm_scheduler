@@ -52,6 +52,12 @@ $(document).ready(function () {
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
                             <label class="mt-3 d-flex justify-content-left">Employee Name</label>
+                            <select class="form-select mt-2 employee-select">
+                               <option value="employeeName">ganesh</option>
+                                <option value="employeeName">Rohith</option>
+                                 <option value="employeeName">Meera</option>
+                                  <option value="employeeName">Arun</option>
+                            </select>
                             <small>Pending work: <span class="pending-work">
                                 ${rowData.employees && rowData.employees.length > 0 ? rowData.employees[0].pending : 'N/A'}
                             </span></small>
@@ -72,7 +78,7 @@ $(document).ready(function () {
                         <div class="col-md-2 mt-4">
                             <button class="btn assign">Assign</button><br>
                             <button class="btn reject">Reject</button>
-                    </div>
+                        </div>
                     
                 </td>
             </tr>`;
@@ -123,17 +129,28 @@ $(document).ready(function () {
                         <p><strong>City:</strong> ${employee.city}</p>
                     </div>
                 </div>
-                <p class="text-center mb-2" onclick="showmore(this)">show more ⮟</p>
+                <p class="text-center mb-2" onclick="showmore(this)" id="showMore">show more ⮟</p>
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
-                    <div class="image-gallery d-flex justify-content-center">
+                    <p class="text-left"><strong>Employee:</strong>
+                        <select class="form-select mt-2 employee-select" style="width:80%">
+                            <option value="employeeName">ganesh</option>
+                            <option value="employeeName">Rohith</option>
+                            <option value="employeeName">Meera</option>
+                            <option value="employeeName">Arun</option>
+                       </select>
+                     </p>       
+                    <div class="image-gallery d-flex justify-content-center mt-2">
                         <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container d-inline justify-content-center">
                             <img src="images/profile img.png" alt="Image 1" width="100px">
                             <div class="overlay">+3</div>
                         </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3" style="gap:3%">
+                        <button class="btn assign">Assign</button>
+                        <button class="btn reject">Reject</button>
                     </div>
                     <p class="text-center pt-3 mb-2" onclick="showless(this)">show less </p>       
                 </div>
@@ -157,6 +174,7 @@ $(document).ready(function () {
         const showMoreDiv = $(button).parent('.show-more');
         showMoreDiv.slideUp(); // Hide the additional details
         $(button).show(); // Show the "show more" button again
+        document.getElementById("showMore").style.display="block"
     }
 });
 

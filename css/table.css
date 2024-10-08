@@ -439,6 +439,15 @@ a {
     color: white;
 }
 
+#invoice {
+    padding: 10px 18px 10px 18px;
+    width: 80%;
+    border-radius: 7px;
+    border: none;
+    font-size: 14px;
+    background-color: #006103;
+    color: white;
+}
 #cancel {
     padding: 3px 10px 3px 10px;
     width: 70%;
@@ -619,6 +628,7 @@ strong{
     color: #004102;
     font-weight: bolder;
     font-size: 14px;
+    text-align: left !important;
 }
 #showMoreButton,#showLessButton{
     font-weight: 600;
@@ -647,6 +657,11 @@ strong{
     border: 1px solid #006103 !important;
     color: #006103 !important;
     background-color: transparent !important;
+}
+
+.description{
+    padding-left: 2%;
+    padding-top: 2%;
 }
 @media (max-width:930px) {
 
