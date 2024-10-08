@@ -399,6 +399,21 @@ a {
   
 }
 
+.btn-send{
+    font-weight: bold;
+    border-radius: 10px;
+    /* border: 1px; */
+    border-color:  #006103;
+}
+.btn-send:hover{
+    font-weight: bold;
+    border-radius: 10px;
+    /* border: 1px; */
+    background-color:  #006103;
+    color: #caedf8;
+   
+
+}
 /* Styles for the Previous and Next links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous .page-link,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next .page-link {
@@ -691,3 +706,4 @@ strong{
         border-bottom: 1px solid #e0e0e0;
     }
 }
+
