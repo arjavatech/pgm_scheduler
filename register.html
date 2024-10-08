@@ -92,51 +92,58 @@
             <button class="close-btn" id="closePopup">Close</button>
         </div>
     </div>
-  
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#submit-btn').on('submit', function (event) {
-                event.preventDefault(); // Prevent form submission
+        
+            document.getElementById('submit-btn').addEventListener('click', function(event){
+            
+                event.preventDefault();
                 console.log('yes');
                 // Gather input values
                 const data = {
-                    company_name: $('#companyName').val(),
-                    phone_number: $('#phoneNumber').val(),
-                    first_name: $('#firstName').val(),
-                    last_name: $('#lastName').val(),
-                    email: $('#email').val()
+                    company_name: document.getElementById('companyName').value,
+                    phone_number: document.getElementById('phone').value.toString(),
+                    first_name: document.getElementById('firstName').value,
+                    last_name: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value
                 };
 
-                // Send a POST request
-                $.ajax({
-                    url: 'https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev//company_register/create', 
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    
-                    success: function (response) {
-                        // Handle the response from the server
-                        console.log("Success:", response);
-                        popupModal.style.display = 'block';
-                        mainContent.classList.add('blur-background');
+                console.log(data)
 
+                $('#popupModal').hide(); 
+                $('#mainContent').removeClass('blur-background'); 
+                window.location.href = 'company.html';
 
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error:", error);
-                    }
-                    
-                });
-            });
+                // fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev//company_register/create", {
+                // method: 'POST',
+                // body: JSON.stringify(data)
+                //  })
+                // .then(response => {
+                //     if (!response.ok) {
+                //         throw new Error(`Error: ${response.status}`);
+                //     }
+                //     return response.json();
+                // })
+                // .then(data => {
+                //     if (data.error) {
+                //         setTimeout(function () {
+                //             window.location.href = "register.html";
+                //         }, 1000);
+                //     } else {
+                //         popupModal.style.display = 'block';
+                //         mainContent.classList.add('blur-background');
+                //         setTimeout(function () {
+                //             $('#popupModal').hide(); 
+                //             $('#mainContent').removeClass('blur-background'); 
+                //             window.location.href = 'company.html';
+                //         }, 1000);
+                //     }
 
-            $('#closePopup').on('click', function () {
-            $('#popupModal').hide(); 
-            $('#mainContent').removeClass('blur-background'); 
-            window.location.href = 'company.html';
-        });
- });
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                // });
+               });
     </script>
     
 </body>
