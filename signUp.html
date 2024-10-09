@@ -15,114 +15,116 @@
     <!-- Google Sign-In Script -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-        <!-- Custom CSS -->
-        <style>
-            /* Loading Overlay Style */
-   .loading-overlay {
-       position: fixed;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 100%;
-       background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       z-index: 9999; /* To make sure it appears above everything */
-   }
-   
-   /* Apply background blur to the main content when loading is active */
-   .blur-background {
-       filter: blur(5px);
-   }
-   
-   /* Center spinner */
-   .spinner-border {
-       width: 3rem;
-       height: 3rem;
-       border-width: 0.3rem;
-   }
+    <!-- Custom CSS -->
+    <style>
+        /* Loading Overlay Style */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* To make sure it appears above everything */
+        }
 
-   .cross__svg {
-      border-radius: 50%;
-      display: block;
-     
-     
-      stroke-width: 3;
-     
-  }
-  
-  .cross__circle {
-      animation: stroke 0.6s ease 0s normal forwards;
-      fill: none;
-      margin: 0 auto;
-      stroke: #e55454;
-      stroke-dasharray: 166;
-      stroke-dashoffset: 166;
-      stroke-width: 2;
-  }
-  
-  .cross__path {
-      stroke: #e55454;
-      stroke-dasharray: 48;
-      stroke-dashoffset: 48;
-      transform-origin: 50% 50% 0;
-  }
-  
-  .cross__path--right {
-      animation: stroke 0.3s ease 0.8s normal forwards;
-  }
-  
-  .cross__path--left {
-      animation: stroke 1s ease 0.8s normal forwards;
-  }
-  
-  .checkmark-container {
-              position: relative;
-              width: 100px;
-              height: 100px;
-              margin: 0 auto 20px;
-          }
+        /* Apply background blur to the main content when loading is active */
+        .blur-background {
+            filter: blur(5px);
+        }
 
-          #popupModal {
-       position: fixed;
-       top: 50%;
-       left: 50%;
-       transform: translate(-50%, -50%);
-       width: 50%;
-       background-color: white;
-       border-radius: 10px;
-       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-       z-index: 9999;
-       display: none; /* Initially hidden */
-   }
+        /* Center spinner */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3rem;
+        }
 
-   .modal-content {
-       padding: 20px;
-       text-align: center;
-   }
+        .cross__svg {
+            border-radius: 50%;
+            display: block;
 
-   #popupModal h3 {
-       margin-bottom: 15px;
-   }
 
-   #popupModal p {
-       margin-bottom: 20px;
-   }
+            stroke-width: 3;
 
-   /* Close button style */
-   .close-btn {
-       background-color: #004102;
-       color: white;
-       border: none;
-       margin-left: 10px;
-       margin-right: 10px;
-       padding: 10px 20px;
-       cursor: pointer;
-       border-radius: 5px;
-   }
-   
-       </style>
+        }
+
+        .cross__circle {
+            animation: stroke 0.6s ease 0s normal forwards;
+            fill: none;
+            margin: 0 auto;
+            stroke: #e55454;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+        }
+
+        .cross__path {
+            stroke: #e55454;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            transform-origin: 50% 50% 0;
+        }
+
+        .cross__path--right {
+            animation: stroke 0.3s ease 0.8s normal forwards;
+        }
+
+        .cross__path--left {
+            animation: stroke 1s ease 0.8s normal forwards;
+        }
+
+        .checkmark-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+
+        #popupModal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            display: none;
+            /* Initially hidden */
+        }
+
+        .modal-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #popupModal h3 {
+            margin-bottom: 15px;
+        }
+
+        #popupModal p {
+            margin-bottom: 20px;
+        }
+
+        /* Close button style */
+        .close-btn {
+            background-color: #004102;
+            color: white;
+            border: none;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 
 </head>
 
@@ -165,9 +167,9 @@
         </div>
     </div>
     <div id="loadingOverlay" class="loading-overlay d-none"></div>
-        <div class="spinner-border text-light" role="status">
-            <span class="sr-only"></span>
-        </div>
+    <div class="spinner-border text-light" role="status">
+        <span class="sr-only"></span>
+    </div>
     </div>
 
     <div id="popupModal">
@@ -182,21 +184,21 @@
     <script>
 
         // Function to fetch and display employee data
-function checkUrl() {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    loadingOverlay.classList.remove('d-none');
+        function checkUrl() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('d-none');
 
-    var page_url = window.location.href;
-    var urlParams = new URLSearchParams(window.location.search);
+            var page_url = window.location.href;
+            var urlParams = new URLSearchParams(window.location.search);
 
 
-    let data = {url : page_url};
+            let data = { url: page_url };
 
-    if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
-        const mainContent = document.getElementById('mainContent');
-        mainContent.classList.add('blur-background');
-    
-    fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/invite_status/get", {
+            if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
+                const mainContent = document.getElementById('mainContent');
+                mainContent.classList.add('blur-background');
+
+                fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/invite_status/get", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -219,27 +221,29 @@ function checkUrl() {
                             // mainContent.classList.add('blur-background');  
                         } else {
                             if (data.Accepted) {
+                                loadingOverlay.classList.add('d-none');
+                                const mainContent = document.getElementById('mainContent');
                                 document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                                 popupModal.style.display = 'block';
                                 mainContent.classList.add('blur-background');
                                 closePopup.addEventListener('click', function () {
                                     window.location.href = 'index.html';
                                 });
-                            } 
-                    }
+                            }
+                        }
                     })
                     .catch(error => {
+                        loadingOverlay.classList.add('d-none');
                         console.error('Error:', error);
                     });
-                }
-                else
-                {
-                    loadingOverlay.classList.add('d-none');
-                }
-}
+            }
+            else {
+                loadingOverlay.classList.add('d-none');
+            }
+        }
 
         // Call fetchData when the page is fully loaded
-    document.addEventListener('DOMContentLoaded', checkUrl);
+        document.addEventListener('DOMContentLoaded', checkUrl);
 
         function handleCredentialResponse(response) {
             const loadingOverlay = document.getElementById('loadingOverlay');
