@@ -90,7 +90,6 @@
                 }
 
                 let userDetails = decodeJwtResponse(response.credential);
-
                 let data = {
                     company_id: cid,
                     id: userDetails.email,
@@ -98,7 +97,6 @@
                     signup_url: url,
                     is_employee: isEmployee
                 }
-
 
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
                     method: 'POST',
@@ -117,12 +115,11 @@
                         if (data.error) {
                             // showLogoutModal();  // Show failure modal
                         } else {
-                            // showSuccessModal();  // Show success modal
                             setTimeout(function () {
                                 if (urlParams.has('invite_id_c')) {
-                                    window.location.href = 'company.html';
-                                } else if (urlParams.has('invite_id_e')) {
                                     window.location.href = 'dashboard.html';
+                                } else if (urlParams.has('invite_id_e')) {
+                                    alert("Employee page is under maintenance.");
                                 }
 
                             }, 1000);
@@ -132,11 +129,9 @@
                         showLogoutModal();  // Show failure modal on error
                         console.error('Error:', error);
                     });
-
             }
             else {
                 alert("No invite ID found in the URL.");
-
             }
 
         }
