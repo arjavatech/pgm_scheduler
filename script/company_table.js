@@ -28,17 +28,13 @@ function viewcompanydetails() {
                             <span class="icon" title="Edit" style="cursor: pointer;">
                                 <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
                             </span>
-                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}">
+                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}" email-id="${element.email}">
                                 <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
-
                             </span>
                         </div>
                     </td>
                     <td>
-                          <span class="icon " style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}">
-                                <i class="fa-solid fa-paper-plane"></i>
-
-                            </span>
+                       <i class="fa fa-envelope paper-plane" style="color: blue;" ${element.invite_status == "Accepted" ? "disabled" : ""}></i>
                     </td>
                 `;
                 tableBody.appendChild(newRow);
@@ -63,12 +59,13 @@ function viewcompanydetails() {
                     const deleteIcon = event.target.closest('.delete-icon');
                     const companyId = deleteIcon.getAttribute('data-id');
                     const rowToDelete = deleteIcon.closest('tr');
+                    const email = deleteIcon.getAttribute('email-id');
 
-                    if (confirm('Are you sure you want to delete this company?')) {
-                        // Send PUT request to delete the company
-                        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}`, {
+                    // Show confirmation modal instead of using confirm
+                    showConfirmModal(() => {
+                        // If confirmed, proceed with delete
+                        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}/${email}`, {
                             method: 'PUT',
-                           
                         })
                         .then(response => {
                             if (!response.ok) {
@@ -81,15 +78,56 @@ function viewcompanydetails() {
                         })
                         .catch(error => {
                             console.error('Delete error:', error);
-                            alert('Failed to delete the company.');
+                            showAlert('Failed to delete the company.');
                         });
-                    }
+                    });
                 }
             });
         })
         .catch(error => {
             console.error('Fetch error:', error);
+            showAlert('Failed to load company details.');
         });
+}
+
+// Function to show the confirmation modal
+function showConfirmModal(onConfirm) {
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmYesBtn = document.getElementById('confirmYesBtn');
+    const confirmNoBtn = document.getElementById('confirmNoBtn');
+    const confirmCBtn = document.getElementById('confirmCBtn');
+    if (!confirmModal || !confirmYesBtn || !confirmNoBtn) {
+        console.error('Confirm modal elements are not found in the DOM.');
+        return;
+    }
+    
+    confirmModal.style.display = 'block';
+
+    confirmYesBtn.onclick = () => {
+        onConfirm();
+        confirmModal.style.display = 'none';
+    };
+
+    confirmNoBtn.onclick = () => {
+        confirmModal.style.display = 'none';
+    };
+    confirmCBtn.onclick = () => {
+        confirmModal.style.display = 'none';
+    };
+}
+
+// Function to show the alert modal
+function showAlert(message) {
+    const alertModal = document.getElementById('alertModal');
+    const alertMessage = document.getElementById('alertMessage');
+    const alertOkBtn = document.getElementById('alertOkBtn');
+    
+    alertMessage.innerText = message;
+    alertModal.style.display = 'block';
+
+    alertOkBtn.onclick = () => {
+        alertModal.style.display = 'none';
+    };
 }
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {

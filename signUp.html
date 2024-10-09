@@ -96,13 +96,13 @@ function checkUrl() {
                     })
                     .then(data => {
                         if (data.error) {
-                            console.log("error")
-                            console.log(data)
+                            alert("404- Not Found No invite ID found in the URL.");
                             
                         } else {
-                            console.log(data)
-                            alert("404- Not Found No invite ID found in the URL.");
-                        }
+                            if (data.Accepted) {
+                            
+                        } 
+                    }
                     })
                     .catch(error => {
                         console.error('Error:', error);
