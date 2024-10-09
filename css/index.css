@@ -8,7 +8,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 65%;
+    width: 75%;
+    margin-top: -10% !important;
 }
 
 body {
@@ -17,7 +18,7 @@ body {
 }
 
 #left {
-    background-color: #7706CD;
+    background-image: radial-gradient(#004102, #131313 100%);
     height: 100vh;
 }
 
@@ -25,6 +26,7 @@ body {
     background-color: white;
     border-radius: 10px;
     width: 60%;
+    height: 90%;
 }
 
 .input-bottom-border {
@@ -37,7 +39,7 @@ body {
 }
 
 .login-button {
-    background-color: #7706CD;
+    background-color: #004102;
     color: white;
     width: 90%;
     border: none;
@@ -50,7 +52,7 @@ i {
 }
 
 span {
-    color: #7706CD;
+    color:#004102;
     font-weight: bold;
 }
 
@@ -65,9 +67,16 @@ span {
 
 input::placeholder {
     color: #9e9e9e;
-    font-size: 18px;
+    font-size: 15px;
 }
 
+.image h3{
+    margin-top: -80% !important;
+}
+
+.conte{
+    margin-top: -5% !important;
+}
 
 
 @media (max-width:450px) {
@@ -107,4 +116,43 @@ input::placeholder {
         width: 80%;
     }
 }
+
+
+@media (max-width:990px) {
+    #header {
+        font-size: 24px;
+    }
+}
+
+@media (max-width:450px) {
+    #header {
+        font-size: 13px;
+    }
+
+    .container-sty {
+        width: 80%;
+    }
+
+    .login-button {
+        margin-top: 10% !important;
+        width: 80%;
+        padding: 2%;
+        font-size: 12px;
+        border-radius: 6px !important;
+    }
+    #login{
+        font-size: 12px;
+    }
+}
+
+@media(max-width:769px){
+    .container-sty{
+        width: 80% !important;
+        height: 94%;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+   
+}
+
 
