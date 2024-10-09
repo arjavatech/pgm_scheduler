@@ -33,14 +33,16 @@ z-index: 9999; /* To make sure it appears above everything */
 
 /* Apply background blur to the main content when loading is active */
 .blur-background {
-filter: blur(5px);
+    filter: blur(5px);
 }
 
 /* Center spinner */
 .spinner-border {
-width: 3rem;
-height: 3rem;
-border-width: 0.3rem;
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3rem;
+    background: rgba(0, 0, 0, 1);
+    background-color: #0c251d;
 }
 
 /* Updated CSS for popupModal */
@@ -132,7 +134,7 @@ border-radius: 5px;
 </head>
 
 <body>
-    <div id="fb-root"></div>
+    <!-- <div id="fb-root"></div> -->
 
     <div class="container-fluid" id="mainContent">
         <div class="row">
@@ -202,9 +204,6 @@ border-radius: 5px;
                 
                 mainContent.classList.add('blur-background');
 
-                console.log(data)
-                console.log("---------------------")
-
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/invite_status/get", {
                     method: 'POST',
                     headers: {
@@ -215,7 +214,7 @@ border-radius: 5px;
                     .then(response => {
 
                         loadingOverlay.classList.add('d-none');
-                        
+                        mainContent.classList.remove('blur-background');
 
                         if (!response.ok) {
                             throw new Error(`Error: ${response.status}`);
@@ -224,23 +223,17 @@ border-radius: 5px;
                     })
                     .then(data => {
                         if (data.error) {
-                            mainContent.classList.remove('blur-background');
                             // document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                             // popupModal.style.display = 'block';
                             // mainContent.classList.add('blur-background');  
                         } else {
-                            if (data.Accepted) {
-                                loadingOverlay.classList.add('d-none');
+                            if (data === "Accepted") {
                                 document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                                 popupModal.style.display = 'block';
                                 mainContent.classList.add('blur-background');
                                 closePopup.addEventListener('click', function () {
                                     window.location.href = 'index.html';
                                 });
-                            }
-                            else
-                            {
-                                mainContent.classList.remove('blur-background');
                             }
                         }
                     })
