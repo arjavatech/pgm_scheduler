@@ -16,25 +16,18 @@
      <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 </head>
-<style>
-    @media (max-width:990px) {
-        #header{
-            font-size: 24px;
-        }
-    }
-</style>
 
 <body>
     <div class="container-fluid">
         <div class="row">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1 order-md-1"
+                    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1"
                         id="left">
                         <div class="container container-sty  text-center">
-                            <h2 class="text-center m-3" id="header">Welcome Back</h2>
-                            <input type="text" class="input-bottom-border mt-3" placeholder="Username/Phone Number">
-                            <input id="password" placeholder="Password" type="password"
+                            <h2 class="text-center m-3"><span style="color: #52525b;">Welcome</span> Back</h2>
+                            <p class="pt-3">Please Enter OTP</p>
+                            <input id="OTP" placeholder="OTP" type="text"
                                 class="input-bottom-border mt-3">
 
                             <button type="submit" class="mt-5 login-button">Submit</button>
@@ -48,14 +41,11 @@
                                 <div class="col-2">
                                     <i class="fab fa-facebook fa-2x" onclick = "loginWithFacebook()"></i>
                                 </div>
-                                <!-- <div class="col-2">
-                                    <i class="fab fa-google fa-2x"></i>
-                                </div> -->
                                 <p class="g_id_signin mt-4"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center order-1 order-xl-2 order-md-2"
+                    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 col-sty d-flex flex-column justify-content-center align-items-center order-1 order-xl-2"
                         id="image">
                         <img src="images/login img.png" alt="Login Image" class="m-4 p-5 img-fluid login-img-sty">
                         <h3 class="text-center">

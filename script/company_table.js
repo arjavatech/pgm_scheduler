@@ -12,14 +12,10 @@ function viewcompanydetails() {
             return response.json();
         })
         .then(data => {
-            // Store the fetched data
             employeesData = data;
-            let index = 0;
+            tableBody.innerHTML = ''; // Clear any previous rows
 
-            // Clear the existing table body content
-            tableBody.innerHTML = '';
-
-            // Populate the table body with fetched data
+            // Populate the table
             employeesData.forEach(element => {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
@@ -28,29 +24,29 @@ function viewcompanydetails() {
                     <td class="phone-column">${element.first_name}</td>
                     <td class="isAdmin">${element.email}</td>
                     <td>
-                    <div>
+                        <div>
                             <span class="icon" title="Edit" style="cursor: pointer;">
                                 <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
                             </span>
-                            <span class="icon" title="Delete" style="cursor: pointer; margin-left: 10px; ">
+                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}">
                                 <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
+
                             </span>
                         </div>
                     </td>
                     <td>
-    <button class="btn btn-send" ${element.invite_status == "Accepted" ? "disabled" : ""}>
-    ${element.invite_status == "Accepted" ? "Send" : "Resend"}
-    </button>
-</td>
+                          <span class="icon " style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}">
+                                <i class="fa-solid fa-paper-plane"></i>
+
+                            </span>
+                    </td>
                 `;
                 tableBody.appendChild(newRow);
-                index++;
             });
 
             // Initialize DataTable after populating data
             $(document).ready(function () {
                 $('#ticketTable').DataTable({
-                    // Optional configurations
                     "paging": true,
                     "lengthChange": true,
                     "searching": true,
@@ -58,17 +54,43 @@ function viewcompanydetails() {
                     "info": true,
                     "autoWidth": false,
                     "responsive": true,
-
                 });
+            });
+
+            // Event listener for deleting a company
+            tableBody.addEventListener('click', function (event) {
+                if (event.target.closest('.delete-icon')) {
+                    const deleteIcon = event.target.closest('.delete-icon');
+                    const companyId = deleteIcon.getAttribute('data-id');
+                    const rowToDelete = deleteIcon.closest('tr');
+
+                    if (confirm('Are you sure you want to delete this company?')) {
+                        // Send PUT request to delete the company
+                        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}`, {
+                            method: 'PUT',
+                           
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Error: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(() => {
+                            rowToDelete.remove();
+                        })
+                        .catch(error => {
+                            console.error('Delete error:', error);
+                            alert('Failed to delete the company.');
+                        });
+                    }
+                }
             });
         })
         .catch(error => {
             console.error('Fetch error:', error);
         });
 }
-
-
-
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {
     var sidebar = document.getElementById('left');

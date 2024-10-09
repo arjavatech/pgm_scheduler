@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 65%;
+    width: 75%;
 }
 
 body {
@@ -17,14 +17,14 @@ body {
 }
 
 #left {
-    background-color: #7706CD;
+    background-image: radial-gradient(#004102, #131313 50%);
     height: 100vh;
 }
 
 .container-sty {
     background-color: white;
     border-radius: 10px;
-    width: 60%;
+    width: 70%;
 }
 
 .input-bottom-border {
@@ -37,7 +37,7 @@ body {
 }
 
 .login-button {
-    background-color: #7706CD;
+    background-color: #004102;
     color: white;
     width: 90%;
     border: none;
@@ -50,7 +50,7 @@ i {
 }
 
 span {
-    color: #7706CD;
+    color:#004102;
     font-weight: bold;
 }
 
@@ -65,7 +65,7 @@ span {
 
 input::placeholder {
     color: #9e9e9e;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 
