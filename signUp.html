@@ -234,7 +234,13 @@
                     })
                     .catch(error => {
                         loadingOverlay.classList.add('d-none');
-                        console.error('Error:', error);
+                                const mainContent = document.getElementById('mainContent');
+                                document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
+                                popupModal.style.display = 'block';
+                                mainContent.classList.add('blur-background');
+                                closePopup.addEventListener('click', function () {
+                                    window.location.href = 'index.html';
+                                });
                     });
             }
             else {
