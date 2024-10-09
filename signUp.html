@@ -77,6 +77,21 @@
       animation: stroke 1s ease 0.8s normal forwards;
   }
   
+  .checkmark-container {
+              position: relative;
+              width: 100px;
+              height: 100px;
+              margin: 0 auto 20px;
+          }
+
+          #popupModal .close-btn {
+    background-image: radial-gradient(#004102, #131313 50%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
    
        </style>
 
@@ -131,13 +146,14 @@
             <h3>Invalid URL</h3>
             <p id="txt"></p>
             <div class="checkmark-container">
-                <svg class="cross__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                    <circle class="cross__circle" cx="26" cy="26" r="25" fill="none"/>
-                    <path class="cross__path cross__path--right" fill="none" d="M16,16 l20,20" />
-                    <path class="cross__path cross__path--right" fill="none" d="M16,36 l20,-20" />
-                </svg>
+                <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+                    <g stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+                      <path class="circle" d="M13 1C6.372583 1 1 6.372583 1 13s5.372583 12 12 12 12-5.372583 12-12S19.627417 1 13 1z"/>
+                      <path class="tick" d="M6.5 13.5L10 17 l8.808621-8.308621"/>
+                    </g>
+                  </svg>
             </div>
-            <button class="close-btn"   id="closePopupFailure">Retry</button>
+            <button class="close-btn" id="closePopup">Continue</button>
         </div>
     </div>
 
@@ -177,16 +193,17 @@ function checkUrl() {
                     })
                     .then(data => {
                         if (data.error) {
-                            document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
-                            popupModal.style.display = 'block';
-                            mainContent.classList.add('blur-background');
-                            
-                            
+                            // document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
+                            // popupModal.style.display = 'block';
+                            // mainContent.classList.add('blur-background');  
                         } else {
                             if (data.Accepted) {
                                 document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                                 popupModal.style.display = 'block';
                                 mainContent.classList.add('blur-background');
+                                closePopup.addEventListener('click', function () {
+                                    window.location.href = 'index.html';
+                                });
                             } 
                     }
                     })
@@ -204,6 +221,8 @@ function checkUrl() {
     document.addEventListener('DOMContentLoaded', checkUrl);
 
         function handleCredentialResponse(response) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('d-none');
 
             var url = window.location.href;
             var urlParams = new URLSearchParams(window.location.search);
@@ -238,6 +257,7 @@ function checkUrl() {
                     body: JSON.stringify(data)
                 })
                     .then(response => {
+                        loadingOverlay.classList.add('d-none');
                         if (!response.ok) {
                             throw new Error(`Error: ${response.status}`);
                         }
@@ -258,12 +278,20 @@ function checkUrl() {
                         }
                     })
                     .catch(error => {
-                        showLogoutModal();  // Show failure modal on error
+                        loadingOverlay.classList.add('d-none');
                         console.error('Error:', error);
                     });
             }
             else {
-                alert("No invite ID found in the URL.");
+                loadingOverlay.classList.add('d-none');
+                const mainContent = document.getElementById('mainContent');
+                document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
+                                popupModal.style.display = 'block';
+                                mainContent.classList.add('blur-background');
+                                closePopup.addEventListener('click', function () {
+                                    window.location.href = 'index.html';
+                                });
+                // alert("No invite ID found in the URL.");
             }
 
         }
