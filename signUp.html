@@ -15,16 +15,81 @@
     <!-- Google Sign-In Script -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
+        <!-- Custom CSS -->
+        <style>
+            /* Loading Overlay Style */
+   .loading-overlay {
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       z-index: 9999; /* To make sure it appears above everything */
+   }
+   
+   /* Apply background blur to the main content when loading is active */
+   .blur-background {
+       filter: blur(5px);
+   }
+   
+   /* Center spinner */
+   .spinner-border {
+       width: 3rem;
+       height: 3rem;
+       border-width: 0.3rem;
+   }
+
+   .cross__svg {
+      border-radius: 50%;
+      display: block;
+     
+     
+      stroke-width: 3;
+     
+  }
+  
+  .cross__circle {
+      animation: stroke 0.6s ease 0s normal forwards;
+      fill: none;
+      margin: 0 auto;
+      stroke: #e55454;
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+  }
+  
+  .cross__path {
+      stroke: #e55454;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      transform-origin: 50% 50% 0;
+  }
+  
+  .cross__path--right {
+      animation: stroke 0.3s ease 0.8s normal forwards;
+  }
+  
+  .cross__path--left {
+      animation: stroke 1s ease 0.8s normal forwards;
+  }
+  
+   
+       </style>
+
 </head>
 
 <body>
     <div id="fb-root"></div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="mainContent">
         <div class="row">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-xl-5 col-md-5 col-lg-5 col-sty d-flex flex-column justify-content-center align-items-center order-1 order-xl-2"
+                    <div class="col-sm-12 col-xl-6 col-md-5 col-lg-5 col-sty d-flex flex-column justify-content-center align-items-center order-1 order-xl-2"
                         id="fix">
                         <img src="images/login img.png" alt="Login Image" class="m-4 p-5 img-fluid login-img-sty">
                         <h3 class="text-center">
@@ -35,7 +100,7 @@
                         </p>
                     </div>
 
-                    <div class="col-sm-12 col-xl-7 col-md-7 col-lg-7 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1"
+                    <div class="col-sm-12 col-xl-6 col-md-7 col-lg-7 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1"
                         id="left">
                         <div class="container container-sty text-center">
                             <h2 class="text-center m-3 fw-bold">Sign Up</h2>
@@ -55,19 +120,44 @@
             </div>
         </div>
     </div>
+    <div id="loadingOverlay" class="loading-overlay d-none"></div>
+        <div class="spinner-border text-light" role="status">
+            <span class="sr-only"></span>
+        </div>
+    </div>
+
+    <div id="popupModal">
+        <div class="modal-content">
+            <h3>Invalid URL</h3>
+            <p id="txt"></p>
+            <div class="checkmark-container">
+                <svg class="cross__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="cross__circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="cross__path cross__path--right" fill="none" d="M16,16 l20,20" />
+                    <path class="cross__path cross__path--right" fill="none" d="M16,36 l20,-20" />
+                </svg>
+            </div>
+            <button class="close-btn"   id="closePopupFailure">Retry</button>
+        </div>
+    </div>
 
 
     <script>
 
         // Function to fetch and display employee data
 function checkUrl() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    loadingOverlay.classList.remove('d-none');
 
     var page_url = window.location.href;
     var urlParams = new URLSearchParams(window.location.search);
 
+
     let data = {url : page_url};
 
     if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
+        const mainContent = document.getElementById('mainContent');
+        mainContent.classList.add('blur-background');
     
     fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/invite_status/get", {
                     method: 'POST',
@@ -77,6 +167,9 @@ function checkUrl() {
                     body: JSON.stringify(data)
                 })
                     .then(response => {
+
+                        loadingOverlay.classList.add('d-none');
+
                         if (!response.ok) {
                             throw new Error(`Error: ${response.status}`);
                         }
@@ -84,17 +177,26 @@ function checkUrl() {
                     })
                     .then(data => {
                         if (data.error) {
-                            alert("404- Not Found No invite ID found in the URL.");
+                            document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
+                            popupModal.style.display = 'block';
+                            mainContent.classList.add('blur-background');
+                            
                             
                         } else {
                             if (data.Accepted) {
-                                alert("404- Not Found Invalid URL.");
+                                document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
+                                popupModal.style.display = 'block';
+                                mainContent.classList.add('blur-background');
                             } 
                     }
                     })
                     .catch(error => {
                         console.error('Error:', error);
                     });
+                }
+                else
+                {
+                    loadingOverlay.classList.add('d-none');
                 }
 }
 
