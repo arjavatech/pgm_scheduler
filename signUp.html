@@ -189,6 +189,7 @@ border-radius: 5px;
         // Function to fetch and display employee data
         function checkUrl() {
             const loadingOverlay = document.getElementById('loadingOverlay');
+            const mainContent = document.getElementById('mainContent');
             loadingOverlay.classList.remove('d-none');
 
             var page_url = window.location.href;
@@ -198,7 +199,7 @@ border-radius: 5px;
             let data = { url: page_url };
 
             if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
-                const mainContent = document.getElementById('mainContent');
+                
                 mainContent.classList.add('blur-background');
 
                 console.log(data)
@@ -214,6 +215,7 @@ border-radius: 5px;
                     .then(response => {
 
                         loadingOverlay.classList.add('d-none');
+                        
 
                         if (!response.ok) {
                             throw new Error(`Error: ${response.status}`);
@@ -222,13 +224,13 @@ border-radius: 5px;
                     })
                     .then(data => {
                         if (data.error) {
+                            mainContent.classList.remove('blur-background');
                             // document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                             // popupModal.style.display = 'block';
                             // mainContent.classList.add('blur-background');  
                         } else {
                             if (data.Accepted) {
                                 loadingOverlay.classList.add('d-none');
-                                const mainContent = document.getElementById('mainContent');
                                 document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                                 popupModal.style.display = 'block';
                                 mainContent.classList.add('blur-background');
@@ -236,11 +238,14 @@ border-radius: 5px;
                                     window.location.href = 'index.html';
                                 });
                             }
+                            else
+                            {
+                                mainContent.classList.remove('blur-background');
+                            }
                         }
                     })
                     .catch(error => {
                         loadingOverlay.classList.add('d-none');
-                                const mainContent = document.getElementById('mainContent');
                                 document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                                 popupModal.style.display = 'block';
                                 mainContent.classList.add('blur-background');
@@ -251,6 +256,7 @@ border-radius: 5px;
             }
             else {
                 loadingOverlay.classList.add('d-none');
+                mainContent.classList.remove('blur-background');
             }
         }
 
