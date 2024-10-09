@@ -71,6 +71,48 @@
 
     <script>
 
+        // Function to fetch and display employee data
+function checkUrl() {
+
+    var page_url = window.location.href;
+    var urlParams = new URLSearchParams(window.location.search);
+
+    let data = {url : page_url};
+
+    if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
+    
+    fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/invite_status/get", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Error: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            console.log("error")
+                            console.log(data)
+                            
+                        } else {
+                            console.log(data)
+                            alert("404- Not Found No invite ID found in the URL.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+}
+
+        // Call fetchData when the page is fully loaded
+    document.addEventListener('DOMContentLoaded', checkUrl);
+
         function handleCredentialResponse(response) {
 
             var url = window.location.href;
