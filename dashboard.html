@@ -21,20 +21,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="dashboard.css">
-
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 
 </head>
 
 <body>
+    <div class="overlay" id="overlay">
+        <div class="spinner"></div>
+</div>
+    <div id="nav">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="col-4">
+               <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle" style="width: 20%;">
+            </div>
+            <div class="col-4 text-center">
+                <img src="images/logo.png" alt="Logo" style="max-width: 100%;">
+            </div>
+            <div class="col-4 text-end">
+                <img src="icon/Mask group.png" alt="Profile Icon" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
-        <div class="row ">
-            <div class="container res">
+        <div class="row">
+            <div class="container">
                 <div class="row">
-                    <!-- Sidebar -->
-                    <div class="col-sm-12 col-xl-2 col-md-2 col-lg-2 col-sty" id="left">
+                     <!-- Sidebar -->
+                     <div class="col-sm-12 col-xl-2 col-md-2 col-lg-2 col-sty" id="left">
                         <!-- Sidebar -->
                         <div id="sidebar">
                             <div id="sidebar-header" class="m-3 mb-5">
@@ -42,29 +60,29 @@
                             </div>
                             <div id="sidebar-content">
                                 <div class="list-group list-group-flush">
-                                    <a href="exampl.html" class="list-group-item list-group-item-action bg-purple"><img
+                                    <a href="dashboard.html"
+                                        class="list-group-item list-group-item-action bg-purple"><img
                                             src="icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Dashboard</span></a>
                                     <a class="list-group-item list-group-item-action bg-purple dropdown-toggle" href="#"
-                                        id="ticketMenu" data-toggle="collapse" data-target="#ticketSubmenu"
-                                        aria-expanded="false" aria-controls="ticketSubmenu"><img
-                                            src="icon/Mask group-3.png" style="width: 25px;margin-top: -5px;">
+                                        id="ticketMenu" data-bs-toggle="collapse" data-bs-target="#ticketSubmenu"
+                                        aria-expanded="false" aria-controls="ticketSubmenu">
+                                        <img src="icon/Mask group-3.png" style="width: 25px;margin-top: -5px;">
                                         <span style="padding-left: 10px;color: white;">Ticket</span>
                                     </a>
+
                                     <div id="ticketSubmenu" class="collapse">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="paddingTicket.html"
-                                                    class=" bg-purple">Pending
-                                                    Ticket</a></li>
-                                            <li class="list-group-item"><a href="Inprocess.html"
-                                                    class=" bg-purple">In-Progress</a>
+                                        <ul class="list-group list-group-flush" id="list-group-flush">
+                                            <li class="list-group-item"><a href="Unassigned.html">Unassigned Tickets</a>
                                             </li>
-                                            <li class="list-group-item"><a href="invoice.html" class=" bg-purple">Ready
-                                                    for
-                                                    Invoice</a></li>
-                                            <li class="list-group-item"><a href="completed.html"
-                                                    class=" bg-purple">Completed
-                                                    Ticket</a></li>
+                                            <li class="list-group-item"><a href="Inprocess.html"
+                                                    class=" bg-purple">In-Progress</a></li>
+                                            <li class="list-group-item"><a href="invoice.html"
+                                                    class=" bg-purple">ReadyForInvoice</a></li>
+                                            <li class="list-group-item"><a href="completed.html">Completed Ticket</a>
+                                            </li>
+                                            <li class="list-group-item"><a href="RejectedTicket.html">RejectedTicket</a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <a href="employee_ticket.html"
@@ -83,15 +101,15 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- End Sidebar -->
                     <!-- Main Content -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-8 mx-auto" id="fix">
-                        <p
+                        <span
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5);margin-left: -12px;padding: 20px;margin-right: -12px;font-weight: bold;">
                             Admin <span class="span ">XYZ Company <img src="icon/Mask group (2).png" alt=""
                                     style="width: 40px;padding-left: 10px;"></span>
-                        </p>
-                        <div class="container p-4">
+                        </span>
+                        <div class="container p-4 ">
                             <div class="row">
 
                                 <div class="box-model">
@@ -100,29 +118,29 @@
                                         <!-- First Box -->
                                         <div class="col-6 col-sm-6 col-md-3 mb-3">
                                             <div class="box gradient-blue">
-                                                <h3>23</h3>
+                                                <h3 id="todal-ticket">23</h3>
                                                 <p>Total Tickets</p>
                                             </div>
                                         </div>
                                         <!-- Second Box -->
                                         <div class="col-6 col-sm-6 col-md-3 mb-3">
                                             <div class="box gradient-pink">
-                                                <h3>23</h3>
-                                                <p>Total Tickets</p>
+                                                <h3 id="UnAssigned-ti">17</h3>
+                                                <p>UnAssigned Tickets</p>
                                             </div>
                                         </div>
                                         <!-- Third Box -->
                                         <div class="col-6 col-sm-6 col-md-3 mb-3">
                                             <div class="box gradient-yellow">
-                                                <h3>23</h3>
-                                                <p>Total Tickets</p>
+                                                <h3>4</h3>
+                                                <p>In-progress Tickets</p>
                                             </div>
                                         </div>
                                         <!-- Fourth Box -->
                                         <div class="col-6 col-sm-6 col-md-3 mb-3">
                                             <div class="box gradient-purple">
-                                                <h3>23</h3>
-                                                <p>Total Tickets</p>
+                                                <h3>3</h3>
+                                                <p>Completed Tickets</p>
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="container m-1">
+                        <div class="container m-1 rc ">
                             <div class="row  ">
                                 <div class=" col-lg-8  ">
                                     <div class="card-body">
@@ -141,9 +159,11 @@
                                                 </p>
 
                                                 <!-- Responsive buttons with margin to ensure wrapping and proper alignment -->
-                                                <button onclick="updateChart('12months', this)" class=" active ms-5">12
+                                                <button onclick="updateChart('12months', this)"
+                                                    class="active ms-5 d-none d-md-inline-block">12 Months</button>
+
+                                                <button onclick="updateChart('6months', this)" class="dis">6
                                                     Months</button>
-                                                <button onclick="updateChart('6months', this)">6 Months</button>
                                                 <button onclick="updateChart('30days', this)">30 Days</button>
                                                 <button onclick="updateChart('7days', this)">7 Days</button>
                                                 <button onclick="updateChart('today', this)">Today</button>
@@ -166,17 +186,17 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-7 col-md-12  col-sm-12 ">
+                                        <div class="col-lg-7  ">
                                             <div class="box-border  mb-4 ">
                                                 <h5 style="font-weight:  bolder;" class="mb-4">Employees Count</h5>
                                                 <div class="row mt-3">
-                                                    <div class="col-6 col-lg-6 col-sm-6 col-md-6   mb-3">
+                                                    <div class="col-6 col-lg-6 col-sm-12 col-md-6 cd mb-3">
                                                         <div class="box2 ">
                                                             <h3>23</h3>
                                                             <p>Total Employees</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-6 col-lg-6 col-sm-6 col-md-6  mb-3">
+                                                    <div class="col-6 col-lg-6 col-sm-12 col-md-6 cd mb-3">
                                                         <div class="box3">
                                                             <h3>13</h3>
                                                             <p>Available Employees</p>
@@ -191,7 +211,7 @@
                                     <div class="card note rounded-3">
                                         <div class="card-body">
                                             <p style="font-weight: bolder;">Notification</p>
-                                            <ul class="list-group custom-list p-1" id="list-group-flush">
+                                            <ul class="list-group custom-list p-1" id="list-group-flush2">
                                                 <!-- List items will be dynamically added here -->
                                             </ul>
                                         </div>
@@ -221,7 +241,7 @@
         ];
 
         // Select the <ul> element with the class 'list-group-flush'
-        const ul = document.getElementById('list-group-flush');
+        const ul = document.getElementById('list-group-flush2');
 
         // Loop through the listItems array and create <li> elements
         for (let i = 0; i < listItems.length; i++) {
@@ -246,7 +266,12 @@
 
 
     <!-- Custom JavaScript -->
-
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            var sidebar = document.getElementById('left');
+            sidebar.classList.toggle('active');
+        });
+    </script>
 </body>
 
 </html>

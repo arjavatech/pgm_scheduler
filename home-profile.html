@@ -15,77 +15,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/home_profile.css">
-    <!-- <link rel="stylesheet" href="final.css"> -->
+
 </head>
 <style>
-    .list-group-item {
-        background-color: #7706CD !important;
-        color: white !important;
-        font-size: small !important;
-        border: none !important;
-    }
-
-
-    .list-group-item-action {
-        background-color: #7706CD !important;
-        color: white !important;
-
-    }
-
-    .note .list-group-item {
-        position: relative !important;
-        list-style: circle !important;
-        padding: var(--bs-list-group-item-padding-y) var(--bs-list-group-item-padding-x) !important;
-        color: var(--bs-list-group-color) !important;
-        text-decoration: none !important;
-        background-color: var(--bs-list-group-bg) !important;
-        border: none !important;
-
-        font-size: x-small !important;
-    }
-
-    .list-group-item a {
-        color: white;
-    }
-
-    @media (max-width:767px) {
-        .content {
-            color: white;
-            padding-left: 2%;
-        }
-    }
-
-    @media (max-width:450px) {
-        .content {
-            color: white;
-            padding-left: 4%;
-        }
-
-        #icon {
-            margin-left: 2%;
-        }
-
-        #icon2 {
-            margin-left: 8%;
-        }
-
-        #logout {
-            position: absolute;
-            /* bottom: 0; */
-            display: inline-flex;
-            background-color: red;
-        }
-    }
-
-    #logout {
-        position: fixed;
-        bottom: 0;
-        display: inline-flex;
-    }
+    
 </style>
 
 <body>
+    <div id="nav">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="col-4">
+               <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle" style="width: 20%;">
+            </div>
+            <div class="col-4 text-center">
+                <img src="images/logo.png" alt="Logo" style="max-width: 100%;">
+            </div>
+            <div class="col-4 text-end">
+                <img src="icon/Mask group.png" alt="Profile Icon" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="container">
@@ -99,32 +50,38 @@
                             <div id="sidebar-content">
                                 <div class="list-group list-group-flush">
                                     <a href="dashboard.html"
-                                        class="list-group-item list-group-item-action bg-purple"><img src="icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span style="padding-left: 10px;color: white;">Dashboard</span></a>
+                                        class="list-group-item list-group-item-action bg-purple"><img
+                                            src="icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span
+                                            style="padding-left: 10px;color: white;">Dashboard</span></a>
                                     <a class="list-group-item list-group-item-action bg-purple dropdown-toggle" href="#"
-                                        id="ticketMenu" data-toggle="collapse" data-target="#ticketSubmenu"
-                                        aria-expanded="false" aria-controls="ticketSubmenu"><img src="icon/Mask group-3.png" style="width: 25px;margin-top: -5px;">
+                                        id="ticketMenu" data-bs-toggle="collapse" data-bs-target="#ticketSubmenu"
+                                        aria-expanded="false" aria-controls="ticketSubmenu">
+                                        <img src="icon/Mask group-3.png" style="width: 25px;margin-top: -5px;">
                                         <span style="padding-left: 10px;color: white;">Ticket</span>
                                     </a>
+
                                     <div id="ticketSubmenu" class="collapse">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="paddingTicket.html"
-                                                    class=" bg-purple">Pending
-                                                    Ticket</a></li>
-                                            <li class="list-group-item"><a href="Inprocess.html"
-                                                    class=" bg-purple">In-Progress</a>
+                                        <ul class="list-group list-group-flush" id="list-group-flush">
+                                            <li class="list-group-item"><a href="Unassigned.html">Unassigned Tickets</a>
                                             </li>
-                                            <li class="list-group-item"><a href="invoice.html" class=" bg-purple">Ready
-                                                    for
-                                                    Invoice</a></li>
-                                            <li class="list-group-item"><a href="completed.html"
-                                                    class=" bg-purple">Completed
-                                                    Ticket</a></li>
+                                            <li class="list-group-item"><a href="Inprocess.html"
+                                                    class=" bg-purple">In-Progress</a></li>
+                                            <li class="list-group-item"><a href="invoice.html"
+                                                    class=" bg-purple">ReadyForInvoice</a></li>
+                                            <li class="list-group-item"><a href="completed.html">Completed Ticket</a>
+                                            </li>
+                                            <li class="list-group-item"><a href="RejectedTicket.html">RejectedTicket</a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <a href="employee_ticket.html"
-                                        class="list-group-item list-group-item-action bg-purple"><img src="icon/Mask group.png" style="width: 30px;margin-top: -5px;"><span style="padding-left: 10px;color: white;">Employees</span></a>
+                                        class="list-group-item list-group-item-action bg-purple"><img
+                                            src="icon/Mask group.png" style="width: 30px;margin-top: -5px;"><span
+                                            style="padding-left: 10px;color: white;">Employees</span></a>
                                     <a href="home-profile.html"
-                                        class="list-group-item list-group-item-action bg-purple"><img src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span style="padding-left: 10px;color: white;">Profile</span></a>
+                                        class="list-group-item list-group-item-action bg-purple"><img
+                                            src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
+                                            style="padding-left: 10px;color: white;">Profile</span></a>
                                     <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
                                         <span class="content text-white list-group-item">Logout</span>
@@ -134,38 +91,151 @@
                         </div>
                     </div>
 
-
                     <!-- Right Column: Profile Form -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5);margin-left: -12px;padding: 20px;margin-right: -12px;font-weight: bold;">
-                            Admin <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
-                                    style="width: 40px;padding-left: 10px;"></span>
+                            Admin <span class="span" style="float: inline-end;">XYZ Company <img
+                                    src="icon/Mask group (2).png" alt="" style="width: 40px;padding-left: 10px;"></span>
                         </p>
 
 
-                        <h2 class="text-center m-3 mt-5 fw-bold">Profile</h2>
-                        <div class="container container-sty text-center">
+                        <h3 class="text-center fw-bold  mt-4" id="header">Profile</h3>
+                        <div class="overlay" id="overlay">
+                            <div class="spinner"></div>
+                        </div>
+                        <label for="uploadLogo" class="upload-label d-flex justify-content-center">
+                            <div class="logo-sty">
+                                <img id="logoPreview" alt="Upload Logo" style="max-width: 100%; height: auto;">
+                                <input type="file" id="uploadLogo" accept="image/*">
+                                <!-- Pencil icon -->
+                                <span class="icon-pencil"><i class="fas fa-pencil-alt"></i></span>
+                            </div>
+                        </label>
 
-                            <input type="text" class="input-bottom-border mt-4" placeholder="Company Name" disabled
-                                style="background-color: #e5e5e5;">
-                            <label for="uploadLogo" class="upload-label">
-                                Upload Company Logo
-                                <input type="file" id="uploadLogo" class="form-control-file mt-4">
-                            </label>
-                            <textarea rows="1" placeholder="Company Address"
-                                class="input-bottom-border mt-4"></textarea>
-                            <input placeholder="First Name" type="text" class="input-bottom-border mt-4">
-                            <input placeholder="Last Name" type="text" class="input-bottom-border mt-4">
-                            <input placeholder="Phone Number" type="text" class="input-bottom-border mt-4">
-                            <input id="email" placeholder="Email" type="email" class="input-bottom-border mt-4">
-                            <button type="submit" class="mt-5 mb-5 login-button">Update</button>
+
+
+                        <div class="container box-sty">
+                            <form id="settingsForm" class="p-5 text-center">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield mb-4">
+                                            <input id="companyName" placeholder=" " type="text" class="input-sty">
+                                            <label class="label-sty">Company Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield">
+                                            <input type="tel" id="phone" name="phoneNumber" placeholder=" "
+                                                class="input-sty">
+                                            <label>Phone Number</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield mb-4">
+                                            <input id="firstName" placeholder=" " type="text" class="input-sty">
+                                            <label class="label-sty">First name</label>
+                                            <span class="text-danger" id="errorFName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield mb-4">
+                                            <input id="lastName" placeholder=" " type="text" class="input-sty">
+                                            <label class="label-sty">Last name</label>
+                                            <span class="text-danger" id="errorLName"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield mb-4">
+                                            <input id="street" placeholder=" " type="text" class="input-sty">
+                                            <label class="label-sty">Street</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield">
+                                            <input id="city" placeholder=" " type="text" class="input-sty">
+                                            <label class="label-sty">City</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield">
+                                            <input type="text" id="zip" name="zip" placeholder=" " class="input-sty">
+                                            <label>Zip</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="material-textfield">
+                                            <input type="email" id="email" name="email" placeholder=" "
+                                                class="input-sty">
+                                            <label>Email</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn-green float-end">Update</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            var sidebar = document.getElementById('left');
+            sidebar.classList.toggle('active');
+        });
+
+
+        document.getElementById('uploadLogo').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('logoPreview').src = e.target.result; // Set the image source to the uploaded file
+                };
+                reader.readAsDataURL(file); // Convert the file into a data URL
+            }
+        });
+        const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/ShddWeFGFGkk9b67STTJY4`;
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Store the fetched data
+                employeesData = data;
+                console.log(employeesData)
+
+
+                document.getElementById("companyName").value = employeesData.company_name
+                document.getElementById("phone").value = employeesData.phone_number
+                document.getElementById("firstName").value = employeesData.first_name
+                document.getElementById("lastName").value = employeesData.last_name
+                document.getElementById("street").value = employeesData.street
+                document.getElementById("city").value = employeesData.city
+                document.getElementById("zip").value = employeesData.zip
+                document.getElementById("email").value = employeesData.email
+                document.getElementById("state").value = employeesData.state
+
+            });
+
+
+
+    </script>
 </body>
 
 </html>

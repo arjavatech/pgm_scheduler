@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Login</title>
+
+    <!-- Google Sign-In Script -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 d-flex flex-column justify-content-center align-items-center"
+                        id="left">
+                        <div class="container text-center">
+                            <h2 class="text-center m-3" id="header">Welcome Back</h2>
+                            <input type="text" class="input-bottom-border mt-3" placeholder="Username/Phone Number">
+                            <input id="password" placeholder="Password" type="password"
+                                class="input-bottom-border mt-3">
+
+                            <button type="submit" class="mt-5 login-button">Submit</button>
+
+                            <p class="mt-4 fw-bold" id="login">or login with</p>
+                            <!-- Icons Row -->
+                            <div class="row mt-4 d-flex justify-content-center align-items-center Icons">
+                                <div class="col-2">
+                                    <i class="fab fa-apple fa-2x"></i>
+                                </div>
+                                <div class="col-2">
+                                    <i class="fab fa-facebook fa-2x" onclick="loginWithFacebook()"></i>
+                                </div>
+                                <p class="g_id_signin mt-4"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6 d-flex flex-column justify-content-center align-items-center"
+                        id="image">
+                        <img src="images/login img.png" alt="Login Image" class="m-4 p-5 img-fluid login-img-sty">
+                        <h3 class="text-center">
+                            Welcome to <span>CraftPlanPro</span>
+                        </h3>
+                        <p class="text-center pt-2" id="conte">
+                            Streamline Task Allocation and Optimize Employee Productivity
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalMessage">
+                    <!-- Dynamic message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalMessage">
+                    <!-- Dynamic message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Example function to simulate server response
+        function simulateResponse() {
+            const data = { error: true }; // Change this object to test different messages
+
+            const modalMessage = document.getElementById('modalMessage');
+
+            if (data.error) {
+                modalMessage.textContent = "404 - Not Found: No invite ID found in the URL.";
+                new bootstrap.Modal(document.getElementById('messageModal')).show();
+            } else {
+                if (data.Accepted) {
+                    modalMessage.textContent = "404 - Not Found: Invalid URL.";
+                    new bootstrap.Modal(document.getElementById('messageModal')).show();
+                }
+            }
+        }
+
+        // Call the function to test the modal
+        simulateResponse();
+    </script>
+
+</body>
+
+</html>

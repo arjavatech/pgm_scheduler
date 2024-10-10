@@ -2,67 +2,36 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inprocess</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complated tickets</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Google Fonts -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
-
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/Inprocess.css">
-
-    <style>
-        .list-group-item {
-            background-color: #7706CD !important;
-            color: white !important;
-            font-size: small !important;
-            border: none !important;
-        }
-
-
-        .list-group-item-action {
-            background-color: #7706CD !important;
-            color: white !important;
-
-        }
-
-        .note .list-group-item {
-            position: relative !important;
-            list-style: circle !important;
-            padding: var(--bs-list-group-item-padding-y) var(--bs-list-group-item-padding-x) !important;
-            color: var(--bs-list-group-color) !important;
-            text-decoration: none !important;
-            background-color: var(--bs-list-group-bg) !important;
-            border: none !important;
-
-            font-size: x-small !important;
-        }
-
-        .list-group-item a {
-            color: white;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/image.css">
 </head>
 
+
 <body>
+    <div id="nav">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="col-4">
+               <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle" style="width: 20%;">
+            </div>
+            <div class="col-4 text-center">
+                <img src="images/logo.png" alt="Logo" id="logo" style="max-width: 100%;">
+            </div>
+            <div class="col-4 text-end">
+                <img src="icon/Mask group.png" alt="Profile Icon" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="container">
@@ -77,32 +46,38 @@
                             <div id="sidebar-content">
                                 <div class="list-group list-group-flush">
                                     <a href="dashboard.html"
-                                        class="list-group-item list-group-item-action bg-purple"><img src="icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span style="padding-left: 10px;color: white;">Dashboard</span></a>
+                                        class="list-group-item list-group-item-action bg-purple"><img
+                                            src="icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span
+                                            style="padding-left: 10px;color: white;">Dashboard</span></a>
                                     <a class="list-group-item list-group-item-action bg-purple dropdown-toggle" href="#"
-                                        id="ticketMenu" data-toggle="collapse" data-target="#ticketSubmenu"
-                                        aria-expanded="false" aria-controls="ticketSubmenu"><img src="icon/Mask group-3.png" style="width: 25px;margin-top: -5px;">
+                                        id="ticketMenu" data-bs-toggle="collapse" data-bs-target="#ticketSubmenu"
+                                        aria-expanded="false" aria-controls="ticketSubmenu">
+                                        <img src="icon/Mask group-3.png" style="width: 25px;margin-top: -5px;">
                                         <span style="padding-left: 10px;color: white;">Ticket</span>
                                     </a>
+
                                     <div id="ticketSubmenu" class="collapse">
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item"><a href="paddingTicket.html"
-                                                    class=" bg-purple">Pending
-                                                    Ticket</a></li>
-                                            <li class="list-group-item"><a href="Inprocess.html"
-                                                    class=" bg-purple">In-Progress</a>
+                                        <ul class="list-group list-group-flush" id="list-group-flush">
+                                            <li class="list-group-item"><a href="Unassigned.html">Unassigned Tickets</a>
                                             </li>
-                                            <li class="list-group-item"><a href="invoice.html" class=" bg-purple">Ready
-                                                    for
-                                                    Invoice</a></li>
-                                            <li class="list-group-item"><a href="completed.html"
-                                                    class=" bg-purple">Completed
-                                                    Ticket</a></li>
+                                            <li class="list-group-item"><a href="Inprocess.html"
+                                                    class=" bg-purple">In-Progress</a></li>
+                                            <li class="list-group-item"><a href="invoice.html"
+                                                    class=" bg-purple">ReadyForInvoice</a></li>
+                                            <li class="list-group-item"><a href="completed.html">Completed Ticket</a>
+                                            </li>
+                                            <li class="list-group-item"><a href="RejectedTicket.html">RejectedTicket</a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <a href="employee_ticket.html"
-                                        class="list-group-item list-group-item-action bg-purple"><img src="icon/Mask group.png" style="width: 30px;margin-top: -5px;"><span style="padding-left: 10px;color: white;">Employees</span></a>
+                                        class="list-group-item list-group-item-action bg-purple"><img
+                                            src="icon/Mask group.png" style="width: 30px;margin-top: -5px;"><span
+                                            style="padding-left: 10px;color: white;">Employees</span></a>
                                     <a href="home-profile.html"
-                                        class="list-group-item list-group-item-action bg-purple"><img src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span style="padding-left: 10px;color: white;">Profile</span></a>
+                                        class="list-group-item list-group-item-action bg-purple"><img
+                                            src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
+                                            style="padding-left: 10px;color: white;">Profile</span></a>
                                     <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
                                         <span class="content text-white list-group-item">Logout</span>
@@ -113,438 +88,37 @@
                     </div>
                     <!-- Main Content -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
-                        <p
+                        <p id="header"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
-                            Admin <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
+                            Employee <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
                                     style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
-                        <div class="container container-sty">
-                            <h1 class="text-center m-3 mt-5 fw-bold ">In-Progress</h1>
-                            <div class="input-box d-flex justify-content-center">
-                                <input type="text" class="form-control " placeholder="Search">
-                                <i class="fa fa-search"></i>
+                         <div class="container container-sty">
+                            <h1 class="text-center m-3 mt-5 fw-bold ">In-Progress Ticket</h1>
+                            <div class="container-fluid mt-5 d-none d-md-table" id="table">
+                                <div id="whole-table">
+                                    <!-- Table -->
+                                    <table id="ticketTable" class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Ticket ID</th>
+                                                <th>Issue Type</th>
+                                                <th>Customer Name</th>
+                                                <th>Phone</th>
+                                                <th>Date</th>
+                                                <th>City</th>
+                                                <th>Assigned Employee</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tBody"></tbody>
+                                    </table>
+                                </div>
                             </div>
 
-                            <div class="container-fluid mt-5" id="table">
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Ticket ID <i class="bi bi-chevron-expand"></i></th>
-                                            <th>Issue Type <i class="bi bi-chevron-expand"></i></th>
-                                            <th>Customer Name <i class="bi bi-chevron-expand"></i></th>
-                                            <th>Phone <i class="bi bi-chevron-expand"></i></th>
-                                            <th>Date <i class="bi bi-chevron-expand"></i></th>
-                                            <th>City <i class="bi bi-chevron-expand"></i></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr data-bs-toggle="collapse" data-bs-target="#details1">
-                                            <td></td>
-                                            <td>001</td>
-                                            <td>AC</td>
-                                            <td>Rohith</td>
-                                            <td>01234 56789</td>
-                                            <td>12/12/2024</td>
-                                            <td>Ashok Nagar</td>
-                                        </tr>
-                                        <tr class="collapse details-row" id="details1">
-                                            <td colspan="7">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-4">
-                                                        <strong id="lable" class="d-flex justify-content-left">Customer
-                                                            Address</strong>
-                                                        <p class="pt-2" style="font-size: 13px;text-align: left;">KING
-                                                            SQUARE OLD NO.1 NEW NO.2, PLOT B 31, 6th
-                                                            Ave, Ashok Nagar, Chennai, Tamil Nadu 600083</p>
-                                                        <label for="employeeName"
-                                                            class="mt-3 d-flex justify-content-left" id="lable">Employee
-                                                            Name</label>
-                                                        <select class="form-select mt-2" id="employeeName">
-                                                            <option>Ganesh</option>
-                                                            <option>Rohith</option>
-                                                            <option>Meera</option>
-                                                        </select>
-                                                        <small class="text-muted">Please note this employee already has
-                                                            5 works ongoing</small>
-                                                    </div>
-
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-6">
-                                                        <strong
-                                                            class="d-flex justify-content-left">Description:</strong>
-                                                        <p style="font-size: 16px;text-align: left;" class="pt-2">The
-                                                            air conditioner is running but not cooling the room
-                                                            effectively, blowing warm air despite long cooling cycles.
-                                                            This could be due to low refrigerant levels, a dirty air
-                                                            filter, a malfunctioning compressor, or a faulty thermostat.
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <button class="btn btn-assign">
-                                                                    Change
-                                                                </button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr data-bs-toggle="collapse" data-bs-target="#details2">
-                                            <td><i class="bi bi-chevron-down collapse-icon"></i></td>
-                                            <td>001</td>
-                                            <td>AC</td>
-                                            <td>Rohith</td>
-                                            <td>01234 56789</td>
-                                            <td>12/12/2024</td>
-                                            <td>Ashok Nagar</td>
-                                        </tr>
-                                        <tr class="collapse details-row" id="details2">
-                                            <td colspan="7">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-4">
-                                                        <strong id="lable" class="d-flex justify-content-left">Customer
-                                                            Address</strong>
-                                                        <p class="pt-2" style="font-size: 13px;text-align: left;">KING
-                                                            SQUARE OLD NO.1 NEW NO.2, PLOT B 31, 6th
-                                                            Ave, Ashok Nagar, Chennai, Tamil Nadu 600083</p>
-                                                        <label for="employeeName"
-                                                            class="mt-3 d-flex justify-content-left" id="lable">Employee
-                                                            Name</label>
-                                                        <select class="form-select mt-2" id="employeeName">
-                                                            <option>Ganesh</option>
-                                                            <option>Rohith</option>
-                                                            <option>Meera</option>
-                                                        </select>
-                                                        <small class="text-muted">Please note this employee already has
-                                                            5 works ongoing</small>
-                                                    </div>
-
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-6">
-                                                        <strong
-                                                            class="d-flex justify-content-left">Description:</strong>
-                                                        <p style="font-size: 16px;text-align: left;" class="pt-2">The
-                                                            air conditioner is running but not cooling the room
-                                                            effectively, blowing warm air despite long cooling cycles.
-                                                            This could be due to low refrigerant levels, a dirty air
-                                                            filter, a malfunctioning compressor, or a faulty thermostat.
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <button class="btn btn-assign">
-                                                                    Change
-                                                                </button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr data-bs-toggle="collapse" data-bs-target="#details3">
-                                            <td><i class="bi bi-chevron-down collapse-icon"></i></td>
-                                            <td>001</td>
-                                            <td>AC</td>
-                                            <td>Rohith</td>
-                                            <td>01234 56789</td>
-                                            <td>12/12/2024</td>
-                                            <td>Ashok Nagar</td>
-                                        </tr>
-                                        <tr class="collapse details-row" id="details3">
-                                            <td colspan="7">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-4">
-                                                        <strong id="lable" class="d-flex justify-content-left">Customer
-                                                            Address</strong>
-                                                        <p class="pt-2" style="font-size: 13px;text-align: left;">KING
-                                                            SQUARE OLD NO.1 NEW NO.2, PLOT B 31, 6th
-                                                            Ave, Ashok Nagar, Chennai, Tamil Nadu 600083</p>
-                                                        <label for="employeeName"
-                                                            class="mt-3 d-flex justify-content-left" id="lable">Employee
-                                                            Name</label>
-                                                        <select class="form-select mt-2" id="employeeName">
-                                                            <option>Ganesh</option>
-                                                            <option>Rohith</option>
-                                                            <option>Meera</option>
-                                                        </select>
-                                                        <small class="text-muted">Please note this employee already has
-                                                            5 works ongoing</small>
-                                                    </div>
-
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-6">
-                                                        <strong
-                                                            class="d-flex justify-content-left">Description:</strong>
-                                                        <p style="font-size: 16px;text-align: left;" class="pt-2">The
-                                                            air conditioner is running but not cooling the room
-                                                            effectively, blowing warm air despite long cooling cycles.
-                                                            This could be due to low refrigerant levels, a dirty air
-                                                            filter, a malfunctioning compressor, or a faulty thermostat.
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <button class="btn btn-assign">
-                                                                    Change
-                                                                </button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr data-bs-toggle="collapse" data-bs-target="#details4">
-                                            <td><i class="bi bi-chevron-down collapse-icon"></i></td>
-                                            <td>001</td>
-                                            <td>AC</td>
-                                            <td>Rohith</td>
-                                            <td>01234 56789</td>
-                                            <td>12/12/2024</td>
-                                            <td>Ashok Nagar</td>
-                                        </tr>
-                                        <tr class="collapse details-row" id="details4">
-                                            <td colspan="7">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-4">
-                                                        <strong id="lable" class="d-flex justify-content-left">Customer
-                                                            Address</strong>
-                                                        <p class="pt-2" style="font-size: 13px;text-align: left;">KING
-                                                            SQUARE OLD NO.1 NEW NO.2, PLOT B 31, 6th
-                                                            Ave, Ashok Nagar, Chennai, Tamil Nadu 600083</p>
-                                                        <label for="employeeName"
-                                                            class="mt-3 d-flex justify-content-left" id="lable">Employee
-                                                            Name</label>
-                                                        <select class="form-select mt-2" id="employeeName">
-                                                            <option>Ganesh</option>
-                                                            <option>Rohith</option>
-                                                            <option>Meera</option>
-                                                        </select>
-                                                        <small class="text-muted">Please note this employee already has
-                                                            5 works ongoing</small>
-                                                    </div>
-
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-6">
-                                                        <strong
-                                                            class="d-flex justify-content-left">Description:</strong>
-                                                        <p style="font-size: 16px;text-align: left;" class="pt-2">The
-                                                            air conditioner is running but not cooling the room
-                                                            effectively, blowing warm air despite long cooling cycles.
-                                                            This could be due to low refrigerant levels, a dirty air
-                                                            filter, a malfunctioning compressor, or a faulty thermostat.
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <button class="btn btn-assign">
-                                                                    Change
-                                                                </button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr data-bs-toggle="collapse" data-bs-target="#details5">
-                                            <td><i class="bi bi-chevron-down collapse-icon"></i></td>
-                                            <td>001</td>
-                                            <td>AC</td>
-                                            <td>Rohith</td>
-                                            <td>01234 56789</td>
-                                            <td>12/12/2024</td>
-                                            <td>Ashok Nagar</td>
-                                        </tr>
-                                        <tr class="collapse details-row" id="details5">
-                                            <td colspan="7">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-4">
-                                                        <strong id="lable" class="d-flex justify-content-left">Customer
-                                                            Address</strong>
-                                                        <p class="pt-2" style="font-size: 13px;text-align: left;">KING
-                                                            SQUARE OLD NO.1 NEW NO.2, PLOT B 31, 6th
-                                                            Ave, Ashok Nagar, Chennai, Tamil Nadu 600083</p>
-                                                        <label for="employeeName"
-                                                            class="mt-3 d-flex justify-content-left" id="lable">Employee
-                                                            Name</label>
-                                                        <select class="form-select mt-2" id="employeeName">
-                                                            <option>Ganesh</option>
-                                                            <option>Rohith</option>
-                                                            <option>Meera</option>
-                                                        </select>
-                                                        <small class="text-muted">Please note this employee already has
-                                                            5 works ongoing</small>
-                                                    </div>
-
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-6">
-                                                        <strong
-                                                            class="d-flex justify-content-left">Description:</strong>
-                                                        <p style="font-size: 16px;text-align: left;" class="pt-2">The
-                                                            air conditioner is running but not cooling the room
-                                                            effectively, blowing warm air despite long cooling cycles.
-                                                            This could be due to low refrigerant levels, a dirty air
-                                                            filter, a malfunctioning compressor, or a faulty thermostat.
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <button class="btn btn-assign">
-                                                                    Change
-                                                                </button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr data-bs-toggle="collapse" data-bs-target="#details6">
-                                            <td><i class="bi bi-chevron-down collapse-icon"></i></td>
-                                            <td>001</td>
-                                            <td>AC</td>
-                                            <td>Rohith</td>
-                                            <td>01234 56789</td>
-                                            <td>12/12/2024</td>
-                                            <td>Ashok Nagar</td>
-                                        </tr>
-                                        <tr class="collapse details-row" id="details6">
-                                            <td colspan="7">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-4">
-                                                        <strong id="lable" class="d-flex justify-content-left">Customer
-                                                            Address</strong>
-                                                        <p class="pt-2" style="font-size: 13px;text-align: left;">KING
-                                                            SQUARE OLD NO.1 NEW NO.2, PLOT B 31, 6th
-                                                            Ave, Ashok Nagar, Chennai, Tamil Nadu 600083</p>
-                                                        <label for="employeeName"
-                                                            class="mt-3 d-flex justify-content-left" id="lable">Employee
-                                                            Name</label>
-                                                        <select class="form-select mt-2" id="employeeName">
-                                                            <option>Ganesh</option>
-                                                            <option>Rohith</option>
-                                                            <option>Meera</option>
-                                                        </select>
-                                                        <small class="text-muted">Please note this employee already has
-                                                            5 works ongoing</small>
-                                                    </div>
-
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-6">
-                                                        <strong
-                                                            class="d-flex justify-content-left">Description:</strong>
-                                                        <p style="font-size: 16px;text-align: left;" class="pt-2">The
-                                                            air conditioner is running but not cooling the room
-                                                            effectively, blowing warm air despite long cooling cycles.
-                                                            This could be due to low refrigerant levels, a dirty air
-                                                            filter, a malfunctioning compressor, or a faulty thermostat.
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <button class="btn btn-assign">
-                                                                    Change
-                                                                </button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr data-bs-toggle="collapse" data-bs-target="#details7">
-                                            <td><i class="bi bi-chevron-down collapse-icon"></i></td>
-                                            <td>001</td>
-                                            <td>AC</td>
-                                            <td>Rohith</td>
-                                            <td>01234 56789</td>
-                                            <td>12/12/2024</td>
-                                            <td>Ashok Nagar</td>
-                                        </tr>
-                                        <tr class="collapse details-row" id="details7">
-                                            <td colspan="7">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-4">
-                                                        <strong id="lable" class="d-flex justify-content-left">Customer
-                                                            Address</strong>
-                                                        <p class="pt-2" style="font-size: 13px;text-align: left;">KING
-                                                            SQUARE OLD NO.1 NEW NO.2, PLOT B 31, 6th
-                                                            Ave, Ashok Nagar, Chennai, Tamil Nadu 600083</p>
-                                                        <label for="employeeName"
-                                                            class="mt-3 d-flex justify-content-left" id="lable">Employee
-                                                            Name</label>
-                                                        <select class="form-select mt-2" id="employeeName">
-                                                            <option>Ganesh</option>
-                                                            <option>Rohith</option>
-                                                            <option>Meera</option>
-                                                        </select>
-                                                        <small class="text-muted">Please note this employee already has
-                                                            5 works ongoing</small>
-                                                    </div>
-
-                                                    <div class="col-md-1"></div>
-
-                                                    <div class="col-md-6">
-                                                        <strong
-                                                            class="d-flex justify-content-left">Description:</strong>
-                                                        <p style="font-size: 16px;text-align: left;" class="pt-2">The
-                                                            air conditioner is running but not cooling the room
-                                                            effectively, blowing warm air despite long cooling cycles.
-                                                            This could be due to low refrigerant levels, a dirty air
-                                                            filter, a malfunctioning compressor, or a faulty thermostat.
-                                                        </p>
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <button class="btn btn-assign">
-                                                                    Change
-                                                                </button>
-                                                            </div>
-                                                            <div class="col-6">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <!-- Placeholder for Cards (Mobile View) -->
+                            <div id="card-container" class="d-md-none d-block card-view"></div>
                         </div>
                     </div>
                 </div>
@@ -552,8 +126,17 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="script/Inprocess_table.js"></script>
 </body>
 
 </html>

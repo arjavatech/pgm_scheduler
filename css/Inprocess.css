@@ -9,7 +9,7 @@ body {
 }
 
 #left {
-    background-color: #7706CD;
+    background-image: radial-gradient(#004102 ,#131313 50%);
     height: 200vh;
 }
 
@@ -21,14 +21,14 @@ body {
 
 
 .dropdown-menu {
-    background-color: #7706CD;
+    background-image: radial-gradient(#004102 ,#131313 50%);
     border: none;
 
 }
 
 .dropdown-item:focus,
 .dropdown-item:hover {
-    background-color: #7706CD;
+    background-image: radial-gradient(#004102 ,#131313 50%);
     color: white;
 }
 
@@ -142,10 +142,12 @@ i,
 
 .details-row {
     background-color: #f8f9fa;
+    
 }
 
 .details-row td {
     padding: 20px;
+    width: 50%;
 }
 
 .details-row .btn {
@@ -156,14 +158,14 @@ i,
 }
 
 .details-row .btn-assign {
-    background-color: #6f42c1;
+    background-image: radial-gradient(#004102 ,#131313 50%);
     color: #fff;
     padding: 10px 10px 10px 10px;
     width: 100%;
 }
 
 .details-row .btn-reject {
-    border: 1px solid #6f42c1;
+    background-image: radial-gradient(#004102 ,#131313 50%);
     color: #6f42c1;
     background-color: transparent;
     width: 100%;
@@ -182,30 +184,35 @@ i,
 
 #employeeName {
     width: 100%;
-    /* margin-left: 25%; */
+    margin-left: 25%;
 }
 
-tr {
-    border-top: 1px solid inherit;
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-tr th{
-    color: #7706CD !important;
-    text-align: center !important;
-}
+
 
 td{
     text-align: center;
 }
 
 #table {
-    margin-left: -3%;
-    margin-right: -3%;
     width: 100%;
+}
+.table thead  tr th {
+    color: #083a0a;
+    font-weight: bold;
+    padding: 10px;
+    text-align: centre !important;
 }
 
 table{
     width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
 }
 
 .text-muted{
@@ -231,4 +238,181 @@ a{
 
 #lable{
     text-align: left !important;
+}
+
+
+#ticketTable
+{
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Merge borders */
+}
+#ticketTable th, #ticketTable td 
+{
+    padding: 10px; /* Space around text */
+    border: 1px solid #ddd; /* Light gray border */
+}
+#ticketTable tbody tr:nth-child(4n+1) 
+{
+    background-color: #d3d3d3; 
+}
+#ticketTable tbody tr:nth-child(odd):not(:nth-child(4n+1)) 
+{
+    background-color: #f2f2f2; 
+}
+#ticketTable tbody tr:nth-child(even):not(:nth-child(4n+1)) 
+{
+    background-color: #ffffff; /* White for even rows */
+}
+#whole-table
+{
+    border: 1px solid ;
+    padding: 20px;
+}
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td 
+{
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  
+}
+th 
+{
+    background-color: #6a1b9a;
+    color: white;
+}      
+.collapse-icon 
+{
+    cursor: pointer;
+}
+.collapse-icon::before 
+{
+    content: '▼';
+    display: inline-block;
+    margin-right: 8px;
+}
+.toggle-row.expanded .collapse-icon::before 
+{
+    content: ' ';
+}
+.pagination 
+{
+    margin: 10px 0;
+    text-align: right;
+}
+.pagination button 
+{
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+}
+.pagination button.disabled 
+{
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+#searchInput
+{
+    margin-top: 10px;
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.filter-container 
+{
+    margin-bottom: 10px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+tr.shown td.details-control {
+    background: url('https://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+.dataTables_filter 
+{
+    margin-bottom: 20px; 
+}
+.dataTables_length select 
+{
+    padding-right: 25px; 
+    margin-right: 10px; 
+}
+.dataTables_length select 
+{
+    width: auto; /* Adjust width based on content */
+    min-width: 75px; /* Ensure a minimum width to prevent overlap */
+    padding-right: 15px; /* Provide space for the dropdown arrow */
+}
+.dataTables_length label 
+{
+    margin-right: 10px; /* Space between label and dropdown */
+}
+.dataTables_paginate 
+{
+    display: flex; /* Flexbox for pagination alignment */
+    align-items: center; /* Center align items vertically */
+}
+.list-group-item 
+{
+    background:transparent !important;
+    color: white !important;
+    font-size: small !important;
+    border: none !important;
+}
+
+
+.list-group-item-action {
+    background:transparent !important;
+    color: white !important;
+
+}
+
+.note .list-group-item {
+    position: relative !important;
+    list-style: circle !important;
+    padding: var(--bs-list-group-item-padding-y) var(--bs-list-group-item-padding-x) !important;
+    color: var(--bs-list-group-color) !important;
+    text-decoration: none !important;
+    background-color: var(--bs-list-group-bg) !important;
+    border: none !important;
+
+    font-size: x-small !important;
+}
+
+.list-group-item a {
+    color: white;
+}
+.collapse-content {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.dataTables_filter {
+    float: right;
+}
+
+.dataTables_paginate {
+    float: right;
+}
+
+td.details-control {
+    cursor: pointer;
+}
+
+tr.shown .details-control::before {
+    content: " ";
+}
+
+td.details-control::before {
+    content: "▼";
+    padding-right: 5px;
 }

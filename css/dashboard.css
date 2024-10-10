@@ -8,15 +8,13 @@ body {
    
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     /* overflow-y: hidden; */
 }
 #left {
-    background-color: #7706CD;
-    min-height: 100%;
-    padding: 0;
-    margin: 0;
-  
+    background-image: radial-gradient(#004102 ,#131313 50%);
+
+    height: 200vh;
 }
 
 
@@ -28,8 +26,7 @@ body {
     color: var(--bs-list-group-color);
     text-decoration: none;
     background-color: var(--bs-list-group-bg);
-    border:none;
-   
+    border:none;   
     font-size: x-small;
 }
 
@@ -104,6 +101,8 @@ body {
 
 
 
+ 
+
 
 /* Chart Containers */
 .chart-container {
@@ -140,17 +139,19 @@ body {
 
 #ticketSubmenu a {
     text-decoration: none;
-    background-color: #7706CD;
+    background-image: radial-gradient(#004102 ,#131313 50%);
+
     color: white;
 }
 .bg-purple:hover,
 .bg-purple:focus {
-    background-color: #7706CD;
+    background:transparent;
+
     color: white;
 }
 
 .bg-purple {
-    background-color: #7706CD;
+    background: transparent !important;
     color: white;
     border-bottom: none;
 }
@@ -162,40 +163,10 @@ body {
 }
 
 
-#sidebar {
-    background-color: #7706CD;
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    top: 0;
-    left: -200px; /* Adjusted to match width */
-    z-index: 999;
-    overflow-y: auto;
-    transition: all 0.3s ease;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-#sidebar.visible {
-    left: 0;
-}
-
-/* Overlay Style */
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    display: none;
-}
 
 /* Sidebar Links */
 .list-group-item {
-    background-color: #7706CD;
+    background:transparent;
     color: white;
     font-size: small;
     border: none;
@@ -208,76 +179,20 @@ body {
 
 }
 
-/* Sidebar Styling for Mobile */
-@media (max-width: 768px) {
-    #sidebar {
-        left: -250px; /* Hide sidebar by default on smaller screens */
-    }
+.list-group-item-action:focus {
+    background-color: transparent;
+    color: white;
 
-    #sidebar.active {
-        left: 0; /* Show sidebar when active on smaller screens */
-    }
 }
 
-
-
-
-
-
-#toggleButton {
-    position: fixed;
-    top: 10px;
-    left: 10px; /* Adjust the position for mobile */
-    background-color: #7706CD;
-    border: none;
-    border-radius: 50%; /* Circular button */
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    z-index: 1001; /* Ensure it stays above the navbar */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+a{
+    color: white;
+    text-decoration: none;
+}
+#list-group-flush1{
+    margin-left: 60px;
 }
 
-.bar {
-    width: 25px;
-    height: 3px;
-    background-color: white; /* White bars */
-    margin: 3px 0;
-    border-radius: 5px; /* Rounded edges on the bars */
-}
-
-/* Navbar Styling */
-.navbar {
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Logo Styling */
-.logo {
-    max-width: 135px; /* Set max width for the logo */
-    height: auto;
-    margin-left: auto; 
-   
-}
-
-
-/* @media (max-width:769px)
-{
-        .res{
-margin-left: 80px;
-width: 90%;
-    }
-} */
 /* Default styles for .box2 and .box3 */
 .box2, .box3 {
     padding: 20px;
@@ -334,17 +249,67 @@ width: 90%;
     padding: 4px 10px;            /* Fine-tuned padding to match the design */
     color: #000;                  /* Black text for high contrast */
 }
+/* sakthi code start */
+.dropdown-menu {
+    background-color: #7706CD;
+    border: none;
 
-/* Responsive Design */
+}
 
-/* Small devices (mobile phones, 320px and up) */
-@media (max-width: 480px) {
-    .btn-group {
-        gap: 8px;                 /* Reduce the gap between buttons for smaller screens */
+.dropdown-item:focus,
+.dropdown-item:hover {
+    background-color: #7706CD;
+    color: white;
+}
+
+.dropdown-item {
+    color: white;
+
+
+}
+
+i,
+.para {
+    color: white;
+  
+}
+
+.content {
+    color: white;
+    padding-left: 7%;
+   
+}
+
+.mobile{
+    display:none !important;
+}
+h1{
+    text-align: center;
+    margin-top: 6%;
+}
+/* code  end */
+
+
+@media (max-width: 320px) {
+    .btn-group button .dis {
+       padding-left: 300px;
+        display: block;           /* Adjust padding for small screens */
     }
-    .btn-group button {
-        padding: 4px 8px;         /* Smaller padding for compact size */
-        font-size: 9px;           /* Small font for better fit */
+
+    .btn-group p {
+        font-size: 14px;  
+               /* Smaller heading font for very small screens */
+    }
+}
+
+/* Sidebar Styling for Mobile */
+@media (max-width: 768px) {
+    #sidebar {
+        left: -250px; /* Hide sidebar by default on smaller screens */
+    }
+
+    #sidebar.show {
+        left: 0; /* Show sidebar when active on smaller screens */
     }
 }
 
@@ -371,56 +336,133 @@ width: 90%;
     
 }
 
-/* Media Queries for Mobile Screens */
-@media (max-width: 767px) {
-    .navbar {
-        justify-content: space-between;
-        background-color: #7706CD;
-    }
-   
-
-    .logo {
-        margin-left: 100px; /* Adjust logo position on mobile */
-    }
-
-    #toggleButton {
-        display: flex; /* Show toggle button on smaller screens */
-    }
-}
 
 
 
-/* Hide Toggle Button on Larger Screens */
-@media (max-width: 900px) {
-    /* #toggleButton {
-        display: none; 
-    } */
-    /* .logo {
-        display: none; 
-    } */
 
-    #sidebar {
-        left:-250px !important; /* Sidebar visible by default on larger screens */
+
+@media (max-width: 320px) {
+    .box2, .box3 {
+        padding: 15px;
+        border-radius: 15px;
     }
 
-  
-}
-@media (min-width: 1024px) {
-    #toggleButton {
-        display: none; /* Hide toggle button on larger screens */
+    .box2 h3, .box3 h3 {
+        font-size: 22px;
     }
-    .res{
-    
+
+    .box2 p, .box3 p {
+        font-size: 10px;
+    }
+
+      .cd{
         width: 100%;
-            }
-            .logo {
-                display: none; /* Adjust logo position on mobile */
-            }
-            #sidebar {
-                left:  0px; /* Sidebar visible by default on larger screens */
-            }
+    }
+    .rc {
+        justify-content: center;
+        align-items: center;
+        padding-left: 6px;
+    
+    }
+    .box-border {
+        margin-top:30px ;
+    }
 
-  
+    .box {
+        padding-top: 25px;
+    }
+    .box h3 {
+        font-weight: 600;
+        font-size: 20px;
+    }
+    
+    .box p {
+        font-size: 8px;
+    }
 }
 
+@media (max-width: 768px) {
+    .box-border {
+        margin-top:30px ;
+    }
+}
+
+/* vddjff sakthi code  */
+@media (max-width: 1200px) {
+    #left {
+        display: none;
+        height: auto;
+        padding: 40px 0;
+        
+    }
+
+    .container-sty {
+        width: 90%;
+    }
+}
+
+@media (max-width: 992px) {
+    .container-sty {
+        padding: 20px;
+    }
+    #fix span{
+        display:block;
+    }
+    #sidebar{
+        display: block;
+    }
+    
+    .mobile{
+        display: none !important;
+    }
+    .navbar{
+        display: flex !important;
+    }
+}
+
+
+ @media (min-width:762px) {
+    .container-sty {
+        padding: 20px;
+    }
+    #fix span {
+        display:block;
+    }
+    #sidebar{
+        display: block;
+    }
+    
+    .mobile{
+        display: none !important;
+    }
+    .navbar{
+        display: flex !important;
+    }
+    
+ }
+@media (max-width: 768px) {
+    .container-sty {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .content {
+        color: white;
+        padding-left: 2%;
+       
+    }
+    #fix span{
+        display: none;
+    }
+    #icon2 {
+        margin-left: 4%;
+    }
+    .mobile{
+        display: block !important;
+    }
+    .navbar{
+        display: flex !important;
+    }
+    
+}
 

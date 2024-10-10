@@ -1,20 +1,9 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleButton = document.getElementById('toggleButton');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
 
-    // Toggle sidebar visibility
-    toggleButton.addEventListener('click', function () {
-        sidebar.classList.toggle('visible');
-        overlay.style.display = sidebar.classList.contains('visible') ? 'block' : 'none';
-    });
-
-    // Close sidebar on overlay click
-    overlay.addEventListener('click', function () {
-        sidebar.classList.remove('visible');
-        overlay.style.display = 'none';
-    });
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('left');
+    sidebar.classList.toggle('active');
 });
+
 const dataSets = {
     '12months': {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

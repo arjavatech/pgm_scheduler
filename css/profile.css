@@ -15,7 +15,7 @@ body {
 }
 
 #left {
-    background-color: #7706CD;
+    background-color: #006103;
     height: 140vh; 
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 .login-button {
-    background-color: #7706CD;
+    background-color: #006103;
     color: white;
     width: 100%;
     border: none;
@@ -64,7 +64,6 @@ body {
 
 .upload-label::after {
     content:url("icon/upload-icon.png");
-    font-family: "FontAwesome";
     margin-left: auto;
     font-size: 18px;
     color: #b3aea9;
@@ -78,9 +77,27 @@ input::placeholder {
     color: #9e9e9e;
     font-size: 18px;
 }
+
+.list-group-item-action:focus {
+    background-color: transparent;
+    color: white;
+
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+#list-group-flush{
+    margin-left: 60px;
+}
+
+a{
+    text-decoration: none;
+}
+
 @media (max-width: 1200px) {
     #left {
-        height: auto;
         padding: 40px 0;
     }
     .container-sty {
@@ -124,8 +141,4 @@ input::placeholder {
     #left {
         padding: 20px 0;
     }
-}
-
-a{
-    text-decoration: none;
 }
