@@ -15,13 +15,48 @@
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/image.css">
 </head>
+<style>
+    /* Loading  */
+    .loading {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .loading .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #004102;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 
 <body>
     <div id="nav">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="col-4">
-               <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle" style="width: 20%;">
+                <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
+                    style="width: 20%;">
             </div>
             <div class="col-4 text-center">
                 <img src="images/logo.png" alt="Logo" id="logo" style="max-width: 100%;">
@@ -94,7 +129,7 @@
                                     style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
-                         <div class="container container-sty">
+                        <div class="container container-sty">
                             <h1 class="text-center m-3 mt-5 fw-bold ">Unassigned Ticket</h1>
                             <div class="container-fluid mt-5 d-none d-md-table" id="table">
                                 <div id="whole-table">
@@ -125,7 +160,11 @@
             </div>
         </div>
     </div>
-
+    <!-- loading  -->
+    <div class="loading" id="l">
+        <div class="spinner"></div>
+             
+    </div>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -137,6 +176,16 @@
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
     <script src="script/unassigned_table.js"></script>
+    <script>
+        window.onload = function () {
+
+            document.getElementById('l').style.display = 'flex';
+
+            setTimeout(function () {
+                document.getElementById('l').style.display = 'none';
+            }, 2000);
+        }
+    </script>
 </body>
 
 </html>
