@@ -128,7 +128,39 @@ padding: 10px 20px;
 cursor: pointer;
 border-radius: 5px;
 }
+    /* Loading  */
+    .loading {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .loading .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #004102;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 
 </head>
@@ -171,11 +203,11 @@ border-radius: 5px;
             </div>
         </div>
     </div>
-    <div id="loadingOverlay" class="loading-overlay d-none"></div>
-    <div class="spinner-border text-light" role="status">
-        <span class="sr-only"></span>
-    </div>
-    </div>
+
+    <!-- loading  -->
+  <div class="loading" id="l">
+    <div class="spinner"></div>
+</div>
 
     <div id="popupModal">
         <div class="modal-content">
@@ -190,9 +222,8 @@ border-radius: 5px;
 
         // Function to fetch and display employee data
         function checkUrl() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
             const mainContent = document.getElementById('mainContent');
-            loadingOverlay.classList.remove('d-none');
+            document.getElementById('l').style.display = 'flex';
 
             var page_url = window.location.href;
             var urlParams = new URLSearchParams(window.location.search);
@@ -213,7 +244,7 @@ border-radius: 5px;
                 })
                     .then(response => {
 
-                        loadingOverlay.classList.add('d-none');
+                        document.getElementById('l').style.display = 'none';
                         mainContent.classList.remove('blur-background');
 
                         if (!response.ok) {
@@ -238,7 +269,7 @@ border-radius: 5px;
                         }
                     })
                     .catch(error => {
-                        loadingOverlay.classList.add('d-none');
+                        document.getElementById('l').style.display = 'none';
                                 document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
                                 popupModal.style.display = 'block';
                                 mainContent.classList.add('blur-background');
@@ -248,7 +279,7 @@ border-radius: 5px;
                     });
             }
             else {
-                loadingOverlay.classList.add('d-none');
+                document.getElementById('l').style.display = 'none';
                 mainContent.classList.remove('blur-background');
             }
         }
@@ -257,8 +288,7 @@ border-radius: 5px;
         document.addEventListener('DOMContentLoaded', checkUrl);
 
         function handleCredentialResponse(response) {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            loadingOverlay.classList.remove('d-none');
+            document.getElementById('l').style.display = 'flex';
 
             var url = window.location.href;
             var urlParams = new URLSearchParams(window.location.search);
@@ -285,8 +315,6 @@ border-radius: 5px;
                     is_employee: isEmployee
                 }
 
-                
-
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
                     method: 'POST',
                     headers: {
@@ -295,7 +323,7 @@ border-radius: 5px;
                     body: JSON.stringify(data)
                 })
                     .then(response => {
-                        loadingOverlay.classList.add('d-none');
+                        document.getElementById('l').style.display = 'none';
                         if (!response.ok) {
                             throw new Error(`Error: ${response.status}`);
                         }
@@ -323,12 +351,12 @@ border-radius: 5px;
                         }
                     })
                     .catch(error => {
-                        loadingOverlay.classList.add('d-none');
+                        document.getElementById('l').style.display = 'none';
                         console.error('Error:', error);
                     });
             }
             else {
-                loadingOverlay.classList.add('d-none');
+                document.getElementById('l').style.display = 'none';
                 const mainContent = document.getElementById('mainContent');
                 document.getElementById("txt").textContent = "Signup Failed - Your URL is invalid to access our App.";
                 popupModal.style.display = 'block';

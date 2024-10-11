@@ -16,7 +16,41 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 </head>
+<style>
+    /* Loading  */
+    .loading {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .loading .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #004102;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
 
 <body>
     <div class="container-fluid">
@@ -35,12 +69,12 @@
 
                             <p class="mt-4 fw-bold" id="login">or login with</p>
                             <!-- Icons Row -->
-                            <div class="row mt-2 d-flex justify-content-center align-items-center" class="Icons">
-                               
+                            <div class="row mt-4 d-flex justify-content-center align-items-center" class="Icons">
+
                                 <!-- <div class="col-2">
                                     <i class="fab fa-google fa-2x"></i>
                                 </div> -->
-                                <p class="g_id_signin mt-1"></p>
+                                <p class="g_id_signin mt-4"></p>
                             </div>
                         </div>
                     </div>
@@ -58,110 +92,116 @@
             </div>
         </div>
     </div>
+    <!-- loading  -->
+    <div class="loading" id="l">
+        <div class="spinner"></div>
+             
+    </div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
     <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '1564179824527181', 
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v12.0' 
-        });
-          
-        FB.AppEvents.logPageView();   
-      };
-    
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
-    
-        <script>
-        
-            function handleCredentialResponse(response) {
-                let userDetails = decodeJwtResponse(response.credential);
-        
-                console.log('User details:', userDetails.email);
-    
-                const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/account_check/${userDetails.email}`;
-        
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    alert("User ID not found");
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.isSuperAdmin) {
-                    // Redirect to company.html
-                    window.location.href = 'company.html';
-                } 
-                else if (data.isAdmin) {
-                    // Redirect to company.html
-                    window.location.href = 'dashboard.html';
-                }
-                else if (data.isEmployee) {
-                    alert("Employee page development is under maintenance");
-                }
-                else {
-                    alert("User ID not found");
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1564179824527181',
+                cookie: true,
+                xfbml: true,
+                version: 'v12.0'
             });
-    
-    
-            }
-        
-            function decodeJwtResponse(token) {
-                const base64Url = token.split('.')[1];
-                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                return JSON.parse(jsonPayload);
-            }
-        
-            window.onload = function () {
-                google.accounts.id.initialize({
-                    client_id: '105136553260-b1aavp1n75f8caktbvuiipgr92at4pth.apps.googleusercontent.com', 
-                    callback: handleCredentialResponse
-                });
-        
-                // Render the Google Sign-In button
-                google.accounts.id.renderButton(
-                    document.querySelector(".g_id_signin"),  // This should target the button container
-                    { theme: "outline", size: "large" }  // Customize the button appearance
-                );
-        
-                google.accounts.id.prompt();  // Optional: Prompt the user to sign in
-            };
-        </script>
-    
+
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <script>
-    
-        function loginWithFacebook() {
-          FB.login(function(response) {
-            if (response.status === 'connected') {
-              // Redirect to your desired URL
-              window.location.href = 'dashboard.html';
-            } else {
-              console.log('User did not authorize the app');
-            }
-          }, {scope: 'public_profile,email'});
+
+        function handleCredentialResponse(response) {
+            document.getElementById('l').style.display = 'flex';
+            let userDetails = decodeJwtResponse(response.credential);
+
+            console.log('User details:', userDetails.email);
+
+            const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/account_check/${userDetails.email}`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    document.getElementById('l').style.display = 'none';
+                    if (!response.ok) {
+                        
+                        alert("User ID not found");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                   
+                    if (data.isSuperAdmin) {
+                        
+                        // Redirect to company.html
+                        window.location.href = 'company.html';
+                    }
+                    else if (data.isAdmin) {
+                        // Redirect to company.html
+                        window.location.href = 'dashboard.html';
+                    }
+                    else if (data.isEmployee) {
+                        alert("Employee page development is under maintenance");
+                    }
+                    
+                })
+                .catch(error => {
+                    document.getElementById('l').style.display = 'none';
+                    console.error('Fetch error:', error);
+                });
+
+
         }
-      
-      </script>
-    
 
+        function decodeJwtResponse(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
 
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: '105136553260-b1aavp1n75f8caktbvuiipgr92at4pth.apps.googleusercontent.com',
+                callback: handleCredentialResponse
+            });
+
+            // Render the Google Sign-In button
+            google.accounts.id.renderButton(
+                document.querySelector(".g_id_signin"),  // This should target the button container
+                { theme: "outline", size: "large" }  // Customize the button appearance
+            );
+
+            google.accounts.id.prompt();  // Optional: Prompt the user to sign in
+        };
+    </script>
+
+    <script>
+
+        function loginWithFacebook() {
+            FB.login(function (response) {
+                if (response.status === 'connected') {
+                    // Redirect to your desired URL
+                    window.location.href = 'dashboard.html';
+                } else {
+                    console.log('User did not authorize the app');
+                }
+            }, { scope: 'public_profile,email' });
+        }
+
+    </script>
 </body>
 
 </html>

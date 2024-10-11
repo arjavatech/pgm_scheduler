@@ -164,10 +164,12 @@
 
         document.getElementById('submit-btn').addEventListener('click', function (event) {
             event.preventDefault();
+            
             const loadingOverlay = document.getElementById('loadingOverlay');
             const mainContent = document.getElementById('mainContent');
             loadingOverlay.classList.remove('d-none');
             mainContent.classList.add('blur-background');
+
             // Gather input values
             const data = {
                 company_name: document.getElementById('companyName').value,
