@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    overflow-y: hidden !important;
+    
 }
 
 .login-img-sty {
@@ -15,12 +15,20 @@ body {
 
 }
 
+/* #left{
+    position: fixed; /* Keep the sidebar fixed */
+    /* overflow-y: auto; /* Enable vertical scrolling if needed */
+ */ */
+
+
+
 
 .container-sty {
     background-color: white;
     border-radius: 10px;
-    width: 50%;
+    width: 100%;
     padding: 2rem;
+    
 }
 
 .input-bottom-border {
