@@ -11,11 +11,6 @@ body {
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-#left {
-    background-image: radial-gradient(#004102, #131313 50%);
-    height: 200vh;
-}
-
 .container-sty {
     background-color: white;
     border-radius: 10px;
@@ -76,24 +71,28 @@ table.dataTable.table-striped>thead {
 
 /* Apply a light green background for odd rows */
 table.dataTable.table-striped>tbody>tr.odd {
-    background-color: #f2f7f2 !important;
+    background-color: #def8de !important;
     /* Light green */
     /* box-shadow: none; */
     /* Remove the default shadow */
 }
 
-/* Apply a white background for even rows */
+
 table.dataTable.table-striped>tbody>tr.even {
     background-color: #ffffff !important;
-    /* White */
+   
 }
+/* 
+
+table.dataTable.table-striped>tbody>tr.odd>* {
+    box-shadow: none;
+    
+} */
 
 
-
-/* Custom hover effect for all rows */
 table.dataTable tbody tr:hover {
     background-color: #f1f1f1 !important;
-    /* Light gray for hover */
+   
 }
 
 .details-row {
@@ -106,10 +105,9 @@ table.dataTable tbody tr:hover {
 }
 
 .button-container {
-    /* Use Flexbox to align the buttons horizontally */
-    /* Optional: Adds space between the buttons */
+
     justify-content: flex-start;
-    /* Align the buttons to the left (or you can use 'center' or 'flex-end') */
+   
 }
 
 .details-row .btn {
@@ -143,20 +141,22 @@ table.dataTable tbody tr:hover {
     margin-right: 5px;
 }
 
-#rejectedTicketTable td .issue-type.AC .circle,
-#unassignedTicketTable td .issue-type.AC .circle,
-#ticketTable td .issue-type.AC .circle {
+#rejectedTicketTable td .issue-type.ac .circle,
+#unassignedTicketTable td .issue-type.ac .circle,
+#ticketTable td .issue-type.ac .circle {
     background-color: #daba1ece;
-    /* AC color */
-    
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
 }
 
-#rejectedTicketTable td .issue-type.Fridge .circle,
-#unassignedTicketTable td .issue-type.Fridge .circle,
-#ticketTable td .issue-type.Fridge .circle {
-    background-color: #04b9f6;
-    /* Fridge color */
-   
+#rejectedTicketTable td .issue-type.fridge .circle,
+#unassignedTicketTable td .issue-type.fridge .circle,
+#ticketTable td .issue-type.fridge .circle {
+    background-color: #04b9f6;   
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
 }
 
 #rejectedTicketTable tbody td .issue-type,
@@ -198,6 +198,7 @@ table.dataTable tbody tr:hover {
 #ticketTable tbody tr {
     background-color: #fff;
     transition: background-color 0.3s ease;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 #rejectedTicketTable tbody tr:hover,
@@ -225,7 +226,7 @@ table.dataTable tbody tr:hover {
 
 #sidebar a {
     color: #fff;
-    /* Link color */
+  
 }
 
 #searchbar {
@@ -298,6 +299,7 @@ a {
 #whole-table {
     border: 1px;
     padding: 20px;
+    /* box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);  */
 }
 
 
@@ -306,67 +308,48 @@ a {
     content: "⮟";
 }
 
-
-/* DataTables Pagination Styles */
-
-
-/* Pagination styles */
-
-
-
-
-
-
-
-
-/* Pagination button styles */
-/* Main pagination container */
 .dataTables_wrapper .dataTables_paginate {
     display: flex !important;
-    /* Use flexbox for alignment */
     justify-content: center;
-    /* Center pagination */
     margin: 20px 0;
-    /* Margin around the pagination */
 }
 
 /* Pagination list */
 .dataTables_wrapper .dataTables_paginate .pagination {
     display: flex;
-    /* Flexbox layout */
+
     padding: 0;
-    /* Remove padding */
+
     margin: 0;
-    /* Remove margin */
+
     list-style: none;
-    /* No bullet points */
+
 }
 
 /* Pagination buttons */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item {
     margin: 0 3px;
-    /* Reduced space between buttons */
+
 }
 
 /* Page links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-link {
     color: #006103 !important;
-    /* Default text color */
+
     background-color: transparent !important;
-    /* No background */
+
     border: 1px solid #006103;
-    /* Green border */
+
     border-radius: 0px;
-    /* Rounded corners */
+
     padding: 8px 15px;
-    /* Reduced padding */
+
     font-size: 0.85rem;
-    /* Reduced font size */
+
     text-align: center;
-    /* Center text */
-    /* Ensure inline-block display */
+ 
     transition: background-color 0.3s, color 0.3s;
-    /* Transition for hover effects */
+   
 }
 
 
@@ -374,28 +357,28 @@ a {
 /* Hover styles for pagination links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-link:hover {
     color: white !important;
-    /* Text color on hover */
+
     background-color: #006103 !important;
-    /* Background color on hover */
+ 
 }
 
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.active {
 
     padding: none;
-    box-shadow: none;
+    /* box-shadow: none; */
     background: none;
-    /* Hide the active page number */
+
 }
 
 
 /* Disabled button styles */
 .dataTables_wrapper .dataTables_paginate .pagination .disabled .page-link {
     color: rgb(255, 253, 253) !important;
-    /* Color for disabled links */
-    background-color: #99b29a !important;
-    /* Ensure no background */
+
+    background-color: #68a46a !important;
+
     pointer-events: none;
-    /* Disable pointer events */
+
     border: transparent;
 }
 
@@ -403,31 +386,46 @@ a {
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next {
     font-weight: bold;
-    /* Make text bold */
+  
 }
 
+.btn-send{
+    font-weight: bold;
+    border-radius: 10px;
+    /* border: 1px; */
+    border-color:  #006103;
+}
+.btn-send:hover{
+    font-weight: bold;
+    border-radius: 10px;
+    /* border: 1px; */
+    background-color:  #006103;
+    color: #caedf8;
+   
+
+}
 /* Styles for the Previous and Next links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous .page-link,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next .page-link {
     background-color: #f8f9fa;
-    /* Light background for Previous and Next */
+ 
     color: #006103;
-    /* Text color */
+ 
     border-radius: 10px;
-    /* Rounded corners */
+  
     padding: 8px 15px;
-    /* Reduced padding for Previous and Next */
+
     font-size: 0.85rem;
-    /* Reduced font size for Previous and Next */
+   
 }
 
 /* Hover styles for Previous and Next links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous .page-link:hover,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next .page-link:hover {
     background-color: #006103 !important;
-    /* Dark green background on hover */
+
     color: white !important;
-    /* White text on hover */
+ 
 }
 
 #addEmployee {
@@ -439,15 +437,6 @@ a {
     color: white;
 }
 
-#invoice {
-    padding: 10px 18px 10px 18px;
-    width: 80%;
-    border-radius: 7px;
-    border: none;
-    font-size: 14px;
-    background-color: #006103;
-    color: white;
-}
 #cancel {
     padding: 3px 10px 3px 10px;
     width: 70%;
@@ -550,10 +539,25 @@ td.details-control {
 
 /* Default down arrow */
 td.details-control::before {
-    content: ' ⮟ ';
-    /* Smooth transition */
+    content: '';
+    border: solid rgb(72, 70, 70);
+    border-width: 0 2px 1px 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg); /* Arrow */
+   
 }
 
+td.details-control.active::before {
+    content: '';
+    border: solid rgb(72, 70, 70);
+    border-width: 0 1px 2px 0;
+    display: inline-block;
+    padding: 2px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
 /* When toggled, show up arrow */
 tr.shown td.details-control {
     content: ' ';
@@ -578,7 +582,7 @@ tr.shown td.details-control {
 #ticketTable td {
     color: #4a4a4a;
     background: none;
-    /* border-bottom: 1px solid #e0e0e0; */
+    border-bottom: 1px solid #e0e0e0;
 }
 
 
@@ -613,7 +617,7 @@ tr.shown td.details-control {
     color: #4a4a4a;
     background: none;
     font-size: 10px !important;
-    /* border-bottom: 1px solid #e0e0e0; */
+    border-bottom: 1px solid #e0e0e0;
 }
 
 
@@ -628,41 +632,21 @@ strong{
     color: #004102;
     font-weight: bolder;
     font-size: 14px;
-    text-align: left !important;
 }
 #showMoreButton,#showLessButton{
     font-weight: 600;
     color: #004102;
 }
 
+.no-scroll {
+    overflow: hidden;
+  }
 
-.assign{
-    border: none !important;
-    background-color: #006103 !important;
-    color: white !important;
-}
-
-.assign:hover{
-    border: none !important;
-    background-color: #006103 !important;
-    color: white !important;
-}
-
-.assign:focus{
-    border: none !important;
-    background-color: #006103 !important;
-    color: white !important;
-}
-.reject , .reject:hover{
-    border: 1px solid #006103 !important;
-    color: #006103 !important;
-    background-color: transparent !important;
-}
-
-.description{
-    padding-left: 2%;
-    padding-top: 2%;
-}
+  .body-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black overlay */
+    transition: background-color 0.3s ease;
+  }
 @media (max-width:930px) {
 
     #rejectedTicketTable thead th,
@@ -680,7 +664,7 @@ strong{
         color: #4a4a4a;
         background: none;
         font-size: 10px !important;
-        /* border-bottom: 1px solid #e0e0e0; */
+        border-bottom: 1px solid #e0e0e0;
     }
 }
 
@@ -710,7 +694,7 @@ strong{
         color: #006103;
         font-weight: bold;
         text-transform: uppercase !important;
-        font-size: 14px !important;
+        font-size: 11px !important;
     }
 
     #rejectedTicketTable td,
@@ -719,6 +703,7 @@ strong{
         color: #4a4a4a;
         background: none;
         font-size: 14px !important;
-        /* border-bottom: 1px solid #e0e0e0; */
+        border-bottom: 1px solid #e0e0e0;
     }
 }
+

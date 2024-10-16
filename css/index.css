@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     width: 75%;
+    margin-top: -10% !important;
 }
 
 body {
@@ -17,14 +18,14 @@ body {
 }
 
 #left {
-    background-image: radial-gradient(#004102, #131313 50%);
+    background-image: radial-gradient(#004102, #131313 100%);
     height: 100vh;
 }
 
 .container-sty {
     background-color: white;
     border-radius: 10px;
-    width: 70%;
+    width: 60%;
 }
 
 .input-bottom-border {
@@ -68,6 +69,13 @@ input::placeholder {
     font-size: 15px;
 }
 
+.image h3{
+    margin-top: -80% !important;
+}
+
+.conte{
+    margin-top: -5% !important;
+}
 
 
 @media (max-width:450px) {
@@ -108,3 +116,43 @@ input::placeholder {
     }
 }
 
+
+@media (max-width:990px) {
+    #header {
+        font-size: 24px;
+    }
+}
+
+@media (max-width:450px) {
+    #header {
+        font-size: 13px;
+    }
+
+    .container-sty {
+        width: 80%;
+    }
+
+    .login-button {
+        margin-top: 10% !important;
+        width: 80%;
+        padding: 2%;
+        font-size: 12px;
+        border-radius: 6px !important;
+    }
+    #login{
+        font-size: 12px;
+    }
+}
+
+@media(max-width:769px){
+    .container-sty{
+        width: 80% !important;
+    }   
+}
+
+
+@media(max-width:1250px){
+    .container-sty{
+        width: 80% !important;
+    }   
+}

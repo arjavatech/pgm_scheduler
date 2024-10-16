@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', viewcompanydetails);
 
 function viewcompanydetails() {
+    document.getElementById('l').style.display = 'flex';
     const tableBody = document.getElementById("tBody");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/getall`;
 
     fetch(apiUrl)
         .then(response => {
+            document.getElementById('l').style.display = 'none';
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
@@ -18,31 +20,51 @@ function viewcompanydetails() {
             // Populate the table
             employeesData.forEach(element => {
                 const newRow = document.createElement('tr');
+                
+              
                 newRow.innerHTML = `
-                    <td class="pin-column">${element.company_name}</td>
-                    <td class="name-column">${element.phone_number}</td>
-                    <td class="phone-column">${element.first_name}</td>
+                    <td class="pin-column" >${element.company_name}</td>
+                  
+                    <td class="name-column">${element.first_name}</td>
+                    <td class="phone-column">${element.phone_number}</td>
                     <td class="isAdmin">${element.email}</td>
                     <td>
                         <div>
                             <span class="icon" title="Edit" style="cursor: pointer;">
                                 <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
                             </span>
-                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}">
+                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}" email-id="${element.email}" delete-comp="${element.company_name}">
                                 <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
-
                             </span>
                         </div>
                     </td>
                     <td>
-                          <span class="icon " style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}">
-                                <i class="fa-solid fa-paper-plane"></i>
-
-                            </span>
+                       <button id="send" class="${element.status == "Accepted" ?" ":"re-send "} " 
+                        companyIdSends="${element.company_id}" 
+                        companyNameForsend="${element.company_name}"
+                        phnNo="${element.phone_number}"
+                        fName="${element.first_name}"
+                        lName="${element.last_name}"
+                        mail="${element.email}"
+                        style="border:none; background:transparent"${element.status == "Accepted" ? "disabled" : ""}>
+                          <img  src=${element.status == "Accepted" ?"icon/sendDiasable.png":"icon/icons8-forward-message-20.png"}></img>
+                       </button>
                     </td>
                 `;
+                console.log(element.company_id,element.first_name);
                 tableBody.appendChild(newRow);
+                addCard({
+                    company_id:element.company_id,
+                    company_name:element.company_name,
+                    first_name:element.first_name,
+                    last_name:element.last_name,
+                    phone_number:element.phone_number,
+                    email:element.email,
+                    status:element.status
+                })
             });
+            // <i class="fa fa-envelope paper-plane" style="color: blue;" ${element.invite_status == "Accepted" ? "disabled" : ""}></i>
+                   
 
             // Initialize DataTable after populating data
             $(document).ready(function () {
@@ -57,18 +79,75 @@ function viewcompanydetails() {
                 });
             });
 
+            tableBody.addEventListener('click', function (event) {
+                if (event.target.closest('#send')) {
+                    const resendButton = event.target.closest('#send');
+                    const companyIdSends = resendButton.getAttribute('companyIdSends');
+                    const companyNameForsend = resendButton.getAttribute('companyNameForsend');
+                    const phnNo = resendButton.getAttribute('phnNo');
+                    const fName = resendButton.getAttribute('fName');
+                    const lName = resendButton.getAttribute('lName');
+                    const mail = resendButton.getAttribute('mail');
+
+                    document.getElementById('l').style.display = 'flex';
+                    const mainContent = document.getElementById('mainContent');
+                    mainContent.classList.add('blur-background');
+
+                    // Call the resend API
+                    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_mail/resend`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            company_id: companyIdSends,
+                            company_name: companyNameForsend,
+                            phone_number: phnNo,
+                            first_name: fName,
+                            last_name: lName,
+                            email: mail
+                        })
+                    })
+                    .then(response => {
+                        document.getElementById('l').style.display = 'none';
+                        if (!response.ok) {
+                            throw new Error(`Error: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        //SuccessModal
+                        popupModal.style.display = 'block';
+                        mainContent.classList.add('blur-background');
+                        closePopup.addEventListener('click', function () {
+                        window.location.href = 'company.html';
+                       });
+                    
+                    })
+                    .catch(error => {
+                        document.getElementById('l').style.display = 'none';
+                        console.error('Error:', error);
+                    });
+                }
+            });
+    
+
             // Event listener for deleting a company
             tableBody.addEventListener('click', function (event) {
+            
                 if (event.target.closest('.delete-icon')) {
                     const deleteIcon = event.target.closest('.delete-icon');
+                   
                     const companyId = deleteIcon.getAttribute('data-id');
                     const rowToDelete = deleteIcon.closest('tr');
-
-                    if (confirm('Are you sure you want to delete this company?')) {
-                        // Send PUT request to delete the company
-                        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}`, {
+                    const email = deleteIcon.getAttribute('email-id');
+                    const CompName=deleteIcon.getAttribute('delete-comp');
+                   
+                    document.getElementById("CompName").innerHTML=`Are you want to Delete ${CompName} Company`;
+                    showConfirmModal(() => {
+                        // If confirmed, proceed with delete
+                        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}/${email}`, {
                             method: 'PUT',
-                           
                         })
                         .then(response => {
                             if (!response.ok) {
@@ -81,18 +160,142 @@ function viewcompanydetails() {
                         })
                         .catch(error => {
                             console.error('Delete error:', error);
-                            alert('Failed to delete the company.');
+                            showAlert('Failed to delete the company.');
                         });
-                    }
+                    });
                 }
+
             });
         })
         .catch(error => {
+            document.getElementById('l').style.display = 'none';
             console.error('Fetch error:', error);
+            showAlert('Failed to load company details.');
         });
 }
 
+// Function to show the confirmation modal
+function showConfirmModal(onConfirm) {
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmYesBtn = document.getElementById('confirmYesBtn');
+    const confirmNoBtn = document.getElementById('confirmNoBtn');
+    const confirmCBtn = document.getElementById('confirmCBtn');
+    if (!confirmModal || !confirmYesBtn || !confirmNoBtn) {
+        console.error('Confirm modal elements are not found in the DOM.');
+        return;
+    }
+    
+    confirmModal.style.display = 'block';
+
+    confirmYesBtn.onclick = () => {
+        onConfirm();
+        confirmModal.style.display = 'none';
+    };
+
+    confirmNoBtn.onclick = () => {
+        confirmModal.style.display = 'none';
+    };
+    confirmCBtn.onclick = () => {
+        confirmModal.style.display = 'none';
+    };
+}
+
+// Function to show the alert modal
+function showAlert(message) {
+    const alertModal = document.getElementById('alertModal');
+    const alertMessage = document.getElementById('alertMessage');
+    const alertOkBtn = document.getElementById('alertOkBtn');
+    
+    alertMessage.innerText = message;
+    alertModal.style.display = 'block';
+
+    alertOkBtn.onclick = () => {
+        alertModal.style.display = 'none';
+    };
+}
+
+
+function addCard(employee){
+    const cardHtml =`
+        <div class="card mb-3" id="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Company Name </strong>  ${employee.company_name}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Name  </strong>  ${employee.first_name}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Phone </strong>  ${employee.phone_number}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Email </strong>  ${employee.email}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-center">
+                            <span class="icon" title="Edit" style="cursor: pointer;">
+                                <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
+                            </span>
+                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${employee.company_id}" email-id="${employee.email}" delete-comp="${employee.company_name}">
+                                <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <p class="d-flex justify-content-center"><button id="send" class="${employee.status == "Accepted" ?" ":"re-send "} " 
+                        companyIdSends="${employee.company_id}" 
+                        companyNameForsend="${employee.company_name}"
+                        phnNo="${employee.phone_number}"
+                        fName="${employee.first_name}"
+                        lName="${employee.last_name}"
+                        mail="${employee.email}"
+                        style="border:none; background:transparent"${employee.status == "Accepted" ? "disabled" : ""}>
+                          <img  src=${employee.status == "Accepted" ?"icon/sendDiasable.png":"icon/icons8-forward-message-20.png"}></img>
+                       </button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    $('#card-container').append(cardHtml);
+}
+
+
 document.getElementById('sidebarToggle').addEventListener('click', function () {
     var sidebar = document.getElementById('left');
-    sidebar.classList.toggle('active');
+    var body = document.body;  // Get the body element
+    var mainContents = document.querySelectorAll(".card"); // Use correct selector for multiple elements
+    var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
+
+    sidebar.classList.toggle('active');  // Toggle the sidebar
+
+    if (sidebar.classList.contains('active')) {
+        // When the sidebar is active (open), disable body scroll and add background overlay
+        body.classList.add('no-scroll');
+        body.classList.add('body-overlay');  // Add background overlay
+
+        content.style.backgroundColor = "transparent";  // Apply transparent background
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "transparent";  // Apply to each card
+        });
+    } else {
+        // When the sidebar is closed, re-enable body scroll and remove background overlay
+        body.classList.remove('no-scroll');
+        body.classList.remove('body-overlay');  // Remove background overlay
+        
+        content.style.backgroundColor = "";  // Reset background color
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "";  // Reset each card's background color
+        });
+    }
 });
+
+
+
+
+
