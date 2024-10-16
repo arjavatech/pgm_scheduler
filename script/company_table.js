@@ -24,8 +24,9 @@ function viewcompanydetails() {
               
                 newRow.innerHTML = `
                     <td class="pin-column" >${element.company_name}</td>
-                    <td class="name-column">${element.phone_number}</td>
-                    <td class="phone-column">${element.first_name}</td>
+                  
+                    <td class="name-column">${element.first_name}</td>
+                    <td class="phone-column">${element.phone_number}</td>
                     <td class="isAdmin">${element.email}</td>
                     <td>
                         <div>
@@ -50,7 +51,17 @@ function viewcompanydetails() {
                        </button>
                     </td>
                 `;
+                console.log(element.company_id,element.first_name);
                 tableBody.appendChild(newRow);
+                addCard({
+                    company_id:element.company_id,
+                    company_name:element.company_name,
+                    first_name:element.first_name,
+                    last_name:element.last_name,
+                    phone_number:element.phone_number,
+                    email:element.email,
+                    status:element.status
+                })
             });
             // <i class="fa fa-envelope paper-plane" style="color: blue;" ${element.invite_status == "Accepted" ? "disabled" : ""}></i>
                    
@@ -203,7 +214,88 @@ function showAlert(message) {
     };
 }
 
+
+function addCard(employee){
+    const cardHtml =`
+        <div class="card mb-3" id="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Company Name </strong>  ${employee.company_name}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Name  </strong>  ${employee.first_name}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Phone </strong>  ${employee.phone_number}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Email </strong>  ${employee.email}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex justify-content-center">
+                            <span class="icon" title="Edit" style="cursor: pointer;">
+                                <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
+                            </span>
+                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${employee.company_id}" email-id="${employee.email}" delete-comp="${employee.company_name}">
+                                <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <p class="d-flex justify-content-center"><button id="send" class="${employee.status == "Accepted" ?" ":"re-send "} " 
+                        companyIdSends="${employee.company_id}" 
+                        companyNameForsend="${employee.company_name}"
+                        phnNo="${employee.phone_number}"
+                        fName="${employee.first_name}"
+                        lName="${employee.last_name}"
+                        mail="${employee.email}"
+                        style="border:none; background:transparent"${employee.status == "Accepted" ? "disabled" : ""}>
+                          <img  src=${employee.status == "Accepted" ?"icon/sendDiasable.png":"icon/icons8-forward-message-20.png"}></img>
+                       </button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    $('#card-container').append(cardHtml);
+}
+
+
 document.getElementById('sidebarToggle').addEventListener('click', function () {
     var sidebar = document.getElementById('left');
-    sidebar.classList.toggle('active');
+    var body = document.body;  // Get the body element
+    var mainContents = document.querySelectorAll(".card"); // Use correct selector for multiple elements
+    var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
+
+    sidebar.classList.toggle('active');  // Toggle the sidebar
+
+    if (sidebar.classList.contains('active')) {
+        // When the sidebar is active (open), disable body scroll and add background overlay
+        body.classList.add('no-scroll');
+        body.classList.add('body-overlay');  // Add background overlay
+
+        content.style.backgroundColor = "transparent";  // Apply transparent background
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "transparent";  // Apply to each card
+        });
+    } else {
+        // When the sidebar is closed, re-enable body scroll and remove background overlay
+        body.classList.remove('no-scroll');
+        body.classList.remove('body-overlay');  // Remove background overlay
+        
+        content.style.backgroundColor = "";  // Reset background color
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "";  // Reset each card's background color
+        });
+    }
 });
+
+
+
+
+

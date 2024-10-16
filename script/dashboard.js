@@ -1,7 +1,31 @@
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {
     var sidebar = document.getElementById('left');
-    sidebar.classList.toggle('active');
+    var body = document.body;  // Get the body element
+    var mainContents = document.querySelectorAll(".card"); // Use correct selector for multiple elements
+    var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
+
+    sidebar.classList.toggle('active');  // Toggle the sidebar
+
+    if (sidebar.classList.contains('active')) {
+        // When the sidebar is active (open), disable body scroll and add background overlay
+        body.classList.add('no-scroll');
+        body.classList.add('body-overlay');  // Add background overlay
+
+        content.style.backgroundColor = "transparent";  // Apply transparent background
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "transparent";  // Apply to each card
+        });
+    } else {
+        // When the sidebar is closed, re-enable body scroll and remove background overlay
+        body.classList.remove('no-scroll');
+        body.classList.remove('body-overlay');  // Remove background overlay
+        
+        content.style.backgroundColor = "";  // Reset background color
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "";  // Reset each card's background color
+        });
+    }
 });
 
 const dataSets = {

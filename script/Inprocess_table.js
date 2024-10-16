@@ -52,6 +52,12 @@ $(document).ready(function () {
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
                             <label class="mt-3 d-flex justify-content-left">Employee Name</label>
+                            <select class="form-select mt-2 employee-select">
+                                <option value="ganesh">Mani</option>
+                                <option value="saab">Arunkumar</option>
+                                <option value="mercedes">Sakthi</option>
+                                <option value="audi">Logeshwari</option>
+                            </select>
                             <small>Pending work: <span class="pending-work">
                                 ${rowData.employees && rowData.employees.length > 0 ? rowData.employees[0].pending : 'N/A'}
                             </span></small>
@@ -125,8 +131,14 @@ $(document).ready(function () {
                         <p><strong>City:</strong> ${employee.city}</p>
                     </div>
                 </div>
-                <p class="text-center mb-2" onclick="showmore(this)">show more ⮟</p>
+                  <p class="text-center mb-2" id="showMoreButton" onclick="showmore('none','block')">show more ⮟</p>     
                 <div class="show-more" style="display:none">
+                <p><strong>Employee Name:</strong><select class="form-select mt-2 employee-select">
+                                <option value="ganesh">Mani</option>
+                                <option value="saab">Arunkumar</option>
+                                <option value="mercedes">Sakthi</option>
+                                <option value="audi">Logeshwari</option>
+                            </select></p>
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
@@ -137,7 +149,7 @@ $(document).ready(function () {
                             <div class="overlay">+3</div>
                         </div>
                     </div>
-                    <p class="text-center pt-3 mb-2" onclick="showless(this)">show less </p>       
+                     <p class="text-center pt-3 mb-2" id="showLessButton" onclick="showmore('block','none')">show less ⮝</p>             
                 </div>
             </div>
         </div>
@@ -147,22 +159,38 @@ $(document).ready(function () {
         $('#card-container').append(cardHtml);
     }
 
-    // Function to show more details in card
-    window.showmore = function(button) {
-        const showMoreDiv = $(button).next('.show-more');
-        showMoreDiv.slideDown(); // Show the additional details
-        $(button).hide(); // Hide the "show more" button
-    }
-
-    // Function to show less details in card
-    window.showless = function(button) {
-        const showMoreDiv = $(button).parent('.show-more');
-        showMoreDiv.slideUp(); 
-        $(button).show(); 
-    }
 });
+
+function showmore(response1, response2) {
+    document.getElementById("showMoreButton").style.display = response1;
+    document.querySelector(".show-more").style.display = response2;
+}
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {
     var sidebar = document.getElementById('left');
-    sidebar.classList.toggle('active');
+    var body = document.body;  // Get the body element
+    var mainContents = document.querySelectorAll(".card"); // Use correct selector for multiple elements
+    var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
+
+    sidebar.classList.toggle('active');  // Toggle the sidebar
+
+    if (sidebar.classList.contains('active')) {
+        // When the sidebar is active (open), disable body scroll and add background overlay
+        body.classList.add('no-scroll');
+        body.classList.add('body-overlay');  // Add background overlay
+
+        content.style.backgroundColor = "transparent";  // Apply transparent background
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "transparent";  // Apply to each card
+        });
+    } else {
+        // When the sidebar is closed, re-enable body scroll and remove background overlay
+        body.classList.remove('no-scroll');
+        body.classList.remove('body-overlay');  // Remove background overlay
+        
+        content.style.backgroundColor = "";  // Reset background color
+        mainContents.forEach(function(mainContent) {
+            mainContent.style.backgroundColor = "";  // Reset each card's background color
+        });
+    }
 });

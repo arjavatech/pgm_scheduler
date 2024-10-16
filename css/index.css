@@ -26,7 +26,6 @@ body {
     background-color: white;
     border-radius: 10px;
     width: 60%;
-    height: 90%;
 }
 
 .input-bottom-border {
@@ -148,11 +147,12 @@ input::placeholder {
 @media(max-width:769px){
     .container-sty{
         width: 80% !important;
-        height: 94%;
-        padding-top: 4px;
-        padding-bottom: 4px;
-    }
-   
+    }   
 }
 
 
+@media(max-width:1250px){
+    .container-sty{
+        width: 80% !important;
+    }   
+}

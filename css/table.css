@@ -11,11 +11,6 @@ body {
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-#left {
-    background-image: radial-gradient(#004102, #131313 50%);
-    height: 200vh;
-}
-
 .container-sty {
     background-color: white;
     border-radius: 10px;
@@ -642,6 +637,16 @@ strong{
     font-weight: 600;
     color: #004102;
 }
+
+.no-scroll {
+    overflow: hidden;
+  }
+
+  .body-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black overlay */
+    transition: background-color 0.3s ease;
+  }
 @media (max-width:930px) {
 
     #rejectedTicketTable thead th,
@@ -689,7 +694,7 @@ strong{
         color: #006103;
         font-weight: bold;
         text-transform: uppercase !important;
-        font-size: 14px !important;
+        font-size: 11px !important;
     }
 
     #rejectedTicketTable td,

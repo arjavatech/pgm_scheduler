@@ -119,6 +119,23 @@
         transform: rotate(360deg);
       }
     }
+
+    /* Disable body scrolling */
+    .no-scroll {
+      overflow: hidden;
+    }
+
+    .body-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Semi-transparent black overlay */
+      transition: background-color 0.3s ease;
+    }
+
+    @media (max-width:450px) {
+      #fix {
+        margin-top: -8% !important;
+      }
+    }
   </style>
 </head>
 
@@ -134,7 +151,7 @@
         <img src="images/logo.png" alt="Logo" id="logo" style="max-width: 100%;">
       </div>
       <div class="col-4 text-end">
-        <img src="icon/Mask group.png" alt="Profile Icon" style="max-width: 100%;display: none;">
+        <img src="icon/Mask group.png" alt="Profile Icon" style="max-width: 100%;">
       </div>
     </div>
   </div>
@@ -178,13 +195,13 @@
 
               <!-- Table -->
               <div class="container-fluid mt-5 d-flex justify-content-center">
-                <div id="table">
+                <div id="table" class="d-none d-md-table">
                   <table id="ticketTable" class="table table-striped ">
                     <thead>
                       <tr>
                         <th>Company Name</th>
-                        <th id="fws">Phone Number</th>
                         <th>First Name</th>
+                        <th id="fws">Phone Number</th>
                         <th>Email</th>
                         <th>Action</th>
                         <th></th>
@@ -195,7 +212,9 @@
                 </div>
               </div>
               <!-- Placeholder for Cards (Mobile View) -->
-              <div id="card-container" class="d-md-none d-block card-view"></div>
+              <div id="card-container" class="d-md-none d-block card-view">
+
+              </div>
             </div>
           </div>
         </div>
