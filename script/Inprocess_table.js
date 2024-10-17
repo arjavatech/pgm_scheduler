@@ -67,15 +67,15 @@ $(document).ready(function () {
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
                             <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
-                        </div>
-                        <div class=" button-container">
-                           <button>Reassign</button>
-                        </div>
-                    </div>
+                                <img src="images/profile img.png" alt="Image 1" width="100px">
+                                <div class="image-container d-inline justify-content-center">
+                                    <img src="images/profile img.png" alt="Image 1" width="100px">
+                                    <div class="overlay">+3</div>
+                                </div>
+                                <div class=" button-container">
+                                    <button id="reAssignedEmployee">Reassign</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </td>

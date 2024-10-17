@@ -80,8 +80,9 @@ table.dataTable.table-striped>tbody>tr.odd {
 
 table.dataTable.table-striped>tbody>tr.even {
     background-color: #ffffff !important;
-   
+
 }
+
 /* 
 
 table.dataTable.table-striped>tbody>tr.odd>* {
@@ -92,7 +93,7 @@ table.dataTable.table-striped>tbody>tr.odd>* {
 
 table.dataTable tbody tr:hover {
     background-color: #f1f1f1 !important;
-   
+
 }
 
 .details-row {
@@ -107,7 +108,7 @@ table.dataTable tbody tr:hover {
 .button-container {
 
     justify-content: flex-start;
-   
+
 }
 
 .details-row .btn {
@@ -153,7 +154,7 @@ table.dataTable tbody tr:hover {
 #rejectedTicketTable td .issue-type.fridge .circle,
 #unassignedTicketTable td .issue-type.fridge .circle,
 #ticketTable td .issue-type.fridge .circle {
-    background-color: #04b9f6;   
+    background-color: #04b9f6;
     height: 5px;
     width: 5px;
     border-radius: 50%;
@@ -226,7 +227,7 @@ table.dataTable tbody tr:hover {
 
 #sidebar a {
     color: #fff;
-  
+
 }
 
 #searchbar {
@@ -347,9 +348,9 @@ a {
     font-size: 0.85rem;
 
     text-align: center;
- 
+
     transition: background-color 0.3s, color 0.3s;
-   
+
 }
 
 
@@ -359,7 +360,7 @@ a {
     color: white !important;
 
     background-color: #006103 !important;
- 
+
 }
 
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.active {
@@ -386,37 +387,39 @@ a {
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next {
     font-weight: bold;
-  
+
 }
 
-.btn-send{
+.btn-send {
     font-weight: bold;
     border-radius: 10px;
     /* border: 1px; */
-    border-color:  #006103;
+    border-color: #006103;
 }
-.btn-send:hover{
+
+.btn-send:hover {
     font-weight: bold;
     border-radius: 10px;
     /* border: 1px; */
-    background-color:  #006103;
+    background-color: #006103;
     color: #caedf8;
-   
+
 
 }
+
 /* Styles for the Previous and Next links */
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.previous .page-link,
 .dataTables_wrapper .dataTables_paginate .pagination .page-item.next .page-link {
     background-color: #f8f9fa;
- 
+
     color: #006103;
- 
+
     border-radius: 10px;
-  
+
     padding: 8px 15px;
 
     font-size: 0.85rem;
-   
+
 }
 
 /* Hover styles for Previous and Next links */
@@ -425,7 +428,7 @@ a {
     background-color: #006103 !important;
 
     color: white !important;
- 
+
 }
 
 #addEmployee {
@@ -436,7 +439,14 @@ a {
     background-color: #006103;
     color: white;
 }
-
+#reAssignedEmployee {
+    padding: 12px 20px 12px 20px;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    background-color: #006103;
+    color: white;
+}
 #cancel {
     padding: 3px 10px 3px 10px;
     width: 70%;
@@ -545,8 +555,9 @@ td.details-control::before {
     display: inline-block;
     padding: 2px;
     transform: rotate(45deg);
-    -webkit-transform: rotate(45deg); /* Arrow */
-   
+    -webkit-transform: rotate(45deg);
+    /* Arrow */
+
 }
 
 td.details-control.active::before {
@@ -558,6 +569,7 @@ td.details-control.active::before {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
 }
+
 /* When toggled, show up arrow */
 tr.shown td.details-control {
     content: ' ';
@@ -628,25 +640,29 @@ tr.shown td.details-control {
 .card {
     border: 1px solid #006103;
 }
-strong{
+
+strong {
     color: #004102;
     font-weight: bolder;
     font-size: 14px;
 }
-#showMoreButton,#showLessButton{
+
+#showMoreButton,
+#showLessButton {
     font-weight: 600;
     color: #004102;
 }
 
 .no-scroll {
     overflow: hidden;
-  }
+}
 
-  .body-overlay {
+.body-overlay {
     background-color: rgba(0, 0, 0, 0.5);
     /* Semi-transparent black overlay */
     transition: background-color 0.3s ease;
-  }
+}
+
 @media (max-width:930px) {
 
     #rejectedTicketTable thead th,
@@ -706,4 +722,3 @@ strong{
         border-bottom: 1px solid #e0e0e0;
     }
 }
-

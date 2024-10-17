@@ -1,0 +1,103 @@
+body {
+    background-color: #ccc;
+}
+
+.gradient-blue {
+    background-image: linear-gradient(to bottom, #4bcbeb, #0e92b2);
+}
+
+.gradient-pink {
+    background-image: linear-gradient(to bottom, #FE9496, #FE7096);
+}
+
+.gradient-yellow {
+    background-image: linear-gradient(to bottom, #FFC831, #DB9806);
+}
+
+.gradient-purple {
+    background-image: linear-gradient(to bottom, #9E58FF, #6A3EA8);
+}
+
+.box {
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 18px;
+}
+
+.span {
+    float: inline-end;
+}
+
+#ticketSummary {
+    background-color: white;
+    border-radius: 13px;
+}
+
+
+
+.chart-container2 {
+    background-color: white;
+    padding: 10px 15px 40px 10px;
+    border-radius: 10px;
+    width: 100%;
+    height: 255px;
+    position: relative;
+}
+
+@media (max-width:1194px) {
+    .box {
+        color: white;
+        padding: 10px;
+        border-radius: 20px;
+        font-size: 12px;
+    }
+}
+
+
+@media (max-width:768px) {
+    .box {
+        color: white;
+        padding: 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        /* width: 50%; */
+    }
+
+    #fix {
+        margin-top: 10%;
+    }
+}
+
+
+
+@media (max-width:500px) {
+    .box {
+        color: white;
+        padding: 10px;
+        border-radius: 20px;
+        font-size: 12px !important;
+        /* width: 50%; */
+    }
+
+    #fix {
+        margin-top: 15% !important;
+    }
+}
+
+@media (max-width:400px) {
+    #fix {
+        margin-top: 15% !important;
+    }
+}
+
+
+@media (max-width:340px) {
+    .box {
+        color: white;
+        padding: 10px;
+        border-radius: 20px;
+        font-size: 10px !important;
+        /* width: 50%; */
+    }
+}

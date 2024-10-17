@@ -34,47 +34,45 @@ $(document).ready(function () {
             ticket.employee_no_of_completed_work,
             ticket.no_of_pending_works,
           
-        ]).draw(false).node(); // Get the row node after adding
-
-        // $(rowNode).find('td:first').addClass('details-control');
+        ]).draw(false).node(); 
     }
 
     // Format the row details
-    function format(rowData) {
-        return `
-            <tr class="collapse-content details-row">
-                <td colspan="8">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-4">
-                            <strong class="d-flex justify-content-left">Customer Address</strong>
-                            <p class="pt-2" style="font-size: 13px; text-align: left;">
-                                ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}, ${rowData.state}
-                            </p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
-                            <select class="form-select mt-2 employee-select">
-                                <option value="ganesh">Mani</option>
-                                <option value="saab">Arunkumar</option>
-                                <option value="mercedes">Sakthi</option>
-                                <option value="audi">Logeshwari</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-6">
-                            <strong>Description:</strong>
-                            <p class="description">${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
-                        </div>
-                    </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>`;
-    }
+    // function format(rowData) {
+    //     return `
+    //         <tr class="collapse-content details-row">
+    //             <td colspan="8">
+    //                 <div class="row">
+    //                     <div class="col-md-1"></div>
+    //                     <div class="col-md-4">
+    //                         <strong class="d-flex justify-content-left">Customer Address</strong>
+    //                         <p class="pt-2" style="font-size: 13px; text-align: left;">
+    //                             ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}, ${rowData.state}
+    //                         </p>
+    //                         <label class="mt-3 d-flex justify-content-left">Employee Name</label>
+    //                         <select class="form-select mt-2 employee-select">
+    //                             <option value="ganesh">Mani</option>
+    //                             <option value="saab">Arunkumar</option>
+    //                             <option value="mercedes">Sakthi</option>
+    //                             <option value="audi">Logeshwari</option>
+    //                         </select>
+    //                     </div>
+    //                     <div class="col-md-1"></div>
+    //                     <div class="col-md-6">
+    //                         <strong>Description:</strong>
+    //                         <p class="description">${rowData.description}</p>
+    //                         <div class="image-gallery d-flex justify-content-center">
+    //                     <img src="images/profile img.png" alt="Image 1" width="100px">
+    //                     <div class="image-container d-inline justify-content-center">
+    //                         <img src="images/profile img.png" alt="Image 1" width="100px">
+    //                         <div class="overlay">+3</div>
+    //                     </div>
+    //                 </div>
+    //                     </div>
+    //                 </div>
+    //             </td>
+    //         </tr>`;
+    // }
 
     // Expand row details on click
     $('#ticketTable tbody').on('click', 'td.details-control', function () {
@@ -87,7 +85,7 @@ $(document).ready(function () {
             row.child.hide();
             tr.removeClass('shown');
         } else {
-            row.child(format(details)).show();
+            // row.child(format(details)).show();
             tr.addClass('shown');
         }
     });
@@ -99,41 +97,32 @@ $(document).ready(function () {
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Name </strong>  ${employee.name}</p>
+                        <p><strong>Name </strong>  ${employee.first_name}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Ticket ID </strong>  ${employee.ticket_id}</p>
+                        <p><strong>Phone </strong>  ${employee.phone_number}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Issue type </strong>  ${employee.ticket_type}</p>
+                        <p><strong>Issue type </strong>  ${employee.specialization}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Date </strong>  ${employee.complain_raised_date}</p>
+                        <p><strong>Email </strong>  ${employee.email}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Phone </strong> ${employee.phone_number}</p>
+                        <p><strong>Location </strong> ${employee.assigned_locations}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>City:</strong> ${employee.city}</p>
+                        <p><strong>Completed Ticket:</strong> ${employee.employee_no_of_completed_work}</p>
                     </div>
                 </div>
-                  <p class="text-center mb-2" id="showMoreButton" onclick="showmore('none','block')">show more ⮟</p>
-                <div class="show-more" style="display:none">
-                    <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
-                    <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
-                    <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
-                        </div>
+                 <div class="row">
+                    <div class="col-6">
+                        <p><strong>Pending Ticket:</strong> ${employee.no_of_pending_works}</p>
                     </div>
-                     <p class="text-center pt-3 mb-2" id="showLessButton" onclick="showmore('block','none')">show less ⮝</p>          
                 </div>
             </div>
         </div>

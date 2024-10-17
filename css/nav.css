@@ -245,6 +245,9 @@ a {
         width: 18% !important;
        
     }
+    #logo {
+        width: 65% !important;
+    }
 }
 
 @media (max-width: 450px) {
