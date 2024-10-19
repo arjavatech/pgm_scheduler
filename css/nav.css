@@ -202,15 +202,9 @@ a {
         overflow: hidden;
     }
 
-    #logo {
-        width: 10% !important;
-    }
     #rejectedTicketTable thead th,
     #unassignedTicketTable thead th,
     #ticketTable thead th {
-        /* color: #006103; */
-        /* font-weight: bold; */
-        /* text-transform: uppercase !important; */
         font-size: 10px !important;
     }
 }

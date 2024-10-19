@@ -12,12 +12,65 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/newDashboard.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <style>
-    
+    .box-border {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .box2,
+    .box3 {
+        padding: 20px;
+        text-align: center;
+        border-radius: 20px;
+        margin: 0 auto;
+        border: 1px solid #666;
+    }
+
+    .box2 h3,
+    .box3 h3 {
+        font-size: 25px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .box2 p {
+        font-size: 11px;
+        color: #666;
+    }
+
+    .box3 p {
+        font-size: 9px;
+        color: #666;
+    }
+
+    /* Disable body scrolling */
+    .no-scroll {
+        overflow: hidden;
+    }
+
+    .body-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent black overlay */
+        transition: background-color 0.3s ease;
+    }
+
+    #ticketChart1 {
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    @media (max-width:576px) {
+        .box-border {
+            height: 350px !important;
+        }
+    }
 </style>
 
 <body>
@@ -154,7 +207,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mt-5 mb-4" style="margin-left: -20px;margin-right: -20px;">
+                                    <div class="row mt-5 mb-5">
                                         <div class="col-12 col-md-5 mb-4">
                                             <div class="chart-container2">
                                                 <p
@@ -188,10 +241,10 @@
                                 </div>
 
                                 <div class="col-12 col-lg-4">
-                                    <div class="mb-4" style="background-color: white; padding: 20px;border-radius: 13px;">
+                                    <div style="background-color: white; padding: 20px;border-radius: 13px;">
                                         <p class="fw-bold mt-3" style="text-align: start;">Notification</p>
                                         <ul class="list-group"
-                                            style="padding-left: 20px !important;line-height: 30px;font-size: small;">
+                                            style="padding: 20px !important;line-height: 30px;font-size: small;">
                                             <li>Daily Summary: You have 5 pending tickets, 3 in progress, and 2
                                                 completed today.</li>
                                             <li>A new ticket has been received. Please assign an employee.</li>
