@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/signUp.css">
     <title>Login</title>
 
     <!-- Google Sign-In Script -->
@@ -70,10 +70,6 @@
                             <p class="mt-4 fw-bold" id="login">or login with</p>
                             <!-- Icons Row -->
                             <div class="row mt-4 d-flex justify-content-center align-items-center" class="Icons">
-
-                                <!-- <div class="col-2">
-                                    <i class="fab fa-google fa-2x"></i>
-                                </div> -->
                                 <p class="g_id_signin mt-4"></p>
                             </div>
                         </div>
@@ -134,15 +130,15 @@
                 .then(response => {
                     document.getElementById('l').style.display = 'none';
                     if (!response.ok) {
-                        
+
                         alert("User ID not found");
                     }
                     return response.json();
                 })
                 .then(data => {
-                   
+
                     if (data.isSuperAdmin) {
-                        
+
                         // Redirect to company.html
                         window.location.href = 'company.html';
                     }
@@ -153,7 +149,7 @@
                     else if (data.isEmployee) {
                         alert("Employee page development is under maintenance");
                     }
-                    
+
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';

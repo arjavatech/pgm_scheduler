@@ -187,17 +187,15 @@
                         </p>
                     </div>
 
-                    <div class="col-sm-12 col-xl-6 col-md-7 col-lg-7 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1 order-md-1 "
-                        id="left">
+                    <div class="col-sm-12 col-xl-6 col-md-7 col-lg-7 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1 order-md-1" id="left">
                         <div class="container container-sty text-center">
                             <h2 class="text-center m-3 fw-bold">Sign Up</h2>
-                            <input type="text" class="input-bottom-border mt-4" placeholder="Username/Phone Number">
-                            <input id="password" placeholder="Password" type="password"
-                                class="input-bottom-border mt-4">
-                            <input id="confirm-password" placeholder="Confirm password" type="password"
-                                class="input-bottom-border mt-4">
-                            <button type="submit" class="mt-5 login-button">Submit</button>
-
+                            <form id="signupForm">
+                                <input type="text" class="input-bottom-border mt-4" id="username" placeholder="Username/Phone Number" required>
+                                <input id="password" placeholder="Password" type="password" class="input-bottom-border mt-4" required>
+                                <input id="confirm-password" placeholder="Confirm password" type="password" class="input-bottom-border mt-4" required>
+                                <button type="submit" class="mt-5 login-button" id="submitBtn">Submit</button>
+                            </form>
                             <p class="mt-2" style="font-size: 18px;color: #52525b;">or Sign up with</p>
                             <p class="g_id_signin mt-2"></p>
                         </div>
@@ -290,6 +288,117 @@
 
         // Call fetchData when the page is fully loaded
         document.addEventListener('DOMContentLoaded', checkUrl);
+        function validateForm() {
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+
+    if (password.length < 3) {
+        alert("Password must be at least 8 characters long.");
+        return false;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return false;
+    }
+
+    return true;
+}
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        handleSubmit();
+    });
+
+        function handleSubmit(response) {
+            event.preventDefault(); // Prevent the default form submission
+            if (!validateForm()) return;
+            document.getElementById('l').style.display = 'flex';
+            let url = window.location.href;
+            let urlParams = new URLSearchParams(window.location.search);
+
+            let isEmployee;
+            let cid;
+            let password;
+            console.log(urlParams);
+            if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
+
+                if (urlParams.has('invite_id_c')) {
+                    cid = urlParams.get('invite_id_c');
+                    isEmployee = false;
+                    password=document.getElementById("password").value;
+                } else if (urlParams.has('invite_id_e')) {
+                    cid = urlParams.get('invite_id_e');
+                    isEmployee = true;
+                    password=document.getElementById("password").value;
+                }
+
+                let userDetails = decodeJwtResponse(response.credential);
+                let data = {
+                    "company_id":cid,
+                    "id": "user789",
+                    "login_type": "annonymas",
+                    "password": password,
+                    "approved_by": "admin001",
+                    "signup_url": url,
+                    "is_employee": true,
+                    "last_modified_by": "admin001"
+                }
+
+                fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        document.getElementById('l').style.display = 'none';
+                        if (!response.ok) {
+                            throw new Error(`Error: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            // showLogoutModal();  // Show failure modal
+                        } else {
+                            setTimeout(function () {
+                                if (urlParams.has('invite_id_c')) {
+                                    window.location.href = 'dashboard.html';
+                                } else if (urlParams.has('invite_id_e')) {
+                                    alert("Employee page is under maintenance.");
+                                    const mainContent = document.getElementById('mainContent');
+                                    document.getElementById("txt").textContent = "Employee page is under maintenance.";
+                                    popupModal.style.display = 'block';
+                                    mainContent.classList.add('blur-background');
+                                    closePopup.addEventListener('click', function () {
+                                        window.location.href = 'signUp.html';
+                                    });
+                                }
+
+                            }, 1000);
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById('l').style.display = 'none';
+                        console.error('Error:', error);
+                    });
+            }
+            else {
+                console.log('Current URL:', window.location.href);
+               
+                document.getElementById('l').style.display = 'none';
+                const mainContent = document.getElementById('mainContent');
+                document.getElementById("txt").textContent = "Signup Failed - Your URL is invalid to access our App.";
+                popupModal.style.display = 'block';
+                mainContent.classList.add('blur-background');
+                closePopup.addEventListener('click', function () {
+                    window.location.href = 'signUp.html';
+                });
+                // alert("No invite ID found in the URL.");
+            }
+
+        }
 
         function handleCredentialResponse(response) {
             document.getElementById('l').style.display = 'flex';
