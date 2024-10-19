@@ -16,6 +16,62 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+<style>
+    .box-border {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .box2,
+    .box3 {
+        padding: 20px;
+        text-align: center;
+        border-radius: 20px;
+        margin: 0 auto;
+        border: 1px solid #666;
+    }
+
+    .box2 h3,
+    .box3 h3 {
+        font-size: 25px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .box2 p {
+        font-size: 11px;
+        color: #666;
+    }
+
+    .box3 p {
+        font-size: 9px;
+        color: #666;
+    }
+
+    /* Disable body scrolling */
+    .no-scroll {
+        overflow: hidden;
+    }
+
+    .body-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent black overlay */
+        transition: background-color 0.3s ease;
+    }
+
+    #ticketChart1 {
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    @media (max-width:576px) {
+        .box-border {
+            height: 350px !important;
+        }
+    }
+</style>
 
 <body>
     <div id="nav">
@@ -90,8 +146,8 @@
                     <!-- Main Content -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p id="header"
-                            style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
-                            Employee <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
+                            style="background-color: white;box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
+                            Admin <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
                                     style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
@@ -127,58 +183,67 @@
 
                         <div class="container-fluid mt-4">
                             <div class="row">
-                                <div class="col-8">
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <p class="fw-bold mt-3" style="text-align: start;">Ticket History</p>
+                                <div class="col-12 col-lg-8">
+                                    <div class="row" id="ticketChart1">
+                                        <div class="col-12 col-md-2">
+                                            <p class="fw-bold mt-3" style="text-align: start;font-size: small;">Ticket
+                                                History</p>
                                         </div>
-                                        <div class="col-10 d-flex justify-content-center" style="gap: 3%;">
-                                            <button onclick="updateChart('12months', this)" class="btn">12
-                                                Months</button>
-                                            <button onclick="updateChart('6months', this)" class="btn">6 Months</button>
-                                            <button onclick="updateChart('30days', this)" class="btn">30 Days</button>
-                                            <button onclick="updateChart('7days', this)" class="btn">7 Days</button>
-                                            <button onclick="updateChart('today', this)" class="btn">Today</button>
+                                        <div class="col-12 col-md-10 d-flex justify-content-center"
+                                            style="gap: 3%; flex-wrap: wrap;">
+                                            <button onclick="updateChart('12months', this)" class="btn"
+                                                style="font-size: small;">12 Months</button>
+                                            <button onclick="updateChart('6months', this)" class="btn"
+                                                style="font-size: small;">6 Months</button>
+                                            <button onclick="updateChart('30days', this)" class="btn"
+                                                style="font-size: small;">30 Days</button>
+                                            <button onclick="updateChart('7days', this)" class="btn"
+                                                style="font-size: small;">7 Days</button>
+                                            <button onclick="updateChart('today', this)" class="btn"
+                                                style="font-size: small;">Today</button>
+                                        </div>
+                                        <div class="col-12 mt-5">
+                                            <canvas id="myChart" height="120px"></canvas>
                                         </div>
                                     </div>
-                                    <canvas id="myChart" class="mt-5" height="100%"></canvas>
 
-                                    <div class="row mt-5">
-                                        <div class="col-4 ">
+                                    <div class="row mt-5 mb-5">
+                                        <div class="col-12 col-md-5 mb-4">
                                             <div class="chart-container2">
                                                 <p
                                                     style="font-weight: bold; margin-bottom: 4px;font-size: 12px; text-align: center;">
-                                                    Revenue
-                                                    <span style="font-weight: normal;">(Last Four
-                                                        months)</span>
+                                                    Revenue <span style="font-weight: normal;">(Last Four months)</span>
                                                 </p>
                                                 <canvas id="myChart2"></canvas>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div style="background-color: white;height: 255px;padding: 20px;">
-                                                <p>Employee Count</p>
-                                                <div class="row" style="padding: 10px;">
-                                                    <div class="col-5 col-md-5 text-center" style="align-items: center;width: 100%;border: 1px solid black;padding: 18px;">
-                                                        <h3>23</h3>
-                                                        <h5 style="font-size: small;color: #ac9e9e;">Total Employee</h5>
+                                        <div class="col-12 col-md-7">
+                                            <div class="box-border" style="height: 255px;">
+                                                <h5 style="font-size:medium;font-weight: bold;" class="mb-4">Employees
+                                                    Count</h5>
+                                                <div class="row mt-3 justify-content-center align-content-center">
+                                                    <div class="col-12 col-sm-6 mb-3">
+                                                        <div class="box2">
+                                                            <h3>23</h3>
+                                                            <p>Total Employees</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-1"></div>
-                                                    <div class="col-5 col-md-5 text-center" style="border: 1px solid black;width: 100%;padding: 18px;">
-                                                        <h3>23</h3>
-                                                        <h5 style="font-size: small;color: #ac9e9e;">Available Employee</h5>
+                                                    <div class="col-12 col-sm-6 mb-3">
+                                                        <div class="box3">
+                                                            <h3>13</h3>
+                                                            <p>Available Employees</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-4">
+                                <div class="col-12 col-lg-4">
                                     <div style="background-color: white; padding: 20px;border-radius: 13px;">
                                         <p class="fw-bold mt-3" style="text-align: start;">Notification</p>
-                                        <ul class="list-group p-1"
+                                        <ul class="list-group"
                                             style="padding: 20px !important;line-height: 30px;font-size: small;">
                                             <li>Daily Summary: You have 5 pending tickets, 3 in progress, and 2
                                                 completed today.</li>
@@ -193,18 +258,19 @@
                                             <li>A new ticket has been received. Please assign an employee.</li>
                                         </ul>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
 
-    <script src="script/dashboard.js"></script>
+    <script src="script/newDashboard.js"></script>
 
     <script>
         // List of items to be added dynamically

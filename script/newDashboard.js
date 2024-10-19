@@ -21,21 +21,34 @@ const dataSets = {
     }
 };
 
+// Function to update chart data
+function updateChart(range, button) {
+    // Update active button style
+    document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+
+    // Update chart data
+    chart.data.labels = dataSets[range].labels;
+    chart.data.datasets[0].data = dataSets[range].data;
+    chart.update();
+}
+
 // Initialize chart with 12 months data
 let ctx = document.getElementById('myChart').getContext('2d');
 let chart = new Chart(ctx, {
-    type: 'line',
+    type: 'line',  // Set as 'line' to simulate an area chart
     data: {
         labels: dataSets['12months'].labels,
         datasets: [{
             label: 'Ticket History',
             data: dataSets['12months'].data,
-            borderColor: '#6200ea',
-            backgroundColor: 'rgba(98, 0, 234, 0.1)',
-            pointBackgroundColor: '#6200ea',
-            pointBorderColor: '#6200ea',
+            borderColor: '#131313',  // Line color
+            backgroundColor: 'rgba(98, 0, 234, 0.1)',  // Fill color for the area
+            pointBackgroundColor: '#131313',
+            pointBorderColor: '#131313',
             pointHoverRadius: 3,
             tension: 0.1,
+            borderWidth: 1,
         }]
     },
     options: {
@@ -67,4 +80,89 @@ let chart = new Chart(ctx, {
             }
         }
     }
+});
+
+
+
+const months = ['Feb', 'Mar', 'Apr', 'May']; // Example labels
+
+// Get the context of the canvas element
+let ctx2 = document.getElementById('myChart2').getContext('2d');
+let chart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: months,
+        datasets: [{
+            data: [200, 250, 150, 175], // Example data
+            backgroundColor: ['#C0C0C0', '#C0C0C0', '#C0C0C0', '#7706CD'], // Gray for first three bars, purple for the last
+            borderWidth: 0, // No border to match the design
+            barThickness: 10, // Set the bar thickness (adjust this value as needed)
+
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false // Hide legend to match your design
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: '#999',
+                    stepSize: 100,
+                    callback: function(value) { return '$' + value; } // Add dollar signs
+                },
+                grid: {
+                    color: '#e0e0e0'
+                }
+            },
+            x: {
+                ticks: {
+                    color: '#999'
+                },
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+
+
+
+
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('left');
+    var body = document.body;  // Get the body element
+    var Ticket = document.getElementById("ticketSummary");
+    var box = document.querySelectorAll(".box")
+    var mainContents = document.querySelectorAll(".row"); // Use correct selector for multiple elements
+    // var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
+
+    sidebar.classList.toggle('active');  // Toggle the sidebar
+
+    // if (sidebar.classList.contains('active')) {
+    //     // When the sidebar is active (open), disable body scroll and add background overlay
+    //     body.classList.add('no-scroll');
+    //     body.classList.add('body-overlay');  // Add background overlay
+
+    //     Ticket.style.backgroundColor = "transparent";  // Apply transparent background
+    //     box.forEach(function(mainContent) {
+    //         mainContent.style.opacity = "0.2";  // Apply to each card
+    //     });
+    // } else {
+    //     // When the sidebar is closed, re-enable body scroll and remove background overlay
+    //     body.classList.remove('no-scroll');
+    //     body.classList.remove('body-overlay');  // Remove background overlay
+        
+    //     Ticket.style.backgroundColor = "";  // Reset background color
+    //     box.forEach(function(mainContent) {
+    //         mainContent.style.opacity = "1";  // Reset each card's background color
+    //     });
+        
+    // }
 });

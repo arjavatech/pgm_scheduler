@@ -4,25 +4,29 @@ body {
 
 .gradient-blue {
     background-image: linear-gradient(to bottom, #4bcbeb, #0e92b2);
+    font-size: small;
 }
 
 .gradient-pink {
     background-image: linear-gradient(to bottom, #FE9496, #FE7096);
+    font-size: small;
 }
 
 .gradient-yellow {
     background-image: linear-gradient(to bottom, #FFC831, #DB9806);
+    font-size: small;
 }
 
 .gradient-purple {
     background-image: linear-gradient(to bottom, #9E58FF, #6A3EA8);
+    font-size: small;
 }
 
 .box {
     color: white;
     padding: 20px;
     border-radius: 20px;
-    font-size: 18px;
+    font-size: small;
 }
 
 .span {
@@ -77,7 +81,6 @@ body {
         padding: 10px;
         border-radius: 20px;
         font-size: 12px !important;
-        /* width: 50%; */
     }
 
     #fix {
@@ -98,6 +101,5 @@ body {
         padding: 10px;
         border-radius: 20px;
         font-size: 10px !important;
-        /* width: 50%; */
     }
 }
