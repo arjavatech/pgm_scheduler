@@ -57,7 +57,7 @@ a {
 
 #nav {
     background-image: radial-gradient(#004102, #131313 50%);
-    padding: 20px;
+    padding: 10px;
 }
 
 /* Loading   start*/
@@ -153,6 +153,7 @@ a {
         top: 0;
         z-index: 1000;
     }
+    
 
     #header_admin {
         display: none;
@@ -202,7 +203,7 @@ a {
     }
 
     #logo {
-        width: 50% !important;
+        width: 10% !important;
     }
     #rejectedTicketTable thead th,
     #unassignedTicketTable thead th,

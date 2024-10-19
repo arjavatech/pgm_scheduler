@@ -173,12 +173,74 @@
     visibility: visible;
 }
 
-@media (max-width:767px) {
+@media (max-width:768px) {
     .content {
         color: white;
         padding-left: 2%;
     }
+
+  
+
+    /* .logo-sty{
+        margin-top: 30%;
+    }
+
+    #nav{
+       padding: 5px;
+    }
+
+    #nav #logo{
+        width: 10px;
+        height: 100px !important;
+    } */
 }
+
+@media (max-width:998px) {
+    .content {
+        color: white;
+        padding-left: 2%;
+    }
+
+    .logo-sty {
+        margin-top: 15%;
+    }
+
+    /* /* #nav{
+       padding: 5px;
+     
+    } */
+
+    .box-sty{
+        font-size: small;
+    }
+
+    #nav .text-end{
+        width: 15%;
+    }
+
+    #icon{
+        width: 30%;
+    }
+    
+    #sidebarToggle{
+        width: 15% !important;
+    }
+    
+
+
+
+   
+    /* input[type=text][type=number]{
+        padding: 10px;
+       
+    } 
+    #nav .text-center{
+        width: 200px;
+    }  */
+    
+}
+
+
 
 @media (max-width:450px) {
     .content {
@@ -194,11 +256,122 @@
         margin-left: 8%;
     }
 
-   
+    .logo-sty {
+        margin-top: 20%;
+    }
+
+    /* .material-textfield input{
+        max-width: 300px;
+       
+        align-items: center;
+    } */
+
+    /* #nav #logo{
+        width: 10px;
+        
+    }
+
+    input[type=text][type=number]{
+        padding: 10px;
+       
+    }  */
+
+
+
+
 }
 
 @media (max-width: 576px) {
-    .material-textfield {
-        width: 100%;
+    /* .material-textfield input,
+    .material-textfield textarea {
+        width: 160% !important;
+    } */
+
+    .material-textfield label {
+        position: absolute;
+        top: 12px;
+        left: 0.75rem;
+        transition: all 0.3s ease;
+        background: white;
+        padding: 0 0.25rem;
+        color: #006103;
+        pointer-events: none;
     }
+
+    .material-textfield {
+        position: relative;
+        margin-bottom: 1.5rem;
+        width: 120%;
+        margin-left: -15% !important;
+        margin-right: auto;
+    }
+
+    .logo-sty {
+        margin-top: 20%;
+    }
+
+    .box-sty button{
+       font-size: small;
+    }
+
+    #icon{
+        width: 50%;
+    }
+
+    #sidebarToggle{
+        width: 25% !important;
+    }
+
+
+
+
+    
+
+    /* #nav .text-center{
+        width: 150px;
+    }
+
+    input[type=text][type=number]{
+        padding: 10px;
+       
+    }  */
+}
+
+@media(max-width:320px) {
+    .logo-sty {
+        margin-top: 20%;
+    }
+
+    .material-textfield label {
+        position: absolute;
+        top: 12px;
+        left: 0.75rem;
+        transition: all 0.3s ease;
+        background: white;
+        padding: 0 0.25rem;
+        color: #006103;
+        pointer-events: none;
+    }
+
+    .material-textfield {
+        position: relative;
+        margin-bottom: 1.5rem;
+        width: 120%;
+        margin-left: -10% !important;
+        margin-right: 30% !important;
+    }
+
+    #icon{
+        width: 60%;
+    }
+    
+
+    #sidebarToggle{
+        width: 30% !important;
+    }
+    
+    /* .material-textfield input{
+        width:250px;
+        margin-left: -25%;
+    } */
 }
