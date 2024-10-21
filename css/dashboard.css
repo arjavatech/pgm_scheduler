@@ -49,55 +49,6 @@ body {
     position: relative;
 }
 
-.box-border {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.box2,
-.box3 {
-    padding: 20px;
-    text-align: center;
-    border-radius: 20px;
-    margin: 0 auto;
-    border: 1px solid #666;
-}
-
-.box2 h3,
-.box3 h3 {
-    font-size: 25px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.box2 p {
-    font-size: 11px;
-    color: #666;
-}
-
-.box3 p {
-    font-size: 9px;
-    color: #666;
-}
-
-/* Disable body scrolling */
-.no-scroll {
-    overflow: hidden;
-}
-
-.body-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent black overlay */
-    transition: background-color 0.3s ease;
-}
-
-#ticketChart1 {
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-}
-
 @media (max-width:1194px) {
     .box {
         color: white;
@@ -120,14 +71,13 @@ body {
     #fix {
         margin-top: 10%;
     }
-}
-
-
-@media (max-width:576px) {
-    .box-border {
-        height: 350px !important;
+    .box h3{
+        padding-top: 10px;
+        font-size: 18px !important;
     }
 }
+
+
 
 @media (max-width:500px) {
     .box {
@@ -139,6 +89,10 @@ body {
 
     #fix {
         margin-top: 15% !important;
+    }
+    .box h3{
+        padding-top: 10px;
+        font-size: 18px !important;
     }
 }
 
@@ -155,5 +109,10 @@ body {
         padding: 10px;
         border-radius: 20px;
         font-size: 10px !important;
+    }
+
+    .box h3{
+        padding-top: 10px;
+        font-size: 16px !important;
     }
 }

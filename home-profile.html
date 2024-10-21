@@ -18,26 +18,95 @@
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/home_profile.css">
 
+
 </head>
 <style>
     .no-scroll {
-    overflow: hidden;
-  }
+        overflow: hidden;
+    }
 
-  .body-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent black overlay */
-    transition: background-color 0.3s ease;
-  }
+    .body-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent black overlay */
+        transition: background-color 0.3s ease;
+    }
+
+
+
+
+    .custom-modal-content {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        border: none;
+        width: 80%;
+    }
+
+    .custom-modal-body {
+        font-size: 18px;
+        text-align: center;
+        padding: 20px;
+        color: #333;
+    }
+
+    /* Modal footer styling */
+    .custom-modal-footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 60px;
+        border-top: none;
+    }
+
+    .btn-yes {
+        background-color: #006103;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        width: 30%;
+        transition: background-color 0.3s ease;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .btn-yes:hover {
+        background-color: #006103;
+        opacity: 0.8;
+        color: white;
+        /* Darker green on hover */
+    }
+
+    /* No button styling */
+    .btn-no {
+        background-color: #dc3545;
+        /* Red background */
+        color: white;
+        /* White text */
+        border: none;
+        /* Remove border */
+        width: 30%;
+        border-radius: 6px;
+        /* Rounded corners */
+        transition: background-color 0.3s ease;
+        /* Smooth hover effect */
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .btn-no:hover {
+        background-color: #c82333;
+        color: white;
+        opacity: 0.8;
+        /* Darker red on hover */
+    }
 </style>
 
 <body>
     <div id="nav">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="col-4 text-start">
-               <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle" style="width: 30%;">
+                <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
+                    style="width: 30%;">
             </div>
-            <div class="col-4 text pt-1 pb-1">
+            <div class="col-4 text-center pt-1 pb-1">
                 <img src="images/logo.png" alt="Logo" style="max-width: 70%;">
             </div>
             <div class="col-4 text-end">
@@ -94,7 +163,8 @@
                                         <img src="icon/Vector.png" id="icon">
                                         <span class="content text-white list-group-item" data-bs-toggle="modal"
                                             data-bs-target="#logoutModal" style="cursor: pointer;">Logout</span>
-                                    </div>
+                                                  
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -114,15 +184,15 @@
                             <div class="spinner"></div>
                         </div>
                         <div class="logo-sty">
-                        <label for="uploadLogo" class="upload-label d-flex justify-content-center">
-                            
+                            <label for="uploadLogo" class="upload-label d-flex justify-content-center">
+
                                 <img id="logoPreview" alt="Upload Logo" style="max-width: 100%; height: auto;">
                                 <input type="file" id="uploadLogo" accept="image/*">
                                 <!-- Pencil icon -->
                                 <span class="icon-pencil"><i class="fas fa-pencil-alt"></i></span>
-                        
-                        </label>
-                    </div>
+
+                            </label>
+                        </div>
 
 
 
@@ -201,13 +271,26 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn-yes ">Yes</button>
+                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-        document.getElementById('sidebarToggle').addEventListener('click', function () {
-            var sidebar = document.getElementById('left');
-            sidebar.classList.toggle('active');
+        document.querySelector('.btn-yes').addEventListener('click', function () {
+            window.location.href = 'index.html';
         });
 
-
+    </script>
+    <script>
         document.getElementById('uploadLogo').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -218,7 +301,7 @@
                 reader.readAsDataURL(file); // Convert the file into a data URL
             }
         });
-        const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/ShddWeFGFGkk9b67STTJY4`;
+        const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/PhHo97we7UVHCTbhatWY3L`;
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -244,7 +327,32 @@
 
             });
 
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            var sidebar = document.getElementById('left');
+            var body = document.body;  // Get the body element
+            var box = document.querySelector(".box-sty")
+            sidebar.classList.toggle('active');  // Toggle the sidebar
+            var input = document.querySelectorAll(".input-sty")
+            var textfield = document.querySelectorAll(".material-textfield")
+            if (sidebar.classList.contains('active')) {
+                // When the sidebar is active (open), disable body scroll and add background overlay
+                body.classList.add('no-scroll');
+                body.classList.add('body-overlay');  // Add background overlay
+                box.style.backgroundColor = "transparent";
+                input.forEach(function (input) {
+                    input.style.backgroundColor = "transparent";  // Reset each card's background color
+                });
+                textfield.forEach(function (textfield) {
+                    textfield.style.backgroundColor = "transparent";  // Reset each card's background color
+                });
 
+            } else {
+                body.classList.remove('no-scroll');
+                body.classList.remove('body-overlay');  // Remove background overlay
+                box.classList.remove('body-overlay');
+
+            }
+        });
 
     </script>
 </body>

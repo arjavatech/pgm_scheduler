@@ -15,7 +15,81 @@
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/image.css">
 </head>
+<style>
+    .custom-modal-content {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        border: none;
+        width: 80%;
+    }
 
+    /* Modal body styling */
+    .custom-modal-body {
+        font-size: 18px;
+        /* Larger font */
+        text-align: center;
+        /* Center text */
+        padding: 20px;
+        /* Add padding */
+        color: #333;
+        /* Text color */
+    }
+
+    /* Modal footer styling */
+    .custom-modal-footer {
+        display: flex;
+        /* Flexbox for buttons */
+        justify-content: space-between;
+        /* Space between buttons */
+        padding: 10px 60px;
+        border-top: none;
+        /* Remove border from the footer */
+    }
+
+    /* Yes button styling */
+    .btn-yes {
+        background-color: #006103;
+        color: white;
+        /* White text */
+        border: none;
+        /* Remove border */
+        border-radius: 6px;
+        /* Rounded corners */
+        width: 30%;
+
+        transition: background-color 0.3s ease;
+        /* Smooth hover effect */
+    }
+
+    .btn-yes:hover {
+        background-color: #006103;
+        opacity: 0.8;
+        color: white;
+        /* Darker green on hover */
+    }
+
+    /* No button styling */
+    .btn-no {
+        background-color: #dc3545;
+        /* Red background */
+        color: white;
+        /* White text */
+        border: none;
+        /* Remove border */
+        width: 30%;
+        border-radius: 6px;
+        /* Rounded corners */
+        transition: background-color 0.3s ease;
+        /* Smooth hover effect */
+    }
+
+    .btn-no:hover {
+        background-color: #c82333;
+        color: white;
+        opacity: 0.8;
+        /* Darker red on hover */
+    }
+</style>
 
 <body>
     <div id="nav">
@@ -137,8 +211,8 @@
                     Are you sure you want to log out?
                 </div>
                 <div class="modal-footer custom-modal-footer">
-                    <button type="button" class="btn btn-yes ">Yes</button>
-                    <button type="button" class="btn btn-no " data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn-yes ">Yes</button>
+                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
