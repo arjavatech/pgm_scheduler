@@ -82,7 +82,9 @@
                                             style="padding-left: 10px;color: white;">Profile</span></a>
                                     <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
-                                        <span class="content text-white list-group-item">Logout</span>
+                                        <span class="content text-white list-group-item" data-bs-toggle="modal"
+                                            data-bs-target="#logoutModal" style="cursor: pointer;">Logout</span>
+                                                  
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +98,7 @@
                                     style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
-                         <div class="container container-sty">
+                        <div class="container container-sty">
                             <h1 class="text-center m-3 mt-5 fw-bold ">Unassigned Ticket</h1>
                             <div class="container-fluid mt-5 d-none d-md-table" id="table">
                                 <div id="whole-table">
@@ -128,6 +130,25 @@
         </div>
     </div>
 
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn btn-yes ">Yes</button>
+                    <button type="button" class="btn btn-no " data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelector('.btn-yes').addEventListener('click', function () {
+            window.location.href = 'index.html';
+        });
+
+    </script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
