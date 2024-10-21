@@ -121,7 +121,7 @@ a {
 
 @media (max-width:1044px) {
     #left {
-        width: 20%;
+        width: 21%;
     }
 
     #fix {
@@ -178,7 +178,7 @@ a {
         z-index: 999;
         background-color: #ff0000;
         transition: all 0.3s ease;
-        margin-top: 8%;
+        margin-top: 6% !important;
         padding-top: 20px;
     }
 
@@ -192,7 +192,7 @@ a {
         background-color: transparent;
         color: white;
         border: none;
-        width: 10% !important;
+        width: 15% !important;
         top: 0px;
         left: 0px;
         z-index: 1001;
@@ -207,12 +207,19 @@ a {
     #ticketTable thead th {
         font-size: 10px !important;
     }
+    #logo{
+        width: 60%;
+        font-weight: bold;
+    }
+    #icon{
+        width: 20% !important;
+    }
 }
 
 @media (max-width:702px) {
     #left {
         width: 40% !important;
-        margin-top: 9%;
+        margin-top: 7% !important;
     }
     
     .sidebar-toggle {
@@ -229,7 +236,7 @@ a {
 @media (max-width: 530px) {
     #left {
         width: 47% !important;
-        margin-top: 12%;
+        margin-top: 9% !important;
     }
 
     .sidebar-toggle {
@@ -245,7 +252,7 @@ a {
 @media (max-width: 450px) {
     #left {
         width: 61% !important;
-        margin-top: 13%;
+        margin-top: 10% !important;
     }
     .sidebar-toggle {
         display: block;
@@ -257,13 +264,17 @@ a {
     .container-sty{
         margin-top: 20%;
     }
+    #logo{
+        width: 80%;
+        font-weight: bold;
+    }
 }
 
 
 @media (max-width:330px) {
     #left {
-        width: 70% !important;
-        padding-top: 20%;
+        width: 65% !important;
+        padding-top: 10%;
     }
 
     .container-sty{
@@ -277,6 +288,8 @@ a {
         width: 25% !important;
     
     }
+
+    
 
     
     .sidebar-toggle {
