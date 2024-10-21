@@ -25,14 +25,79 @@
         display: none;
     }
 
-    
+    @media (max-width:450px) {
+        .card {
+            width: 100% !important;
+        }
+    }
+
+
+    @media (min-width:350px) and (max-width:767px) {
+
+        #buttons{
+            gap: 10px;
+        }
+        .col-md-4.pt-3 {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        #cancel,
+        #addEmployee {
+            width: 48%;
+            margin-bottom: 0;
+            font-size: 13px;
+        }
+
+        .input-bottom-border {
+            font-size: 13px;
+
+        }
+    }
+
+
+
+    @media (max-width: 320px) {
+
+        #addEmployee,
+        #cancel {
+            width: 49%;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        .input-bottom-border {
+            font-size: 10px;
+
+        }
+    }
+
+    @media (min-width: 280px) and (max-width: 318px) {
+
+        #addEmployee,
+        #cancel {
+            width: 47%;
+            margin-bottom: 10px;
+            font-size: 8px;
+            border-radius: 5px;
+        }
+
+        .input-bottom-border {
+            font-size: 8px;
+
+        }
+    }
+
+    @media (max-width:450px) {
+       
+    }
 </style>
 
 
 <body>
     <div id="nav">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-
+        <div class="container d-flex justify-content-between align-items-center">
             <div class="col-4">
                 <img src="icon/menu icon.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
                     style="width: 20%;">
@@ -41,7 +106,7 @@
                 <img src="images/logo.png" alt="Logo" id="logo" style="max-width: 100%;">
             </div>
             <div class="col-4 text-end">
-                <img src="icon/bell.png" alt="Profile Icon" id="icon" style="max-width: 80% !important;">
+                <img src="icon/bell.png" alt="Profile Icon" id="icon">
             </div>
         </div>
     </div>
@@ -94,9 +159,8 @@
                                             style="padding-left: 10px;color: white;">Profile</span></a>
                                     <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
-                                        <span class="content text-white list-group-item" data-bs-toggle="modal"
-                                            data-bs-target="#logoutModal" style="cursor: pointer;">Logout</span>
-                                    </div>
+                                        <span class="content text-white list-group-item">Logout</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,13 +176,13 @@
                         <div class="container container-sty">
                             <h1 class="text-center m-3 mt-5 fw-bold">Employee ticket</h1>
 
-                            <div class="container center-container">
+                            <div class="container-fluid center-container">
                                 <div class="row">
                                     <div class="col-md-4 text-center">
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Employee ID">
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Employee Name">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 text-center">
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Phone">
                                         <select class="input-bottom-border mt-4" id="specialization">
                                             <option value="" disabled selected>Specialization</option>
@@ -129,17 +193,18 @@
                                             <option value="human_resources">Human Resources</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4 pt-3">
-                                        <button type="submit" class="mt-4 login-button" id="addEmployee"
-                                            onclick="show()">Add employee</button><br>
+                                    <div class="col-md-4 pt-3" id="buttons">
+
                                         <button type="submit" class="mt-4 login-button" id="cancel"
                                             onclick="cancel()">Cancel</button>
+                                        <button type="submit" class="mt-4 login-button" id="addEmployee"
+                                            onclick="show()">Add employee</button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Table -->
-                            <div class="container-fluid mt-5 d-flex justify-content-center">
+                            <div class="container-fluid mt-5   justify-content-center" id="card">
                                 <div id="table" class="d-none d-md-table">
                                     <table id="ticketTable" class="table table-striped table-hover">
                                         <thead>
@@ -166,26 +231,6 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content custom-modal-content">
-                <div class="modal-body custom-modal-body">
-                    Are you sure you want to log out?
-                </div>
-                <div class="modal-footer custom-modal-footer">
-                    <button type="button" class="btn-yes ">Yes</button>
-                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        document.querySelector('.btn-yes').addEventListener('click', function () {
-            window.location.href = 'index.html';
-        });
-
-    </script>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

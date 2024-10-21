@@ -268,29 +268,67 @@ function addCard(employee){
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {
     var sidebar = document.getElementById('left');
-    var body = document.body;  // Get the body element
-    var mainContents = document.querySelectorAll(".card"); // Use correct selector for multiple elements
-    var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
+    var body = document.body;
+    var mainContents = document.querySelectorAll(".card");
+    var content = document.querySelector(".container-sty");
+    var tableOddRows = document.querySelectorAll("tr");
+    var tableEvenRows = document.querySelectorAll("tr.even");
+    var issueType = document.querySelectorAll(".issue-type");
+    var tHead = document.querySelector("thead");
+    var tHeadCells = document.querySelectorAll("thead th");
 
-    sidebar.classList.toggle('active');  // Toggle the sidebar
+    sidebar.classList.toggle('active');
 
     if (sidebar.classList.contains('active')) {
-        // When the sidebar is active (open), disable body scroll and add background overlay
+        // Sidebar is open, apply transparency
         body.classList.add('no-scroll');
-        body.classList.add('body-overlay');  // Add background overlay
+        body.classList.add('body-overlay');
 
-        content.style.backgroundColor = "transparent";  // Apply transparent background
-        mainContents.forEach(function(mainContent) {
-            mainContent.style.backgroundColor = "transparent";  // Apply to each card
+        content.style.backgroundColor = "transparent";
+        mainContents.forEach(function (mainContent) {
+            mainContent.style.backgroundColor = "transparent";
+        });
+        tableOddRows.forEach(function (row) {
+            row.style.cssText = "background-color: transparent !important;"; // Adds !important
+        });
+
+        if (tHead) {
+            tHead.style.cssText = "background-color: transparent !important;";
+        }
+
+        // Apply transparency to each table head cell
+        tHeadCells.forEach(function (cell) {
+            cell.style.cssText = "background-color: transparent !important;";
+        });
+
+        issueType.forEach(function (row) {
+            row.style.cssText = "background-color: transparent !important;"; // Adds !important
         });
     } else {
-        // When the sidebar is closed, re-enable body scroll and remove background overlay
+        // Sidebar is closed, reset colors
         body.classList.remove('no-scroll');
-        body.classList.remove('body-overlay');  // Remove background overlay
-        
-        content.style.backgroundColor = "";  // Reset background color
-        mainContents.forEach(function(mainContent) {
-            mainContent.style.backgroundColor = "";  // Reset each card's background color
+        body.classList.remove('body-overlay');
+
+        content.style.backgroundColor = "";
+        mainContents.forEach(function (mainContent) {
+            mainContent.style.backgroundColor = "";
+        });
+
+        tableOddRows.forEach(function (row) {
+            row.style.backgroundColor = ""; // Reset odd row background
+        });
+
+        tableEvenRows.forEach(function (row) {
+            row.style.backgroundColor = ""; // Reset even row background
+        });
+
+        if (tHead) {
+            tHead.style.backgroundColor = ""; // Reset thead background
+        }
+
+        // Reset the background of each table head cell
+        tHeadCells.forEach(function (cell) {
+            cell.style.backgroundColor = ""; // Reset th background
         });
     }
 });
