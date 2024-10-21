@@ -178,21 +178,6 @@
         color: white;
         padding-left: 2%;
     }
-
-  
-
-    /* .logo-sty{
-        margin-top: 30%;
-    }
-
-    #nav{
-       padding: 5px;
-    }
-
-    #nav #logo{
-        width: 10px;
-        height: 100px !important;
-    } */
 }
 
 @media (max-width:998px) {
@@ -205,39 +190,13 @@
         margin-top: 15%;
     }
 
-    /* /* #nav{
-       padding: 5px;
-     
-    } */
-
     .box-sty{
         font-size: small;
     }
 
-    #nav .text-end{
-        width: 15%;
-    }
-
-    #icon{
-        width: 30%;
-    }
-    
     #sidebarToggle{
         width: 15% !important;
-    }
-    
-
-
-
-   
-    /* input[type=text][type=number]{
-        padding: 10px;
-       
-    } 
-    #nav .text-center{
-        width: 200px;
-    }  */
-    
+    }    
 }
 
 
@@ -248,45 +207,13 @@
         padding-left: 4%;
     }
 
-    #icon {
-        margin-left: 2%;
-    }
-
-    #icon2 {
-        margin-left: 8%;
-    }
-
     .logo-sty {
         margin-top: 20%;
     }
 
-    /* .material-textfield input{
-        max-width: 300px;
-       
-        align-items: center;
-    } */
-
-    /* #nav #logo{
-        width: 10px;
-        
-    }
-
-    input[type=text][type=number]{
-        padding: 10px;
-       
-    }  */
-
-
-
-
 }
 
 @media (max-width: 576px) {
-    /* .material-textfield input,
-    .material-textfield textarea {
-        width: 160% !important;
-    } */
-
     .material-textfield label {
         position: absolute;
         top: 12px;
@@ -314,27 +241,12 @@
        font-size: small;
     }
 
-    #icon{
-        width: 50%;
-    }
+
 
     #sidebarToggle{
         width: 25% !important;
     }
 
-
-
-
-    
-
-    /* #nav .text-center{
-        width: 150px;
-    }
-
-    input[type=text][type=number]{
-        padding: 10px;
-       
-    }  */
 }
 
 @media(max-width:320px) {
@@ -361,17 +273,7 @@
         margin-right: 30% !important;
     }
 
-    #icon{
-        width: 60%;
-    }
-    
-
     #sidebarToggle{
         width: 30% !important;
     }
-    
-    /* .material-textfield input{
-        width:250px;
-        margin-left: -25%;
-    } */
 }

@@ -76,7 +76,7 @@ h1 {
     border-radius: 2px;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     box-sizing: border-box;
     display: inline-block;
     min-width: 1.5em;
@@ -89,3 +89,71 @@ h1 {
     border: 1px solid transparent;
     border-radius: 2px;
 }
+
+
+
+.custom-modal-content {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border: none;
+    width: 80%;
+}
+
+.custom-modal-body {
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+    color: #333;
+}
+
+/* Modal footer styling */
+.custom-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 60px;
+    border-top: none;
+}
+
+.btn-yes {
+    background-color: #006103;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 30%;
+    transition: background-color 0.3s ease;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.btn-yes:hover {
+    background-color: #006103;
+    opacity: 0.8;
+    color: white;
+    /* Darker green on hover */
+}
+
+/* No button styling */
+.btn-no {
+    background-color: #dc3545;
+    /* Red background */
+    color: white;
+    /* White text */
+    border: none;
+    /* Remove border */
+    width: 30%;
+    border-radius: 6px;
+    /* Rounded corners */
+    transition: background-color 0.3s ease;
+    /* Smooth hover effect */
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.btn-no:hover {
+    background-color: #c82333;
+    color: white;
+    opacity: 0.8;
+    /* Darker red on hover */
+}
+
+
