@@ -31,6 +31,17 @@
         transition: background-color 0.3s ease;
     }
 
+    /* When the sidebar is active, make the placeholders transparent */
+    .input-sty::placeholder {
+        color: #a9a9a9;
+        transition: color 0.3s ease;
+        /* Smooth transition */
+    }
+
+    .placeholder-transparent::placeholder {
+        color: transparent;
+        /* Transparent placeholder */
+    }
 
 
 
@@ -329,30 +340,33 @@
 
         document.getElementById('sidebarToggle').addEventListener('click', function () {
             var sidebar = document.getElementById('left');
-            var body = document.body;  // Get the body element
-            var box = document.querySelector(".box-sty")
-            sidebar.classList.toggle('active');  // Toggle the sidebar
-            var input = document.querySelectorAll(".input-sty")
-            var textfield = document.querySelectorAll(".material-textfield")
+            var body = document.body;
+            var box = document.querySelector(".box-sty");
+            var input = document.querySelectorAll(".input-sty");
+
+            sidebar.classList.toggle('active');
+
             if (sidebar.classList.contains('active')) {
-                // When the sidebar is active (open), disable body scroll and add background overlay
-                body.classList.add('no-scroll');
-                body.classList.add('body-overlay');  // Add background overlay
+                // Sidebar is active (open)
+                body.classList.add('no-scroll', 'body-overlay');
                 box.style.backgroundColor = "transparent";
-                input.forEach(function (input) {
-                    input.style.backgroundColor = "transparent";  // Reset each card's background color
-                });
-                textfield.forEach(function (textfield) {
-                    textfield.style.backgroundColor = "transparent";  // Reset each card's background color
-                });
 
+                input.forEach(function (inputElement) {
+                    inputElement.style.backgroundColor = "transparent";  // Input background transparent
+                    inputElement.classList.add('placeholder-transparent');  // Make placeholder transparent
+                });
             } else {
-                body.classList.remove('no-scroll');
-                body.classList.remove('body-overlay');  // Remove background overlay
-                box.classList.remove('body-overlay');
+                // Sidebar is inactive (closed)
+                body.classList.remove('no-scroll', 'body-overlay');
+                box.style.backgroundColor = "";
 
+                input.forEach(function (inputElement) {
+                    inputElement.style.backgroundColor = "";  // Reset background color
+                    inputElement.classList.remove('placeholder-transparent');  // Reset placeholder transparency
+                });
             }
         });
+
 
     </script>
 </body>

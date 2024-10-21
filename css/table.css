@@ -72,9 +72,6 @@ table.dataTable.table-striped>thead {
 /* Apply a light green background for odd rows */
 table.dataTable.table-striped>tbody>tr.odd {
     background-color: #def8de !important;
-    /* Light green */
-    /* box-shadow: none; */
-    /* Remove the default shadow */
 }
 
 
@@ -158,6 +155,9 @@ table.dataTable tbody tr:hover {
     width: 5px;
     border-radius: 50%;
 }
+
+
+
 
 #rejectedTicketTable tbody td .issue-type,
 #unassignedTicketTable tbody td .issue-type,
@@ -454,6 +454,7 @@ a {
     padding: 10px;
     width: 90%;
     box-sizing: border-box;
+    color: #9e9e9e;
 }
 
 #searchInput {
@@ -608,7 +609,7 @@ tr.shown td.details-control {
     color: #006103;
     font-weight: bold;
     text-transform: uppercase !important;
-    font-size: 11px !important;
+    font-size: 8px !important;
 }
 
 #rejectedTicketTable td,
@@ -655,7 +656,7 @@ strong{
         color: #006103;
         font-weight: bold;
         text-transform: uppercase !important;
-        font-size: 11px !important;
+        font-size: 7px !important;
     }
 
     #rejectedTicketTable td,

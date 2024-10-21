@@ -1,6 +1,7 @@
 $(document).ready(function () {
     const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/rejected/ShddWeFGFGkk9b67STTJY4";
     let rowDetails = [];
+
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -32,8 +33,7 @@ $(document).ready(function () {
             ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,
-            ticket.city,
-          
+            ticket.city
         ]).draw(false).node(); // Get the row node after adding
 
         $(rowNode).find('td:first').addClass('details-control');
@@ -64,12 +64,12 @@ $(document).ready(function () {
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
                             <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
-                        </div>
-                    </div>
+                                <img src="images/profile img.png" alt="Image 1" width="100px">
+                                <div class="image-container d-inline justify-content-center">
+                                    <img src="images/profile img.png" alt="Image 1" width="100px">
+                                    <div class="overlay">+3</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </td>
@@ -121,7 +121,7 @@ $(document).ready(function () {
                         <p><strong>City:</strong> ${employee.city}</p>
                     </div>
                 </div>
-                  <p class="text-center mb-2" id="showMoreButton" onclick="showmore('none','block')">show more ⮟</p>
+                <p class="text-center mb-2 showMoreButton">show more ⮟</p>     
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
@@ -133,7 +133,7 @@ $(document).ready(function () {
                             <div class="overlay">+3</div>
                         </div>
                     </div>
-                     <p class="text-center pt-3 mb-2" id="showLessButton" onclick="showmore('block','none')">show less ⮝</p>            
+                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
                 </div>
             </div>
         </div>
@@ -143,36 +143,84 @@ $(document).ready(function () {
         $('#card-container').append(cardHtml);
     }
 
-});
-function showmore(response1, response2) {
-    document.getElementById("showMoreButton").style.display = response1;
-    document.querySelector(".show-more").style.display = response2;
-}
-document.getElementById('sidebarToggle').addEventListener('click', function () {
-    var sidebar = document.getElementById('left');
-    var body = document.body;  // Get the body element
-    var mainContents = document.querySelectorAll(".card"); // Use correct selector for multiple elements
-    var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
+    // Show more functionality with event delegation
+    $(document).on('click', '.showMoreButton', function () {
+        const cardBody = $(this).closest('.card-body');
+        cardBody.find('.show-more').slideDown(); // Slide down the content
+        $(this).hide(); // Hide "show more" button
+    });
 
-    sidebar.classList.toggle('active');  // Toggle the sidebar
+    $(document).on('click', '.showLessButton', function () {
+        const cardBody = $(this).closest('.card-body');
+        cardBody.find('.show-more').slideUp(); // Slide up the content
+        cardBody.find('.showMoreButton').show(); // Show "show more" button again
+    });
 
-    if (sidebar.classList.contains('active')) {
-        // When the sidebar is active (open), disable body scroll and add background overlay
-        body.classList.add('no-scroll');
-        body.classList.add('body-overlay');  // Add background overlay
 
-        content.style.backgroundColor = "transparent";  // Apply transparent background
-        mainContents.forEach(function(mainContent) {
-            mainContent.style.backgroundColor = "transparent";  // Apply to each card
-        });
-    } else {
-        // When the sidebar is closed, re-enable body scroll and remove background overlay
-        body.classList.remove('no-scroll');
-        body.classList.remove('body-overlay');  // Remove background overlay
-        
-        content.style.backgroundColor = "";  // Reset background color
-        mainContents.forEach(function(mainContent) {
-            mainContent.style.backgroundColor = "";  // Reset each card's background color
-        });
-    }
+    document.getElementById('sidebarToggle').addEventListener('click', function () {
+        var sidebar = document.getElementById('left');
+        var body = document.body;
+        var mainContents = document.querySelectorAll(".card");
+        var content = document.querySelector(".container-sty");
+        var tableOddRows = document.querySelectorAll("tr");
+        var tableEvenRows = document.querySelectorAll("tr.even");
+        var issueType = document.querySelectorAll(".issue-type");
+        var tHead = document.querySelector("thead");
+        var tHeadCells = document.querySelectorAll("thead th");
+
+        sidebar.classList.toggle('active');
+
+        if (sidebar.classList.contains('active')) {
+            // Sidebar is open, apply transparency
+            body.classList.add('no-scroll');
+            body.classList.add('body-overlay');
+
+            content.style.backgroundColor = "transparent";
+            mainContents.forEach(function (mainContent) {
+                mainContent.style.backgroundColor = "transparent";
+            });
+            tableOddRows.forEach(function (row) {
+                row.style.cssText = "background-color: transparent !important;"; // Adds !important
+            });
+
+            if (tHead) {
+                tHead.style.cssText = "background-color: transparent !important;";
+            }
+
+            // Apply transparency to each table head cell
+            tHeadCells.forEach(function (cell) {
+                cell.style.cssText = "background-color: transparent !important;";
+            });
+
+            issueType.forEach(function (row) {
+                row.style.cssText = "background-color: transparent !important;"; // Adds !important
+            });
+        } else {
+            // Sidebar is closed, reset colors
+            body.classList.remove('no-scroll');
+            body.classList.remove('body-overlay');
+
+            content.style.backgroundColor = "";
+            mainContents.forEach(function (mainContent) {
+                mainContent.style.backgroundColor = "";
+            });
+
+            tableOddRows.forEach(function (row) {
+                row.style.backgroundColor = ""; // Reset odd row background
+            });
+
+            tableEvenRows.forEach(function (row) {
+                row.style.backgroundColor = ""; // Reset even row background
+            });
+
+            if (tHead) {
+                tHead.style.backgroundColor = ""; // Reset thead background
+            }
+
+            // Reset the background of each table head cell
+            tHeadCells.forEach(function (cell) {
+                cell.style.backgroundColor = ""; // Reset th background
+            });
+        }
+    });
 });
