@@ -24,7 +24,9 @@ const dataSets = {
 // Function to update chart data
 function updateChart(range, button) {
     // Update active button style
-    document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+
+    // Add 'active' class to the clicked button
     button.classList.add('active');
 
     // Update chart data

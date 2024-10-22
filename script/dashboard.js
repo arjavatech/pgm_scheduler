@@ -24,7 +24,9 @@ const dataSets = {
 // Function to update chart data
 function updateChart(range, button) {
     // Update active button style
-    document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.btn').forEach(btn => btn.classList.remove('active'));
+
+    // Add 'active' class to the clicked button
     button.classList.add('active');
 
     // Update chart data
@@ -136,33 +138,7 @@ let chart2 = new Chart(ctx2, {
 
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {
-    var sidebar = document.getElementById('left');
-    var body = document.body;  // Get the body element
-    var Ticket = document.getElementById("ticketSummary");
-    var box = document.querySelectorAll(".box")
-    var mainContents = document.querySelectorAll(".row"); // Use correct selector for multiple elements
-    // var content = document.querySelector(".container-sty"); // Assuming this is the main content wrapper
-
+    var sidebar = document.getElementById('left');    
     sidebar.classList.toggle('active');  // Toggle the sidebar
 
-    // if (sidebar.classList.contains('active')) {
-    //     // When the sidebar is active (open), disable body scroll and add background overlay
-    //     body.classList.add('no-scroll');
-    //     body.classList.add('body-overlay');  // Add background overlay
-
-    //     Ticket.style.backgroundColor = "transparent";  // Apply transparent background
-    //     box.forEach(function(mainContent) {
-    //         mainContent.style.opacity = "0.2";  // Apply to each card
-    //     });
-    // } else {
-    //     // When the sidebar is closed, re-enable body scroll and remove background overlay
-    //     body.classList.remove('no-scroll');
-    //     body.classList.remove('body-overlay');  // Remove background overlay
-        
-    //     Ticket.style.backgroundColor = "";  // Reset background color
-    //     box.forEach(function(mainContent) {
-    //         mainContent.style.opacity = "1";  // Reset each card's background color
-    //     });
-        
-    // }
 });

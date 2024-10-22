@@ -44,9 +44,128 @@ body {
     background-color: white;
     padding: 10px 15px 40px 10px;
     border-radius: 10px;
-    width: 100%;
+    width: 100% !important;
     height: 255px;
     position: relative;
+    box-sizing: border-box;
+}
+
+
+.box-border {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.box2,
+.box3 {
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+    margin: 0 auto;
+    border: 1px solid #666;
+}
+
+.box2 h3,
+.box3 h3 {
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.box2 p {
+    font-size: 11px;
+    color: #666;
+}
+
+.box3 p {
+    font-size: 9px;
+    color: #666;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.body-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+
+#ticketChart1 {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+.active {
+    border: 1px solid black;
+    height: 40px;
+}
+.btn{
+    font-size: small;
+}
+.responsive-canvas {
+    height: 120px;
+}
+
+
+@media (max-width:576px) {
+    .box-border {
+        height: 350px !important;
+
+    }
+    .active {
+    border: 1px solid black;
+    height: 30px;
+}
+}
+
+@media (min-width:492px) and (max-width:2560px) {
+    #btn12months {
+        font-size: small;
+    }
+
+    #btnmonths {
+        font-size: small;
+    }
+}
+
+@media (max-width: 380px){
+    #btnmonths{
+        font-size: 9px;
+    }
+
+}
+@media (min-width: 385px) and (max-width: 490px){
+    #btnmonths{
+        font-size: 13px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .responsive-canvas {
+        height: 80px;
+    }
+}
+
+@media only screen and (max-width: 490px) {
+    #btn12months {
+        display: none;
+
+    }
+}
+
+@media (max-width: 380px) {
+    #btnmonths {
+        font-size: 9px;
+    }
+
+}
+
+@media (min-width: 385px) and (max-width: 490px) {
+    #btnmonths {
+        font-size: 13px;
+    }
 }
 
 @media (max-width:1194px) {
@@ -114,5 +233,5 @@ body {
     .box h3{
         padding-top: 10px;
         font-size: 16px !important;
-    }
+    }   
 }
