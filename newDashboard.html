@@ -22,6 +22,36 @@
         padding: 20px;
         border-radius: 10px;
     }
+   
+    @media only screen and (max-width: 490px) {
+        #btn12months {
+            display: none; 
+          
+        }
+        /* .chart-container1 canvas{
+            height: 80px!important;
+            width: 20px;
+            font-size: xx-small;
+         
+        } */
+        /* #ticketChart1{
+            height: 400px;
+        } */
+
+       
+    }
+    @media (max-width: 380px){
+        #btnmonths{
+            font-size: 9px;
+        }
+
+    }
+    @media (min-width: 385px) and (max-width: 490px){
+        #btnmonths{
+            font-size: 13px;
+        }
+    }
+  
 
     .box2,
     .box3 {
@@ -69,8 +99,29 @@
     @media (max-width:576px) {
         .box-border {
             height: 350px !important;
+            
         }
     }
+    @media (min-width:492px) and (max-width:2560px){
+        #btn12months{
+            font-size: small;
+        }
+        #btnmonths{
+            font-size: small;
+        }
+    }
+    /* Default canvas size */
+.responsive-canvas {
+    height: 120px; /* Default height for non-mobile screens */
+}
+
+/* Adjust canvas height for mobile screens */
+@media only screen and (max-width: 768px) {
+    .responsive-canvas {
+        height: 80px; /* Increase height for smaller screens */
+    }
+}
+
 </style>
 
 <body>
@@ -187,24 +238,23 @@
                                 <div class="col-12 col-lg-8">
                                     <div class="row" id="ticketChart1">
                                         <div class="col-12 col-md-2">
-                                            <p class="fw-bold mt-3" style="text-align: start;font-size: small;">Ticket
-                                                History</p>
+                                            <p class="fw-bold mt-3" style="text-align: start;font-size: medium;">Ticket History</p>
                                         </div>
                                         <div class="col-12 col-md-10 d-flex justify-content-center"
                                             style="gap: 3%; flex-wrap: wrap;">
-                                            <button onclick="updateChart('12months', this)" class="btn"
-                                                style="font-size: small;">12 Months</button>
+                                            <button onclick="updateChart('12months', this)" class="btn active"
+                                            id="btn12months" >12 Months</button>
                                             <button onclick="updateChart('6months', this)" class="btn"
-                                                style="font-size: small;">6 Months</button>
+                                                id="btnmonths" >6 Months</button>
                                             <button onclick="updateChart('30days', this)" class="btn"
-                                                style="font-size: small;">30 Days</button>
+                                                id="btnmonths">30 Days</button>
                                             <button onclick="updateChart('7days', this)" class="btn"
-                                                style="font-size: small;">7 Days</button>
+                                                id="btnmonths">7 Days</button>
                                             <button onclick="updateChart('today', this)" class="btn"
-                                                style="font-size: small;">Today</button>
+                                                id="btnmonths">Today</button>
                                         </div>
                                         <div class="col-12 mt-5">
-                                            <canvas id="myChart" height="120px"></canvas>
+                                            <canvas id="myChart" class="responsive-canvas" height="120px"></canvas>
                                         </div>
                                     </div>
 
