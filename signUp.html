@@ -316,6 +316,7 @@
 
             let isEmployee = false;
             let cid;
+            let username = document.getElementById("username").value;
             let password = document.getElementById("password").value;
 
             if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
@@ -330,7 +331,7 @@
 
                 let data = {
                     company_id: cid,
-                    id: "user789",
+                    id: username,
                     login_type: "anonymous",
                     password: password,
                     approved_by: "admin",
