@@ -164,14 +164,21 @@
 
                     if (data.isSuperAdmin) {
 
-                        // Redirect to company.html
-                        window.location.href = 'company.html';
+                        companyIDget(userDetails.email)
+                        setTimeout(() => {
+                            window.location.href = 'company.html';
+                        }, 1000);
+
+                        
                     }
                     else if (data.isAdmin) {
-                        // Redirect to company.html
-                        window.location.href = 'dashboard.html';
+                        companyIDget(userDetails.email)
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1000);
                     }
                     else if (data.isEmployee) {
+                        companyIDget(userDetails.email)
                         alert("Employee page development is under maintenance");
                     }
 
@@ -182,6 +189,28 @@
                 });
 
 
+        }
+
+        function companyIDget(user_id)
+        {
+            fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/get/${user_id}`)
+                .then(response => {
+                    document.getElementById('l').style.display = 'none';
+                    if (!response.ok) {
+
+                        alert("User ID not found");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    localStorage.setItem("cid", data.company_id)
+                })
+                .catch(error => {
+                    document.getElementById('l').style.display = 'none';
+                    console.error('Fetch error:', error);
+
+                });
         }
 
 
@@ -204,14 +233,17 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(password)
-                    console.log(data.password)
+                    localStorage.setItem("cid", data.company_id)
                     if (data.password == password && data.is_employee == 0) {
-
+                        
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1000);
                         // Redirect to company.html
-                        window.location.href = 'dashboard.html';
+                        
                     }
                     else if (data.password == password && data.is_employee == 1) {
+                        localStorage.setItem("cid", data.company_id)
                         alert("Employee page development is under maintenance");
                     }
                     else

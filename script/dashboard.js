@@ -21,6 +21,9 @@ const dataSets = {
     }
 };
 
+let cid = localStorage.getItem("cid");
+console.log(cid);
+
 // Function to update chart data
 function updateChart(range, button) {
     // Update active button style
