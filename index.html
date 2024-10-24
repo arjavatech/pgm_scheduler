@@ -118,6 +118,87 @@
 
     <script>
 
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
+
+            // Get the values from the input fields
+            const username = document.querySelector("input[placeholder='Username/Phone Number']").value;
+            const password = document.getElementById("password").value;
+
+            // Basic client-side validation (make sure fields aren't empty)
+            if (!username || !password) {
+                alert("Please enter both username and password.");
+                return;
+            }
+
+            // Show the loading spinner
+            document.getElementById('l').style.display = 'flex';
+
+            // Prepare the data to be sent in the POST request
+            const loginData = {
+                username: username,
+                password: password
+            };
+
+            // Make a POST request to your backend API
+            fetch('https://your-api-url.com/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',  // Specify the content type as JSON
+                },
+                body: JSON.stringify(loginData),  // Convert the loginData to a JSON string
+            })
+                .then(response => {
+                    document.getElementById('l').style.display = 'none'; // Hide loading spinner
+                    if (!response.ok) {
+                        throw new Error('Login failed. Invalid username or password.');
+                    }
+                    return response.json();  // Parse the JSON response
+                })
+                .then(data => {
+                    // Handle successful login (data will include user info)
+                    console.log('Login successful:', data);
+
+                    // Example: Redirect to a different page based on user role
+                    if (data.isAdmin) {
+                        window.location.href = 'admin_dashboard.html';  // Redirect to admin dashboard
+                    } else {
+                        window.location.href = 'user_dashboard.html';  // Redirect to user dashboard
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('l').style.display = 'none';  // Hide loading spinner
+                    console.error('Error during login:', error);
+                    alert('Login failed: ' + error.message);  // Display the error message to the user
+                });
+        }
+
+        // Function to initialize Google Sign-In and other features
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: 'your-google-client-id.apps.googleusercontent.com',  // Replace with your actual Google Client ID
+                callback: handleCredentialResponse
+            });
+
+            // Render the Google Sign-In button
+            google.accounts.id.renderButton(
+                document.querySelector(".g_id_signin"),  // This should target the button container
+                { theme: "outline", size: "large" }  // Customize the button appearance
+            );
+
+            google.accounts.id.prompt();  // Optional: Prompt the user to sign in
+        };
+
+        // Optional: Function to decode JWT token from Google Sign-In
+        function decodeJwtResponse(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
         function handleCredentialResponse(response) {
             document.getElementById('l').style.display = 'flex';
             let userDetails = decodeJwtResponse(response.credential);
@@ -159,14 +240,109 @@
 
         }
 
-        function decodeJwtResponse(token) {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
+
+        function validateForm() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            return true;
         }
+
+        // Handle form submission
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent the default form submission
+            if (!validateForm()) return;
+
+            document.getElementById('l').style.display = 'flex'; // Show loading spinner
+
+            const url = window.location.href;
+            const urlParams = new URLSearchParams(window.location.search);
+
+            let isEmployee = false;
+            let cid;
+            let password = document.getElementById("password").value;
+
+            if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
+                // Check for customer or employee invite ID
+                if (urlParams.has('invite_id_c')) {
+                    cid = urlParams.get('invite_id_c');
+                    isEmployee = false;
+                } else if (urlParams.has('invite_id_e')) {
+                    cid = urlParams.get('invite_id_e');
+                    isEmployee = true;
+                }
+
+                let data = {
+                    company_id: cid,
+                    id: "user789",
+                    login_type: "anonymous",
+                    password: password,
+                    approved_by: "admin001",
+                    signup_url: url,
+                    is_employee: isEmployee,
+                    last_modified_by: "admin001",
+                };
+
+                fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then((response) => {
+                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
+                        if (!response.ok) {
+                            throw new Error(`Error: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        if (data.error) {
+                            // Display appropriate error message
+                        } else {
+                            setTimeout(function () {
+                                if (urlParams.has('invite_id_c')) {
+                                    window.location.href = 'dashboard.html'; // Redirect for customers
+                                } else if (urlParams.has('invite_id_e')) {
+                                    alert("Employee page is under maintenance.");
+                                    document.getElementById("txt").textContent = "Employee page is under maintenance.";
+                                    popupModal.style.display = 'block';
+                                    mainContent.classList.add('blur-background');
+                                    closePopup.addEventListener('click', function () {
+                                        window.location.href = 'signUp.html';
+                                    });
+                                }
+                            }, 1000);
+                        }
+                    })
+                    .catch((error) => {
+                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
+                        console.error('Error:', error);
+                    });
+            } else {
+                // No invite ID found in URL, show error message
+                document.getElementById('l').style.display = 'none';
+                document.getElementById("txt").textContent = "Signup Failed - Your URL is invalid to access our App.";
+                popupModal.style.display = 'block';
+                mainContent.classList.add('blur-background');
+                closePopup.addEventListener('click', function () {
+                    window.location.href = 'signUp.html';
+                });
+            }
+        }
+
+        
 
         window.onload = function () {
             google.accounts.id.initialize({

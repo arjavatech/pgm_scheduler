@@ -187,20 +187,23 @@
                         </p>
                     </div>
 
-                    <div class="col-sm-12 col-xl-6 col-md-7 col-lg-7 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1 order-md-1" id="left">
+                    <div class="col-sm-12 col-xl-6 col-md-7 col-lg-7 col-sty d-flex flex-column justify-content-center align-items-center order-2 order-xl-1 order-md-1"
+                        id="left">
                         <div class="container container-sty text-center">
                             <h2 class="text-center m-3 fw-bold">Sign Up</h2>
                             <form id="signupForm">
-                                <input type="text" class="input-bottom-border mt-4" id="username" placeholder="Username/Phone Number" required>
-                                <input id="password" placeholder="Password" type="password" class="input-bottom-border mt-4" required>
-                                <input id="confirm-password" placeholder="Confirm password" type="password" class="input-bottom-border mt-4" required>
+                                <input type="text" class="input-bottom-border mt-4" id="username"
+                                    placeholder="Username/Phone Number" required>
+                                <input id="password" placeholder="Password" type="password"
+                                    class="input-bottom-border mt-4" required>
+                                <input id="confirm-password" placeholder="Confirm password" type="password"
+                                    class="input-bottom-border mt-4" required>
                                 <button type="submit" class="mt-5 login-button" id="submitBtn">Submit</button>
                             </form>
                             <p class="mt-2" style="font-size: 18px;color: #52525b;">or Sign up with</p>
                             <p class="g_id_signin mt-2"></p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -221,32 +224,30 @@
 
 
     <script>
-
+        // Call fetchData when the page is fully loaded
+        document.addEventListener('DOMContentLoaded', checkUrl);
         // Function to fetch and display employee data
         function checkUrl() {
             const mainContent = document.getElementById('mainContent');
-            document.getElementById('l').style.display = 'flex';
+            document.getElementById('l').style.display = 'flex'; // Show loading spinner
 
-            var page_url = window.location.href;
-            var urlParams = new URLSearchParams(window.location.search);
-
+            const page_url = window.location.href;
+            const urlParams = new URLSearchParams(window.location.search);
 
             let data = { url: page_url };
 
             if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
-
                 mainContent.classList.add('blur-background');
 
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/invite_status/get", {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
                 })
-                    .then(response => {
-
-                        document.getElementById('l').style.display = 'none';
+                    .then((response) => {
+                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         mainContent.classList.remove('blur-background');
 
                         if (!response.ok) {
@@ -254,169 +255,156 @@
                         }
                         return response.json();
                     })
-                    .then(data => {
-                        if (data.error) {
-                            // document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
-                            // popupModal.style.display = 'block';
-                            // mainContent.classList.add('blur-background');  
-                        } else {
-                            if (data === "Accepted") {
-                                document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
-                                popupModal.style.display = 'block';
-                                mainContent.classList.add('blur-background');
-                                closePopup.addEventListener('click', function () {
-                                    window.location.href = 'index.html';
-                                });
-                            }
+                    .then((data) => {
+                        if (data.error || data === "Accepted") {
+                            document.getElementById("txt").textContent = "404 - Not Found Invalid URL.";
+                            popupModal.style.display = 'block';
+                            mainContent.classList.add('blur-background');
+                            closePopup.addEventListener('click', function () {
+                                window.location.href = 'index.html';
+                            });
                         }
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         document.getElementById('l').style.display = 'none';
-                        document.getElementById("txt").textContent = "404- Not Found Invalid URL.";
+                        document.getElementById("txt").textContent = "404 - Not Found Invalid URL.";
                         popupModal.style.display = 'block';
                         mainContent.classList.add('blur-background');
                         closePopup.addEventListener('click', function () {
                             window.location.href = 'index.html';
                         });
                     });
-            }
-            else {
+            } else {
                 document.getElementById('l').style.display = 'none';
                 mainContent.classList.remove('blur-background');
+                // document.getElementById("txt").textContent = "404 - Not Found Invalid URL.";
+                // popupModal.style.display = 'block';
+                // mainContent.classList.add('blur-background');
+                // closePopup.addEventListener('click', function () {
+                //     window.location.href = 'index.html';
+                // });
             }
         }
 
-        // Call fetchData when the page is fully loaded
-        document.addEventListener('DOMContentLoaded', checkUrl);
+        // Form validation function
         function validateForm() {
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm-password").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
 
-    if (password.length < 3) {
-        alert("Password must be at least 8 characters long.");
-        return false;
-    }
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                return false;
+            }
 
-    if (password !== confirmPassword) {
-        alert("Passwords do not match.");
-        return false;
-    }
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
 
-    return true;
-}
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        handleSubmit();
-    });
+            return true;
+        }
 
-        function handleSubmit(response) {
+        // Handle form submission
+        function handleSubmit(event) {
             event.preventDefault(); // Prevent the default form submission
             if (!validateForm()) return;
-            document.getElementById('l').style.display = 'flex';
-            let url = window.location.href;
-            let urlParams = new URLSearchParams(window.location.search);
 
-            let isEmployee;
+            document.getElementById('l').style.display = 'flex'; // Show loading spinner
+
+            const url = window.location.href;
+            const urlParams = new URLSearchParams(window.location.search);
+
+            let isEmployee = false;
             let cid;
-            let password;
-            console.log(urlParams);
-            if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
+            let password = document.getElementById("password").value;
 
+            if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
+                // Check for customer or employee invite ID
                 if (urlParams.has('invite_id_c')) {
                     cid = urlParams.get('invite_id_c');
                     isEmployee = false;
-                    password=document.getElementById("password").value;
                 } else if (urlParams.has('invite_id_e')) {
                     cid = urlParams.get('invite_id_e');
                     isEmployee = true;
-                    password=document.getElementById("password").value;
                 }
 
-                let userDetails = decodeJwtResponse(response.credential);
                 let data = {
-                    "company_id":cid,
-                    "id": "user789",
-                    "login_type": "annonymas",
-                    "password": password,
-                    "approved_by": "admin001",
-                    "signup_url": url,
-                    "is_employee": true,
-                    "last_modified_by": "admin001"
-                }
+                    company_id: cid,
+                    id: "user789",
+                    login_type: "anonymous",
+                    password: password,
+                    approved_by: "admin",
+                    signup_url: url,
+                    is_employee: isEmployee,
+                    last_modified_by: "admin",
+                };
 
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
                 })
-                    .then(response => {
-                        document.getElementById('l').style.display = 'none';
+                    .then((response) => {
+                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
                             throw new Error(`Error: ${response.status}`);
                         }
                         return response.json();
                     })
-                    .then(data => {
+                    .then((data) => {
                         if (data.error) {
-                            // showLogoutModal();  // Show failure modal
+                            // Display appropriate error message
                         } else {
                             setTimeout(function () {
                                 if (urlParams.has('invite_id_c')) {
-                                    window.location.href = 'dashboard.html';
+                                    window.location.href = 'dashboard.html'; // Redirect for customers
                                 } else if (urlParams.has('invite_id_e')) {
                                     alert("Employee page is under maintenance.");
-                                    const mainContent = document.getElementById('mainContent');
                                     document.getElementById("txt").textContent = "Employee page is under maintenance.";
                                     popupModal.style.display = 'block';
                                     mainContent.classList.add('blur-background');
                                     closePopup.addEventListener('click', function () {
-                                        window.location.href = 'signUp.html';
+                                        window.location.href = 'index.html';
                                     });
                                 }
-
                             }, 1000);
                         }
                     })
-                    .catch(error => {
-                        document.getElementById('l').style.display = 'none';
+                    .catch((error) => {
+                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         console.error('Error:', error);
                     });
-            }
-            else {
-                console.log('Current URL:', window.location.href);
-               
+            } else {
+                // No invite ID found in URL, show error message
                 document.getElementById('l').style.display = 'none';
-                const mainContent = document.getElementById('mainContent');
                 document.getElementById("txt").textContent = "Signup Failed - Your URL is invalid to access our App.";
                 popupModal.style.display = 'block';
                 mainContent.classList.add('blur-background');
                 closePopup.addEventListener('click', function () {
-                    window.location.href = 'signUp.html';
+                    window.location.href = 'index.html';
                 });
-                // alert("No invite ID found in the URL.");
             }
-
         }
 
+        // Handle Google Sign-In Response
         function handleCredentialResponse(response) {
-            document.getElementById('l').style.display = 'flex';
+            document.getElementById('l').style.display = 'flex'; // Show loading spinner
 
-            var url = window.location.href;
-            var urlParams = new URLSearchParams(window.location.search);
+            const url = window.location.href;
+            const urlParams = new URLSearchParams(window.location.search);
 
             let isEmployee;
             let cid;
 
             if (urlParams.has('invite_id_c') || urlParams.has('invite_id_e')) {
-
                 if (urlParams.has('invite_id_c')) {
                     cid = urlParams.get('invite_id_c');
                     isEmployee = false;
                 } else if (urlParams.has('invite_id_e')) {
                     cid = urlParams.get('invite_id_e');
-                    isEmployee = false;
+                    isEmployee = true;
                 }
 
                 let userDetails = decodeJwtResponse(response.credential);
@@ -425,33 +413,32 @@
                     id: userDetails.email,
                     login_type: "gauth",
                     signup_url: url,
-                    is_employee: isEmployee
-                }
+                    is_employee: isEmployee,
+                };
 
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
                 })
-                    .then(response => {
-                        document.getElementById('l').style.display = 'none';
+                    .then((response) => {
+                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
                             throw new Error(`Error: ${response.status}`);
                         }
                         return response.json();
                     })
-                    .then(data => {
+                    .then((data) => {
                         if (data.error) {
-                            // showLogoutModal();  // Show failure modal
+                            // Handle error
                         } else {
                             setTimeout(function () {
                                 if (urlParams.has('invite_id_c')) {
                                     window.location.href = 'dashboard.html';
                                 } else if (urlParams.has('invite_id_e')) {
                                     alert("Employee page is under maintenance.");
-                                    const mainContent = document.getElementById('mainContent');
                                     document.getElementById("txt").textContent = "Employee page is under maintenance.";
                                     popupModal.style.display = 'block';
                                     mainContent.classList.add('blur-background');
@@ -459,29 +446,25 @@
                                         window.location.href = 'signUp.html';
                                     });
                                 }
-
                             }, 1000);
                         }
                     })
-                    .catch(error => {
-                        document.getElementById('l').style.display = 'none';
+                    .catch((error) => {
+                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         console.error('Error:', error);
                     });
-            }
-            else {
-                document.getElementById('l').style.display = 'none';
-                const mainContent = document.getElementById('mainContent');
+            } else {
+                document.getElementById('l').style.display = 'none'; // Hide loading spinner
                 document.getElementById("txt").textContent = "Signup Failed - Your URL is invalid to access our App.";
                 popupModal.style.display = 'block';
                 mainContent.classList.add('blur-background');
                 closePopup.addEventListener('click', function () {
                     window.location.href = 'signUp.html';
                 });
-                // alert("No invite ID found in the URL.");
             }
-
         }
 
+        // Decode JWT Response
         function decodeJwtResponse(token) {
             const base64Url = token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -491,6 +474,7 @@
             return JSON.parse(jsonPayload);
         }
 
+        // Google Sign-In Initialization
         window.onload = function () {
             google.accounts.id.initialize({
                 client_id: '105136553260-b1aavp1n75f8caktbvuiipgr92at4pth.apps.googleusercontent.com',
@@ -505,6 +489,10 @@
 
             google.accounts.id.prompt();  // Optional: Prompt the user to sign in
         };
+
+        // Add event listener for form submission
+        document.getElementById('signupForm').addEventListener('submit', handleSubmit);
+
     </script>
 
 
