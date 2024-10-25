@@ -41,6 +41,7 @@ body {
 
 
 .chart-container2 {
+    margin-left: -10px;
     background-color: white;
     padding: 10px 15px 40px 10px;
     border-radius: 10px;
@@ -61,9 +62,11 @@ body {
 .box3 {
     padding: 20px;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 15px;
     margin: 0 auto;
     border: 1px solid #666;
+    
+    margin-top:15px ;
 }
 
 .box2 h3,
@@ -74,7 +77,7 @@ body {
 }
 
 .box2 p {
-    font-size: 11px;
+    font-size: 9px;
     color: #666;
 }
 
@@ -234,4 +237,19 @@ body {
         padding-top: 10px;
         font-size: 16px !important;
     }   
+}
+
+@media (min-width: 1000px) and (max-width: 1228px){
+    /* .active{
+        height: 50px;
+        
+    } */
+     .db{
+        font-size: 11px !important;
+        font-weight: 1200;
+     }
+    #btnmonths, #btn12months{
+        font-size: 8px;
+    }
+ 
 }

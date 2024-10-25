@@ -53,7 +53,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 50%;
+            width: 30%;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
@@ -216,11 +216,14 @@
 
     <div id="popupModal">
         <div class="modal-content">
-            <h3>Invalid URL</h3>
+            <h3 id="head">Invalid URL</h3>
             <p id="txt"></p>
             <button class="close-btn" id="closePopup">Continue</button>
         </div>
     </div>
+
+
+
 
 
     <script>
@@ -277,12 +280,6 @@
             } else {
                 document.getElementById('l').style.display = 'none';
                 mainContent.classList.remove('blur-background');
-                // document.getElementById("txt").textContent = "404 - Not Found Invalid URL.";
-                // popupModal.style.display = 'block';
-                // mainContent.classList.add('blur-background');
-                // closePopup.addEventListener('click', function () {
-                //     window.location.href = 'index.html';
-                // });
             }
         }
 
@@ -292,12 +289,26 @@
             const confirmPassword = document.getElementById("confirm-password").value;
 
             if (password.length < 8) {
-                alert("Password must be at least 8 characters long.");
+                document.getElementById('l').style.display = 'none';
+                document.getElementById("head").textContent ="";
+                document.getElementById("txt").textContent = "Password must be at least 8 characters long.";
+                popupModal.style.display = 'block';
+                mainContent.classList.add('blur-background');
+                closePopup.addEventListener('click', function () {
+                    window.location.href = 'signUp.html';
+                });
                 return false;
             }
 
             if (password !== confirmPassword) {
-                alert("Passwords do not match.");
+                document.getElementById('l').style.display = 'none';
+                document.getElementById("head").textContent ="";
+                document.getElementById("txt").textContent = "Passwords do not match.";
+                popupModal.style.display = 'block';
+                mainContent.classList.add('blur-background');
+                closePopup.addEventListener('click', function () {
+                    window.location.href = 'signUp.html';
+                });
                 return false;
             }
 
@@ -362,7 +373,6 @@
                                 if (urlParams.has('invite_id_c')) {
                                     window.location.href = 'dashboard.html'; // Redirect for customers
                                 } else if (urlParams.has('invite_id_e')) {
-                                    alert("Employee page is under maintenance.");
                                     document.getElementById("txt").textContent = "Employee page is under maintenance.";
                                     popupModal.style.display = 'block';
                                     mainContent.classList.add('blur-background');
@@ -439,7 +449,6 @@
                                 if (urlParams.has('invite_id_c')) {
                                     window.location.href = 'dashboard.html';
                                 } else if (urlParams.has('invite_id_e')) {
-                                    alert("Employee page is under maintenance.");
                                     document.getElementById("txt").textContent = "Employee page is under maintenance.";
                                     popupModal.style.display = 'block';
                                     mainContent.classList.add('blur-background');

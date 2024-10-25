@@ -89,7 +89,7 @@ let chart = new Chart(ctx, {
 
 
 
-const months = ['Feb', 'Mar', 'Apr', 'May']; // Example labels
+const months = ['Feb', 'Mar', 'Apr', 'May'];
 
 // Get the context of the canvas element
 let ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -142,6 +142,5 @@ let chart2 = new Chart(ctx2, {
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {
     var sidebar = document.getElementById('left');    
-    sidebar.classList.toggle('active');  // Toggle the sidebar
-
+    sidebar.classList.toggle('active');
 });
