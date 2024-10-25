@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const cid = localStorage.getItem("cid");
     const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/unassigned/ShddWeFGFGkk9b67STTJY4";
     let rowDetails = [];
     fetch(apiUrl)

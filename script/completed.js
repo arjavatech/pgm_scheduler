@@ -1,6 +1,11 @@
 $(document).ready(function () {
+
+    const cid = localStorage.getItem("cid");
     const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/completed/ShddWeFGFGkk9b67STTJY4";
     let rowDetails = [];
+    const exam = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/completed/${cid}`
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex'; // Show loading indicator
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -10,8 +15,12 @@ $(document).ready(function () {
                 addTicket(ticket);
                 addCard(ticket); // Add the card for mobile view
             });
+            loadingIndicator.style.display = 'none'; // Hide loading indicator after successful fetch
         })
-        .catch(error => console.error('Error fetching tickets:', error));
+        .catch(error => {
+            console.error('Error fetching tickets:', error);
+            loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
+        });
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({

@@ -30,9 +30,11 @@
         justify-content: center;
         align-items: center;
     }
+
     .blur-background {
-            filter: blur(5px);
-        }
+        filter: blur(5px);
+    }
+
     .loading .spinner {
         border: 4px solid #f3f3f3;
         border-top: 4px solid #004102;
@@ -98,14 +100,15 @@
                         <div class="container container-sty text-center">
                             <h2 class="text-center m-3" id="header">Welcome Back</h2>
                             <input type="text" class="input-bottom-border mt-3" placeholder="Username/Phone Number"
-                                id="username">
-                            <input id="password" placeholder="Password" type="password"
-                                class="input-bottom-border mt-3">
+                                id="username" required>
+                            <input id="password" placeholder="Password" type="password" class="input-bottom-border mt-3"
+                                required>
 
-                            <button type="submit" class="mt-5 login-button" onclick="handleSubmit(event)">Submit</button>
+                            <button type="submit" class="mt-5 login-button"
+                                onclick="handleSubmit(event)">Submit</button>
 
-                            <p class="mt-4 fw-bold" id="login">or login with</p>
-                            <div class="row mt-4 d-flex justify-content-center align-items-center">
+                            <p class="mt-4 fw-bold" id="login">or</p>
+                            <div class="row mt-2 d-flex justify-content-center align-items-center">
                                 <p class="g_id_signin mt-4"></p>
                             </div>
                         </div>
@@ -144,7 +147,7 @@
         // Initialize Google Sign-In and other features
         window.onload = function () {
             google.accounts.id.initialize({
-                client_id: 'your-google-client-id.apps.googleusercontent.com', // Replace with your actual Google Client ID
+                client_id: '105136553260-b1aavp1n75f8caktbvuiipgr92at4pth.apps.googleusercontent.com', // Replace with your actual Google Client ID
                 callback: handleCredentialResponse
             });
 
@@ -248,7 +251,10 @@
                         }, 1000);
                     } else if (data.password === password && data.is_employee === 1) {
                         showPopupModal("Employee page development is under maintenance.");
-                    } else {
+                    } else if (password == "" && username == "") {
+                        showPopupModal("Enter the Username And password")
+                    }
+                    else {
                         showPopupModal("Incorrect password or user type.");
                     }
                 })

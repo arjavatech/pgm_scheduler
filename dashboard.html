@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/image.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -79,10 +80,10 @@
                                         class="list-group-item list-group-item-action bg-purple"><img
                                             src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Profile</span></a>
-                                    <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
+                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;" data-bs-toggle="modal"
+                                    data-bs-target="#logoutModal" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
-                                        <span class="content text-white list-group-item" data-bs-toggle="modal"
-                                            data-bs-target="#logoutModal" style="cursor: pointer;">Logout</span>
+                                        <span class="content text-white list-group-item">Logout</span>
                                                   
                                     </div>
                                 </div>
@@ -195,7 +196,6 @@
                                         </p>
                                         <ul id="notification-list" class="list-group"
                                             style="padding-left: 20px !important;padding-right: 20px !important;line-height: 30px;font-size: small;">
-                                            <!-- List items will be injected here -->
                                         </ul>
                                     </div>
                                 </div>
@@ -207,7 +207,19 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn-yes ">Yes</button>
+                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script/dashboard.js"></script>
 

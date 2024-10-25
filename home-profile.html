@@ -27,20 +27,16 @@
 
     .body-overlay {
         background-color: rgba(0, 0, 0, 0.5);
-        /* Semi-transparent black overlay */
         transition: background-color 0.3s ease;
     }
 
-    /* When the sidebar is active, make the placeholders transparent */
     .input-sty::placeholder {
         color: #a9a9a9;
         transition: color 0.3s ease;
-        /* Smooth transition */
     }
 
     .placeholder-transparent::placeholder {
         color: transparent;
-        /* Transparent placeholder */
     }
 
 
@@ -59,7 +55,6 @@
         color: #333;
     }
 
-    /* Modal footer styling */
     .custom-modal-footer {
         display: flex;
         justify-content: space-between;
@@ -82,22 +77,15 @@
         background-color: #006103;
         opacity: 0.8;
         color: white;
-        /* Darker green on hover */
     }
 
-    /* No button styling */
     .btn-no {
         background-color: #dc3545;
-        /* Red background */
         color: white;
-        /* White text */
         border: none;
-        /* Remove border */
         width: 30%;
         border-radius: 6px;
-        /* Rounded corners */
         transition: background-color 0.3s ease;
-        /* Smooth hover effect */
         padding-top: 8px;
         padding-bottom: 8px;
     }
@@ -106,7 +94,6 @@
         background-color: #c82333;
         color: white;
         opacity: 0.8;
-        /* Darker red on hover */
     }
 </style>
 
@@ -170,11 +157,10 @@
                                         class="list-group-item list-group-item-action bg-purple"><img
                                             src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Profile</span></a>
-                                    <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
+                               <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;" data-bs-toggle="modal"
+                                    data-bs-target="#logoutModal" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
-                                        <span class="content text-white list-group-item" data-bs-toggle="modal"
-                                            data-bs-target="#logoutModal" style="cursor: pointer;">Logout</span>
-                                                  
+                                        <span class="content text-white list-group-item">Logout</span>
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +186,7 @@
                                 <img id="logoPreview" alt="Upload Logo" style="max-width: 100%; height: auto;">
                                 <input type="file" id="uploadLogo" accept="image/*">
                                 <!-- Pencil icon -->
-                                <span class="icon-pencil"><i class="fas fa-pencil-alt"></i></span>
+                                <span class="icon-pencil"><i style="cursor: pointer;" class="fas fa-pencil-alt"></i></span>
 
                             </label>
                         </div>

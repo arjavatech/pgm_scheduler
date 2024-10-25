@@ -5,66 +5,67 @@ function viewcompanydetails() {
     const tableBody = document.getElementById("tBody");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/getall`;
 
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
     fetch(apiUrl)
         .then(response => {
-            document.getElementById('l').style.display = 'none';
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
             }
             return response.json();
         })
         .then(data => {
+            loadingIndicator.style.display = 'none'; // Hide loading after response is received
             employeesData = data;
             tableBody.innerHTML = ''; // Clear any previous rows
 
             // Populate the table
             employeesData.forEach(element => {
                 const newRow = document.createElement('tr');
-                
-              
                 newRow.innerHTML = `
-                    <td class="pin-column" >${element.company_name}</td>
-                  
-                    <td class="name-column">${element.first_name}</td>
-                    <td class="phone-column">${element.phone_number}</td>
-                    <td class="isAdmin">${element.email}</td>
-                    <td>
-                        <div>
-                            <span class="icon" title="Edit" style="cursor: pointer;">
-                                <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
-                            </span>
-                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${element.company_id}" email-id="${element.email}" delete-comp="${element.company_name}">
-                                <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
-                            </span>
-                        </div>
-                    </td>
-                    <td>
-                       <button id="send" class="${element.status == "Accepted" ?" ":"re-send "} " 
+                <td class="pin-column">${element.company_name}</td>
+                <td class="name-column">${element.first_name}</td>
+                <td class="phone-column">${element.phone_number}</td>
+                <td class="isAdmin">${element.email}</td>
+                <td>
+                    <div>
+                        <span class="icon" title="Edit" style="cursor: pointer;">
+                            <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
+                        </span>
+                        <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" 
+                            data-id="${element.company_id}" email-id="${element.email}" delete-comp="${element.company_name}">
+                            <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <button id="send" class="${element.status === "Accepted" ? "" : "re-send"}" 
                         companyIdSends="${element.company_id}" 
                         companyNameForsend="${element.company_name}"
                         phnNo="${element.phone_number}"
                         fName="${element.first_name}"
                         lName="${element.last_name}"
                         mail="${element.email}"
-                        style="border:none; background:transparent"${element.status == "Accepted" ? "disabled" : ""}>
-                          <img  src=${element.status == "Accepted" ?"icon/sendDiasable.png":"icon/icons8-forward-message-20.png"}></img>
-                       </button>
-                    </td>
-                `;
-                console.log(element.company_id,element.first_name);
+                        style="border:none; background:transparent"
+                        ${element.status === "Accepted" ? "disabled" : ""}>
+                        <img src="${element.status === "Accepted" ? "icon/sendDiasable.png" : "icon/icons8-forward-message-20.png"}">
+                    </button>
+                </td>
+            `;
+                console.log(element.company_id, element.first_name);
                 tableBody.appendChild(newRow);
+
                 addCard({
-                    company_id:element.company_id,
-                    company_name:element.company_name,
-                    first_name:element.first_name,
-                    last_name:element.last_name,
-                    phone_number:element.phone_number,
-                    email:element.email,
-                    status:element.status
-                })
+                    company_id: element.company_id,
+                    company_name: element.company_name,
+                    first_name: element.first_name,
+                    last_name: element.last_name,
+                    phone_number: element.phone_number,
+                    email: element.email,
+                    status: element.status
+                });
             });
-            // <i class="fa fa-envelope paper-plane" style="color: blue;" ${element.invite_status == "Accepted" ? "disabled" : ""}></i>
-                   
 
             // Initialize DataTable after populating data
             $(document).ready(function () {
@@ -79,6 +80,7 @@ function viewcompanydetails() {
                 });
             });
 
+            // Event listeners
             tableBody.addEventListener('click', function (event) {
                 if (event.target.closest('#send')) {
                     const resendButton = event.target.closest('#send');
@@ -89,7 +91,7 @@ function viewcompanydetails() {
                     const lName = resendButton.getAttribute('lName');
                     const mail = resendButton.getAttribute('mail');
 
-                    document.getElementById('l').style.display = 'flex';
+                    loadingIndicator.style.display = 'flex'; // Show loading for resend operation
                     const mainContent = document.getElementById('mainContent');
                     mainContent.classList.add('blur-background');
 
@@ -108,70 +110,64 @@ function viewcompanydetails() {
                             email: mail
                         })
                     })
-                    .then(response => {
-                        document.getElementById('l').style.display = 'none';
-                        if (!response.ok) {
-                            throw new Error(`Error: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        //SuccessModal
-                        popupModal.style.display = 'block';
-                        mainContent.classList.add('blur-background');
-                        closePopup.addEventListener('click', function () {
-                        window.location.href = 'company.html';
-                       });
-                    
-                    })
-                    .catch(error => {
-                        document.getElementById('l').style.display = 'none';
-                        console.error('Error:', error);
-                    });
-                }
-            });
-    
-
-            // Event listener for deleting a company
-            tableBody.addEventListener('click', function (event) {
-            
-                if (event.target.closest('.delete-icon')) {
-                    const deleteIcon = event.target.closest('.delete-icon');
-                   
-                    const companyId = deleteIcon.getAttribute('data-id');
-                    const rowToDelete = deleteIcon.closest('tr');
-                    const email = deleteIcon.getAttribute('email-id');
-                    const CompName=deleteIcon.getAttribute('delete-comp');
-                   
-                    document.getElementById("CompName").innerHTML=`Are you want to Delete ${CompName} Company`;
-                    showConfirmModal(() => {
-                        // If confirmed, proceed with delete
-                        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}/${email}`, {
-                            method: 'PUT',
-                        })
                         .then(response => {
+                            loadingIndicator.style.display = 'none'; // Hide loading after resend response
                             if (!response.ok) {
                                 throw new Error(`Error: ${response.status}`);
                             }
                             return response.json();
                         })
-                        .then(() => {
-                            rowToDelete.remove();
+                        .then(data => {
+                            // SuccessModal
+                            popupModal.style.display = 'block';
+                            mainContent.classList.add('blur-background');
+                            closePopup.addEventListener('click', function () {
+                                window.location.href = 'company.html';
+                            });
                         })
                         .catch(error => {
-                            console.error('Delete error:', error);
-                            showAlert('Failed to delete the company.');
+                            loadingIndicator.style.display = 'none'; // Hide loading on error
+                            console.error('Error:', error);
                         });
-                    });
                 }
 
+                // Event listener for deleting a company
+                if (event.target.closest('.delete-icon')) {
+                    const deleteIcon = event.target.closest('.delete-icon');
+                    const companyId = deleteIcon.getAttribute('data-id');
+                    const rowToDelete = deleteIcon.closest('tr');
+                    const email = deleteIcon.getAttribute('email-id');
+                    const CompName = deleteIcon.getAttribute('delete-comp');
+
+                    document.getElementById("CompName").innerHTML = `Are you want to Delete ${CompName} Company`;
+                    showConfirmModal(() => {
+                        // If confirmed, proceed with delete
+                        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}/${email}`, {
+                            method: 'PUT',
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`Error: ${response.status}`);
+                                }
+                                return response.json();
+                            })
+                            .then(() => {
+                                rowToDelete.remove();
+                            })
+                            .catch(error => {
+                                console.error('Delete error:', error);
+                                showAlert('Failed to delete the company.');
+                            });
+                    });
+                }
             });
         })
         .catch(error => {
-            document.getElementById('l').style.display = 'none';
+            loadingIndicator.style.display = 'none'; // Hide loading on error
             console.error('Fetch error:', error);
             showAlert('Failed to load company details.');
         });
+
 }
 
 // Function to show the confirmation modal
@@ -184,7 +180,7 @@ function showConfirmModal(onConfirm) {
         console.error('Confirm modal elements are not found in the DOM.');
         return;
     }
-    
+
     confirmModal.style.display = 'block';
 
     confirmYesBtn.onclick = () => {
@@ -205,7 +201,7 @@ function showAlert(message) {
     const alertModal = document.getElementById('alertModal');
     const alertMessage = document.getElementById('alertMessage');
     const alertOkBtn = document.getElementById('alertOkBtn');
-    
+
     alertMessage.innerText = message;
     alertModal.style.display = 'block';
 
@@ -215,8 +211,8 @@ function showAlert(message) {
 }
 
 
-function addCard(employee){
-    const cardHtml =`
+function addCard(employee) {
+    const cardHtml = `
         <div class="card mb-3" id="card">
             <div class="card-body">
                 <div class="row">
@@ -247,7 +243,7 @@ function addCard(employee){
                         </div>
                     </div>
                     <div class="col-6">
-                        <p class="d-flex justify-content-center"><button id="send" class="${employee.status == "Accepted" ?" ":"re-send "} " 
+                        <p class="d-flex justify-content-center"><button id="send" class="${employee.status == "Accepted" ? " " : "re-send "} " 
                         companyIdSends="${employee.company_id}" 
                         companyNameForsend="${employee.company_name}"
                         phnNo="${employee.phone_number}"
@@ -255,7 +251,7 @@ function addCard(employee){
                         lName="${employee.last_name}"
                         mail="${employee.email}"
                         style="border:none; background:transparent"${employee.status == "Accepted" ? "disabled" : ""}>
-                          <img  src=${employee.status == "Accepted" ?"icon/sendDiasable.png":"icon/icons8-forward-message-20.png"}></img>
+                          <img  src=${employee.status == "Accepted" ? "icon/sendDiasable.png" : "icon/icons8-forward-message-20.png"}></img>
                        </button></p>
                     </div>
                 </div>

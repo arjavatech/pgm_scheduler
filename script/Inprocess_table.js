@@ -1,17 +1,29 @@
 $(document).ready(function () {
+    const cid = localStorage.getItem("cid");
+    const exam = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`
     const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/ShddWeFGFGkk9b67STTJY4";
     let rowDetails = [];
+
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
+            console.log("AK"); // Debug statement
+            rowDetails.push(...data); // Push all data at once
             data.forEach(ticket => {
-                rowDetails.push(ticket);
                 addTicket(ticket);
                 addCard(ticket);
             });
+            loadingIndicator.style.display = 'none'; // Hide loading after processing
         })
-        .catch(error => console.error('Error fetching tickets:', error));
+        .catch(error => {
+            console.error('Error fetching tickets:', error);
+            loadingIndicator.style.display = 'none'; // Hide loading on error
+        });
+
+
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({

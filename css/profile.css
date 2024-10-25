@@ -52,6 +52,7 @@ body {
 .upload-label {
     display: flex;
     align-items: center;
+    position: relative;
     font-size: 16px;
     color: #b3aea9;
     margin-top: 20px;
@@ -62,12 +63,7 @@ body {
     padding-bottom: 8px;
 }
 
-.upload-label::after {
-    content:url("icon/upload-icon.png");
-    margin-left: auto;
-    font-size: 18px;
-    color: #b3aea9;
-}
+
 
 input[type="file"] {
     display: none;

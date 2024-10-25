@@ -62,6 +62,7 @@ h1 {
 
 
 
+
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     box-sizing: border-box;
     display: inline-block;
@@ -155,5 +156,3 @@ h1 {
     opacity: 0.8;
     /* Darker red on hover */
 }
-
-
