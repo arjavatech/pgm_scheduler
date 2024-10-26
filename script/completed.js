@@ -90,6 +90,7 @@ $(document).ready(function () {
                                     <img src="images/profile img.png" alt="Image 1" width="100px">
                                     <div class="overlay">+3</div>
                                 </div>
+                                <h5>$100</h5>
                             </div>
                         </div>
                     </div>

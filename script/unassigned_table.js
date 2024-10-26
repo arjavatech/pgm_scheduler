@@ -1,9 +1,25 @@
+const cid = localStorage.getItem("cid");
 $(document).ready(function () {
-    const cid = localStorage.getItem("cid");
+    
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/unassigned/${cid}`;
-    let rowDetails = [];    
-    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
-    loadingIndicator.style.display = 'flex'; // Show loading before fetch
+    let rowDetails = [];
+    let employeeOptions = ""; // Declare employeeOptions globally
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
+
+    // Fetch employee data for the select options
+    const employeeUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_based_pending_works_count/ShddWeFGFGkk9b67STTJY4`;
+    fetch(employeeUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Populate global employeeOptions for use in both addCard and format
+            employeeOptions = data.map(employee =>
+                `<option value="${employee.employee_id}">${employee.employee_name}</option>`
+            ).join("");
+        })
+        .catch(error => console.error('Error fetching employees:', error));
+
+    // Fetch tickets
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -11,12 +27,12 @@ $(document).ready(function () {
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
-                addCard(ticket); // Add the card for mobile view
+                addCard(ticket); // Use employeeOptions in addCard
             });
         })
         .catch(error => {
             console.error('Error fetching tickets:', error);
-            loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
+            loadingIndicator.style.display = 'none';
         });
 
     // Initialize DataTable
@@ -33,56 +49,65 @@ $(document).ready(function () {
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
         const rowNode = table.row.add([
-            `<span></span>`, // Control for expanding the row
+            `<span></span>`,
             ticket.ticket_id,
             `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
             ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,
             ticket.city,
-
-        ]).draw(false).node(); // Get the row node after adding
+        ]).draw(false).node();
 
         $(rowNode).find('td:first').addClass('details-control');
     }
 
-    // Format the row details
+    // Function to format each row with expandable details
     function format(rowData) {
+        console.log(rowData.ticket_id); // Log the ticket ID
+    
+        // Escape function to prevent XSS attacks
+        function escapeHTML(html) {
+            const text = document.createTextNode(html);
+            const div = document.createElement('div');
+            div.appendChild(text);
+            return div.innerHTML;
+        }
+    
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-4">
-                            <strong class="d-flex justify-content-left">Customer Address</strong>
-                            <p class="pt-2" style="font-size: 13px; text-align: left;">
-                                ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
-                            </p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
-                            <select class="form-select mt-2 employee-select">
-                                <option value="ganesh">Mani</option>
-                                <option value="saab">Arunkumar</option>
-                                <option value="mercedes">Sakthi</option>
-                                <option value="audi">Logeshwari</option>
+                            <strong>Customer Address</strong>
+                            <p>${escapeHTML(rowData.street || 'No address available')}, ${escapeHTML(rowData.city || 'N/A')}, ${escapeHTML(rowData.zip || 'N/A')}, ${escapeHTML(rowData.state || 'N/A')}</p>
+                            <label class="mt-3 d-flex justify-content-left"><strong>Employee Name</strong></label>
+                            <select class="form-select employee-select mt-2" id="employee-select-${rowData.ticket_id}">
+                                ${employeeOptions}
                             </select>
+                            <small>Pending work: ${rowData.employees?.[0]?.pending || 'N/A'}</small>
                         </div>
-                        <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <strong>Description:</strong>
-                            <p class="description">${rowData.description}</p>
+                            <p>${escapeHTML(rowData.description || 'No description available')}</p>
                             <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
-                        </div>
-                    </div>
+                                <img src="images/profile img.png" alt="Image for ticket" width="100px">
+                                <div class="image-container">
+                                    <img src="images/profile img.png" alt="Additional image for ticket" width="100px">
+                                    <div class="overlay">+3</div>
+                                </div>
+                            </div> 
+                            
+                            <div class="mt-3 mb-3">
+                            <button type="button" class="btn-yes" onclick="handleAssign('${cid}', ${rowData.ticket_id})">Assigned</button>
+                                <button type="button" class="btn-no">Reject</button>
+                            </div>
                         </div>
                     </div>
                 </td>
             </tr>`;
     }
-
+    
     // Expand row details on click
     $('#ticketTable tbody').on('click', 'td.details-control', function () {
         const tr = $(this).closest('tr');
@@ -99,149 +124,100 @@ $(document).ready(function () {
         }
     });
 
+
+
+
     // Function to create and append the card for mobile view
     function addCard(employee) {
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <p><strong>Name </strong>  ${employee.name}</p>
-                    </div>
-                    <div class="col-6">
-                        <p><strong>Ticket ID </strong>  ${employee.ticket_id}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <p><strong>Issue type </strong>  ${employee.ticket_type}</p>
-                    </div>
-                    <div class="col-6">
-                        <p><strong>Date </strong>  ${employee.complain_raised_date}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <p><strong>Phone </strong> ${employee.phone_number}</p>
-                    </div>
-                    <div class="col-6">
-                        <p><strong>City:</strong> ${employee.city}</p>
-                    </div>
-                </div>
-                  <p class="text-center mb-2 showMoreButton">show more ⮟</p>
+                <p><strong>Name:</strong> ${employee.name}</p>
+                <p><strong>Ticket ID:</strong> ${employee.ticket_id}</p>
+                <p><strong>Issue Type:</strong> ${employee.ticket_type}</p>
+                <p><strong>Date:</strong> ${employee.complain_raised_date}</p>
+                <p><strong>Phone:</strong> ${employee.phone_number}</p>
+                <p><strong>City:</strong> ${employee.city}</p>
+                <p class="text-center mb-2 showMoreButton">Show more ⮟</p>
                 <div class="show-more" style="display:none">
-                    <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
+                    <p><strong>Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p><strong>Employee Name:</strong><select class="form-select mt-2 employee-select">
-                                <option value="ganesh">Mani</option>
-                                <option value="saab">Arunkumar</option>
-                                <option value="mercedes">Sakthi</option>
-                                <option value="audi">Logeshwari</option>
-                            </select></p>
+                    <p><strong>Employee:</strong>
+                        <select class="form-select employee-select">
+                            ${employeeOptions}
+                        </select>
+                    </p>
                     <div class="image-gallery d-flex justify-content-center">
                         <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
+                        <div class="image-container">
                             <img src="images/profile img.png" alt="Image 1" width="100px">
                             <div class="overlay">+3</div>
                         </div>
                     </div>
-                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>            
+                    <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>
                 </div>
             </div>
-        </div>
-        `;
+        </div>`;
 
-        // Append the card to the card container for mobile view
         $('#card-container').append(cardHtml);
     }
 
-    // Show more functionality with event delegation
+    // Show more functionality
     $(document).on('click', '.showMoreButton', function () {
-        const cardBody = $(this).closest('.card-body');
-        cardBody.find('.show-more').slideDown(); // Slide down the content
-        $(this).hide(); // Hide "show more" button
+        $(this).closest('.card-body').find('.show-more').slideDown();
+        $(this).hide();
     });
 
     $(document).on('click', '.showLessButton', function () {
-        const cardBody = $(this).closest('.card-body');
-        cardBody.find('.show-more').slideUp(); // Slide up the content
-        cardBody.find('.showMoreButton').show(); // Show "show more" button
+        $(this).closest('.card-body').find('.show-more').slideUp();
+        $(this).closest('.card-body').find('.showMoreButton').show();
     });
-
 });
 
-function showmore(response1, response2) {
-    document.getElementById("showMoreButton").style.display = response1;
-    document.querySelector(".show-more").style.display = response2;
+
+async function assignedEmployee(cid, employee_id, ticket_id) {
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
+    console.log(employee_id)
+    const assignAPI = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/approve_ticket/${cid}/${ticket_id}/${employee_id}`;
+    
+    try {
+        const response = await fetch(assignAPI, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Error: ${response.status} - ${errorMessage}`);
+          
+        }
+        
+        const data = await response.json();
+        console.log("Employee assigned successfully:", data);
+        loadingIndicator.style.display = 'none';
+    } catch (error) {
+        console.error("Failed to assign employee:", error.message);
+        loadingIndicator.style.display = 'none';
+    }
 }
 
-document.getElementById('sidebarToggle').addEventListener('click', function () {
-    var sidebar = document.getElementById('left');
-    var body = document.body;
-    var mainContents = document.querySelectorAll(".card");
-    var content = document.querySelector(".container-sty");
-    var tableOddRows = document.querySelectorAll("tr");
-    var tableEvenRows = document.querySelectorAll("tr.even");
-    var issueType = document.querySelectorAll(".issue-type");
-    var tHead = document.querySelector("thead");
-    var tHeadCells = document.querySelectorAll("thead th");
-    var select = document.querySelector(".employee-select")
-    sidebar.classList.toggle('active');
 
-    if (sidebar.classList.contains('active')) {
-        // Sidebar is open, apply transparency
-        body.classList.add('no-scroll');
-        body.classList.add('body-overlay');
 
-        content.style.backgroundColor = "transparent";
-        mainContents.forEach(function (mainContent) {
-            mainContent.style.backgroundColor = "transparent";
-        });
-        tableOddRows.forEach(function (row) {
-            row.style.cssText = "background-color: transparent !important;"; // Adds !important
-        });
+// Function to handle assignment
+function handleAssign(cid, ticketId) {
+    const selectElement = document.getElementById(`employee-select-${ticketId}`);
+    const selectedValue = selectElement.value;
 
-        if (tHead) {
-            tHead.style.cssText = "background-color: transparent !important;";
-        }
-
-        // Apply transparency to each table head cell
-        tHeadCells.forEach(function (cell) {
-            cell.style.cssText = "background-color: transparent !important;";
-        });
-
-        issueType.forEach(function (row) {
-            row.style.cssText = "background-color: transparent !important;"; // Adds !important
-        });
-
-        select.style.backgroundColor = "transparent";
-    } else {
-        // Sidebar is closed, reset colors
-        body.classList.remove('no-scroll');
-        body.classList.remove('body-overlay');
-
-        content.style.backgroundColor = "";
-        mainContents.forEach(function (mainContent) {
-            mainContent.style.backgroundColor = "";
-        });
-
-        tableOddRows.forEach(function (row) {
-            row.style.backgroundColor = ""; // Reset odd row background
-        });
-
-        tableEvenRows.forEach(function (row) {
-            row.style.backgroundColor = ""; // Reset even row background
-        });
-
-        if (tHead) {
-            tHead.style.backgroundColor = ""; // Reset thead background
-        }
-
-        // Reset the background of each table head cell
-        tHeadCells.forEach(function (cell) {
-            cell.style.backgroundColor = ""; // Reset th background
-        });
-        select.disabled = false;
+    // Ensure ticketId is a number, if not, convert it to a valid format
+    const ticketIdInt = parseInt(ticketId, 10);
+    if (isNaN(ticketIdInt)) {
+        console.error(`Invalid ticket ID: ${ticketId}`);
+        return; // Prevent the function from proceeding
     }
-});
+
+    assignedEmployee(cid, selectedValue, ticketIdInt);
+}
 
