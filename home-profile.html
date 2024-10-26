@@ -98,7 +98,7 @@
 </style>
 
 <body>
-    <div id="nav">
+    <div id="nav" class="mb-5">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="col-4 text-start">
                 <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
@@ -157,8 +157,8 @@
                                         class="list-group-item list-group-item-action bg-purple"><img
                                             src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Profile</span></a>
-                               <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;" data-bs-toggle="modal"
-                                    data-bs-target="#logoutModal" class="m-3">
+                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
+                                        data-bs-toggle="modal" data-bs-target="#logoutModal" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
                                         <span class="content text-white list-group-item">Logout</span>
                                     </div>
@@ -186,7 +186,8 @@
                                 <img id="logoPreview" alt="Upload Logo" style="max-width: 100%; height: auto;">
                                 <input type="file" id="uploadLogo" accept="image/*">
                                 <!-- Pencil icon -->
-                                <span class="icon-pencil"><i style="cursor: pointer;" class="fas fa-pencil-alt"></i></span>
+                                <span class="icon-pencil"><i style="cursor: pointer;"
+                                        class="fas fa-pencil-alt"></i></span>
 
                             </label>
                         </div>
@@ -281,6 +282,9 @@
             </div>
         </div>
     </div>
+    <div class="loading" id="l">
+        <div class="spinner"></div>
+    </div>
     <script>
         document.querySelector('.btn-yes').addEventListener('click', function () {
             window.location.href = 'index.html';
@@ -288,6 +292,7 @@
 
     </script>
     <script>
+        let cid = localStorage.getItem("cid");
         document.getElementById('uploadLogo').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -298,7 +303,10 @@
                 reader.readAsDataURL(file); // Convert the file into a data URL
             }
         });
-        const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/PhHo97we7UVHCTbhatWY3L`;
+        const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/${cid}`;
+
+        const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+        loadingIndicator.style.display = 'flex'; // Show loading before fetch
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -310,8 +318,7 @@
                 // Store the fetched data
                 employeesData = data;
                 console.log(employeesData)
-
-
+                loadingIndicator.style.display = 'none';
                 document.getElementById("companyName").value = employeesData.company_name
                 document.getElementById("phone").value = employeesData.phone_number
                 document.getElementById("firstName").value = employeesData.first_name
@@ -321,7 +328,11 @@
                 document.getElementById("zip").value = employeesData.zip
                 document.getElementById("email").value = employeesData.email
                 document.getElementById("state").value = employeesData.state
+            })
 
+            .catch(error => {
+                console.error('Error fetching tickets:', error);
+                loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
             });
 
         document.getElementById('sidebarToggle').addEventListener('click', function () {

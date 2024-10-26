@@ -50,7 +50,7 @@
     </style>
 
 <body>
-    <div id="nav">
+    <div id="nav" class="mb-5">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="col-4">
                 <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
@@ -89,17 +89,13 @@
                                     <a href="company.html" class="list-group-item list-group-item-action bg-purple"><img
                                             src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Companies</span></a>
-                                   
-                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;" class="m-3" data-bs-toggle="modal"
-                                    data-bs-target="#logoutModal">
+
+                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
+                                        class="m-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                         <img src="icon/Vector.png" id="icon">
                                         <span class="content text-white list-group-item" data-bs-toggle="modal"
                                             data-bs-target="#logoutModal">Logout</span>
-                                                  
                                     </div>
-                                        <span class="content text-white list-group-item" data-bs-toggle="modal"
-                                            data-bs-target="#logoutModal" style="cursor: pointer;">Logout</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +173,9 @@
             <button class="close-btn" id="closePopupFailure">Retry</button>
         </div>
     </div>
-
+    <div class="loading" id="l">
+        <div class="spinner"></div>
+    </div>
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content custom-modal-content">
@@ -195,18 +193,32 @@
         document.querySelector('.btn-yes').addEventListener('click', function () {
             window.location.href = 'index.html';
         });
-
     </script>
-
     <script>
 
         document.getElementById('submit-btn').addEventListener('click', function (event) {
             event.preventDefault();
 
-            const loadingOverlay = document.getElementById('loadingOverlay');
+
             const mainContent = document.getElementById('mainContent');
-            loadingOverlay.classList.remove('d-none');
             mainContent.classList.add('blur-background');
+            const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+            loadingIndicator.style.display = 'flex'; // Show loading before fetch
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    loadingIndicator.style.display = 'none';
+                    data.forEach(ticket => {
+                        rowDetails.push(ticket);
+                        addTicket(ticket);
+                        addCard(ticket, index); // Pass index for unique IDs
+                        index++;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching tickets:', error);
+                    loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
+                });
 
             // Gather input values
             const data = {
@@ -228,7 +240,7 @@
             })
                 .then(response => {
 
-                    loadingOverlay.classList.add('d-none');
+                    loadingIndicator.style.display = 'none';
 
                     if (!response.ok) {
                         throw new Error(`Error: ${response.status}`);
@@ -257,7 +269,7 @@
                 })
                 .catch(error => {
                     // Show failure modal on error
-                    loadingSpinner.classList.add('d-none');
+                    loadingIndicator.style.display = 'none';
                     console.error('Error:', error);
                 });
         });

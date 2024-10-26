@@ -1,19 +1,25 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
-    const exam = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/rejected/${cid}`
-    const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/rejected/ShddWeFGFGkk9b67STTJY4";
+    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/rejected/${cid}`
     let rowDetails = [];
 
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
+            loadingIndicator.style.display = 'none';
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
-                addCard(ticket); // Add the card for mobile view
+                addCard(ticket, index); // Pass index for unique IDs
+                index++;
             });
         })
-        .catch(error => console.error('Error fetching tickets:', error));
+        .catch(error => {
+            console.error('Error fetching tickets:', error);
+            loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
+        });
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
@@ -169,7 +175,7 @@ $(document).ready(function () {
         var issueType = document.querySelectorAll(".issue-type");
         var tHead = document.querySelector("thead");
         var tHeadCells = document.querySelectorAll("thead th");
-
+        var select = document.querySelector(".employee-select")
         sidebar.classList.toggle('active');
 
         if (sidebar.classList.contains('active')) {
@@ -197,6 +203,8 @@ $(document).ready(function () {
             issueType.forEach(function (row) {
                 row.style.cssText = "background-color: transparent !important;"; // Adds !important
             });
+
+            select.style.backgroundColor = "transparent";
         } else {
             // Sidebar is closed, reset colors
             body.classList.remove('no-scroll');
@@ -223,6 +231,7 @@ $(document).ready(function () {
             tHeadCells.forEach(function (cell) {
                 cell.style.backgroundColor = ""; // Reset th background
             });
+            select.disabled = false;
         }
     });
 });

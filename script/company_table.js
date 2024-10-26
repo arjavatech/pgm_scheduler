@@ -53,7 +53,7 @@ function viewcompanydetails() {
                     </button>
                 </td>
             `;
-                console.log(element.company_id, element.first_name);
+
                 tableBody.appendChild(newRow);
 
                 addCard({

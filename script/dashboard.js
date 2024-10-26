@@ -137,6 +137,57 @@ let chart2 = new Chart(ctx2, {
     }
 });
 
+async function fetchEmployeeCounts() {
+    try {       
+        const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_count/${cid}`);
+        const data = await response.json();
+       console.log(data);
+        // Assuming API returns data with totalEmployees and availableEmployees
+        const totalEmployees = data.total_employee;
+        const availableEmployees = data.available_employee;
+       console.log(totalEmployees)
+
+        // Update the HTML with fetched data
+        document.querySelector('.box2 h3').textContent = totalEmployees === 0 ? 0 : totalEmployees;
+        document.querySelector('.box3 h3').textContent = availableEmployees === 0 ? 0 : availableEmployees ;
+    } catch (error) {
+        console.error("Error fetching employee data:", error);
+    }
+}
+
+// Call the function to load employee counts when the page loads
+
+
+
+async function fetchCounts() {
+    try {
+       
+        const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_counts/${cid}`);
+        const data = await response.json();
+       console.log(data);
+        // Assuming API returns data with totalEmployees and availableEmployees
+        const ticketCounts = data.total_tickets;
+       
+       console.log(ticketCounts)
+
+        // Update the HTML with fetched data
+        document.querySelector('.UnassignedCount h3').textContent =  data.pending_tickets;
+        document.querySelector('.CompletedCount h3').textContent =  data.completed_tickets;
+        document.querySelector('.InprocessCount h3').textContent = data. inprogress_tickets;
+        document.querySelector('.ticketcount h3').textContent =  ticketCounts;
+       
+       
+    } catch (error) {
+        console.error("Error fetching employee data:", error);
+    }
+}
+
+
+window.addEventListener('DOMContentLoaded', function() {
+    fetchEmployeeCounts();
+    fetchCounts(); 
+   
+});
 
 
 

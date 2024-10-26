@@ -2,9 +2,13 @@ $(document).ready(function () {
     const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/getall";
     let rowDetails = [];
     let index = 1;
+
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
+            loadingIndicator.style.display = 'none';
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
@@ -12,18 +16,21 @@ $(document).ready(function () {
                 index++;
             });
         })
-        .catch(error => console.error('Error fetching tickets:', error));
+        .catch(error => {
+            console.error('Error fetching tickets:', error);
+            loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
+        });
 
     // Show more/less functionality
-    $(document).on('click', '.show-more-toggle', function() {
+    $(document).on('click', '.show-more-toggle', function () {
         const index = $(this).data('index');
         $(`#showMoreButton-${index}`).hide();
         $(`#showMoreContent-${index}`).slideDown();
     });
 
-    $(document).on('click', '.show-less-toggle', function() {
+    $(document).on('click', '.show-less-toggle', function () {
         const index = $(this).data('index');
-        $(`#showMoreContent-${index}`).slideUp(function() {
+        $(`#showMoreContent-${index}`).slideUp(function () {
             $(`#showMoreButton-${index}`).show();
         });
     });

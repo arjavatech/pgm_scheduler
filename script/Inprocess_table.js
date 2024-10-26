@@ -1,7 +1,6 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
-    const exam = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`
-    const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/ShddWeFGFGkk9b67STTJY4";
+    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`
     let rowDetails = [];
 
     const loadingIndicator = document.getElementById('l');
@@ -10,7 +9,6 @@ $(document).ready(function () {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            console.log("AK"); // Debug statement
             rowDetails.push(...data); // Push all data at once
             data.forEach(ticket => {
                 addTicket(ticket);
@@ -199,7 +197,7 @@ $(document).ready(function () {
         var issueType = document.querySelectorAll(".issue-type");
         var tHead = document.querySelector("thead");
         var tHeadCells = document.querySelectorAll("thead th");
-
+        var select = document.querySelector(".employee-select")
         sidebar.classList.toggle('active');
 
         if (sidebar.classList.contains('active')) {
@@ -227,6 +225,8 @@ $(document).ready(function () {
             issueType.forEach(function (row) {
                 row.style.cssText = "background-color: transparent !important;"; // Adds !important
             });
+
+            select.style.backgroundColor = "transparent";
         } else {
             // Sidebar is closed, reset colors
             body.classList.remove('no-scroll');
@@ -253,6 +253,7 @@ $(document).ready(function () {
             tHeadCells.forEach(function (cell) {
                 cell.style.backgroundColor = ""; // Reset th background
             });
+            select.disabled = false;
         }
     });
 });

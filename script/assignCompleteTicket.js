@@ -122,6 +122,8 @@ function generateTableBody() {
     const tbody = document.querySelector('#ticketTable tbody');
     tbody.innerHTML = ''; // Clear existing tbody content
 
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
     tableRows.forEach(rowData => {
         const tr = document.createElement('tr');
         tr.classList.add('main-row');
@@ -143,6 +145,7 @@ function generateTableBody() {
 
         tbody.appendChild(tr);
     });
+    loadingIndicator.style.display = 'none';
 }
 
 // Call the function to generate the table body
@@ -276,7 +279,7 @@ function addCardsForAllEmployees() {
             address: detail.address,
             description: detail.description
         };
-        
+
         addCard(employeeData);
     });
 }
