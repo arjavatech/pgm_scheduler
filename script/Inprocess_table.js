@@ -70,6 +70,7 @@ $(document).ready(function () {
             <tr class="collapse-content details-row">
                 <td colspan="8">
                     <div class="row">
+                    <div class="col-md-1"></div>
                         <div class="col-md-4">
                             <strong>Customer Address</strong>
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
@@ -84,10 +85,19 @@ $(document).ready(function () {
                             </select>
                             <small>Pending work: <span class="pending-work">${rowData.pending || 'N/A'}</span></small>
                         </div>
+                        <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <strong>Description:</strong>
                             <p>${rowData.description}</p>
+                            <div class="image-gallery d-flex justify-content-center">
+                                <img src="images/profile img.png" alt="Image 1" width="100px">
+                                <div class="image-container d-inline justify-content-center">
+                                    <img src="images/profile img.png" alt="Image 1" width="100px">
+                                    <div class="overlay"  data-bs-toggle="modal"
+                                            data-bs-target="#imageModel">+3</div>
+                                </div>
                             <button class="btn-yes btn-reassign">Reassign</button>
+                            </div>
                         </div>
                     </div>
                 </td>
@@ -144,120 +154,6 @@ $(document).ready(function () {
         }
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
@@ -305,7 +201,8 @@ $(document).ready(function () {
                         <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container d-inline justify-content-center">
                             <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
+                            <div class="overlay"  data-bs-toggle="modal"
+                                            data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             

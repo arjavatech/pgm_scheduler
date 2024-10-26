@@ -334,7 +334,12 @@ a {
 
     }
 }
+@media (max-width:930px) {
+    #fix {
+        margin-top: 15% !important;
+    }
 
+}
 @media (max-width:450px) {
     #fix {
         margin-top: 19% !important;

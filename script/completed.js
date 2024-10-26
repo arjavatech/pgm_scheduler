@@ -49,7 +49,7 @@ $(document).ready(function () {
             ticket.phone_number,
             ticket.complain_raised_date,
             ticket.city,
-            `<span class="assigned-employee">${ticket.name}</span>` // Assigned employee
+            `<span class="assigned-employee">${ticket.first_name} ${ticket.last_name}</span>` // Assigned employee
         ]).draw(false).node(); // Get the row node after adding
 
         $(rowNode).find('td:first').addClass('details-control');
@@ -72,13 +72,8 @@ $(document).ready(function () {
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
-                            <select class="form-select mt-2 employee-select">
-                                <option value="ganesh">Mani</option>
-                                <option value="saab">Arunkumar</option>
-                                <option value="mercedes">Sakthi</option>
-                                <option value="audi">Logeshwari</option>
-                            </select>
+                            <label class="mt-3 d-flex justify-content-left">Employee Name :</label>
+                             ${rowData.first_name}  ${rowData.last_name}
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
@@ -88,7 +83,8 @@ $(document).ready(function () {
                                 <img src="images/profile img.png" alt="Image 1" width="100px">
                                 <div class="image-container d-inline justify-content-center">
                                     <img src="images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay">+3</div>
+                                    <div class="overlay"  data-bs-toggle="modal"
+                                            data-bs-target="#imageModel">+3</div>
                                 </div>
                                 <h5>$100</h5>
                             </div>
@@ -152,7 +148,8 @@ $(document).ready(function () {
                         <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container d-inline justify-content-center">
                             <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
+                            <div class="overlay"  data-bs-toggle="modal"
+                                            data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>       
