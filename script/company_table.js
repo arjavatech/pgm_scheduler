@@ -94,6 +94,7 @@ function viewcompanydetails() {
                     loadingIndicator.style.display = 'flex'; // Show loading for resend operation
                     const mainContent = document.getElementById('mainContent');
                     mainContent.classList.add('blur-background');
+                    loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
                     // Call the resend API
                     fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_mail/resend`, {
@@ -142,10 +143,13 @@ function viewcompanydetails() {
                     document.getElementById("CompName").innerHTML = `Are you want to Delete ${CompName} Company`;
                     showConfirmModal(() => {
                         // If confirmed, proceed with delete
+                        loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
                         fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/delete/${companyId}/${email}`, {
                             method: 'PUT',
                         })
                             .then(response => {
+                                loadingIndicator.style.display = 'none'; 
                                 if (!response.ok) {
                                     throw new Error(`Error: ${response.status}`);
                                 }
@@ -156,6 +160,7 @@ function viewcompanydetails() {
                             })
                             .catch(error => {
                                 console.error('Delete error:', error);
+                                loadingIndicator.style.display = 'none'; 
                                 showAlert('Failed to delete the company.');
                             });
                     });

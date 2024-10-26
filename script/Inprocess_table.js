@@ -83,9 +83,7 @@ $(document).ready(function () {
                                     <img src="images/profile img.png" alt="Image 1" width="100px">
                                     <div class="overlay">+3</div>
                                 </div>
-                                <div class="button-container">
-                                    <button>Reassign</button>
-                                </div>
+                                    <button class="btn-yes">Reassign</button>
                             </div>
                         </div>
                     </div>
