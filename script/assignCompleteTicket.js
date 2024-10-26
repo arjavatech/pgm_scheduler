@@ -1,30 +1,33 @@
 // Sample data for the table rows
-const tableRows = [
-    {
-        ticketID: '001',
-        issueType: 'AC',
-        assignedEmployee: 'Rohith',
-        phone: '01234 56789',
-        date: '12/12/2024',
-        location: 'Ashok Nagar'
-    },
-    {
-        ticketID: '002',
-        issueType: 'Fridge',
-        assignedEmployee: 'Karthik',
-        phone: '09876 54321',
-        date: '13/12/2024',
-        location: 'Besant Nagar'
-    },
-    {
-        ticketID: '003',
-        issueType: 'Fridge',
-        assignedEmployee: 'Sharma',
-        phone: '09876 54321',
-        date: '13/12/2024',
-        location: 'Besant Nagar'
-    }
-];
+    const tableRows = [
+        {
+            ticketID: '001',
+            issueType: 'AC',
+            FirstName: 'Rohith',
+            LastName:'kumar',
+            phone: '01234 56789',
+            date: '12/12/2024',
+            location: 'Ashok Nagar'
+        },
+        {
+            ticketID: '002',
+            issueType: 'Fridge',
+            FirstName: 'Karthik',
+            LastName:'suburaj',
+            phone: '09876 54321',
+            date: '13/12/2024',
+            location: 'Besant Nagar'
+        },
+        {
+            ticketID: '003',
+            issueType: 'Fridge',
+            FirstName: 'Arun',
+            LastName:'kumar',
+            phone: '09876 54321',
+            date: '13/12/2024',
+            location: 'Besant Nagar'
+        }
+    ];
 
 // Sample data for row details
 const rowDetails = [
@@ -86,7 +89,7 @@ function format(rowData) {
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
-                        <strong class="d-flex justify-content-left">Customer Address:</strong>
+                        <strong class="d-flex justify-content-left">Work Time:</strong>
                         <div class="col-md-1 mt-3"></div>
                         <input type="text" placeholder="Start Time" class="input-bottom"></input>
                         <div class="col-md-1 mt-3"></div>
@@ -95,8 +98,8 @@ function format(rowData) {
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
                         <div class="image-set d-flex">
-                            <img src="images/profile img.png" alt="Image 1" id="image" width="100px">
-                            <img src="images/profile img.png" id="image" width="100px">
+                            <img src="../images/profile img.png" alt="Image 1" id="image" width="100px">
+                            <img src="../images/profile img.png" id="image" width="100px">
                             <input type="file" id="uploadLogo" class="d-none">
                             <label for="uploadLogo" class="upload-label mt-4">Upload Logo</label>       
                         </div>
@@ -133,14 +136,26 @@ function generateTableBody() {
             <td class="details-control"></td>
             <td>${rowData.ticketID}</td>
             <td>
-                <div class="issue-type ${rowData.issueType.toLowerCase()}">
-                    <span class="circle"></span> ${rowData.issueType}
-                </div>
+                <select >
+                  <option>
+                    <div class="issue-type ${rowData.issueType.toLowerCase()}">
+                        <span class="circle">AC</span>
+                    </div>
+                  </option>
+                  <option>
+                  <div class="issue-type ${rowData.issueType.toLowerCase()}">
+                      <span class="circle">Fridge</span>
+                  </div>
+                </option>
+
+                </select>
             </td>
-            <td class="assigned-employee">${rowData.assignedEmployee}</td>
+            <td class="assigned-employee">${rowData.FirstName}</td>
+            <td class="assigned-employee">${rowData.LastName}</td>
             <td>${rowData.phone}</td>
             <td>${rowData.date}</td>
             <td>${rowData.location}</td>
+          
         `;
 
         tbody.appendChild(tr);
@@ -204,15 +219,15 @@ function addCard(employee) {
                         <p><strong>Emp ID</strong>: ${employee.ticketID}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Issue Type</strong>: ${employee.issueType}</p>
+                            <p><strong>Phone</strong>: ${employee.phone}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Emp Name</strong>: ${employee.assignedEmployee}</p>
+                        <p><strong>First Name</strong>: ${employee.FirstName}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Phone</strong>: ${employee.phone}</p>
+                        <p><strong>Last Name</strong>: ${employee.LastName}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -226,6 +241,20 @@ function addCard(employee) {
 
                 <p class="text-center mb-2 showMoreButton">show more ⮟</p>
                 <div class="show-more" style="display:none">
+                <div class="row">
+                    <div class="col-12">
+                    <p><strong>Issue Type</strong>:
+                    <select>
+                      <option>
+                        AC
+                      </option>
+                      <option>
+                       Fridge
+                    </option>
+                    </select>
+                 </p>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <p><strong>Address</strong>: ${employee.address}</p>
@@ -272,7 +301,8 @@ function addCardsForAllEmployees() {
         const employeeData = {
             ticketID: detail.ticketID,
             issueType: tableRows.find(row => row.ticketID === detail.ticketID).issueType,
-            assignedEmployee: detail.employees[0].name, // Assuming you want to use the first employee by default
+            FirstName: detail.employees[0].name, // Assuming you want to use the first employee by default
+            LastName: detail.LastName,
             phone: tableRows.find(row => row.ticketID === detail.ticketID).phone,
             date: tableRows.find(row => row.ticketID === detail.ticketID).date,
             location: tableRows.find(row => row.ticketID === detail.ticketID).location,
