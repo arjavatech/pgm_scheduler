@@ -1,15 +1,16 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
-    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`
+    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`;
     let rowDetails = [];
-
+    const employees = [];
+    
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            rowDetails.push(...data); // Push all data at once
+            rowDetails.push(...data);
             data.forEach(ticket => {
                 addTicket(ticket);
                 addCard(ticket);
@@ -20,8 +21,6 @@ $(document).ready(function () {
             console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading on error
         });
-
-
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
@@ -38,17 +37,32 @@ $(document).ready(function () {
     function addTicket(ticket) {
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
-            ticket.ticket_id,
+            `<span id="ticketId">${ticket.ticket_id}</span>`,
             `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
-            ticket.name,
+            ticket.first_name,
             ticket.phone_number,
             ticket.complain_raised_date,
             ticket.city,
-            `<span class="assigned-employee">${ticket.name}</span>` // Assigned employee
-        ]).draw(false).node(); // Get the row node after adding
-
+            `<span class="assigned-employee" data-old-emp="${ticket.employee_id}">${ticket.name}</span>`
+        ]).draw(false).node();
         $(rowNode).find('td:first').addClass('details-control');
     }
+
+    // Fetch employee names for selection options
+    const employeeAPI = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/getall";
+    async function fetchEmployeeNames() {
+        try {
+            const response = await fetch(employeeAPI);
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            const data = await response.json();
+            data.forEach(employee => {
+                employees.push(employee);
+            });
+        } catch (error) {
+            console.error("Failed to fetch employee names:", error.message);
+        }
+    }
+    fetchEmployeeNames();
 
     // Format the row details
     function format(rowData) {
@@ -56,42 +70,31 @@ $(document).ready(function () {
             <tr class="collapse-content details-row">
                 <td colspan="8">
                     <div class="row">
-                        <div class="col-md-1"></div>
                         <div class="col-md-4">
-                            <strong class="d-flex justify-content-left">Customer Address</strong>
-                            <p class="pt-2" style="font-size: 13px; text-align: left;">
-                                ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
-                            </p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
+                            <strong>Customer Address</strong>
+                            <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
+                            <label>Employee Name</label>
                             <select class="form-select mt-2 employee-select">
-                                <option value="ganesh">Mani</option>
-                                <option value="saab">Arunkumar</option>
-                                <option value="mercedes">Sakthi</option>
-                                <option value="audi">Logeshwari</option>
+                                <option value="${rowData.employee_id}" selected>${rowData.name}</option>
+                                ${employees.map(emp => `
+                                    <option value="${emp.id}" ${emp.pending > 5 ? 'disabled' : ''}>
+                                        ${emp.first_name}
+                                    </option>
+                                `).join('')}
                             </select>
-                            <small>Pending work: <span class="pending-work">
-                                ${rowData.employees && rowData.employees.length > 0 ? rowData.employees[0].pending : 'N/A'}
-                            </span></small>
+                            <small>Pending work: <span class="pending-work">${rowData.pending || 'N/A'}</span></small>
                         </div>
-                        <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <strong>Description:</strong>
-                            <p class="description">${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
-                                <img src="images/profile img.png" alt="Image 1" width="100px">
-                                <div class="image-container d-inline justify-content-center">
-                                    <img src="images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay">+3</div>
-                                </div>
-                                    <button class="btn-yes">Reassign</button>
-                            </div>
+                            <p>${rowData.description}</p>
+                            <button class="btn-yes btn-reassign">Reassign</button>
                         </div>
                     </div>
                 </td>
             </tr>`;
     }
 
-    // Toggle arrow 
+    // Toggle arrow
     $(document).on('click', 'td.details-control', function () {
         $(this).toggleClass('active');
     });
@@ -112,6 +115,150 @@ $(document).ready(function () {
         }
     });
 
+    // Handle the reassign button click
+    $('#ticketTable tbody').on('click', '.btn-reassign', async function () {
+        const detailsRow = $(this).closest('.details-row');
+        const ticketID = detailsRow.closest('tr').prev().find('#ticketId').text();
+        const newEmployeeID = detailsRow.find('.employee-select').val();
+        const oldEmployeeID = detailsRow.closest('tr').prev().find('.assigned-employee').data('old-emp');
+
+        const requestBody = {
+            ticket_id: ticketID,
+            assigned_employee: newEmployeeID,
+            old_employee: oldEmployeeID
+        };
+
+        try {
+            const response = await fetch(`https://your-api-url.com/update_assigned_employee/${ticketID}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            const data = await response.json();
+            console.log("Employee assigned successfully:", data);
+            detailsRow.find('.assigned-employee').text(newEmployeeID);
+        } catch (error) {
+            console.error("Failed to reassign employee:", error.message);
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
         const cardHtml = `
