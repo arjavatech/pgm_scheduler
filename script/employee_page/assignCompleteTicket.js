@@ -1,33 +1,30 @@
 // Sample data for the table rows
-    const tableRows = [
-        {
-            ticketID: '001',
-            issueType: 'AC',
-            FirstName: 'Rohith',
-            LastName:'kumar',
-            phone: '01234 56789',
-            date: '12/12/2024',
-            location: 'Ashok Nagar'
-        },
-        {
-            ticketID: '002',
-            issueType: 'Fridge',
-            FirstName: 'Karthik',
-            LastName:'suburaj',
-            phone: '09876 54321',
-            date: '13/12/2024',
-            location: 'Besant Nagar'
-        },
-        {
-            ticketID: '003',
-            issueType: 'Fridge',
-            FirstName: 'Arun',
-            LastName:'kumar',
-            phone: '09876 54321',
-            date: '13/12/2024',
-            location: 'Besant Nagar'
-        }
-    ];
+const tableRows = [
+    {
+        ticketID: '001',
+        issueType: 'AC',
+        assignedEmployee: 'Rohith',
+        phone: '01234 56789',
+        date: '12/12/2024',
+        location: 'Ashok Nagar'
+    },
+    {
+        ticketID: '002',
+        issueType: 'Fridge',
+        assignedEmployee: 'Karthik',
+        phone: '09876 54321',
+        date: '13/12/2024',
+        location: 'Besant Nagar'
+    },
+    {
+        ticketID: '003',
+        issueType: 'Fridge',
+        assignedEmployee: 'Sharma',
+        phone: '09876 54321',
+        date: '13/12/2024',
+        location: 'Besant Nagar'
+    }
+];
 
 // Sample data for row details
 const rowDetails = [
@@ -81,19 +78,18 @@ function format(rowData) {
                         <p class="pt-2" style="font-size: 13px;text-align: left;">${rowData.address}</p>
                     </div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-6">                        
+                    <div class="col-md-6">
                         <strong class="d-flex justify-content-left">Description:</strong>
-                        <p style="font-size: 13px;text-align: left;" class="pt-2">${rowData.description}</p>                                
+                        <p class="pt-2" style="font-size: 13px;text-align: left;">${rowData.description}</p>
                     </div>
                 </div>
-                <div class="row">
+                
+                <div class="row mt-3">
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
-                        <strong class="d-flex justify-content-left">Work Time:</strong>
-                        <div class="col-md-1 mt-3"></div>
-                        <input type="text" placeholder="Start Time" class="input-bottom"></input>
-                        <div class="col-md-1 mt-3"></div>
-                        <input type="text" placeholder="End Time" class="input-bottom mt-2"></input>
+                        <strong class="d-flex justify-content-left">Customer Address:</strong>
+                        <input type="text" placeholder="Start Time" class="input-bottom mt-3">
+                        <input type="text" placeholder="End Time" class="input-bottom mt-2">
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
@@ -101,24 +97,31 @@ function format(rowData) {
                             <img src="../images/profile img.png" alt="Image 1" id="image" width="100px">
                             <img src="../images/profile img.png" id="image" width="100px">
                             <input type="file" id="uploadLogo" class="d-none">
-                            <label for="uploadLogo" class="upload-label mt-4">Upload Logo</label>       
+                            <label for="uploadLogo" class="upload-label mt-4">Upload Logo</label>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center align-items-center mt-3">
-                    <div class="row">
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Completed</button>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" id="cancel">Cancel</button>
-                        </div>
+                
+                <div class="d-flex justify-content-center align-items-center">
+                    <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" style="display:none">
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <button class="form-control mt-2 employee-select confirm" style="width:250px" id="completed">Accept</button>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="reason()" id="cancel">Reject</button>
                     </div>
                 </div>
+                
+             
+                
             </td>
         </div>
     `;
 }
+
 
 // Function to generate and inject the table body
 function generateTableBody() {
@@ -136,26 +139,14 @@ function generateTableBody() {
             <td class="details-control"></td>
             <td>${rowData.ticketID}</td>
             <td>
-                <select >
-                  <option>
-                    <div class="issue-type ${rowData.issueType.toLowerCase()}">
-                        <span class="circle">AC</span>
-                    </div>
-                  </option>
-                  <option>
-                  <div class="issue-type ${rowData.issueType.toLowerCase()}">
-                      <span class="circle">Fridge</span>
-                  </div>
-                </option>
-
-                </select>
+                <div class="issue-type ${rowData.issueType.toLowerCase()}">
+                    <span class="circle"></span> ${rowData.issueType}
+                </div>
             </td>
-            <td class="assigned-employee">${rowData.FirstName}</td>
-            <td class="assigned-employee">${rowData.LastName}</td>
+            <td class="assigned-employee">${rowData.assignedEmployee}</td>
             <td>${rowData.phone}</td>
             <td>${rowData.date}</td>
             <td>${rowData.location}</td>
-          
         `;
 
         tbody.appendChild(tr);
@@ -193,23 +184,23 @@ $('#ticketTable tbody').on('click', 'td.details-control', function () {
     }
 });
 
-// Update the assigned employee when selected in the row details
+
 $('#ticketTable tbody').on('change', '.employee-select', function () {
     const selectedEmployee = $(this).val();
     const detailsRow = $(this).closest('tr.details-row');
     const ticketID = detailsRow.data('ticket-id');
 
-    // Find the corresponding main row based on the ticket ID
+
     const mainRow = $(`#ticketTable tbody tr`).filter(function () {
         return $(this).find('td:nth-child(2)').text() === ticketID;
     });
 
-    // Update the assigned employee in the main table row
+
     mainRow.find('.assigned-employee').text(selectedEmployee);
     table.row(mainRow).invalidate().draw();
 });
 
-// Function to add a card for an employee
+
 function addCard(employee) {
     const cardHtml = `
         <div class="card mb-3" id="card">
@@ -219,15 +210,15 @@ function addCard(employee) {
                         <p><strong>Emp ID</strong>: ${employee.ticketID}</p>
                     </div>
                     <div class="col-6">
-                            <p><strong>Phone</strong>: ${employee.phone}</p>
+                        <p><strong>Issue Type</strong>: ${employee.issueType}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>First Name</strong>: ${employee.FirstName}</p>
+                        <p><strong>Emp Name</strong>: ${employee.assignedEmployee}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Last Name</strong>: ${employee.LastName}</p>
+                        <p><strong>Phone</strong>: ${employee.phone}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -243,20 +234,6 @@ function addCard(employee) {
                 <div class="show-more" style="display:none">
                 <div class="row">
                     <div class="col-12">
-                    <p><strong>Issue Type</strong>:
-                    <select>
-                      <option>
-                        AC
-                      </option>
-                      <option>
-                       Fridge
-                    </option>
-                    </select>
-                 </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
                         <p><strong>Address</strong>: ${employee.address}</p>
                     </div>
                 </div>
@@ -270,7 +247,7 @@ function addCard(employee) {
                         <button class="form-control mt-2 employee-select comform" style="width:100%" id="completed">Completed</button>
                     </div>
                     <div class="col-6">
-                        <button class="form-control mt-2 employee-select cancel" style="width:100%" id="cancel">Cancel</button>
+                        <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="reason()" id="cancel">Cancel</button>
                     </div>
                 </div>
                 
@@ -301,8 +278,7 @@ function addCardsForAllEmployees() {
         const employeeData = {
             ticketID: detail.ticketID,
             issueType: tableRows.find(row => row.ticketID === detail.ticketID).issueType,
-            FirstName: detail.employees[0].name, // Assuming you want to use the first employee by default
-            LastName: detail.LastName,
+            assignedEmployee: detail.employees[0].name, // Assuming you want to use the first employee by default
             phone: tableRows.find(row => row.ticketID === detail.ticketID).phone,
             date: tableRows.find(row => row.ticketID === detail.ticketID).date,
             location: tableRows.find(row => row.ticketID === detail.ticketID).location,
@@ -313,6 +289,11 @@ function addCardsForAllEmployees() {
         addCard(employeeData);
     });
 }
+
+function reason() {
+    document.querySelector(".input-bottom-reson").style.display = "block"
+}
+
 
 // Call the function to add cards for all employees
 addCardsForAllEmployees();

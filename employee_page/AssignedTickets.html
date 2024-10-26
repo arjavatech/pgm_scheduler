@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../css/table.css">
     <link rel="stylesheet" href="../css/assignedTickets.css">
 
-    <script defer src="../script/assignCompleteTicket.js"></script>
+    <script defer src="../script/employee_page/assignCompleteTicket.js"></script>
 </head>
 
 <body>
@@ -61,7 +61,9 @@
                                     <div id="ticketSubmenu" class="collapse">
                                         <ul class="list-group list-group-flush" id="list-group-flush">
                                             <li class="list-group-item"><a href="AssignedTickets.html"
-                                                    class="bg-purple">Unassigned Ticket</a></li>
+                                                    class="bg-purple">Assigned Ticket</a></li>
+                                            <li class="list-group-item"><a href="inProcessTicket.html"
+                                                    class="bg-purple">InProgress Ticket</a></li>
                                             <li class="list-group-item"><a href="completedTickets.html"
                                                     class="bg-purple">Completed Ticket</a></li>
                                         </ul>
@@ -74,7 +76,6 @@
                                     data-bs-target="#logoutModal" class="m-3">
                                         <img src="../icon/Vector.png" id="icon">
                                         <span class="content text-white list-group-item">Logout</span>
-                                                  
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +102,6 @@
                                                 <th>Ticket ID</th>
                                                 <th>Issue Type</th>
                                                 <th>First Name</th>
-                                                <th>Last Name</th>
                                                 <th>Phone</th>
                                                 <th>Date</th>
                                                 <th>Location</th>
