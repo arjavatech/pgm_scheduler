@@ -86,29 +86,26 @@ function format(rowData) {
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
-                        <strong class="d-flex justify-content-left">Customer Address:</strong>
-                        <div class="col-md-1 mt-3"></div>
-                        <input type="text" placeholder="Start Time" class="input-bottom"></input>
-                        <div class="col-md-1 mt-3"></div>
-                        <input type="text" placeholder="End Time" class="input-bottom mt-2"></input>
+                        <strong class="d-flex justify-content-left">Employee Start time:</strong>
+                        <div class="input-wrapper mt-3">
+                            <input type="text" placeholder="Start Time" class="date-input">
+                            <span class="icon-calendar"><span style="color: #52525b;">&#128197;</span>
+                        </div>  
+                        
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="End Time" class="date-input">
+                            <span class="icon-calendar"><span style="color: #52525b;">&#128197;</span>
+                        </div>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
                         <div class="image-set d-flex">
                             <img src="../images/profile img.png" alt="Image 1" id="image" width="100px">
                             <img src="../images/profile img.png" id="image" width="100px">
-                            <input type="file" id="uploadLogo" class="d-none">
-                            <label for="uploadLogo" class="upload-label mt-4">Upload Logo</label>       
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center align-items-center mt-3">
-                    <div class="row">
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Accept</button>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" id="cancel">Reject</button>
+                            <div class="add-photo">
+                                <label for="file-input" class="icon-attachment">Add Photo &#128279;</label>
+                                <input type="file" id="file-input" accept="image/*">
+                            </div>   
                         </div>
                     </div>
                 </div>

@@ -103,15 +103,17 @@ function format(rowData) {
                 </div>
                 
                 <div class="d-flex justify-content-center align-items-center">
-                    <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" style="display:none">
+                    <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" style="display:none">
                 </div>
                 
-                <div class="row mt-3">
-                    <div class="col-md-6 d-flex justify-content-center">
-                        <button class="form-control mt-2 employee-select confirm" style="width:250px" id="completed">Accept</button>
-                    </div>
-                    <div class="col-md-6 d-flex justify-content-center">
-                        <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="reason()" id="cancel">Reject</button>
+               <div class="d-flex justify-content-center align-items-center mt-3">
+                    <div class="row">
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Accept</button>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="reason()"  id="cancel">Reject</button>
+                        </div>
                     </div>
                 </div>
                 

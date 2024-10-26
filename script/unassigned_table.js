@@ -94,7 +94,8 @@ $(document).ready(function () {
                                 <img src="images/profile img.png" alt="Image for ticket" width="100px">
                                 <div class="image-container">
                                     <img src="images/profile img.png" alt="Additional image for ticket" width="100px">
-                                    <div class="overlay">+3</div>
+                                    <div class="overlay"  data-bs-toggle="modal"
+                                            data-bs-target="#imageModel">+3</div>
                                 </div>
                             </div> 
                             
@@ -169,7 +170,8 @@ $(document).ready(function () {
                         <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container">
                             <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay">+3</div>
+                            <div class="overlay"  data-bs-toggle="modal"
+                                            data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
                      <div class="mt-3 mb-3  d-flex justify-content-center" style="gap:20px">
