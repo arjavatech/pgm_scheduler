@@ -124,7 +124,7 @@
         }
 
         #popupModal .close-btn {
-            background:#004102;
+            background: #004102;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -248,7 +248,7 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(data),
-                })
+                    })
                     .then((response) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         mainContent.classList.remove('blur-background');
@@ -290,7 +290,7 @@
 
             if (password.length < 8) {
                 document.getElementById('l').style.display = 'none';
-                document.getElementById("head").textContent ="";
+                document.getElementById("head").textContent = "";
                 document.getElementById("txt").textContent = "Password must be at least 8 characters long.";
                 popupModal.style.display = 'block';
                 mainContent.classList.add('blur-background');
@@ -302,7 +302,7 @@
 
             if (password !== confirmPassword) {
                 document.getElementById('l').style.display = 'none';
-                document.getElementById("head").textContent ="";
+                document.getElementById("head").textContent = "";
                 document.getElementById("txt").textContent = "Passwords do not match.";
                 popupModal.style.display = 'block';
                 mainContent.classList.add('blur-background');
