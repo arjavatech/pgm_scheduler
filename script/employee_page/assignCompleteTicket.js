@@ -82,32 +82,13 @@ function format(rowData) {
                         <strong class="d-flex justify-content-left">Description:</strong>
                         <p class="pt-2" style="font-size: 13px;text-align: left;">${rowData.description}</p>
                     </div>
-                </div>
-                
-                <div class="row mt-3">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-4">
-                        <strong class="d-flex justify-content-left">Customer Address:</strong>
-                        <input type="text" placeholder="Start Time" class="input-bottom mt-3">
-                        <input type="text" placeholder="End Time" class="input-bottom mt-2">
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-6">
-                        <div class="image-set d-flex">
-                            <img src="../images/profile img.png" alt="Image 1" id="image" width="100px">
-                            <img src="../images/profile img.png" id="image" width="100px">
-                            <input type="file" id="uploadLogo" class="d-none">
-                            <label for="uploadLogo" class="upload-label mt-4">Upload Logo</label>
-                        </div>
-                    </div>
-                </div>
-                
+                </div>                
                 <div class="d-flex justify-content-center align-items-center">
                     <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" style="display:none">
                 </div>
                 
-               <div class="d-flex justify-content-center align-items-center mt-3">
-                    <div class="row">
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    <div class="row" id="acceptButton">
                         <div class="col-md-6 d-flex justify-content-center">
                             <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Accept</button>
                         </div>
@@ -116,9 +97,17 @@ function format(rowData) {
                         </div>
                     </div>
                 </div>
-                
-             
-                
+
+                <div class="d-flex justify-content-center align-items-center mt-3" >
+                    <div class="row" id="comformButton" style="display:none">
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Comform</button>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-center">
+                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="cancel()"  id="cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
             </td>
         </div>
     `;
@@ -294,6 +283,14 @@ function addCardsForAllEmployees() {
 
 function reason() {
     document.querySelector(".input-bottom-reson").style.display = "block"
+    document.getElementById("comformButton").style.display = "inline-flex"
+    document.getElementById("acceptButton").style.display = "none"
+}
+
+function cancel() {
+    document.querySelector(".input-bottom-reson").style.display = "none"
+    document.getElementById("comformButton").style.display = "none"
+    document.getElementById("acceptButton").style.display = "inline-flex"
 }
 
 
