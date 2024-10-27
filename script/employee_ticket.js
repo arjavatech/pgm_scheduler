@@ -118,6 +118,8 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
     var tHead = document.querySelector("thead");
     var tHeadCells = document.querySelectorAll("thead th");
 
+    var input = document.querySelectorAll(".input-bottom-border")
+
     sidebar.classList.toggle('active');
 
     if (sidebar.classList.contains('active')) {
@@ -132,6 +134,8 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         tableOddRows.forEach(function (row) {
             row.style.cssText = "background-color: transparent !important;"; // Adds !important
         });
+
+    
 
         if (tHead) {
             tHead.style.cssText = "background-color: transparent !important;";
@@ -166,6 +170,7 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         if (tHead) {
             tHead.style.backgroundColor = ""; // Reset thead background
         }
+
 
         // Reset the background of each table head cell
         tHeadCells.forEach(function (cell) {

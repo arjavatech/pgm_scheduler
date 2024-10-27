@@ -283,9 +283,7 @@ a {
         border: none;
         width: 25% !important;
     }
-    .container-sty{
-        margin-top: 20%;
-    }
+   
     #logo{
         width: 80%;
         font-weight: bold;
@@ -295,7 +293,7 @@ a {
 
 @media (max-width:330px) {
     #left {
-        width: 67% !important;
+        width: 69% !important;
         padding-top: 10%;
     }
 
