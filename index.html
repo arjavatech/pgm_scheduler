@@ -198,7 +198,9 @@
                         }, 1000);
                     } else if (data.isEmployee) {
                         companyIDget(userDetails.email);
-                        showPopupModal("Employee page development is under maintenance.");
+                        setTimeout(() => {
+                            window.location.href = 'employee_page/inProcessTicket.html';
+                        }, 1000);
                     }
                 })
                 .catch(error => {
@@ -220,6 +222,32 @@
                 })
                 .then(data => {
                     localStorage.setItem("cid", data.company_id);
+                })
+                .catch(error => {
+                    document.getElementById('l').style.display = 'none';
+                    console.error('Fetch error:', error);
+                });
+        }
+
+        function getEmployeeID(url) {
+            fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_get_based_invite_url`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({signup_url : url})
+            }
+            )
+                .then(response => {
+                    document.getElementById('l').style.display = 'none';
+                    if (!response.ok) {
+                        showPopupModal("Employee ID not found");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    localStorage.setItem("eid", data.employee_id);
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
@@ -250,7 +278,10 @@
                             window.location.href = 'dashboard.html';
                         }, 1000);
                     } else if (data.password === password && data.is_employee === 1) {
-                        showPopupModal("Employee page development is under maintenance.");
+                        getEmployeeID(data.signup_url)
+                        setTimeout(() => {
+                            window.location.href = 'employee_page/inProcessTicket.html';
+                        }, 1200);
                     } else if (password == "" && username == "") {
                         showPopupModal("Enter the Username And password")
                     }
