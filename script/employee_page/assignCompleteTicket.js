@@ -14,7 +14,7 @@ $(document).ready(function () {
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
-                addCard(ticket, index); // Pass index for unique IDs
+                addCard(ticket); 
                 index++;
             });
         })
@@ -44,7 +44,8 @@ $(document).ready(function () {
             ticket.phone_number,
             ticket.complain_raised_date,
             ticket.city
-        ]).draw(false).node(); // Get the row node after adding
+        ],
+    '').draw(false).node();
 
         $(rowNode).find('td:first').addClass('details-control');
     }
@@ -76,6 +77,32 @@ $(document).ready(function () {
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${rowData.ticket_id}" style="display:none;width:100%">
+                    </div>
+                </div>
+                <div class="row mt-2" id="acceptButton-${rowData.ticket_id}">
+                    <div class="col-6">
+                       <button class="form-control mt-2 employee-select comform" 
+                            style="width:100%" 
+                            onclick="acceptClick('${rowData.id}')" 
+                            id="completed">Accept</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="reason('${rowData.ticket_id}')" id="cancel">Reject</button>
+                    </div>
+                </div>
+
+                <div class="row" id="comformButton-${rowData.ticket_id}" style="display:none">
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select comform" onclick="rejectedTicket('${rowData.company_id}','${rowData.ticket_id}','${rowData.employee_id}')" style="width:100%" id="completed">Confirm</button>
+                        </div>
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${rowData.ticket_id}')"  id="cancel">Cancel</button>
+                        </div>
+                    </div>
+
                 </td>
             </tr>`;
     }
@@ -99,85 +126,74 @@ $(document).ready(function () {
     // Function to create and append the card for mobile view
     function addCard(employee) {
         const cardHtml = `
-        <div class="card mb-3">
+        <div class="card mb-3" id="card-${employee.ticket_id}">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Name </strong>  ${employee.name}</p>
+                        <p><strong>Emp ID</strong>: ${employee.ticket_id}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Ticket ID </strong>  ${employee.ticket_id}</p>
+                        <p><strong>Issue Type</strong>: ${employee.ticket_type}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Issue type </strong>  ${employee.ticket_type}</p>
+                        <p><strong>Emp Name</strong>: ${employee.name}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Date </strong>  ${employee.complain_raised_date}</p>
+                        <p><strong>Phone</strong>: ${employee.phone_number}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Phone </strong> ${employee.phone_number}</p>
+                        <p><strong>Date</strong>: ${employee.complain_raised_date}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>City:</strong> ${employee.city}</p>
-                    </div>
-                </div>
-                <p class="text-center mb-2 showMoreButton">show more ⮟</p>     
-                <div class="show-more" style="display:none">
-                    <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
-                    <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
-                    <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3
-                            </div>
-                        </div>
-                    </div>
-                            
-                </div>
-                <div class="d-flex justify-content-center align-items-center">
-                    <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" id="reason-${employee.ticket_id}" style="display:none">
-                </div>
-                
-                <div class="d-flex justify-content-center align-items-center mt-3">
-                    <div class="row" id="acceptButton-${employee.ticket_id}">
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed" 
-                                    onclick="reason('${employee.ticket_id}')">Accept</button>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" 
-                                    onclick="reason('${employee.ticket_id}')" id="cancel">Reject</button>
-                        </div>
+                        <p><strong>Location</strong>: ${employee.city}</p>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center align-items-center mt-3">
-                    <div class="row" id="comformButton-${employee.ticket_id}" style="display:none">
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select comform" style="width:250px" 
-                                    id="confirm" onclick="confirmAction('${employee.ticket_id}')">Confirm</button>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" 
-                                    onclick="cancel('${employee.ticket_id}')" id="cancel">Cancel</button>
-                        </div>
+                <p class="text-center mb-2 showMoreButton">show more ⮟</p>
+                <div class="show-more" style="display:none">
+                <div class="row">
+                    <div class="col-12">
+                        <p><strong>Address</strong>: ${employee.address}</p>
                     </div>
                 </div>
-                <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>     
+                <div class="row">
+                    <div class="col-12">
+                        <p><strong>Description</strong>: ${employee.description}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticket_id}" style="display:none;width:100%">
+                    </div>
+                </div>
+                <div class="row mt-2" id="acceptButton-${employee.ticket_id}">
+                    <div class="col-6">
+                        <button class="form-control mt-2 employee-select comform" style="width:100%" onclick="acceptClick('${employee.id}')"  id="completed">Accept</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="reason('${employee.ticket_id}')" id="cancel">Reject</button>
+                    </div>
+                </div>
+
+                <div class="row" id="comformButton-${employee.ticket_id}" style="display:none">
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select comform" style="width:100%" onclick="rejectedTicket('${employee.company_id}','${employee.ticket_id}','${employee.employee_id}')" id="completed">Confirm</button>
+                        </div>
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${employee.ticket_id}')"  id="cancel">Cancel</button>
+                        </div>
+                    </div>
+                
+                <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>
+                </div>  
             </div>
         </div>
-        `;
-
-        // Append the card to the card container for mobile view
-        $('#card-container').append(cardHtml);
-    }
+    `;
+    $('#card-container').append(cardHtml);
 
     // Show more functionality with event delegation
     $(document).on('click', '.showMoreButton', function () {
@@ -189,8 +205,11 @@ $(document).ready(function () {
     $(document).on('click', '.showLessButton', function () {
         const cardBody = $(this).closest('.card-body');
         cardBody.find('.show-more').slideUp(); // Slide up the content
-        cardBody.find('.showMoreButton').show(); // Show "show more" button again
+        cardBody.find('.showMoreButton').show(); // Show "show more" button
     });
+}
+
+
 
 
     document.getElementById('sidebarToggle').addEventListener('click', function () {
@@ -226,16 +245,129 @@ $(document).ready(function () {
         })
     })
 });
-function reason(ticket_id) {
-    // Show the reason input field and confirm buttons when Reject is clicked
-    document.getElementById(`reason-${ticket_id}`).style.display = "block";
-    document.getElementById(`acceptButton-${ticket_id}`).style.display = "none";
-    document.getElementById(`comformButton-${ticket_id}`).style.display = "flex";
+
+// Simplified reason and cancel functions for debugging
+function reason(ticketID) {
+    const reasonInput = document.getElementById(`reason-${ticketID}`);
+    const acceptButton = document.getElementById(`acceptButton-${ticketID}`);
+    const confirmButton = document.getElementById(`comformButton-${ticketID}`);
+    
+    if (reasonInput && acceptButton && confirmButton) {
+        reasonInput.style.display = 'block';
+        acceptButton.style.display = 'none';
+        confirmButton.style.display = 'flex';
+        
+        console.log(`Reason input and Confirm button shown for ticketID: ${ticketID}`);
+    } else {
+        console.error(`Elements not found for ticketID: ${ticketID}`);
+    }
+}
+function getUTCDateString() {
+    const now = new Date();
+    const isoString = now.toISOString();
+    // Extract the date part (YYYY-MM-DD)
+    const utcDate = isoString.split('T')[0];
+    return utcDate;
+  }
+  
+
+function rejectedTicket(cid, tic_id, eid)
+{
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
+    let data = {
+        company_id : cid,
+        ticket_id : parseInt(tic_id),
+        employee_id : eid,
+        rejected_reason : document.getElementById(`reason-${tic_id}`).value,
+        rejected_date : getUTCDateString()
+    }
+
+    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_rejected_ticket`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        })
+        .then((response) => {
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            
+            if (data.error) {
+                loadingIndicator.style.display = 'none';
+                console.error("Error in response:", data.error);
+            }
+            else
+            {
+                setTimeout(() => {
+                    loadingIndicator.style.display = 'none';
+                    window.location.href = 'AssignedTickets.html';
+                }, 1000);
+            }
+        })
+        .catch((error) => {
+            loadingIndicator.style.display = 'none';
+            console.error("Error in response:", data.error);
+        });
 }
 
-function cancel(ticket_id) {
-    // Reset the display when Cancel is clicked
-    document.getElementById(`reason-${ticket_id}`).style.display = "none";
-    document.getElementById(`acceptButton-${ticket_id}`).style.display = "flex";
-    document.getElementById(`comformButton-${ticket_id}`).style.display = "none";
+function cancel(ticketID) {
+    const reasonInput = document.getElementById(`reason-${ticketID}`);
+    const acceptButton = document.getElementById(`acceptButton-${ticketID}`);
+    const confirmButton = document.getElementById(`comformButton-${ticketID}`);
+    
+    if (reasonInput && acceptButton && confirmButton) {
+        reasonInput.style.display = 'none';
+        acceptButton.style.display = 'flex';
+        confirmButton.style.display = 'none';
+        
+    } else {
+        console.error(`Elements not found for ticketID: ${ticketID}`);
+    }
+}
+
+function acceptClick(token)
+{
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
+    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_accept_ticket/${token}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        })
+        .then((response) => {
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            
+            if (data.error) {
+                loadingIndicator.style.display = 'none';
+                console.error("Error in response:", data.error);
+            }
+            else
+            {
+                setTimeout(() => {
+                    loadingIndicator.style.display = 'none';
+                    window.location.href = 'inProcessTicket.html';
+                }, 1000);
+            }
+        })
+        .catch((error) => {
+            loadingIndicator.style.display = 'none';
+            console.error("Error in response:", data.error);
+        });
+
 }
