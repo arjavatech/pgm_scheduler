@@ -67,7 +67,7 @@ function format(rowData) {
             ${employee.name}
         </option>
     `).join('');
-
+    console.log(rowData.ticketID)
     return `
         <div class="collapse-content details-row" data-ticket-id="${rowData.ticketID}">
             <td colspan="8">
@@ -84,27 +84,27 @@ function format(rowData) {
                     </div>
                 </div>                
                 <div class="d-flex justify-content-center align-items-center">
-                    <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" style="display:none">
+                    <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" id="reason-${rowData.ticketID}" style="display:none">
                 </div>
                 
                 <div class="d-flex justify-content-center align-items-center mt-3">
-                    <div class="row" id="acceptButton">
+                    <div class="row" id="acceptButton-${rowData.ticketID}">
                         <div class="col-md-6 d-flex justify-content-center">
                             <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Accept</button>
                         </div>
                         <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="reason()"  id="cancel">Reject</button>
+                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="reason('${rowData.ticketID}')" id="cancel">Reject</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center mt-3" >
-                    <div class="row" id="comformButton" style="display:none">
+                    <div class="row" id="comformButton-${rowData.ticketID}" style="display:none">
                         <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Comform</button>
+                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Confirm</button>
                         </div>
                         <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="cancel()"  id="cancel">Cancel</button>
+                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="cancel('${rowData.ticketID}')"  id="cancel">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -191,10 +191,9 @@ $('#ticketTable tbody').on('change', '.employee-select', function () {
     table.row(mainRow).invalidate().draw();
 });
 
-
 function addCard(employee) {
     const cardHtml = `
-        <div class="card mb-3" id="card">
+        <div class="card mb-3" id="card-${employee.ticketID}">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
@@ -234,13 +233,27 @@ function addCard(employee) {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
-                        <button class="form-control mt-2 employee-select comform" style="width:100%" id="completed">Completed</button>
-                    </div>
-                    <div class="col-6">
-                        <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="reason()" id="cancel">Cancel</button>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticketID}" style="display:none;width:100%">
                     </div>
                 </div>
+                <div class="row mt-2" id="acceptButton-${employee.ticketID}">
+                    <div class="col-6">
+                        <button class="form-control mt-2 employee-select comform" style="width:100%" id="completed">Accept</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="reason('${employee.ticketID}')" id="cancel">Reject</button>
+                    </div>
+                </div>
+
+                <div class="row" id="comformButton-${employee.ticketID}" style="display:none">
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select comform" style="width:100%" id="completed">Confirm</button>
+                        </div>
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${employee.ticketID}')"  id="cancel">Cancel</button>
+                        </div>
+                    </div>
                 
                 <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>
                 </div>  
@@ -263,6 +276,7 @@ function addCard(employee) {
     });
 }
 
+
 // Function to add cards for all employees based on rowDetails
 function addCardsForAllEmployees() {
     rowDetails.forEach(detail => {
@@ -280,17 +294,17 @@ function addCardsForAllEmployees() {
         addCard(employeeData);
     });
 }
-
-function reason() {
-    document.querySelector(".input-bottom-reson").style.display = "block"
-    document.getElementById("comformButton").style.display = "inline-flex"
-    document.getElementById("acceptButton").style.display = "none"
+// Show the reason input field and toggle visibility
+function reason(ticketID) {
+    document.getElementById(`reason-${ticketID}`).style.display = 'block';
+    document.getElementById(`acceptButton-${ticketID}`).style.display = 'none';
+    document.getElementById(`comformButton-${ticketID}`).style.display = 'flex';
 }
 
-function cancel() {
-    document.querySelector(".input-bottom-reson").style.display = "none"
-    document.getElementById("comformButton").style.display = "none"
-    document.getElementById("acceptButton").style.display = "inline-flex"
+function cancel(ticketID) {
+    document.getElementById(`reason-${ticketID}`).style.display = 'none';
+    document.getElementById(`acceptButton-${ticketID}`).style.display = 'flex';
+    document.getElementById(`comformButton-${ticketID}`).style.display = 'none';
 }
 
 
