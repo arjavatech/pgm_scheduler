@@ -135,42 +135,36 @@ $(document).ready(function () {
                         <div class="image-container d-inline justify-content-center">
                             <img src="images/profile img.png" alt="Image 1" width="100px">
                             <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3
-                            </div>
+                                            data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
-                            
+                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
                 </div>
-                <div class="d-flex justify-content-center align-items-center">
-                    <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" id="reason-${employee.ticket_id}" style="display:none">
+                 <div class="d-flex justify-content-center align-items-center">
+                    <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" id="reason-${employee.ticketID}" style="display:none">
                 </div>
                 
                 <div class="d-flex justify-content-center align-items-center mt-3">
                     <div class="row" id="acceptButton-${employee.ticket_id}">
                         <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed" 
-                                    onclick="reason('${employee.ticket_id}')">Accept</button>
+                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Accept</button>
                         </div>
                         <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" 
-                                    onclick="reason('${employee.ticket_id}')" id="cancel">Reject</button>
+                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="reason('${employee.ticket_id}')" id="cancel">Reject</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center align-items-center mt-3">
+                <div class="d-flex justify-content-center align-items-center mt-3" >
                     <div class="row" id="comformButton-${employee.ticket_id}" style="display:none">
                         <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select comform" style="width:250px" 
-                                    id="confirm" onclick="confirmAction('${employee.ticket_id}')">Confirm</button>
+                            <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Confirm</button>
                         </div>
                         <div class="col-md-6 d-flex justify-content-center">
-                            <button class="form-control mt-2 employee-select cancel" style="width:250px" 
-                                    onclick="cancel('${employee.ticket_id}')" id="cancel">Cancel</button>
+                            <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="cancel('${employee.ticket_id}')"  id="cancel">Cancel</button>
                         </div>
                     </div>
                 </div>
-                <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>     
             </div>
         </div>
         `;
@@ -204,38 +198,126 @@ $(document).ready(function () {
         var tHead = document.querySelector("thead");
         var tHeadCells = document.querySelectorAll("thead th");
         var select = document.querySelector(".employee-select")
-        sidebar.classList.toggle('collapsed');
-        content.classList.toggle("container-sty-collapsed")
+        sidebar.classList.toggle('active');
 
-        tableOddRows.forEach(row => {
-            row.classList.toggle("table-row-collapsed")
-        })
-        tableEvenRows.forEach(row => {
-            row.classList.toggle("table-row-collapsed")
-        })
-        issueType.forEach(row => {
-            row.classList.toggle("table-row-collapsed")
-        })
-        mainContents.forEach(content => {
-            content.classList.toggle("card-collapsed")
-        })
+        if (sidebar.classList.contains('active')) {
+            // Sidebar is open, apply transparency
+            body.classList.add('no-scroll');
+            body.classList.add('body-overlay');
 
-        tHead.classList.toggle("table-head")
-        tHeadCells.forEach(cell => {
-            cell.classList.toggle("table-head")
-        })
-    })
+            content.style.backgroundColor = "transparent";
+            mainContents.forEach(function (mainContent) {
+                mainContent.style.backgroundColor = "transparent";
+            });
+            tableOddRows.forEach(function (row) {
+                row.style.cssText = "background-color: transparent !important;"; // Adds !important
+            });
+
+            if (tHead) {
+                tHead.style.cssText = "background-color: transparent !important;";
+            }
+
+            // Apply transparency to each table head cell
+            tHeadCells.forEach(function (cell) {
+                cell.style.cssText = "background-color: transparent !important;";
+            });
+
+            issueType.forEach(function (row) {
+                row.style.cssText = "background-color: transparent !important;"; // Adds !important
+            });
+
+            select.style.backgroundColor = "transparent";
+        } else {
+            // Sidebar is closed, reset colors
+            body.classList.remove('no-scroll');
+            body.classList.remove('body-overlay');
+
+            content.style.backgroundColor = "";
+            mainContents.forEach(function (mainContent) {
+                mainContent.style.backgroundColor = "";
+            });
+
+            tableOddRows.forEach(function (row) {
+                row.style.backgroundColor = ""; // Reset odd row background
+            });
+
+            tableEvenRows.forEach(function (row) {
+                row.style.backgroundColor = ""; // Reset even row background
+            });
+
+            if (tHead) {
+                tHead.style.backgroundColor = ""; // Reset thead background
+            }
+
+            // Reset the background of each table head cell
+            tHeadCells.forEach(function (cell) {
+                cell.style.backgroundColor = ""; // Reset th background
+            });
+            select.disabled = false;
+        }
+    });
+
+
 });
-function reason(ticket_id) {
-    // Show the reason input field and confirm buttons when Reject is clicked
-    document.getElementById(`reason-${ticket_id}`).style.display = "block";
-    document.getElementById(`acceptButton-${ticket_id}`).style.display = "none";
-    document.getElementById(`comformButton-${ticket_id}`).style.display = "flex";
-}
 
-function cancel(ticket_id) {
-    // Reset the display when Cancel is clicked
-    document.getElementById(`reason-${ticket_id}`).style.display = "none";
-    document.getElementById(`acceptButton-${ticket_id}`).style.display = "flex";
-    document.getElementById(`comformButton-${ticket_id}`).style.display = "none";
-}
+    // Show the reason input field and toggle visibility
+    function reason(ticketID) {
+        document.getElementById(`reason-${ticketID}`).style.display = 'block';
+        document.getElementById(`acceptButton-${ticketID}`).style.display = 'none';
+        document.getElementById(`comformButton-${ticketID}`).style.display = 'flex';
+    }
+    
+    function cancel(ticketID) {
+        document.getElementById(`reason-${ticketID}`).style.display = 'none';
+        document.getElementById(`acceptButton-${ticketID}`).style.display = 'flex';
+        document.getElementById(`comformButton-${ticketID}`).style.display = 'none';
+    }
+
+
+// // Function to format row details
+// function format(rowData) {
+//     return `
+//         <div class="collapse-content details-row" data-ticket-id="${rowData.ticket_id}">
+//             <td colspan="8">
+//                 <div class="row">
+//                     <div class="col-md-1"></div>
+//                     <div class="col-md-4">
+//                         <strong class="d-flex justify-content-left">Customer Address</strong>
+//                         <p class="pt-2" style="font-size: 13px;text-align: left;">${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
+//                     </div>
+//                     <div class="col-md-1"></div>
+//                     <div class="col-md-6">
+//                         <strong class="d-flex justify-content-left">Description:</strong>
+//                         <p class="pt-2" style="font-size: 13px;text-align: left;">${rowData.description}</p>
+//                     </div>
+//                 </div>                
+//                 <div class="d-flex justify-content-center align-items-center">
+//                     <input type="text" placeholder="Reason" class="input-bottom-reson mt-3" id="reason-${rowData.ticketID}" style="display:none">
+//                 </div>
+                
+//                 <div class="d-flex justify-content-center align-items-center mt-3">
+//                     <div class="row" id="acceptButton-${rowData.ticket_id}">
+//                         <div class="col-md-6 d-flex justify-content-center">
+//                             <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Accept</button>
+//                         </div>
+//                         <div class="col-md-6 d-flex justify-content-center">
+//                             <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="reason('${rowData.ticket_id}')" id="cancel">Reject</button>
+//                         </div>
+//                     </div>
+//                 </div>
+
+//                 <div class="d-flex justify-content-center align-items-center mt-3" >
+//                     <div class="row" id="comformButton-${rowData.ticket_id}" style="display:none">
+//                         <div class="col-md-6 d-flex justify-content-center">
+//                             <button class="form-control mt-2 employee-select comform" style="width:250px" id="completed">Confirm</button>
+//                         </div>
+//                         <div class="col-md-6 d-flex justify-content-center">
+//                             <button class="form-control mt-2 employee-select cancel" style="width:250px" onclick="cancel('${rowData.ticket_id}')"  id="cancel">Cancel</button>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </td>
+//         </div>
+//     `;
+// }
+
