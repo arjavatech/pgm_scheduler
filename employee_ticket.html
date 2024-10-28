@@ -261,7 +261,7 @@
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Phone Number">
                                     </div>
                                     <div class="col-md-3 text-center">
-                                        <input type="text" class="input-bottom-border mt-4" placeholder="EIN Number">
+                                        <input type="text" class="input-bottom-border mt-4" placeholder="EIN Number" disabled>
                                         <div class="dropdown">
                                             <button id="dropdownButton" class="input-bottom-border mt-4"
                                                 onclick="toggleDropdown(event)">Specialization</button>
@@ -271,12 +271,7 @@
                                                         onchange="updateButton(this)"> AC</label>
                                                 <label><input type="checkbox" value="Fridge"
                                                         onchange="updateButton(this)"> Fridge</label>
-                                                <label><input type="checkbox" value="Cherry"
-                                                        onchange="updateButton(this)"> Cherry</label>
-                                                <label><input type="checkbox" value="Date"
-                                                        onchange="updateButton(this)"> Date</label>
-                                                <label><input type="checkbox" value="Grape"
-                                                        onchange="updateButton(this)"> Grape</label>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -286,6 +281,7 @@
 
                                         <button type="submit" class="mt-4 login-button" id="cancel"
                                             onclick="cancel()">Cancel</button>
+                                            <button type="submit" class="mt-4 login-button">Add employee</button>
                                         <button type="submit" class="mt-4 login-button" id="addEmployee"
                                             onclick="show()">Add employee</button>
                                     </div>

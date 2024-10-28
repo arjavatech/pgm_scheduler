@@ -64,7 +64,6 @@ $(document).ready(function () {
     }
     fetchEmployeeNames();
 
-    // Format the row details
     function format(rowData) {
         return `
             <tr class="collapse-content details-row">
@@ -75,7 +74,7 @@ $(document).ready(function () {
                             <strong>Customer Address</strong>
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
                             <label>Employee Name</label>
-                            <select class="form-select mt-2 employee-select">
+                            <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" disabled>
                                 <option value="${rowData.employee_id}" selected>${rowData.name}</option>
                                 ${employees.map(emp => `
                                     <option value="${emp.id}" ${emp.pending > 5 ? 'disabled' : ''}>
@@ -93,16 +92,18 @@ $(document).ready(function () {
                                 <img src="images/profile img.png" alt="Image 1" width="100px">
                                 <div class="image-container d-inline justify-content-center">
                                     <img src="images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3</div>
+                                    <div class="overlay" data-bs-toggle="modal"
+                                         data-bs-target="#imageModel">+3</div>
                                 </div>
-                            <button class="btn-yes btn-reassign">Reassign</button>
+                            <button class="btn-yes btn-reassign" id="reassign-${rowData.ticket_id}" onclick="disable(${rowData.ticket_id})">Reassign</button>
+                            <button class="btn-yes btn-reassign" id="conform-${rowData.ticket_id}" style="display:none">Conform</button>
                             </div>
                         </div>
                     </div>
                 </td>
             </tr>`;
     }
+    
 
     // Toggle arrow
     $(document).on('click', 'td.details-control', function () {
@@ -299,3 +300,10 @@ $(document).ready(function () {
         }
     });
 });
+
+
+function disable(ticket_id) {
+    document.getElementById(`reassign-${ticket_id}`).style.display = "none";
+    document.querySelector(`.employee-select-${ticket_id}`).disabled = false;
+    document.getElementById(`conform-${ticket_id}`).style.display = "block";
+}
