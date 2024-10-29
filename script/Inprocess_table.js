@@ -1,9 +1,11 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
+    console.log(cid)
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`;
+    const employeeAPI = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/getall";
     let rowDetails = [];
     const employees = [];
-    
+
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
@@ -39,17 +41,17 @@ $(document).ready(function () {
             `<span></span>`, // Control for expanding the row
             `<span id="ticketId">${ticket.ticket_id}</span>`,
             `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
-            ticket.first_name,
+            ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,
             ticket.city,
-            `<span class="assigned-employee" data-old-emp="${ticket.employee_id}">${ticket.name}</span>`
+            `<span class="assigned-employee" data-old-emp="${ticket.employee_id}">${ticket.first_name}</span>`
         ]).draw(false).node();
         $(rowNode).find('td:first').addClass('details-control');
     }
 
     // Fetch employee names for selection options
-    const employeeAPI = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/getall";
+
     async function fetchEmployeeNames() {
         try {
             const response = await fetch(employeeAPI);
@@ -75,7 +77,7 @@ $(document).ready(function () {
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
                             <label>Employee Name</label>
                             <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" disabled>
-                                <option value="${rowData.employee_id}" selected>${rowData.name}</option>
+                                <option value="${rowData.employee_id}" selected>${rowData.first_name}</option>
                                 ${employees.map(emp => `
                                     <option value="${emp.id}" ${emp.pending > 5 ? 'disabled' : ''}>
                                         ${emp.first_name}
@@ -103,7 +105,7 @@ $(document).ready(function () {
                 </td>
             </tr>`;
     }
-    
+
 
     // Toggle arrow
     $(document).on('click', 'td.details-control', function () {
@@ -140,7 +142,7 @@ $(document).ready(function () {
         };
 
         try {
-            const response = await fetch(`https://your-api-url.com/update_assigned_employee/${ticketID}`, {
+            const response = await fetch(`/employee/update/{employee_id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
@@ -155,7 +157,7 @@ $(document).ready(function () {
         }
     });
 
-// card part
+    // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
         const cardHtml = `
@@ -188,12 +190,14 @@ $(document).ready(function () {
                 <p class="text-center mb-2 showMoreButton">show more ⮟</p>     
                 <div class="show-more" style="display:none">
                     <p><strong>Employee Name:</strong>
-                        <select class="form-select mt-2 employee-select">
-                            <option value="ganesh">Mani</option>
-                            <option value="saab">Arunkumar</option>
-                            <option value="mercedes">Sakthi</option>
-                            <option value="audi">Logeshwari</option>
-                        </select>
+                        <select class="form-select mt-2 employee-select employee-select-${employee.ticket_id}" disabled>
+                        <option value="${employee.employee_id}" selected>${employee.name}</option>
+                        ${employees.map(emp => `
+                            <option value="${emp.id}" ${emp.pending > 5 ? 'disabled' : ''}>
+                                ${emp.first_name}
+                            </option>
+                        `).join('')}
+                    </select>
                     </p>
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
@@ -206,6 +210,8 @@ $(document).ready(function () {
                                             data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
+                    <button class="btn-yes mt-4" id="reassign-${employee.ticket_id}" onclick="disable(${employee.ticket_id})" style="width:100%">Reassign</button>
+                            <button class="btn-yes btn-reassign mt-4" id="confirm-${employee.ticket_id}" style="display:none;width:100%">Confirm</button>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
                 </div>
             </div>
