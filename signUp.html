@@ -373,13 +373,9 @@
                                 if (urlParams.has('invite_id_c')) {
                                     window.location.href = 'dashboard.html'; // Redirect for customers
                                 } else if (urlParams.has('invite_id_e')) {
-                                    document.getElementById("txt").textContent = "Employee page is under maintenance.";
-                                    popupModal.style.display = 'block';
-                                    mainContent.classList.add('blur-background');
-                                    closePopup.addEventListener('click', function () {
-                                        window.location.href = 'index.html';
-                                    });
+                                        window.location.href = 'employee_page/AssignedTickets.html';
                                 }
+                                
                             }, 1000);
                         }
                     })

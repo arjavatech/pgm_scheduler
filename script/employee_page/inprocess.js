@@ -4,7 +4,6 @@ $(document).ready(function () {
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/inprogress_tickets/${cid}/${eid}`;
     let rowDetails = [];
-    const employees = [];
     
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
@@ -186,7 +185,7 @@ $(document).ready(function () {
                                             data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
-                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
+                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>           
                 </div>
             </div>
         </div>
