@@ -353,7 +353,7 @@
 
                 console.log(data)
 
-                fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
+                fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/signup/create", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -363,7 +363,7 @@
                     .then((response) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
-                            alert(`Error: ${response}`);
+                            alert(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
@@ -426,7 +426,7 @@
 
                 console.log(data);
 
-                fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
+                fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/signup/create", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -436,7 +436,7 @@
                     .then((response) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
-                            alert(`Error: ${response}`);
+                            alert(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
