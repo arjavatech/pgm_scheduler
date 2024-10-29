@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/inprogress_tickets/${cid}/${eid}`;
     let rowDetails = [];
+    const employees = [];
     
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
@@ -39,7 +40,7 @@ $(document).ready(function () {
         console.log(ticket)
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
-            `<span id="ticketId">${ticket.ticket_id}</span>`,
+            `<span id="ticketId"  ticket-tocken=${ticket.id}>${ticket.ticket_id}</span>`,
             `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
             ticket.name,
             ticket.phone_number,
@@ -52,31 +53,61 @@ $(document).ready(function () {
 
 
     function format(rowData) {
+        console.log(rowData);
+        const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
                     <div class="row">
                     <div class="col-md-1"></div>
-                        <div class="col-md-4">
+                        <div class="col-md-4"style="text-align:left">
                             <strong>Customer Address</strong>
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
-                            <strong>Work started time :</strong>
-                            <p>${rowData.work_started_time}</p>
-                            <strong>Work ended time :</strong>
-                            <p>${rowData.work_ended_time}</p>
+                           
+                           <div class="input-container">
+                          
+                                <label for="start-time">Work started time :</label>
+
+                                <input type="date" id="start-time-${rowData.ticket_id}" value="${workStartedTime}">
+            
+                             </div>
+
+                            <div class="input-container">
+                            <label for="end-time">Work ended time :</label>
+                                <input type="date" id="end-time-${rowData.ticket_id}" placeholder="End Time " >
+                                
+                            </div>
+
+
+                          
+                           
                             </div>
                         <div class="col-md-1"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-6"style="text-align:left">
                             <strong>Description:</strong>
                             <p>${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
-                                <img src="../../images/profile img.png" alt="Image 1" width="100px">
-                                <div class="image-container d-inline justify-content-center">
-                                    <img src="../../images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay" data-bs-toggle="modal"
-                                         data-bs-target="#imageModel">+3</div>
+                            <div class="image-gallery d-flex">
+                              
+                                <div id="image-preview-container">
+                                
+                                   <img src="../images/profile img.png" alt="Image 1" width="100px">
                                 </div>
+
+
+
+                                <div class="uploads">
+                               <label for="upload-${rowData.ticket_id}" class="upload-label">
+                                <span> Add photo</span>
+                                <i class="fa fa-paperclip" aria-hidden="true" style="color:black; text-align:right"></i> 
+                               </label>
+                               <input type="file" id="upload-${rowData.ticket_id}" accept="image/*" style="display: none;"  multiple accept="image/*" >
+                               </div> 
                              </div>
+                             
+                        </div>
+                         <div  class="buttonContainer" id="btn">
+                             <button id="completed" class="completed-button" data-ticket-id="${rowData.ticket_id}">completed</button>
+                             <button class="save" ticket-tocken =${rowData.id} start-time=${workStartedTime}  id=${rowData.ticket_id}>save</button>
                         </div>
                     </div>
                 </td>
@@ -134,6 +165,146 @@ $(document).ready(function () {
         }
     });
 
+
+    // Completed button 
+
+        // Event listener for the completed button
+        $(document).on('click', '.completed-button', async function () {
+            const ticketID = $(this).data('ticket-id');
+            const workStartedTime = $(this).closest('tr').find('#start-time').val();
+            const workEndedTime = $(this).closest('tr').find('#end-time').val();
+            const photos = ""; // You can handle the image upload and include it here if needed
+    
+            const requestBody = {
+                company_id: localStorage.getItem("cid"), // Replace with actual company ID
+                employee_id: localStorage.getItem("eid"), // Replace with actual employee ID
+                ticket_id: ticketID,
+                work_started_time: workStartedTime || undefined, // Optional
+                work_ended_time: workEndedTime || undefined, // Optional
+                photos: photos || undefined // Optional
+            };
+
+            console.log(requestBody);
+    
+            try {
+                const response = await fetch('https://4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_complted_ticket', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+    
+                if (!response.ok) throw new Error(`Error: ${response.status}`);
+                const data = await response.json();
+                console.log("Ticket marked as completed successfully:", data);
+                // Optionally, you can refresh the data or provide feedback to the user
+            } catch (error) {
+                console.error("Failed to mark ticket as completed:", error.message);
+            }
+        });
+    
+
+        document.addEventListener('change', function (event) {
+            // Check if the file input changed
+            if (event.target.id.startsWith('upload-')) {
+                const photoInput = event.target;
+                const previewContainer = document.getElementById('image-preview-container');
+                
+                // Clear any existing previews
+              
+        
+                // Loop through the selected files
+                for (const file of photoInput.files) {
+                    const reader = new FileReader();
+        
+                    // Create a preview when the file is read
+                    reader.onload = function (e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result; // Use the file's data URL
+                        img.style.width = '50px'; // Set a width for the preview
+                        img.style.margin = '2px'; // Add some margin
+                        previewContainer.appendChild(img); // Add the image to the preview container
+                    };
+        
+                    // Read the file as a data URL
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+        
+// Save button 
+
+// Use event delegation to handle clicks on elements with the 'save' class
+document.addEventListener('click', async function (event) {
+    // Check if the clicked element has the class 'save'
+    if (event.target.classList.contains('save')) {
+        const closestSendElement = event.target.closest('.save');
+        console.log(closestSendElement)
+
+        if (closestSendElement) {
+           
+            const ticketId = closestSendElement.getAttribute('ticket-tocken');
+            const Id = closestSendElement.getAttribute('id');
+           
+            const workStartedTime = closestSendElement.getAttribute('start-time');
+            const workEndedTime = document.getElementById(`end-time-${Id}`).value;
+            const photos = ""; // Assuming you will add photo logic later
+
+            const photoInput = document.getElementById(`upload-${Id}`);
+            const formData = new FormData();
+            console.log("Start Time:", workStartedTime);
+            console.log("End Time:", workEndedTime);
+    
+            // Append times to FormData
+            formData.append('work_started_time', workStartedTime || ''); // Add a fallback empty string
+            formData.append('work_ended_time', workEndedTime || '');
+    
+            // Check for photos
+            if (photoInput) {
+                console.log("Files selected:", photoInput.files);
+                for (const file of photoInput.files) {
+                    formData.append('photos', file); // Adjust 'photos' to the expected field name in your backend
+                }
+            } else {
+                console.warn(`No file input found for ID: upload-${Id}`);
+            }
+    
+            // Log FormData entries for debugging
+            for (const [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
+            
+
+     
+       
+            console.log("Number of files selected: ", photoInput.files.length);
+        
+          
+           // Output the ticket ID for debugging
+
+            try {
+                // Make the API call to save the ticket status
+                const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/save/${ticketId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                // Check for HTTP response errors
+                if (!response.ok) throw new Error(`Error: ${response.status}`);
+                
+                // Parse the JSON response
+                const data = await response.json();
+                console.log("Ticket status saved:", data);
+                // Handle successful save (e.g., update UI)
+            } catch (error) {
+                console.error("Failed to save ticket status:", error.message);
+            }
+        } else {
+            console.error("No closest element with ID 'btn' found.");
+        }
+    }
+});
+
 // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
@@ -185,7 +356,7 @@ $(document).ready(function () {
                                             data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
-                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>           
+                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
                 </div>
             </div>
         </div>

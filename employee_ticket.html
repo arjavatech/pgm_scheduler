@@ -79,7 +79,9 @@
     }
 
     @media (max-width:840px) {
-        #addEmployee {
+
+        #addEmployee,
+        #addEmployee2 {
             font-size: 12px;
         }
     }
@@ -103,12 +105,14 @@
             align-items: center;
         }
 
-        #addEmployee{
+        #addEmployee,
+        #addEmployee2 {
             float: right;
         }
 
         #cancel,
-        #addEmployee {
+        #addEmployee,
+        #addEmployee2 {
             width: 48%;
             margin-bottom: 0;
             font-size: 13px;
@@ -125,15 +129,18 @@
     @media (max-width: 350px) {
 
         #addEmployee,
-        #cancel {
+        #cancel,
+        #addEmployee2 {
             width: 49%;
             margin-bottom: 10px;
             font-size: 10px;
         }
 
-        #addEmployee{
+        #addEmployee,
+        #addEmployee2 {
             float: right;
         }
+
         .input-bottom-border {
             font-size: 10px;
 
@@ -153,7 +160,8 @@
     @media (min-width: 280px) and (max-width: 318px) {
 
         #addEmployee,
-        #cancel {
+        #cancel,
+        #addEmployee2 {
             width: 47%;
             margin-bottom: 10px;
             font-size: 8px;
@@ -163,6 +171,18 @@
         .input-bottom-border {
             font-size: 8px;
 
+        }
+    }
+
+    @media (max-width:1060px) {
+
+        #addEmployee,
+        #addEmployee2,
+        #cancel {
+
+            margin-bottom: 10px;
+            font-size: 12px;
+            border-radius: 5px;
         }
     }
 </style>
@@ -223,7 +243,7 @@
                                         </ul>
                                     </div>
                                     <a href="employee_ticket.html"
-                                        class="list-group-item list-group-item-action bg-purple" ><img
+                                        class="list-group-item list-group-item-action bg-purple"><img
                                             src="icon/Mask group.png" style="width: 30px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Employees</span></a>
                                     <a href="home-profile.html"
@@ -261,17 +281,18 @@
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Phone Number">
                                     </div>
                                     <div class="col-md-3 text-center">
-                                        <input type="text" class="input-bottom-border mt-4" placeholder="EIN Number" disabled>
+                                        <input type="text" class="input-bottom-border mt-4"
+                                            placeholder="Assigned Location">
                                         <div class="dropdown">
                                             <button id="dropdownButton" class="input-bottom-border mt-4"
                                                 onclick="toggleDropdown(event)">Specialization</button>
                                             <div class="dropdown-options input-bottom-border" id="dropdownOptions"
                                                 onclick="event.stopPropagation()">
-                                                <label><input type="checkbox" value="AC"
-                                                        onchange="updateButton(this)"> AC</label>
+                                                <label><input type="checkbox" value="AC" onchange="updateButton(this)">
+                                                    AC</label>
                                                 <label><input type="checkbox" value="Fridge"
                                                         onchange="updateButton(this)"> Fridge</label>
-                                               
+
                                             </div>
                                         </div>
                                     </div>
@@ -281,8 +302,10 @@
 
                                         <button type="submit" class="mt-4 login-button" id="cancel"
                                             onclick="cancel()">Cancel</button>
-                                            <button type="submit" class="mt-4 login-button">Add employee</button>
                                         <button type="submit" class="mt-4 login-button" id="addEmployee"
+                                            style="display: none;" id="addEmployee" onclick="createEmployee()">Add
+                                            employee</button>
+                                        <button type="submit" class="mt-4 login-button" id="addEmployee2"
                                             onclick="show()">Add employee</button>
                                     </div>
                                 </div>
@@ -348,8 +371,113 @@
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
     <script src="script/employee_ticket.js"></script>
-
     <script>
+
+        const apiUrlBase = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee";
+        const apiUrl = `${apiUrlBase}/create`;
+        const cid = localStorage.getItem("cid");
+
+        function createEmployee() {
+            const firstName = document.querySelector("input[placeholder='First Name']").value;
+            const lastName = document.querySelector("input[placeholder='Last Name']").value;
+            const email = document.querySelector("input[placeholder='Email']").value;
+            const phone = document.querySelector("input[placeholder='Phone Number']").value;
+            const location = document.querySelector("input[placeholder='Assigned Location']").value;
+            const specialization = Array.from(document.querySelectorAll("#dropdownOptions input[type='checkbox']:checked"))
+                .map(option => option.value);
+
+            // Input validation
+            if (!firstName || !lastName || !email || !phone || specialization.length === 0) {
+                alert("Please fill in all required fields and select at least one specialization.");
+                return;
+            }
+
+            const employeeObject = {
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                phone_number: phone,
+                specialization: specialization.join(", "),
+                assigned_locations: location,
+                company_id: cid
+            };
+
+            console.log("Employee Object:", employeeObject);
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(employeeObject)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errorData => {
+                            console.error('Server Response:', errorData);
+                            throw new Error(`Server Error: ${errorData.message || response.status}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Employee created successfully!');
+
+                    // Clear input fields
+                    const firstNameInput = document.getElementById("firstName");
+                    const lastNameInput = document.getElementById("lastName");
+                    const emailInput = document.getElementById("email");
+                    const phoneInput = document.getElementById("phone");
+                    const locationInput = document.getElementById("location");
+                    const dropdownButton = document.getElementById("dropdownButton");
+
+                    if (firstNameInput) firstNameInput.value = '';
+                    if (lastNameInput) lastNameInput.value = '';
+                    if (emailInput) emailInput.value = '';
+                    if (phoneInput) phoneInput.value = '';
+                    if (locationInput) locationInput.value = '';
+
+                    // Reset specialization checkboxes
+                    document.querySelectorAll("#dropdownOptions input[type='checkbox']").forEach(checkbox => checkbox.checked = false);
+                })
+                .catch(error => {
+                    console.error('Error:', error.message);
+                    alert(`Error: ${error.message}`);
+                });
+        }
+        // Function to add employee to the table
+        function addEmployeeToTable(employee) {
+            const tbody = document.getElementById("tBody");
+            const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `
+                <td>${employee.firstName} ${employee.lastName}</td>
+                <td>${employee.phone}</td>
+                <td>${employee.specialization}</td>
+                <td>${employee.email}</td>
+                <td>${employee.location || "Location TBD"}</td>
+                <td>${employee.completedWork || 0}</td>
+                <td>${employee.pendingWork || 0}</td>
+            `;
+
+            tbody.appendChild(newRow);
+        }
+
+        // Reset form function
+        function resetForm() {
+            document.querySelector("input[placeholder='First Name']").value = "";
+            document.querySelector("input[placeholder='Last Name']").value = "";
+            document.querySelector("input[placeholder='Email']").value = "";
+            document.querySelector("input[placeholder='Phone Number']").value = "";
+            document.getElementById("dropdownButton").textContent = "Specialization";
+
+            cancel(); // Hide the input fields
+        }
+
+        // Event listener for the "Add Employee" button
+        document.getElementById("addEmployee").addEventListener("click", function (event) {
+            event.preventDefault();
+            createEmployee();
+        });
+
         function show() {
             const inputElements = document.querySelectorAll(".input-bottom-border");
 
@@ -357,16 +485,22 @@
             inputElements.forEach(element => {
                 element.style.display = "inline";
             });
-            document.getElementById("cancel").style.display = "inline"
+            document.getElementById("cancel").style.display = "inline";
+            document.getElementById("addEmployee2").style.display = "none";
+            document.getElementById("addEmployee").style.display = "inline";
         }
+
+        // Hide the input fields when "Cancel" button is clicked
         function cancel() {
             const inputElements = document.querySelectorAll(".input-bottom-border");
 
-            // Loop through each element and set the display style to "inline"
+            // Loop through each element and set the display style to "none"
             inputElements.forEach(element => {
                 element.style.display = "none";
             });
-            document.getElementById("cancel").style.display = "none"
+            document.getElementById("cancel").style.display = "none";
+            document.getElementById("addEmployee2").style.display = "inline";
+            document.getElementById("addEmployee").style.display = "none";
         }
     </script>
 
