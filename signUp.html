@@ -336,7 +336,7 @@
                     cid = urlParams.get('invite_id_c');
                     isEmployee = false;
                 } else if (urlParams.has('invite_id_e')) {
-                    cid = urlParams.get('invite_id_e');
+                    cid = urlParams.get('invite_id_e').split("--")[0];
                     isEmployee = true;
                 }
 
@@ -363,7 +363,7 @@
                     .then((response) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
-                            alert(`Error: ${response.data}`);
+                            console.error(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
@@ -411,7 +411,7 @@
                     cid = urlParams.get('invite_id_c');
                     isEmployee = false;
                 } else if (urlParams.has('invite_id_e')) {
-                    cid = urlParams.get('invite_id_e');
+                    cid = urlParams.get('invite_id_e').split("--")[0];
                     isEmployee = true;
                 }
 
@@ -436,7 +436,7 @@
                     .then((response) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
-                            alert(`Error: ${response.data}`);
+                            console.error(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
