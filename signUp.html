@@ -351,6 +351,8 @@
                     last_modified_by: "admin",
                 };
 
+                console.log(data)
+
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
                     method: 'POST',
                     headers: {
@@ -421,6 +423,8 @@
                     signup_url: url,
                     is_employee: isEmployee,
                 };
+
+                console.log(data);
 
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/create", {
                     method: 'POST',
