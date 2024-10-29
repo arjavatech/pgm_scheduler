@@ -336,7 +336,7 @@
                     cid = urlParams.get('invite_id_c');
                     isEmployee = false;
                 } else if (urlParams.has('invite_id_e')) {
-                    cid = urlParams.get('invite_id_e').split("--")[0];
+                    cid = (urlParams.get('invite_id_e')).split("--")[0];
                     isEmployee = true;
                 }
 
@@ -412,7 +412,7 @@
                     isEmployee = false;
                 } else if (urlParams.has('invite_id_e')) {
                     cid = (urlParams.get('invite_id_e')).split("--")[0];
-                    console.log(cid);
+                    
                     isEmployee = true;
                 }
 
