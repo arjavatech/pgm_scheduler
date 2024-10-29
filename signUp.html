@@ -351,7 +351,6 @@
                     last_modified_by: "admin",
                 };
 
-                console.log(data)
 
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/signup/create", {
                     method: 'POST',
@@ -361,17 +360,19 @@
                     body: JSON.stringify(data),
                 })
                     .then((response) => {
-                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
+                        
                         if (!response.ok) {
+                            document.getElementById('l').style.display = 'none'; 
                             console.error(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
                     .then((data) => {
                         if (data.error) {
-                            // Display appropriate error message
+                            document.getElementById('l').style.display = 'none'; 
                         } else {
                             setTimeout(function () {
+                                document.getElementById('l').style.display = 'none'; 
                                 if (urlParams.has('invite_id_c')) {
                                     window.location.href = 'dashboard.html'; // Redirect for customers
                                 } else if (urlParams.has('invite_id_e')) {
@@ -425,7 +426,6 @@
                     is_employee: isEmployee,
                 };
 
-                console.log(data);
 
                 fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/signup/create", {
                     method: 'POST',
@@ -435,17 +435,18 @@
                     body: JSON.stringify(data),
                 })
                     .then((response) => {
-                        document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
+                            document.getElementById('l').style.display = 'none'; 
                             console.error(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
                     .then((data) => {
                         if (data.error) {
-                            // Handle error
+                            document.getElementById('l').style.display = 'none'; 
                         } else {
                             setTimeout(function () {
+                                document.getElementById('l').style.display = 'none'; 
                                 if (urlParams.has('invite_id_c')) {
                                     window.location.href = 'dashboard.html';
                                 } else if (urlParams.has('invite_id_e')) {
