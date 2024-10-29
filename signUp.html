@@ -254,7 +254,7 @@
                         mainContent.classList.remove('blur-background');
 
                         if (!response.ok) {
-                            throw new Error(`Error: ${response.status}`);
+                            throw new Error(`Error: ${response}`);
                         }
                         return response.json();
                     })
@@ -363,7 +363,7 @@
                     .then((response) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
-                            throw new Error(`Error: ${response.status}`);
+                            throw new Error(`Error: ${response}`);
                         }
                         return response.json();
                     })
@@ -436,7 +436,7 @@
                     .then((response) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
                         if (!response.ok) {
-                            throw new Error(`Error: ${response.status}`);
+                            throw new Error(`Error: ${response}`);
                         }
                         return response.json();
                     })
