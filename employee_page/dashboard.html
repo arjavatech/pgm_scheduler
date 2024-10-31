@@ -17,57 +17,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/image.css">
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/employeeDashboard.css">
     <!-- Chart.js for Charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-   
-       /* Inline .year-nav elements */
-.year-nav {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f1f1f1;
-    border-radius: 10px;
-    padding: 5px 20px;
-    margin: 10px auto;
-    border: 1px solid #ddd;
-    width: auto; /* allows it to shrink and expand */
-}
+        /* Inline .year-nav elements */
+        .year-nav {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            padding: 5px 20px;
+            margin: 10px auto;
+            border: 1px solid #ddd;
+            width: auto;
+            /* allows it to shrink and expand */
+        }
 
-.year-nav button {
-    background-color: transparent;
-    border: none;
-    font-size: 12px;
-    cursor: pointer;
-    padding: 5px;
-}
+        .year-nav button {
+            background-color: transparent;
+            border: none;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 5px;
+        }
 
-.year-nav .year {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0 10px;
-}
+        .year-nav .year {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
 
-/* Hover effect for year-nav buttons */
-.year-nav button:hover {
-    color: #007bff;
-}
+        /* Hover effect for year-nav buttons */
+        .year-nav button:hover {
+            color: #007bff;
+        }
 
-/* Inline .request-history-container p */
-.request-history-container p {
-    /* display: inline; */
-    font-size: 12px;
-    text-align: start;
-    padding-top: 12% !important;
-    font-weight: bold;
-}
-
-      
- 
-
+        /* Inline .request-history-container p */
+        .request-history-container p {
+            /* display: inline; */
+            font-size: 12px;
+            text-align: start;
+            padding-top: 12% !important;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -170,10 +167,11 @@
                                             </div>
                                         </div>
                                         <!-- Year Navigation -->
-                                        <div class="col-lg-8 d-flex justify-content-center" >
+                                        <div class="col-lg-8 d-flex justify-content-center">
                                             <div class="year-nav ">
                                                 <button id="decreaseYear">&lt;</button>
-                                                <span class="year" id="currentYearButton" style="font-size: small !important;">2024</span>
+                                                <span class="year" id="currentYearButton"
+                                                    style="font-size: small !important;">2024</span>
                                                 <button id="increaseYear">&gt;</button>
                                             </div>
                                         </div>
@@ -181,7 +179,8 @@
 
                                         <!-- Chart Container -->
                                         <div id="chart-container" style="height: auto;">
-                                            <canvas id="requestHistoryChart" height="250"></canvas> <!-- Reduced height for mobile -->
+                                            <canvas id="requestHistoryChart" height="250"></canvas>
+                                            <!-- Reduced height for mobile -->
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +205,21 @@
         </div>
     </div>
 
- <script src="../script/employee_page/dashboard.js"></script>
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn-yes ">Yes</button>
+                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../script/employee_page/dashboard.js"></script>
 
     <!-- Notification List Script -->
     <script>

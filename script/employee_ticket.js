@@ -81,7 +81,10 @@ $(document).ready(function () {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 text-center">
+                    <div class="col-6">
+                        <p><strong>Email:</strong> ${employee.email}</p>
+                    </div>
+                    <div class="col-6">
                         <p><strong>City:</strong> ${employee.assigned_locations}</p>
                     </div>
                 </div>
@@ -135,7 +138,7 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
             row.style.cssText = "background-color: transparent !important;"; // Adds !important
         });
 
-    
+
 
         if (tHead) {
             tHead.style.cssText = "background-color: transparent !important;";
@@ -178,3 +181,150 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         });
     }
 });
+
+
+const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
+const apiUrlBase = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee";
+const apiUrl = `${apiUrlBase}/create`;
+const cid = localStorage.getItem("cid");
+
+function createEmployee() {
+    const firstName = document.querySelector("input[placeholder='First Name']").value;
+    const lastName = document.querySelector("input[placeholder='Last Name']").value;
+    const email = document.querySelector("input[placeholder='Email']").value;
+    const phone = document.querySelector("input[placeholder='Phone Number']").value;
+    const location = document.querySelector("input[placeholder='Assigned Location']").value;
+    const specialization = Array.from(document.querySelectorAll("#dropdownOptions input[type='checkbox']:checked"))
+        .map(option => option.value);
+
+    // Input validation
+    if (!firstName || !lastName || !email || !phone || specialization.length === 0) {
+        failureModal.show();
+        return;
+    }
+
+    const employeeObject = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone_number: phone,
+        specialization: specialization.join(", "),
+        assigned_locations: location,
+        company_id: cid
+    };
+
+    console.log("Employee Object:", employeeObject);
+
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(employeeObject)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            successModal.show();
+            resetForm();
+            document.querySelectorAll("#dropdownOptions input[type='checkbox']").forEach(checkbox => checkbox.checked = false);
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+            failureModal.show();
+        });
+}
+// Function to add employee to the table
+function addEmployeeToTable(employee) {
+    const tbody = document.getElementById("tBody");
+    const newRow = document.createElement("tr");
+
+    newRow.innerHTML = `
+        <td>${employee.firstName} ${employee.lastName}</td>
+        <td>${employee.phone}</td>
+        <td>${employee.specialization}</td>
+        <td>${employee.email}</td>
+        <td>${employee.location || "Location TBD"}</td>
+        <td>${employee.completedWork || 0}</td>
+        <td>${employee.pendingWork || 0}</td>
+    `;
+
+    tbody.appendChild(newRow);
+}
+
+// Reset form function
+function resetForm() {
+    document.querySelector("input[placeholder='First Name']").value = "";
+    document.querySelector("input[placeholder='Last Name']").value = "";
+    document.querySelector("input[placeholder='Email']").value = "";
+    document.querySelector("input[placeholder='Phone Number']").value = "";
+    document.getElementById("dropdownButton").textContent = "Specialization";
+
+    cancel(); // Hide the input fields
+}
+
+// Event listener for the "Add Employee" button
+document.getElementById("addEmployee").addEventListener("click", function (event) {
+    event.preventDefault();
+    createEmployee();
+});
+
+function show() {
+    const inputElements = document.querySelectorAll(".input-bottom-border");
+
+    // Loop through each element and set the display style to "inline"
+    inputElements.forEach(element => {
+        element.style.display = "inline";
+    });
+    document.getElementById("cancel").style.display = "inline";
+    document.getElementById("addEmployee2").style.display = "none";
+    document.getElementById("addEmployee").style.display = "inline";
+}
+
+// Hide the input fields when "Cancel" button is clicked
+function cancel() {
+    const inputElements = document.querySelectorAll(".input-bottom-border");
+
+    // Loop through each element and set the display style to "none"
+    inputElements.forEach(element => {
+        element.style.display = "none";
+    });
+    document.getElementById("cancel").style.display = "none";
+    document.getElementById("addEmployee2").style.display = "inline";
+    document.getElementById("addEmployee").style.display = "none";
+}
+
+const MAX_SELECTION = 3;
+
+function toggleDropdown(event) {
+    const dropdownOptions = document.getElementById("dropdownOptions");
+    dropdownOptions.style.display = dropdownOptions.style.display === "block" ? "none" : "block";
+    event.stopPropagation();
+}
+
+function updateButton(checkbox) {
+    const checkboxes = document.querySelectorAll("#dropdownOptions input[type='checkbox']");
+    const selectedOptions = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+    // Limit selection to MAX_SELECTION
+    if (selectedOptions.length > MAX_SELECTION) {
+        checkbox.checked = false;
+        alert(`You can select up to ${MAX_SELECTION} options only.`);
+        return;
+    }
+
+    const selectedValues = selectedOptions.map(option => option.value);
+    const dropdownButton = document.getElementById("dropdownButton");
+    dropdownButton.textContent = selectedValues.length > 0
+        ? selectedValues.join(", ")
+        : "Select your favorite fruits";
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function () {
+    const dropdownOptions = document.getElementById("dropdownOptions");
+    dropdownOptions.style.display = "none";
+};

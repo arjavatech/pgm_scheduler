@@ -12,8 +12,8 @@ $(document).ready(function () {
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
-                addCard(ticket, index); // Pass index for unique IDs
-                index++;
+                addCard(ticket); // Pass index for unique IDs
+                
             });
         })
         .catch(error => {
@@ -49,6 +49,8 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
+        // const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
+        const tickerRejectDate = new Date(rowData.rejected_date).toISOString().split('T')[0];
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -59,13 +61,16 @@ $(document).ready(function () {
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name</label>
-                            <select class="form-select mt-2 employee-select">
-                                <option value="ganesh">Mani</option>
-                                <option value="saab">Arunkumar</option>
-                                <option value="mercedes">Sakthi</option>
-                                <option value="audi">Logeshwari</option>
-                            </select>
+                            <strong class="d-flex justify-content-left">Reason :</strong>
+                            <p class="pt-2" style="font-size: 13px; text-align: left;">
+                                ${rowData.rejected_reason}
+                            </p>
+                           <strong> <label class="mt-3 d-flex justify-content-left">Reject Date</label></strong>
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <input type="date" class="input-bottom-border"style="text-align:left !important"
+                                    id="start-time-${rowData.ticket_id}" 
+                                    value="${tickerRejectDate}">                                
+                            </div>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
@@ -134,7 +139,8 @@ $(document).ready(function () {
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
+                    <p class="text-left"><strong >Reason : </strong>${employee.rejected_reason}</p>
+                    <p class="text-left"><strong>Reject Date : </strong>${employee.rejected_date}</p>
                     <div class="image-gallery d-flex justify-content-center">
                         <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container d-inline justify-content-center">
@@ -177,7 +183,6 @@ $(document).ready(function () {
         var issueType = document.querySelectorAll(".issue-type");
         var tHead = document.querySelector("thead");
         var tHeadCells = document.querySelectorAll("thead th");
-        var select = document.querySelector(".employee-select")
         sidebar.classList.toggle('active');
 
         if (sidebar.classList.contains('active')) {
@@ -206,7 +211,8 @@ $(document).ready(function () {
                 row.style.cssText = "background-color: transparent !important;"; // Adds !important
             });
 
-            select.style.backgroundColor = "transparent";
+            document.querySelector(".overlay").textContent = "+3"
+            document.querySelector(".overlay").style.opacity = ".2";
         } else {
             // Sidebar is closed, reset colors
             body.classList.remove('no-scroll');
