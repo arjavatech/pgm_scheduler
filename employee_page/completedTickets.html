@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/table.css">
     <link rel="stylesheet" href="../css/assignedTickets.css">
-
+    <link rel="stylesheet" href="../css/image.css">
     <script defer src="../script/employee_page/completedTicket.js"></script>
     <script defer src="../script/image.js"></script>
 </head>
@@ -166,8 +166,10 @@
                                         <img src="../icon/Mask group.png"><span>Employees</span>
                                     </a>
 
-                                    <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
-                                        <a href="#"><img src="../icon/Vector.png" id="icon">Logout</a>
+                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
+                                        data-bs-toggle="modal" data-bs-target="#logoutModal" class="m-3">
+                                        <img src="../icon/Vector.png" id="icon">
+                                        <span class="content text-white list-group-item">Logout</span>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +215,19 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn-yes ">Yes</button>
+                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="loading" id="l">
         <div class="spinner"></div>
     </div>

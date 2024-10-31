@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success and Failure Modals</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .modal-header.success {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .modal-header.failure {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .modal-body p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Success Modal -->
+  <!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
+      <div class="modal-content">
+        <div class="modal-header success">
+          <h5 class="modal-title" id="successModalLabel">Success</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Your operation was successful!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Failure Modal -->
+  <div class="modal fade" id="failureModal" tabindex="-1" aria-labelledby="failureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
+      <div class="modal-content">
+        <div class="modal-header failure">
+          <h5 class="modal-title" id="failureModalLabel">Failure</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Something went wrong. Please try again.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Trigger Buttons -->
+  <div class="container mt-5 text-center">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#successModal">Show Success Modal</button>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#failureModal">Show Failure Modal</button>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

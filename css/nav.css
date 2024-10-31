@@ -76,7 +76,7 @@ a {
 
 .overlay .spinner {
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #02066F;
+    border-top: 4px solid #004102;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -337,10 +337,61 @@ a {
     #fix {
         margin-top: 19% !important;
     }
+    .container-sty h1{
+        font-size: 17px;
+    }
 }
 
 @media (max-width:350px) {
     #fix {
         margin-top: 25% !important;
     }
+}
+
+
+
+/* Modal styles */
+#popupModalFailure {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Background blur */
+}
+
+#popupModalFailure .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 500px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+#popupModal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Background blur */
+}
+
+#popupModal .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 500px;
+    height: 272px;
+    text-align: center;
+    border-radius: 8px;
 }

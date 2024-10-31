@@ -62,18 +62,33 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
+        const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
+        const workEndedTime = new Date(rowData.work_ended_time).toISOString().split('T')[0];
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
-                            <label class="mt-3 d-flex justify-content-left">Employee Name :</label>
-                             ${rowData.first_name}  ${rowData.last_name}
+                            
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="start-time">Work started time:</label>
+                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                    id="start-time-${rowData.ticket_id}" 
+                                    value="${workStartedTime}">
+                            </div>
+
+
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="end-time">Work ended time :</label>
+                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                    id="start-time-${rowData.ticket_id}" 
+                                    value="${workEndedTime}">                                
+                            </div>                             
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
@@ -112,6 +127,8 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
+        const workStartedTime = new Date(employee.work_started_time).toISOString().split('T')[0];
+        const workEndedTime = new Date(employee.work_ended_time).toISOString().split('T')[0];
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
@@ -136,15 +153,27 @@ $(document).ready(function () {
                         <p><strong>Phone </strong> ${employee.phone_number}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>City:</strong> ${employee.city}</p>
+                        
                     </div>
                 </div>
-                <p class="text-center mb-2 showMoreButton">show more ⮟</p>
+                <p class="text-center mb-2 showMoreButton">show more &#9660;</p>
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
-                    <div class="image-gallery d-flex justify-content-center">
+                    <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="start-time">Work started time:</label>
+                                <input type="date" class="input-bottom-border"
+                                    id="start-time-${employee.ticket_id}" 
+                                    value="${workStartedTime}">
+                            </div>
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="end-time">Work ended time :</label>
+                                <input type="date" class="input-bottom-border"
+                                    id="start-time-${employee.ticket_id}" 
+                                    value="${workEndedTime}">
+                            </div>
+                            <h5 class="pt-4 text-center">$100</h5>
+                    <div class="image-gallery d-flex justify-content-center mt-3">
                         <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container d-inline justify-content-center">
                             <img src="images/profile img.png" alt="Image 1" width="100px">
@@ -152,7 +181,8 @@ $(document).ready(function () {
                                             data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
-                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>       
+                    
+                    <p class="text-center pt-3 mb-2 showLessButton">show less &#9650;</p>       
                 </div>
             </div>
         </div>
@@ -187,7 +217,7 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
     var issueType = document.querySelectorAll(".issue-type");
     var tHead = document.querySelector("thead");
     var tHeadCells = document.querySelectorAll("thead th");
-
+    var input = document.querySelectorAll(".input-bottom-border")
     sidebar.classList.toggle('active');
 
     if (sidebar.classList.contains('active')) {
@@ -215,6 +245,11 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         issueType.forEach(function (row) {
             row.style.cssText = "background-color: transparent !important;"; // Adds !important
         });
+        input.forEach(function (row) {
+            row.disabled = true;
+        });
+        
+
     } else {
         // Sidebar is closed, reset colors
         body.classList.remove('no-scroll');
@@ -240,6 +275,9 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         // Reset the background of each table head cell
         tHeadCells.forEach(function (cell) {
             cell.style.backgroundColor = ""; // Reset th background
+        });
+        input.forEach(function (row) {
+            row.disabled = false;
         });
     }
 });

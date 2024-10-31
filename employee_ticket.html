@@ -12,179 +12,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/employee_ticket.css">
     <link rel="stylesheet" href="css/image.css">
 </head>
 
 <style>
-    .input-bottom-border {
-        display: none;
-    }
-
-    #cancel {
-        display: none;
-    }
-
-
-
-    .dropdown {
-        position: relative;
-        width: 100%;
-    }
-
-    .dropdown button {
-        width: 90%;
-        padding: 10px;
-        font-size: 1em;
-        color: #9e9e9e;
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid #ccc;
-        border-radius: 4px;
-        text-align: left;
-        cursor: pointer;
-    }
-
-    .dropdown button::after {
-        content: "▼";
-        float: right;
-        font-size: 0.8em;
-    }
-
-    .dropdown-options {
-        display: none;
-        position: absolute;
-        width: 100%;
-        overflow-y: auto;
-        border: 1px solid#9e9e9e;
-        border-radius: 4px;
-        margin-top: 5px;
-        z-index: 10;
-        background-color: #9e9e9e;
-    }
-
-    .dropdown-options label {
-        display: flex;
-        align-items: center;
-        padding: 8px;
-        font-size: 1em;
-        color: white !important;
-        cursor: pointer;
-
-    }
-
-    .dropdown-options input[type="checkbox"] {
-        margin-right: 8px;
-        cursor: pointer;
-    }
-
-    @media (max-width:840px) {
-
-        #addEmployee,
-        #addEmployee2 {
-            font-size: 12px;
-        }
-    }
-
-    @media (max-width:450px) {
-        .card {
-            width: 100% !important;
-        }
-    }
-
-
-    @media (min-width:350px) and (max-width:767px) {
-
-        #buttons {
-            gap: 10px;
-        }
-
-        .col-md-4.pt-3 {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        #addEmployee,
-        #addEmployee2 {
-            float: right;
-        }
-
-        #cancel,
-        #addEmployee,
-        #addEmployee2 {
-            width: 48%;
-            margin-bottom: 0;
-            font-size: 13px;
-        }
-
-        .input-bottom-border {
-            font-size: 13px;
-
-        }
-    }
-
-
-
-    @media (max-width: 350px) {
-
-        #addEmployee,
-        #cancel,
-        #addEmployee2 {
-            width: 49%;
-            margin-bottom: 10px;
-            font-size: 10px;
-        }
-
-        #addEmployee,
-        #addEmployee2 {
-            float: right;
-        }
-
-        .input-bottom-border {
-            font-size: 10px;
-
-        }
-
-        .col-md-4.pt-3 {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        #buttons {
-            gap: 10px;
-        }
-    }
-
-    @media (min-width: 280px) and (max-width: 318px) {
-
-        #addEmployee,
-        #cancel,
-        #addEmployee2 {
-            width: 47%;
-            margin-bottom: 10px;
-            font-size: 8px;
-            border-radius: 5px;
-        }
-
-        .input-bottom-border {
-            font-size: 8px;
-
-        }
-    }
-
-    @media (max-width:1060px) {
-
-        #addEmployee,
-        #addEmployee2,
-        #cancel {
-
-            margin-bottom: 10px;
-            font-size: 12px;
-            border-radius: 5px;
-        }
-    }
+    
 </style>
 
 
@@ -359,7 +192,40 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
+            <div class="modal-content">
+                <div class="modal-header success">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    
+                </div>
+                <div class="modal-body">
+                    <p>Employee Added successfully</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Failure Modal -->
+    <div class="modal fade" id="failureModal" tabindex="-1" aria-labelledby="failureModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
+            <div class="modal-content">
+                <div class="modal-header failure">
+                    <h5 class="modal-title" id="failureModalLabel">Failure</h5>
+                   
+                </div>
+                <div class="modal-body">
+                    <p>Something went wrong. Please try again.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -372,172 +238,13 @@
 
     <script src="script/employee_ticket.js"></script>
     <script>
-
-        const apiUrlBase = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee";
-        const apiUrl = `${apiUrlBase}/create`;
-        const cid = localStorage.getItem("cid");
-
-        function createEmployee() {
-            const firstName = document.querySelector("input[placeholder='First Name']").value;
-            const lastName = document.querySelector("input[placeholder='Last Name']").value;
-            const email = document.querySelector("input[placeholder='Email']").value;
-            const phone = document.querySelector("input[placeholder='Phone Number']").value;
-            const location = document.querySelector("input[placeholder='Assigned Location']").value;
-            const specialization = Array.from(document.querySelectorAll("#dropdownOptions input[type='checkbox']:checked"))
-                .map(option => option.value);
-
-            // Input validation
-            if (!firstName || !lastName || !email || !phone || specialization.length === 0) {
-                alert("Please fill in all required fields and select at least one specialization.");
-                return;
-            }
-
-            const employeeObject = {
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                phone_number: phone,
-                specialization: specialization.join(", "),
-                assigned_locations: location,
-                company_id: cid
-            };
-
-            console.log("Employee Object:", employeeObject);
-
-            fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(employeeObject)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(errorData => {
-                            console.error('Server Response:', errorData);
-                            throw new Error(`Server Error: ${errorData.message || response.status}`);
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert('Employee created successfully!');
-
-                    // Clear input fields
-                    const firstNameInput = document.getElementById("firstName");
-                    const lastNameInput = document.getElementById("lastName");
-                    const emailInput = document.getElementById("email");
-                    const phoneInput = document.getElementById("phone");
-                    const locationInput = document.getElementById("location");
-                    const dropdownButton = document.getElementById("dropdownButton");
-
-                    if (firstNameInput) firstNameInput.value = '';
-                    if (lastNameInput) lastNameInput.value = '';
-                    if (emailInput) emailInput.value = '';
-                    if (phoneInput) phoneInput.value = '';
-                    if (locationInput) locationInput.value = '';
-
-                    // Reset specialization checkboxes
-                    document.querySelectorAll("#dropdownOptions input[type='checkbox']").forEach(checkbox => checkbox.checked = false);
-                })
-                .catch(error => {
-                    console.error('Error:', error.message);
-                    alert(`Error: ${error.message}`);
-                });
-        }
-        // Function to add employee to the table
-        function addEmployeeToTable(employee) {
-            const tbody = document.getElementById("tBody");
-            const newRow = document.createElement("tr");
-
-            newRow.innerHTML = `
-                <td>${employee.firstName} ${employee.lastName}</td>
-                <td>${employee.phone}</td>
-                <td>${employee.specialization}</td>
-                <td>${employee.email}</td>
-                <td>${employee.location || "Location TBD"}</td>
-                <td>${employee.completedWork || 0}</td>
-                <td>${employee.pendingWork || 0}</td>
-            `;
-
-            tbody.appendChild(newRow);
-        }
-
-        // Reset form function
-        function resetForm() {
-            document.querySelector("input[placeholder='First Name']").value = "";
-            document.querySelector("input[placeholder='Last Name']").value = "";
-            document.querySelector("input[placeholder='Email']").value = "";
-            document.querySelector("input[placeholder='Phone Number']").value = "";
-            document.getElementById("dropdownButton").textContent = "Specialization";
-
-            cancel(); // Hide the input fields
-        }
-
-        // Event listener for the "Add Employee" button
-        document.getElementById("addEmployee").addEventListener("click", function (event) {
-            event.preventDefault();
-            createEmployee();
-        });
-
-        function show() {
-            const inputElements = document.querySelectorAll(".input-bottom-border");
-
-            // Loop through each element and set the display style to "inline"
-            inputElements.forEach(element => {
-                element.style.display = "inline";
-            });
-            document.getElementById("cancel").style.display = "inline";
-            document.getElementById("addEmployee2").style.display = "none";
-            document.getElementById("addEmployee").style.display = "inline";
-        }
-
-        // Hide the input fields when "Cancel" button is clicked
-        function cancel() {
-            const inputElements = document.querySelectorAll(".input-bottom-border");
-
-            // Loop through each element and set the display style to "none"
-            inputElements.forEach(element => {
-                element.style.display = "none";
-            });
-            document.getElementById("cancel").style.display = "none";
-            document.getElementById("addEmployee2").style.display = "inline";
-            document.getElementById("addEmployee").style.display = "none";
-        }
+       
     </script>
 
 
-    <script>
-        const MAX_SELECTION = 3;
 
-        function toggleDropdown(event) {
-            const dropdownOptions = document.getElementById("dropdownOptions");
-            dropdownOptions.style.display = dropdownOptions.style.display === "block" ? "none" : "block";
-            event.stopPropagation();
-        }
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        function updateButton(checkbox) {
-            const checkboxes = document.querySelectorAll("#dropdownOptions input[type='checkbox']");
-            const selectedOptions = Array.from(checkboxes).filter(checkbox => checkbox.checked);
-
-            // Limit selection to MAX_SELECTION
-            if (selectedOptions.length > MAX_SELECTION) {
-                checkbox.checked = false;
-                alert(`You can select up to ${MAX_SELECTION} options only.`);
-                return;
-            }
-
-            const selectedValues = selectedOptions.map(option => option.value);
-            const dropdownButton = document.getElementById("dropdownButton");
-            dropdownButton.textContent = selectedValues.length > 0
-                ? selectedValues.join(", ")
-                : "Select your favorite fruits";
-        }
-
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function () {
-            const dropdownOptions = document.getElementById("dropdownOptions");
-            dropdownOptions.style.display = "none";
-        };
-    </script>
 </body>
 
 </html>

@@ -724,7 +724,7 @@ strong {
     }
 
     #fix {
-        margin-top: 13% !important;
+        margin-top: 8% !important;
     }
 }
 
@@ -771,12 +771,16 @@ strong {
 
 @media (max-width:450px) {
     #fix {
-        margin-top: 1% !important;
+        margin-top: 9% !important;
+    }
+
+    .container-sty h1{
+        font-size: 17px;
     }
 }
 
 @media (max-width:350px) {
     #fix {
-        margin-top: 5% !important;
+        margin-top: 8% !important;
     }
 }

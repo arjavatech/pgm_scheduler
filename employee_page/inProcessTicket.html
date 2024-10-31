@@ -17,42 +17,46 @@
     <link rel="stylesheet" href="../css/nav.css">
     <link rel="stylesheet" href="../css/table.css">
     <link rel="stylesheet" href="../css/assignedTickets.css">
-
+    <link rel="stylesheet" href="../css/image.css">
     <script defer src="../script/employee_page/inprocess.js"></script>
     <script defer src="../script/image.js"></script>
 </head>
 <style>
-  .image-gallery .uploads{
-       background:none;
-       padding: 10px;
-  }
-  .image-gallery .uploads span{
-    padding: 10px;
-    margin: none !important;
-  }
-.buttonContainer
-{
-    display: flex;
-    justify-content: center;
-    margin-top:20px;
-    gap: 50px;
-}
-.buttonContainer button{
-    width: 20%;
-    padding: 10px;
-    
-} 
-#completed{
-    background-color: #004102;
-}   
-    .input-container input {
-        margin: 8px ;
+    .image-gallery .uploads {
         background: none;
-       border: none;
-       border-bottom: 1px solid #ccc;
+        padding: 10px;
     }
 
-   
+    .image-gallery .uploads span {
+        padding: 10px;
+        margin: none !important;
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        gap: 50px;
+    }
+
+    .buttonContainer button {
+        width: 20%;
+        padding: 10px;
+
+    }
+
+    #completed {
+        background-color: #004102;
+    }
+
+    .input-container input {
+        margin: 8px;
+        background: none;
+        border: none;
+        border-bottom: 1px solid #ccc;
+    }
+
+
     .comform {
         color: white !important;
         background-color: #004102 !important;
@@ -145,7 +149,7 @@
                     style="width: 20%;">
             </div>
             <div class="col-4 text-center">
-                
+
                 <img src="../images/logo.png" alt="Logo" style="max-width: 100%;">
             </div>
             <div class="col-4 text-end">
@@ -189,8 +193,10 @@
                                         <img src="../icon/Mask group.png"><span>Employees</span>
                                     </a>
 
-                                    <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
-                                        <a href="#"><img src="../icon/Vector.png" id="icon">Logout</a>
+                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
+                                        data-bs-toggle="modal" data-bs-target="#logoutModal" class="m-3">
+                                        <img src="../icon/Vector.png" id="icon">
+                                        <span class="content text-white list-group-item">Logout</span>
                                     </div>
                                 </div>
                             </div>
@@ -232,6 +238,20 @@
                             <div id="card-container" class="d-md-none d-block card-view"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn-yes ">Yes</button>
+                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>

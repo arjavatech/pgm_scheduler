@@ -191,7 +191,7 @@ $(document).ready(function () {
                 <div class="show-more" style="display:none">
                     <p><strong>Employee Name:</strong>
                         <select class="form-select mt-2 employee-select employee-select-${employee.ticket_id}" disabled>
-                        <option value="${employee.employee_id}" selected>${employee.name}</option>
+                        <option value="${employee.employee_id}" selected>${employee.first_name}</option>
                         ${employees.map(emp => `
                             <option value="${emp.id}" ${emp.pending > 5 ? 'disabled' : ''}>
                                 ${emp.first_name}
@@ -201,7 +201,7 @@ $(document).ready(function () {
                     </p>
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
+                    <p class="text-center"><strong>Employee:</strong> ${employee.first_name}</p>
                     <div class="image-gallery d-flex justify-content-center">
                         <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container d-inline justify-content-center">
@@ -210,8 +210,8 @@ $(document).ready(function () {
                                             data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
-                    <button class="btn-yes mt-4" id="reassign-${employee.ticket_id}" onclick="disable(${employee.ticket_id})" style="width:100%">Reassign</button>
-                            <button class="btn-yes btn-reassign mt-4" id="confirm-${employee.ticket_id}" style="display:none;width:100%">Confirm</button>
+                    <button class="btn-yes mt-4" id="reassign-${employee.ticket_id}" onclick="disable2(${employee.ticket_id})" style="width:100%">Reassign</button>
+                    <button class="btn-yes btn-reassign mt-4" id="conform-${employee.ticket_id}" style="display:none;width:100%">Confirm</button>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
                 </div>
             </div>
@@ -309,6 +309,12 @@ $(document).ready(function () {
 
 
 function disable(ticket_id) {
+    document.getElementById(`reassign-${ticket_id}`).style.display = "none";
+    document.querySelector(`.employee-select-${ticket_id}`).disabled = false;
+    document.getElementById(`conform-${ticket_id}`).style.display = "block";
+}
+
+function disable2(ticket_id) {
     document.getElementById(`reassign-${ticket_id}`).style.display = "none";
     document.querySelector(`.employee-select-${ticket_id}`).disabled = false;
     document.getElementById(`conform-${ticket_id}`).style.display = "block";
