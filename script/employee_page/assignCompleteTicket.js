@@ -257,7 +257,6 @@ function reason(ticketID) {
         acceptButton.style.display = 'none';
         confirmButton.style.display = 'flex';
         
-        console.log(`Reason input and Confirm button shown for ticketID: ${ticketID}`);
     } else {
         console.error(`Elements not found for ticketID: ${ticketID}`);
     }

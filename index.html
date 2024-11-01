@@ -278,7 +278,7 @@
                             window.location.href = 'dashboard.html';
                         }, 1000);
                     } else if (data.password === password && data.is_employee === 1) {
-                        getEmployeeID(data.signup_url)
+                        getEmployeeID(data.signup_url);
                         setTimeout(() => {
                             window.location.href = 'employee_page/inProcessTicket.html';
                         }, 1200);
