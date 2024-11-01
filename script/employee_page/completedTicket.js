@@ -37,7 +37,6 @@ $(document).ready(function () {
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
-        console.log(ticket)
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
             `<span id="ticketId">${ticket.ticket_id}</span>`,
@@ -128,7 +127,6 @@ $(document).ready(function () {
 
             if (!response.ok) throw new Error(`Error: ${response.status}`);
             const data = await response.json();
-            console.log("Employee assigned successfully:", data);
             detailsRow.find('.assigned-employee').text(newEmployeeID);
         } catch (error) {
             console.error("Failed to reassign employee:", error.message);

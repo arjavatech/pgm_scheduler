@@ -37,7 +37,6 @@ $(document).ready(function () {
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
-        console.log(ticket)
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
             `<span id="ticketId"  ticket-tocken=${ticket.id}>${ticket.ticket_id}</span>`,
@@ -68,18 +67,15 @@ $(document).ready(function () {
                           
                                 <label for="start-time">Work started time :</label>
 
-                                <input type="date" id="start-time-${rowData.ticket_id}" value="${workStartedTime}">
+                                <input type="datetime-local" id="start-time-${rowData.ticket_id}" value="${rowData.work_started_time}">
             
                              </div>
 
                             <div class="input-container">
                             <label for="end-time">Work ended time :</label>
-                                <input type="date" id="end-time-${rowData.ticket_id}" placeholder="End Time " >
+                                <input type="datetime-local" id="end-time-${rowData.ticket_id}" placeholder="End Time " value="${rowData.work_ended_time}">
                                 
                             </div>
-
-
-                          
                            
                             </div>
                         <div class="col-md-1"></div>
@@ -92,9 +88,6 @@ $(document).ready(function () {
                                 
                                    <img src="../images/profile img.png" alt="Image 1" width="100px">
                                 </div>
-
-
-
                                 <div class="uploads">
                                <label for="upload-${rowData.ticket_id}" class="upload-label">
                                 <span> Add photo</span>
@@ -170,24 +163,27 @@ $(document).ready(function () {
 
         // Event listener for the completed button
         $(document).on('click', '.completed-button', async function () {
+            const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+            loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
             const ticketID = $(this).data('ticket-id');
             const workStartedTime = $(this).closest('tr').find('#start-time').val();
             const workEndedTime = $(this).closest('tr').find('#end-time').val();
-            const photos = ""; // You can handle the image upload and include it here if needed
+            // const photos = ""; // You can handle the image upload and include it here if needed
     
             const requestBody = {
                 company_id: localStorage.getItem("cid"), // Replace with actual company ID
                 employee_id: localStorage.getItem("eid"), // Replace with actual employee ID
                 ticket_id: ticketID,
-                work_started_time: workStartedTime || undefined, // Optional
-                work_ended_time: workEndedTime || undefined, // Optional
-                photos: photos || undefined // Optional
+                work_started_time: workStartedTime || null, // Optional
+                work_ended_time: workEndedTime || null, // Optional
+                // photos: photos || null // Optional
             };
 
             console.log(requestBody);
     
             try {
-                const response = await fetch('https://4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_complted_ticket', {
+                const response = await fetch('https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_complted_ticket', {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(requestBody)
@@ -195,9 +191,19 @@ $(document).ready(function () {
     
                 if (!response.ok) throw new Error(`Error: ${response.status}`);
                 const data = await response.json();
-                console.log("Ticket marked as completed successfully:", data);
-                // Optionally, you can refresh the data or provide feedback to the user
+                if(data.message)
+                {
+                    setTimeout(() => {
+                        loadingIndicator.style.display = 'none';
+                        window.location.href = 'inProcessTicket.html';
+                    }, 1000);
+                }
+                else
+                {
+                    loadingIndicator.style.display = 'none';
+                }
             } catch (error) {
+                loadingIndicator.style.display = 'none';
                 console.error("Failed to mark ticket as completed:", error.message);
             }
         });
@@ -237,47 +243,31 @@ $(document).ready(function () {
 document.addEventListener('click', async function (event) {
     // Check if the clicked element has the class 'save'
     if (event.target.classList.contains('save')) {
+        const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+        loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
         const closestSendElement = event.target.closest('.save');
-        console.log(closestSendElement)
 
         if (closestSendElement) {
            
             const ticketId = closestSendElement.getAttribute('ticket-tocken');
             const Id = closestSendElement.getAttribute('id');
            
-            const workStartedTime = closestSendElement.getAttribute('start-time');
+            const workStartedTime = document.getElementById(`start-time-${Id}`).value;
             const workEndedTime = document.getElementById(`end-time-${Id}`).value;
             const photos = ""; // Assuming you will add photo logic later
 
             const photoInput = document.getElementById(`upload-${Id}`);
             const formData = new FormData();
-            console.log("Start Time:", workStartedTime);
-            console.log("End Time:", workEndedTime);
-    
-            // Append times to FormData
-            formData.append('work_started_time', workStartedTime || ''); // Add a fallback empty string
-            formData.append('work_ended_time', workEndedTime || '');
     
             // Check for photos
             if (photoInput) {
-                console.log("Files selected:", photoInput.files);
                 for (const file of photoInput.files) {
                     formData.append('photos', file); // Adjust 'photos' to the expected field name in your backend
                 }
             } else {
                 console.warn(`No file input found for ID: upload-${Id}`);
             }
-    
-            // Log FormData entries for debugging
-            for (const [key, value] of formData.entries()) {
-                console.log(key, value);
-            }
-            
-
-     
-       
-            console.log("Number of files selected: ", photoInput.files.length);
-        
           
            // Output the ticket ID for debugging
 
@@ -286,7 +276,10 @@ document.addEventListener('click', async function (event) {
                 const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/save/${ticketId}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
+                    body: JSON.stringify({
+                        work_started_time : workStartedTime == "" ? null : workStartedTime,
+                        work_ended_time : workEndedTime == "" ? null : workEndedTime
+                    })
                 });
 
                 // Check for HTTP response errors
@@ -294,9 +287,19 @@ document.addEventListener('click', async function (event) {
                 
                 // Parse the JSON response
                 const data = await response.json();
-                console.log("Ticket status saved:", data);
-                // Handle successful save (e.g., update UI)
+                if(data.message)
+                {
+                    setTimeout(() => {
+                        loadingIndicator.style.display = 'none';
+                        window.location.href = 'inProcessTicket.html';
+                    }, 1000);
+                }
+                else
+                {
+                    loadingIndicator.style.display = 'none';
+                }
             } catch (error) {
+                loadingIndicator.style.display = 'none';
                 console.error("Failed to save ticket status:", error.message);
             }
         } else {
