@@ -67,7 +67,7 @@ function populateProfileData(data) {
     
     document.getElementById('street').value = data.street || '';
     document.getElementById('city').value = data.city || '';
-    document.getElementById('state').value = data.state || '';
+    document.getElementById('Specialization').value = data.specialization || '';
     document.getElementById('zip').value = data.zip || '';
 }
 
@@ -75,7 +75,7 @@ function populateProfileData(data) {
 // Function to save form data to localStorage on submission
 function saveFormDataToLocalStorage() {
     const fields = [
-        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', 'email', 'state', 'zip'
+        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', 'email', 'Specialization', 'zip'
     ];
 
     fields.forEach(field => {
@@ -103,11 +103,13 @@ function handleSubmit(event) {
         last_name: getFieldValue('last_name'),
         street: getFieldValue('street'),
         zip: getFieldValue('zip'),
-        state: getFieldValue('state'),
+        specialization: getFieldValue('Specialization'),
         city: getFieldValue('city'),
         email: getFieldValue('email'),
         phone_number: getFieldValue('phone_number')
     };
+
+    console.log(profileData)
 
     fetch(updateApiUrl, {
         method: 'PUT',
