@@ -65,7 +65,7 @@
                                         <ul class="list-group list-group-flush" id="list-group-flush">
                                             <li class="list-group-item"><a href="Unassigned.html">Unassigned Tickets</a>
                                             </li>
-                                            <li class="list-group-item"><a href="Inprocess.html"
+                                            <li class="list-group-item"><a href="In-Progress.html"
                                                     class=" bg-purple">In-Progress</a></li>
                                             <li class="list-group-item"><a href="invoice.html"
                                                     class=" bg-purple">ReadyForInvoice</a></li>
@@ -238,6 +238,10 @@
 
     <script src="script/employee_ticket.js"></script>
     <script>
+        document.querySelector('.btn-yes').addEventListener('click', function () {
+        localStorage.clear();
+        window.location.href = 'index.html';
+        });
        
     </script>
 

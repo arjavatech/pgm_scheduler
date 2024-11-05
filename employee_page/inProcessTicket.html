@@ -145,15 +145,14 @@
     <div id="nav" class="mb-5">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="col-4">
-                <img src="../images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
+                <img src="../icon/menu icon.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
                     style="width: 20%;">
             </div>
             <div class="col-4 text-center">
-
-                <img src="../images/logo.png" alt="Logo" style="max-width: 100%;">
+                <img src="../images/logo.png" alt="Logo" id="logo" style="max-width: 100%;">
             </div>
             <div class="col-4 text-end">
-                <img src="../icon/bell.png" alt="Profile Icon" id="icon" style="max-width: 100%;">
+                <img src="../icon/bell.png" alt="Profile Icon" id="icon">
             </div>
         </div>
     </div>
@@ -168,7 +167,7 @@
                             <div id="sidebar-header" class="m-3 mb-5">
                                 <img src="../images/logo.png" alt="Sidebar Logo" style="width: 100%;">
                             </div>
-                            <div id="sidebar-content">
+                            <div id="sidebar-content" style="padding-top: 20px;">
                                 <div class="list-group list-group-flush">
                                     <a href="dashboard.html" class="list-group-item list-group-item-action bg-purple">
                                         <img src="../icon/Mask group-2.png"><span>Dashboard</span>
@@ -205,11 +204,11 @@
                     <!-- End Sidebar -->
                     <!-- Main Content -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
-                        <p id="header"
+                        <!-- <p id="header"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
                             Employee <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
                                     style="width: 40px; padding-left: 10px;"></span>
-                        </p>
+                        </p> -->
 
                         <div class="container container-sty">
                             <h1 class="text-center m-3 mt-5 fw-bold" style="color: #004102;">InProgress Tickets</h1>
@@ -271,6 +270,11 @@
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
+        document.querySelector('.btn-yes').addEventListener('click', function () {
+        localStorage.clear();
+        window.location.href = 'index.html';
+        });
+        
         document.getElementById('sidebarToggle').addEventListener('click', function () {
             var sidebar = document.getElementById('left');
             var body = document.body;

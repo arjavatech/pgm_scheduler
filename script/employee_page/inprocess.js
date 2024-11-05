@@ -394,64 +394,27 @@ document.addEventListener('click', async function (event) {
         var tHead = document.querySelector("thead");
         var tHeadCells = document.querySelectorAll("thead th");
         var select = document.querySelector(".employee-select")
-        sidebar.classList.toggle('active');
+        sidebar.classList.toggle('collapsed');
+        content.classList.toggle("container-sty-collapsed")
 
-        if (sidebar.classList.contains('active')) {
-            // Sidebar is open, apply transparency
-            body.classList.add('no-scroll');
-            body.classList.add('body-overlay');
+        tableOddRows.forEach(row => {
+            row.classList.toggle("table-row-collapsed")
+        })
+        tableEvenRows.forEach(row => {
+            row.classList.toggle("table-row-collapsed")
+        })
+        issueType.forEach(row => {
+            row.classList.toggle("table-row-collapsed")
+        })
+        mainContents.forEach(content => {
+            content.classList.toggle("card-collapsed")
+        })
 
-            content.style.backgroundColor = "transparent";
-            mainContents.forEach(function (mainContent) {
-                mainContent.style.backgroundColor = "transparent";
-            });
-            tableOddRows.forEach(function (row) {
-                row.style.cssText = "background-color: transparent !important;"; // Adds !important
-            });
-
-            if (tHead) {
-                tHead.style.cssText = "background-color: transparent !important;";
-            }
-
-            // Apply transparency to each table head cell
-            tHeadCells.forEach(function (cell) {
-                cell.style.cssText = "background-color: transparent !important;";
-            });
-
-            issueType.forEach(function (row) {
-                row.style.cssText = "background-color: transparent !important;"; // Adds !important
-            });
-
-            select.style.backgroundColor = "transparent";
-        } else {
-            // Sidebar is closed, reset colors
-            body.classList.remove('no-scroll');
-            body.classList.remove('body-overlay');
-
-            content.style.backgroundColor = "";
-            mainContents.forEach(function (mainContent) {
-                mainContent.style.backgroundColor = "";
-            });
-
-            tableOddRows.forEach(function (row) {
-                row.style.backgroundColor = ""; // Reset odd row background
-            });
-
-            tableEvenRows.forEach(function (row) {
-                row.style.backgroundColor = ""; // Reset even row background
-            });
-
-            if (tHead) {
-                tHead.style.backgroundColor = ""; // Reset thead background
-            }
-
-            // Reset the background of each table head cell
-            tHeadCells.forEach(function (cell) {
-                cell.style.backgroundColor = ""; // Reset th background
-            });
-            select.disabled = false;
-        }
-    });
+        tHead.classList.toggle("table-head")
+        tHeadCells.forEach(cell => {
+            cell.classList.toggle("table-head")
+        })
+    })
 });
 
 

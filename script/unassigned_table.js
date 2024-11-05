@@ -14,8 +14,9 @@ $(document).ready(function () {
         .then(data => {
             // Populate global employeeOptions for use in both addCard and format
             employeeOptions = data.map(employee =>
-                `<option value="${employee.employee_id}">${employee.employee_name}</option>`
+                `<option value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
             ).join("");
+
         })
         .catch(error => console.error('Error fetching employees:', error));
 
@@ -202,7 +203,6 @@ $(document).ready(function () {
 async function assignedEmployee(cid, employee_id, ticket_id) {
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
-    console.log(employee_id)
     const assignAPI = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/approve_ticket/${cid}/${ticket_id}/${employee_id}`;
     
     try {
@@ -218,7 +218,6 @@ async function assignedEmployee(cid, employee_id, ticket_id) {
             throw new Error(`Error: ${response.status} - ${errorMessage}`);
           
         }
-        
         const data = await response.json();
         console.log("Employee assigned successfully:", data);
         loadingIndicator.style.display = 'none';

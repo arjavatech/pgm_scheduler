@@ -223,6 +223,11 @@
 
     <!-- Notification List Script -->
     <script>
+        document.querySelector('.btn-yes').addEventListener('click', function () {
+        localStorage.clear();
+        window.location.href = 'index.html';
+        });
+        
         const listItems = [
             "Repair Ticket Management: Customers can easily raise repair tickets, specifying details like issue type, severity, and preferred appointment times.",
             "Real-Time Notifications: Customers receive email or text updates about their ticket status, providing transparency throughout the process.",

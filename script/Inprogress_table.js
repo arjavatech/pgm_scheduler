@@ -1,13 +1,23 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
-    console.log(cid)
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`;
-    const employeeAPI = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/getall";
     let rowDetails = [];
-    const employees = [];
+    let employeeOptions = ""; // Declare employeeOptions globally
 
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
+    // Fetch employee data for the select options
+    const employeeUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_based_pending_works_count/ShddWeFGFGkk9b67STTJY4`;
+    fetch(employeeUrl)
+        .then(response => response.json())
+        .then(data => {
+            employeeOptions = data.map(employee =>
+                `<option value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
+            ).join("");
+        })
+        .catch(error => console.error('Error fetching employees:', error));
+
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -50,21 +60,7 @@ $(document).ready(function () {
         $(rowNode).find('td:first').addClass('details-control');
     }
 
-    // Fetch employee names for selection options
-
-    async function fetchEmployeeNames() {
-        try {
-            const response = await fetch(employeeAPI);
-            if (!response.ok) throw new Error(`Error: ${response.status}`);
-            const data = await response.json();
-            data.forEach(employee => {
-                employees.push(employee);
-            });
-        } catch (error) {
-            console.error("Failed to fetch employee names:", error.message);
-        }
-    }
-    fetchEmployeeNames();
+    
 
     function format(rowData) {
         return `
@@ -76,15 +72,10 @@ $(document).ready(function () {
                             <strong>Customer Address</strong>
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
                             <label>Employee Name</label>
-                            <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" disabled>
-                                <option value="${rowData.employee_id}" selected>${rowData.first_name}</option>
-                                ${employees.map(emp => `
-                                    <option value="${emp.id}" ${emp.pending > 5 ? 'disabled' : ''}>
-                                        ${emp.first_name}
-                                    </option>
-                                `).join('')}
+                            <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" id="employee_select-${rowData.ticket_id}" disabled>
+                            ${employeeOptions}
                             </select>
-                            <small>Pending work: <span class="pending-work">${rowData.pending || 'N/A'}</span></small>
+                            <small>Pending work: <span id="pending-work-${rowData.ticket_id}" class="pending-work">N/A</span></small>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
@@ -98,14 +89,13 @@ $(document).ready(function () {
                                          data-bs-target="#imageModel">+3</div>
                                 </div>
                             <button class="btn-yes btn-reassign" id="reassign-${rowData.ticket_id}" onclick="disable(${rowData.ticket_id})">Reassign</button>
-                            <button class="btn-yes btn-reassign" id="conform-${rowData.ticket_id}" style="display:none">Conform</button>
+                            <button class="btn-yes btn-confirm" id="confirm-${rowData.ticket_id}" style="display:none" onclick="handleConfirm('${rowData.employee_id}', ${rowData.ticket_id})">Confirm</button>
                             </div>
                         </div>
                     </div>
                 </td>
             </tr>`;
     }
-
 
     // Toggle arrow
     $(document).on('click', 'td.details-control', function () {
@@ -116,6 +106,7 @@ $(document).ready(function () {
     $('#ticketTable tbody').on('click', 'td.details-control', function () {
         const tr = $(this).closest('tr');
         const row = table.row(tr);
+        
         const ticket_id = tr.find('td:nth-child(2)').text();
         const details = rowDetails.find(detail => detail.ticket_id == ticket_id);
 
@@ -128,34 +119,12 @@ $(document).ready(function () {
         }
     });
 
-    // Handle the reassign button click
-    $('#ticketTable tbody').on('click', '.btn-reassign', async function () {
-        const detailsRow = $(this).closest('.details-row');
-        const ticketID = detailsRow.closest('tr').prev().find('#ticketId').text();
-        const newEmployeeID = detailsRow.find('.employee-select').val();
-        const oldEmployeeID = detailsRow.closest('tr').prev().find('.assigned-employee').data('old-emp');
+    // Helper function to get pending work count for an employee
+function getPendingWorkCount(employeeId) {
+    const employee = data.find(emp => emp.employee_id === employeeId);
+    return employee ? employee.pending : 'N/A';
+}
 
-        const requestBody = {
-            ticket_id: ticketID,
-            assigned_employee: newEmployeeID,
-            old_employee: oldEmployeeID
-        };
-
-        try {
-            const response = await fetch(`/employee/update/{employee_id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestBody)
-            });
-
-            if (!response.ok) throw new Error(`Error: ${response.status}`);
-            const data = await response.json();
-            console.log("Employee assigned successfully:", data);
-            detailsRow.find('.assigned-employee').text(newEmployeeID);
-        } catch (error) {
-            console.error("Failed to reassign employee:", error.message);
-        }
-    });
 
     // card part
     // Function to create and append the card for mobile view
@@ -190,13 +159,8 @@ $(document).ready(function () {
                 <p class="text-center mb-2 showMoreButton">show more ⮟</p>     
                 <div class="show-more" style="display:none">
                     <p><strong>Employee Name:</strong>
-                        <select class="form-select mt-2 employee-select employee-select-${employee.ticket_id}" disabled>
-                        <option value="${employee.employee_id}" selected>${employee.first_name}</option>
-                        ${employees.map(emp => `
-                            <option value="${emp.id}" ${emp.pending > 5 ? 'disabled' : ''}>
-                                ${emp.first_name}
-                            </option>
-                        `).join('')}
+                        <select class="form-select mt-2 employee-select employee-select-${employee.ticket_id}" id="employee_select-${employee.ticket_id}" disabled>
+                        ${employeeOptions}
                     </select>
                     </p>
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
@@ -211,7 +175,7 @@ $(document).ready(function () {
                         </div>
                     </div>
                     <button class="btn-yes mt-4" id="reassign-${employee.ticket_id}" onclick="disable2(${employee.ticket_id})" style="width:100%">Reassign</button>
-                    <button class="btn-yes btn-reassign mt-4" id="conform-${employee.ticket_id}" style="display:none;width:100%">Confirm</button>
+                    <button class="btn-yes btn-reassign mt-4" id="confirm-${employee.ticket_id}" style="display:none;width:100%" onclick="handleConfirm('${employee.employee_id}', ${employee.ticket_id})">Confirm</button>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
                 </div>
             </div>
@@ -311,11 +275,59 @@ $(document).ready(function () {
 function disable(ticket_id) {
     document.getElementById(`reassign-${ticket_id}`).style.display = "none";
     document.querySelector(`.employee-select-${ticket_id}`).disabled = false;
-    document.getElementById(`conform-${ticket_id}`).style.display = "block";
+    document.getElementById(`confirm-${ticket_id}`).style.display = "block";
 }
 
 function disable2(ticket_id) {
     document.getElementById(`reassign-${ticket_id}`).style.display = "none";
     document.querySelector(`.employee-select-${ticket_id}`).disabled = false;
-    document.getElementById(`conform-${ticket_id}`).style.display = "block";
+    document.getElementById(`confirm-${ticket_id}`).style.display = "block";
+}
+
+async function handleConfirm(old_eid, ticketId) {
+    const cid = localStorage.getItem("cid");
+    const selectElement = document.getElementById(`employee_select-${ticketId}`);
+    const selectedValue = selectElement.value;
+    const requestBody = {
+        company_id: cid,
+        ticket_id: ticketId,
+        new_employee_id: selectedValue,
+        old_employee_id: old_eid
+    };
+
+    if(selectedValue != old_eid)
+    {
+        const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
+    const assignAPI = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/reassign_ticket`;
+    
+    try {
+        const response = await fetch(assignAPI, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            loadingIndicator.style.display = 'none';
+            const errorMessage = await response.text();
+            throw new Error(`Error: ${response.status} - ${errorMessage}`);
+          
+        }
+        
+        const data = await response.json();
+
+        setTimeout(() => {
+            loadingIndicator.style.display = 'none';
+            window.location.href = 'In-Progress.html';
+        }, 1000);
+
+    } catch (error) {
+        console.error("Failed to assign employee:", error.message);
+        loadingIndicator.style.display = 'none';
+    }
+    }
+
 }
