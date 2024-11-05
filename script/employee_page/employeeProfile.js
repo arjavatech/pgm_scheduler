@@ -32,8 +32,6 @@ const eid = localStorage.getItem("eid");
         }
         profileData = await response.json(); // Store data in the global variable
 
-        console.log(profileData)
-
         // Process and populate the response data
         populateProfileData(profileData);
 
@@ -90,12 +88,13 @@ function getFieldValue(id) {
 
 // Handle form submission
 function handleSubmit(event) {
-    console.log("Button clicked");
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
     const cid = localStorage.getItem("cid");
     const eid = localStorage.getItem("eid");
 
     const updateApiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/update/${eid}`;
-    console.log(updateApiUrl);
+
 
     const profileData = {
         company_id: cid,
@@ -109,8 +108,6 @@ function handleSubmit(event) {
         phone_number: getFieldValue('phone_number')
     };
 
-    console.log(profileData)
-
     fetch(updateApiUrl, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json'},
@@ -121,8 +118,7 @@ function handleSubmit(event) {
         if (!response.ok) throw new Error(`Error: ${response.status}`);
         return response.json();
     })
-    .then(data => console.log(data))
-    .catch(error => console.error('Fetch error:', error));
+    .catch(error => document.getElementById('l').style.display = 'none');
 }
 
 // When I click Logo go to home page 
