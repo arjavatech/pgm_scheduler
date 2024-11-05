@@ -18,6 +18,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/image.css">
     <!-- Custom CSS -->
     <style>
         /* Loading Overlay Style */
@@ -176,6 +177,7 @@
     <div class="loading" id="l">
         <div class="spinner"></div>
     </div>
+    
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content custom-modal-content">
@@ -183,15 +185,17 @@
                     Are you sure you want to log out?
                 </div>
                 <div class="modal-footer custom-modal-footer">
-                    <button type="button" class="btn-yes ">Yes</button>
+                    <button type="button" class="btn-yes">Yes</button>
                     <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
         document.querySelector('.btn-yes').addEventListener('click', function () {
-            window.location.href = 'index.html';
+        localStorage.clear();
+        window.location.href = 'index.html';
         });
     </script>
     <script>
@@ -204,32 +208,16 @@
             mainContent.classList.add('blur-background');
             const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
             loadingIndicator.style.display = 'flex'; // Show loading before fetch
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    loadingIndicator.style.display = 'none';
-                    data.forEach(ticket => {
-                        rowDetails.push(ticket);
-                        addTicket(ticket);
-                        addCard(ticket, index); // Pass index for unique IDs
-                        index++;
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching tickets:', error);
-                    loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
-                });
 
             // Gather input values
             const data = {
-                company_name: document.getElementById('companyName').value,
+                company_name: capitalizeWords(document.getElementById('companyName').value),
                 phone_number: document.getElementById('phone').value.toString(),
-                first_name: document.getElementById('firstName').value,
-                last_name: document.getElementById('lastName').value,
-                email: document.getElementById('email').value
+                first_name: capitalizeWords(document.getElementById('firstName').value),
+                last_name: capitalizeWords(document.getElementById('lastName').value),
+                email: document.getElementById('email').value.toLowerCase()
             };
 
-            console.log(data);
 
             fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev//company_register/create", {
                 method: 'POST',
@@ -278,6 +266,11 @@
             var sidebar = document.getElementById('left');
             sidebar.classList.toggle('active');
         });
+
+        function capitalizeWords(sentence) {
+            return sentence.replace(/\b\w/g, (char) => char.toUpperCase());
+        }
+
     </script>
 
     <!-- Bootstrap Bundle with Popper -->

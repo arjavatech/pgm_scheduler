@@ -174,9 +174,11 @@
                   <a href="company.html" class="list-group-item list-group-item-action bg-purple"><img
                       src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
                       style="padding-left: 10px;color: white;">Companies</span></a>
-                  <div style="position: fixed; bottom: 0; display: inline-flex;" class="m-3">
-                    <img src="icon/Vector.png" id="icon">
-                    <span class="content text-white list-group-item">Logout</span>
+                      <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
+                      class="m-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                      <img src="icon/Vector.png" id="icon">
+                      <span class="content text-white list-group-item" data-bs-toggle="modal"
+                          data-bs-target="#logoutModal">Logout</span>
                   </div>
                 </div>
               </div>
@@ -275,19 +277,21 @@
     </div>
   </div>
 
+  
   <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content custom-modal-content">
-        <div class="modal-body custom-modal-body">
-          Are you sure you want to log out?
+        <div class="modal-content custom-modal-content">
+            <div class="modal-body custom-modal-body">
+                Are you sure you want to log out?
+            </div>
+            <div class="modal-footer custom-modal-footer">
+                <button type="button" class="btn-yes ">Yes</button>
+                <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+            </div>
         </div>
-        <div class="modal-footer custom-modal-footer">
-          <button type="button" class="btn-yes ">Yes</button>
-          <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
   <script>
     document.querySelector('.btn-yes').addEventListener('click', function () {
       window.location.href = 'index.html';

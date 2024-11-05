@@ -278,6 +278,11 @@
     </div> -->
     <script>
 
+document.querySelector('.btn-yes').addEventListener('click', function () {
+        localStorage.clear();
+        window.location.href = 'index.html';
+        });
+
         document.getElementById('sidebarToggle').addEventListener('click', function () {
             var sidebar = document.getElementById('left');
             var body = document.body;
