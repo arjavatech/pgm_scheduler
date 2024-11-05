@@ -45,17 +45,8 @@ const eid = localStorage.getItem("eid");
 
 // Function to populate profile data into the form fields
 function populateProfileData(data) {
-    // const comLoDataUrl = data.CLogo; // Assume this is the logo URL
-    // const image = document.getElementById("logo-img");
+    
 
-    // if (comLoDataUrl.startsWith('data:image/')) {
-    //     image.src = comLoDataUrl; // Set the image source to the data URL
-    //     localStorage.setItem("imageFile", comLoDataUrl); // Save logo to localStorage
-    // } else {
-      
-    // }
-
-    // Set other form fields with data
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
     document.getElementById('last_name').value = data.last_name || '';
@@ -67,13 +58,24 @@ function populateProfileData(data) {
     document.getElementById('city').value = data.city || '';
     document.getElementById('Specialization').value = data.specialization || '';
     document.getElementById('zip').value = data.zip || '';
+
+    document.getElementById('areas_covered').value = data.areas_covered || '';
+
+    document.getElementById('assigned_locations').value = data.assigned_locations || '';
+    document.getElementById('employee_status').value = data.employee_status || '';
+    
+    document.getElementById('skills').value = data.skills || '';
+    document.getElementById('qualification').value = data.qualification || '';
+    document.getElementById('experience').value = data.experience || '';
+    document.getElementById('available').value = data.available || '';
+
 }
 
 
 // Function to save form data to localStorage on submission
 function saveFormDataToLocalStorage() {
     const fields = [
-        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', 'email', 'Specialization', 'zip'
+        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', 'email', 'Specialization', 'zip', 'experience', 'available', 'qualification', 'skills', 'employee_status', 'assigned_locations', 'areas_covered'
     ];
 
     fields.forEach(field => {
@@ -105,7 +107,14 @@ function handleSubmit(event) {
         specialization: getFieldValue('Specialization'),
         city: getFieldValue('city'),
         email: getFieldValue('email'),
-        phone_number: getFieldValue('phone_number')
+        phone_number: getFieldValue('phone_number'),
+        areas_covered: getFieldValue('areas_covered'),
+        assigned_locations: getFieldValue('assigned_locations'),
+        employee_status: getFieldValue('employee_status'),
+        skills: getFieldValue('skills'),
+        qualification: getFieldValue('qualification'),
+        experience: getFieldValue('experience'),
+        available: getFieldValue('available')
     };
 
     fetch(updateApiUrl, {
