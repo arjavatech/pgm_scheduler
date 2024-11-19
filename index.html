@@ -180,7 +180,7 @@
 
             fetch(apiUrl)
                 .then(response => {
-                    document.getElementById('l').style.display = 'none';
+                   
                     if (!response.ok) {
                         showPopupModal("User ID not found");
                     }
@@ -188,7 +188,7 @@
                 })
                 .then(data => {
                     if (data.isSuperAdmin) {
-                        companyIDget(userDetails.email);
+                       
                         setTimeout(() => {
                             window.location.href = 'company.html';
                         }, 1000);
@@ -200,6 +200,7 @@
                     } else if (data.isEmployee) {
                         companyIDget(userDetails.email);
                         setTimeout(() => {
+                            localStorage.setItem("userId",userDetails.email);
                             window.location.href = 'employee_page/inProcessTicket.html';
                         }, 1000);
                     }
@@ -213,7 +214,9 @@
         // Fetch and store company ID
         function companyIDget(user_id) {
             const mainContent = document.getElementById('mainContent');
+          
             fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/get/${user_id}`)
+
                 .then(response => {
                     document.getElementById('l').style.display = 'none';
                     if (!response.ok) {
@@ -222,6 +225,8 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log(data)
+              
                     localStorage.setItem("cid", data.company_id);
                 })
                 .catch(error => {
@@ -266,7 +271,7 @@
 
             fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/get/${username}`)
                 .then(response => {
-                    document.getElementById('l').style.display = 'none';
+                  
                     if (!response.ok) {
                         showPopupModal("User ID not found");
                     }

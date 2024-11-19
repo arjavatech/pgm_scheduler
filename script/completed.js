@@ -1,12 +1,41 @@
 
 $(document).ready(function () {
     let cid = localStorage.getItem("cid");
+    let user_id=localStorage.getItem('userId');
     console.log(cid)
+    const apiu=`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/get/${user_id}`
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/completed/${cid}`;
     let rowDetails = [];
 
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
+
+
+    fetch(apiu)
+    .then(response => {
+        response.json()
+        console.log(response)
+    }
+       )
+    .then(data => {
+        
+        loadingIndicator.style.display = 'none';
+       
+    })
+    .catch(error => {
+        console.error('Error fetching tickets:', error);
+        loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
+    });
+
+
+
+
+
+
+
+
+
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {

@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    const apiUrl = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/getall";
+    let cid = localStorage.getItem("cid");
+    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/${cid}`;
     let rowDetails = [];
     let index = 1;
 

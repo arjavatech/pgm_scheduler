@@ -12,9 +12,12 @@ $(document).ready(function () {
     fetch(employeeUrl)
         .then(response => response.json())
         .then(data => {
+            // Populate global employeeOptions for use in both addCard and format
             employeeOptions = data.map(employee =>
-                `<option value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
+                
+                `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
             ).join("");
+
         })
         .catch(error => console.error('Error fetching employees:', error));
 
@@ -72,10 +75,11 @@ $(document).ready(function () {
                             <strong>Customer Address</strong>
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
                             <label>Employee Name</label>
-                            <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" id="employee_select-${rowData.ticket_id}" disabled>
+                            <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" id="employee-select-${rowData.ticket_id}" disabled>
+                            <option>${rowData.first_name}</option>
                             ${employeeOptions}
                             </select>
-                            <small>Pending work: <span id="pending-work-${rowData.ticket_id}" class="pending-work">N/A</span></small>
+                             <small id="pending-count-${rowData.ticket_id}">Pending work: </small>
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
@@ -96,10 +100,19 @@ $(document).ready(function () {
                 </td>
             </tr>`;
     }
-
+    
     // Toggle arrow
     $(document).on('click', 'td.details-control', function () {
         $(this).toggleClass('active');
+    });
+
+
+    $(document).on('change', '.employee-select', function () {
+        const selectedOption = $(this).find(':selected');
+        const pendingWork = selectedOption.attr('pending');
+        const ticketId = $(this).attr('id').split('-')[2];
+        console.log(ticketId) // Extract ticket ID from select element ID
+        $(`#pending-count-${ticketId}`).text(`Pending work: ${pendingWork || 'N/A'}`);
     });
 
     // Expand row details on click

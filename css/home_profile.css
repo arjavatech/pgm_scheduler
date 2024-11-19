@@ -62,9 +62,7 @@
 .material-textfield {
     position: relative;
     margin-bottom: 1.5rem;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 90%;
 }
 
 .material-textfield input,
@@ -228,7 +226,7 @@
     .material-textfield {
         position: relative;
         margin-bottom: 1.5rem;
-        width: 120%;
+        width: 120% !important;
         margin-left: -15% !important;
         margin-right: auto;
     }
@@ -246,7 +244,9 @@
     #sidebarToggle{
         width: 25% !important;
     }
-
+    .box-sty{
+        padding: 40px;
+    }
 }
 
 @media(max-width:320px) {
@@ -275,5 +275,9 @@
 
     #sidebarToggle{
         width: 30% !important;
+    }
+
+    .box-sty{
+        padding: 0px;
     }
 }

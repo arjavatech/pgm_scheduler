@@ -23,8 +23,17 @@ body {
 
 /* Container for the form */
 .container-sty {
+
+       
+        display: flex;
+        flex-direction: column; /* Side by side layout */
+        justify-content: space-between; /* Spread out form and image */
+        align-items: center; /* Vertically center items */
+        margin: 0 auto; /* Center the container horizontally */
+
     background-color: white;
     border-radius: 10px;
+  height: auto !important;
     width: 70%;
     padding: 3%;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);

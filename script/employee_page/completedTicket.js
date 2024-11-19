@@ -1,11 +1,11 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
     const eid = localStorage.getItem("eid");
+    console.log(cid)
+    console.log(eid)
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/completed_tickets/${cid}/${eid}`;
     let rowDetails = [];
-    const employees = [];
-    
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
@@ -52,31 +52,48 @@ $(document).ready(function () {
 
 
     function format(rowData) {
+        const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
+        const workEndedTime = new Date(rowData.work_ended_time).toISOString().split('T')[0];
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
                     <div class="row">
-                    <div class="col-md-1"></div>
-                        <div class="col-md-4">
-                            <strong>Customer Address</strong>
-                            <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
-                            <strong>Work started time :</strong>
-                            <p>${rowData.work_started_time}</p>
-                            <strong>Work ended time :</strong>
-                            <p>${rowData.work_ended_time}</p>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4" >
+                            <strong class="d-flex justify-content-left">Customer Address</strong>
+                            <p class="pt-2" style="font-size: 13px; text-align: left;">
+                                ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
+                            </p>
+                            
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="start-time">Work started time:</label>
+                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                    id="start-time-${rowData.ticket_id}" 
+                                    value="${workStartedTime}">
+                            </div>
+
+
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="end-time">Work ended time :</label>
+                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                    id="start-time-${rowData.ticket_id}" 
+                                    value="${workEndedTime}">                                
+                            </div>                             
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <strong>Description:</strong>
-                            <p>${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
-                                <img src="../../images/profile img.png" alt="Image 1" width="100px">
+                            <p class="description">${rowData.description}</p>
+                            <div class="../image-gallery d-flex justify-content-center">
+                                <img src="../images/profile img.png" alt="Image 1" width="100px">
                                 <div class="image-container d-inline justify-content-center">
-                                    <img src="../../images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay" data-bs-toggle="modal"
-                                         data-bs-target="#imageModel">+3</div>
+                                    <img src="../images/profile img.png" alt="Image 1" width="100px">
+                                    <div class="overlay"  data-bs-toggle="modal"
+                                            data-bs-target="#imageModel">+3</div>
+                                            
                                 </div>
-                             </div>
+                                <h5 class="pt-4" style="padding-left:20px">$100</h5>
+                            </div>
                         </div>
                     </div>
                 </td>

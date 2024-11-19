@@ -14,7 +14,7 @@ $(document).ready(function () {
         .then(data => {
             // Populate global employeeOptions for use in both addCard and format
             employeeOptions = data.map(employee =>
-                `<option value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
+                `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
             ).join("");
 
         })
@@ -73,7 +73,7 @@ $(document).ready(function () {
             div.appendChild(text);
             return div.innerHTML;
         }
-    
+   
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -84,9 +84,10 @@ $(document).ready(function () {
                             <p>${escapeHTML(rowData.street || 'No address available')}, ${escapeHTML(rowData.city || 'N/A')}, ${escapeHTML(rowData.zip || 'N/A')}, ${escapeHTML(rowData.state || 'N/A')}</p>
                             <label class="mt-3 d-flex justify-content-left"><strong>Employee Name</strong></label>
                             <select class="form-select employee-select mt-2" id="employee-select-${rowData.ticket_id}">
+                            <option value="" disabled selected>Select</option>
                                 ${employeeOptions}
                             </select>
-                            <small>Pending work: ${rowData.employees?.[0]?.pending || 'N/A'}</small>
+                             <small id="pending-count-${rowData.ticket_id}">Pending work: N/A</small>
                         </div>
                         <div class="col-md-6">
                             <strong>Description:</strong>
@@ -127,7 +128,12 @@ $(document).ready(function () {
     });
 
 
-
+    $(document).on('change', '.employee-select', function () {
+        const selectedOption = $(this).find(':selected');
+        const pendingWork = selectedOption.attr('pending');
+        const ticketId = $(this).attr('id').split('-')[2]; // Extract ticket ID from select element ID
+        $(`#pending-count-${ticketId}`).text(`Pending work: ${pendingWork || 'N/A'}`);
+    });
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
