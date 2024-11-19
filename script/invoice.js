@@ -101,7 +101,9 @@ $(document).ready(function () {
                                     <div class="overlay"  data-bs-toggle="modal"
                                             data-bs-target="#imageModel">+3</div>
                                 </div>
-                                 <button class="btn-yes btn-reassign">Generate Invoice</button>
+                                <button type="button" class="btn-yes btn-reassign" data-bs-toggle="modal" data-bs-target="#InvoiceModal">
+                                    Generate Invoice
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -246,7 +248,7 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         input.forEach(function (row) {
             row.disabled = true;
         });
-        
+
 
     } else {
         // Sidebar is closed, reset colors

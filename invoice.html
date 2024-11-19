@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/home_profile.css">
     <link rel="stylesheet" href="css/image.css">
 </head>
 
@@ -57,7 +58,7 @@
                                         <span style="padding-left: 10px;color: white;">Ticket</span>
                                     </a>
 
-                                   <div id="ticketSubmenu" class="collapse">
+                                    <div id="ticketSubmenu" class="collapse">
                                         <ul class="list-group list-group-flush" id="list-group-flush">
                                             <li class="list-group-item"><a href="Unassigned.html">Unassigned Tickets</a>
                                             </li>
@@ -142,35 +143,80 @@
                 </div>
             </div>
         </div>
-  <!-- Modal -->
-  <div class="modal fade" id="imageModel" tabindex="-1" aria-labelledby="imageModelLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal-content">
-            <div class="modal-body custom-modal-body">
-                The images are
-            </div>
-            <div class="modal-footer custom-modal-footer">
-                <img src="images/profile img.png" alt="Image 1" width="100px">
-                <img src="images/profile img.png"
-                    alt="Image 1" width="100px">
-            </div>
-            <div class="modal-footer custom-modal-footer">
-                <img src="images/profile img.png" alt="Image 1" width="100px">
-                <img src="images/profile img.png"
-                    alt="Image 1" width="100px">
+        <!-- Modal -->
+        <div class="modal fade" id="imageModel" tabindex="-1" aria-labelledby="imageModelLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-body custom-modal-body">
+                        The images are
+                    </div>
+                    <div class="modal-footer custom-modal-footer">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                    </div>
+                    <div class="modal-footer custom-modal-footer">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
         <div class="loading" id="l">
             <div class="spinner"></div>
         </div>
+        <div class="modal fade" id="InvoiceMsdodal" tabindex="-1" aria-labelledby="InvoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="InvoiceModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="material-textfield mb-4">
+                            <input placeholder=" " type="text" class="input-sty">
+                            <label class="label-sty">Discription</label>
+                        </div>
+                        <div class="material-textfield mb-4">
+                            <input placeholder=" " type="text" class="input-sty">
+                            <label class="label-sty">Last name</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn-green">Pay</button>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="InvoiceModal" tabindex="-1" aria-labelledby="InvoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="InvoiceModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body custom-modal-body">
+                        <div class="material-textfield mb-4">
+                            <input placeholder=" " type="text" class="input-sty">
+                            <label class="label-sty">Discription</label>
+                        </div>
+                        <div class="material-textfield mb-4">
+                            <input placeholder=" " type="text" class="input-sty">
+                            <label class="label-sty">Amount</label>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn-green">Pay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script>
             document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = 'index.html';
-        });
+                localStorage.clear();
+                window.location.href = 'index.html';
+            });
 
         </script>
 
@@ -184,7 +230,7 @@
         <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
-        <script src="script/completed.js"></script>
+        <script src="script/invoice.js"></script>
 </body>
 
 </html>

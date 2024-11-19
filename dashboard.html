@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/image.css">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -58,7 +57,7 @@
                                         <span style="padding-left: 10px;color: white;">Ticket</span>
                                     </a>
 
-                                   <div id="ticketSubmenu" class="collapse">
+                                    <div id="ticketSubmenu" class="collapse">
                                         <ul class="list-group list-group-flush" id="list-group-flush">
                                             <li class="list-group-item"><a href="Unassigned.html">Unassigned Tickets</a>
                                             </li>
@@ -80,8 +79,8 @@
                                         class="list-group-item list-group-item-action bg-purple"><img
                                             src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Profile</span></a>
-                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;" data-bs-toggle="modal"
-                                    data-bs-target="#logoutModal" class="m-3">
+                                    <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
+                                        data-bs-toggle="modal" data-bs-target="#logoutModal" class="m-3">
                                         <img src="icon/Vector.png" id="icon">
                                         <span class="content text-white list-group-item">Logout</span>
                                     </div>
@@ -103,7 +102,7 @@
                             <div class="row text-center">
                                 <div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
                                     <div class="box gradient-blue ticketcount">
-                                        <h3 id="todal-ticket" ></h3>
+                                        <h3 id="todal-ticket"></h3>
                                         <p>Total Tickets</p>
                                     </div>
                                 </div>
@@ -125,7 +124,8 @@
                                         <p>Completed Tickets</p>
                                     </div>
                                 </div>
-                            </div>
+                                          
+                            </div>
 
                         </div>
 
@@ -220,12 +220,15 @@
             </div>
         </div>
     </div>
-
+    <div class="loading" id="l">
+        <div class="spinner"></div>
+    </div>
     <script src="script/dashboard.js"></script>
+
     <script>
         document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = 'index.html';
+            localStorage.clear();
+            window.location.href = 'index.html';
         });
     </script>
 

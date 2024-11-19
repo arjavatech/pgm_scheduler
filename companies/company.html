@@ -11,10 +11,10 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="css/nav.css">
-  <link rel="stylesheet" href="css/table.css" />
-  <link rel="stylesheet" href="css/image.css">
-  <link rel="stylesheet" href="css/company.css" />
+  <link rel="stylesheet" href="../css/nav.css">
+  <link rel="stylesheet" href="../css/table.css" />
+  <link rel="stylesheet" href="../css/image.css">
+  <link rel="stylesheet" href="../css/company.css" />
 
 
   <style>
@@ -40,7 +40,7 @@
 
       border: 1px solid #888;
       width: 500px;
-      height: 250px;
+      /* height: 250px; */
       text-align: center;
       border-radius: 10px;
     }
@@ -139,14 +139,14 @@
   <div id="nav" class="mb-5">
     <div class="container d-flex justify-content-between align-items-center">
       <div class="col-4">
-        <img src="images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
+        <img src="../images/icons8-menu-bar-64.png" alt="" class="sidebar-toggle img-fluid" id="sidebarToggle"
           style="width: 20%;">
       </div>
       <div class="col-4 text-center">
-        <img src="images/logo.png" alt="Logo" id="logo" style="max-width: 100%;">
+        <img src="../images/logo.png" alt="Logo" id="logo" style="max-width: 100%;">
       </div>
       <div class="col-4 text-end">
-        <img src="icon/Mask group.png" alt="Profile Icon" style="max-width: 100%;">
+        <img src="../icon/bell.png" alt="Profile Icon" id="icon" style="max-width: 100%;">
       </div>
     </div>
   </div>
@@ -160,25 +160,25 @@
             <!-- Sidebar -->
             <div id="sidebar">
               <div id="sidebar-header" class="m-3 mb-5">
-                <img src="images/logo.png" alt="Sidebar Logo" style="max-width: 100%;">
+                <img src="../images/logo.png" alt="Sidebar Logo" style="max-width: 100%;">
               </div>
               <div id="sidebar-content">
                 <div class="list-group list-group-flush">
-                  <a href="#" class="list-group-item list-group-item-action bg-purple"><img src="icon/Mask group-2.png"
-                      style="width: 25px;margin-top: -5px;"><span
+                  <a href="dashboard.html" class="list-group-item list-group-item-action bg-purple"><img
+                      src="../icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span
                       style="padding-left: 10px;color: white;">Dashboard</span></a>
 
                   <a href="register.html" class="list-group-item list-group-item-action bg-purple"><img
-                      src="icon/Mask group.png" style="width: 30px;margin-top: -5px;"><span
+                      src="../icon/Mask group.png" style="width: 30px;margin-top: -5px;"><span
                       style="padding-left: 10px;color: white;">Register</span></a>
                   <a href="company.html" class="list-group-item list-group-item-action bg-purple"><img
-                      src="icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
+                      src="../icon/Mask group-1.png" style="width: 30px;margin-top: -5px;"><span
                       style="padding-left: 10px;color: white;">Companies</span></a>
-                      <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
-                      class="m-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                      <img src="icon/Vector.png" id="icon">
-                      <span class="content text-white list-group-item" data-bs-toggle="modal"
-                          data-bs-target="#logoutModal">Logout</span>
+                  <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;" class="m-3"
+                    data-bs-toggle="modal" data-bs-target="#logoutModal">
+                    <img src="../icon/Vector.png" id="icon">
+                    <span class="content text-white list-group-item" data-bs-toggle="modal"
+                      data-bs-target="#logoutModal">Logout</span>
                   </div>
                 </div>
               </div>
@@ -277,20 +277,20 @@
     </div>
   </div>
 
-  
+
   <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal-content">
-            <div class="modal-body custom-modal-body">
-                Are you sure you want to log out?
-            </div>
-            <div class="modal-footer custom-modal-footer">
-                <button type="button" class="btn-yes ">Yes</button>
-                <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
-            </div>
+      <div class="modal-content custom-modal-content">
+        <div class="modal-body custom-modal-body">
+          Are you sure you want to log out?
         </div>
+        <div class="modal-footer custom-modal-footer">
+          <button type="button" class="btn-yes ">Yes</button>
+          <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
   <script>
     document.querySelector('.btn-yes').addEventListener('click', function () {

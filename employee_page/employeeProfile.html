@@ -96,6 +96,137 @@
         color: white;
         opacity: 0.8;
     }
+
+    .w {
+        width: 91% !important;
+        margin-right: 12%;
+    }
+
+    /* Styling for the input box */
+    .multi-select-container {
+        position: relative;
+
+    }
+
+    .multi-select-input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid green;
+        border-radius: 10px;
+        color: black;
+        cursor: pointer;
+    }
+
+    /* Styling for the dropdown list */
+    .multi-select-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 15% !important;
+        width: 78%;
+        border: 1px solid #ddd;
+        background-color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        max-height: 150px;
+        overflow-y: auto;
+        border-radius: 5px;
+    }
+
+    /* Styling each option */
+    .multi-select-option {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+        color: green;
+    }
+
+    .multi-select-option:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Hide default checkbox styling */
+    .multi-select-option input[type="checkbox"] {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .multi-select-dropdown1 {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 15% !important;
+        width: 78%;
+        border: 1px solid #ddd;
+        background-color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        max-height: 150px;
+        overflow-y: auto;
+        border-radius: 5px;
+    }
+
+    .multi-select-option1 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+        color: green;
+    }
+
+    .multi-select-option1:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Hide default checkbox styling */
+    .multi-select-option1 input[type="checkbox"] {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+
+    .multi-select-dropdown3 {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 15% !important;
+        width: 78%;
+        border: 1px solid #ddd;
+        background-color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        max-height: 150px;
+        overflow-y: auto;
+        border-radius: 5px;
+    }
+
+    .multi-select-option3 {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+        color: green;
+    }
+
+    .multi-select-option3:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Hide default checkbox styling */
+    .multi-select-option3 input[type="checkbox"] {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    @media (max-width:577px) {
+        .w {
+            width: 120% !important;
+        }
+    }
 </style>
 
 <body>
@@ -160,26 +291,15 @@
 
                     <!-- Right Column: Profile Form -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
-                        <!-- <p id="header"
-                            style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5);margin-left: -12px;padding: 20px;margin-right: -12px;font-weight: bold;">
-                            Employee <span class="span" style="float: inline-end;">XYZ Company <img
-                                    src="icon/Mask group (2).png" alt="" style="width: 40px;padding-left: 10px;"></span>
-                        </p> -->
-
-
                         <h3 class="text-center fw-bold  mt-4" id="header">Profile</h3>
-                        <!-- <div class="overlay" id="overlay">
-                            <div class="spinner"></div>
-                        </div> -->
+
                         <div class="logo-sty">
                             <label for="uploadLogo" class="upload-label d-flex justify-content-center">
-
                                 <img id="logoPreview" alt="Upload Profile" style="max-width: 100%; height: auto;">
-                                <input type="file" id="uploadLogo" accept="image/*">
+                                <input type="file" id="uploadLogo" accept="image/*" style="display: none;">
                                 <!-- Pencil icon -->
                                 <span class="icon-pencil"><i style="cursor: pointer;"
                                         class="fas fa-pencil-alt"></i></span>
-
                             </label>
                         </div>
 
@@ -229,8 +349,8 @@
 
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input type="text" id="assigned_locations" name="assigned_locations" placeholder=" "
-                                                class="input-sty">
+                                            <input type="text" id="assigned_locations" name="assigned_locations"
+                                                placeholder=" " class="input-sty">
                                             <label>Assigned Locations</label>
                                         </div>
                                     </div>
@@ -252,26 +372,61 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                        <div class="material-textfield mb-4">
-                                            <input id="skills" placeholder=" " type="text" class="input-sty">
-                                            <label class="label-sty">Skills</label>
-                                        </div>
-                                </div>
 
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="employee_status" placeholder=" " type="text" class="input-sty">
-                                            <label class="label-sty">Status</label>
+                                            <input id="skills" placeholder=" " type="text" class="input-sty">
+                                            <label class="label-sty">skills</label>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input type="text" id="available" name="experience" placeholder=" "
+                                            <input type="text" id="driving" name="driving" placeholder=" "
                                                 class="input-sty">
-                                            <label>Available?</label>
+                                            <label>Driving License</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="multi-select-container">
+                                            <div class="material-textfield">
+                                                <input type="text" id="status" name="status" placeholder=" " class="multi-select-input input-sty" readonly>
+                                                <label>Status</label>
+                                            </div>
+                                            <div class="multi-select-dropdown">
+                                                <label class="multi-select-option">
+                                                    <input type="checkbox" value="Active" />
+                                                    Active
+                                                </label>
+                                                <label class="multi-select-option">
+                                                    <input type="checkbox" value="InActive" />
+                                                    InActive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-sm-6">
+                                        <div class="multi-select-container">
+                                            <div class="material-textfield">
+                                                <input type="text" id="availability" name="availability" placeholder=" " class="multi-select-input1 input-sty" readonly>
+                                                <label>Available?</label>
+                                            </div>
+                                            <div class="multi-select-dropdown1">
+                                                <label class="multi-select-option">
+                                                    <input type="checkbox" value="Active" />
+                                                    Active
+                                                </label>
+                                                <label class="multi-select-option">
+                                                    <input type="checkbox" value="InActive" />
+                                                    InActive
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -285,18 +440,28 @@
                                     </div>
 
                                     <div class="col-sm-6">
-                                        <div class="material-textfield">
-                                            <input type="text" id="Specialization" name="Specialization" placeholder=" "
-                                                class="input-sty">
-                                            <label>Specialization</label>
+                                        <div class="multi-select-container">
+                                            <div class="material-textfield">
+                                                <input type="text" id="Specialization" name="experience" placeholder=" " class="multi-select-input3 input-sty" readonly>
+                                                <label>Specialization</label>
+                                            </div>
+                                            <div class="multi-select-dropdown3">
+                                                <label class="multi-select-option3">
+                                                    <input type="checkbox" value="AC" />
+                                                    AC
+                                                </label>
+                                                <label class="multi-select-option3">
+                                                    <input type="checkbox" value="Fridge" />
+                                                    Fridge
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input type="text" id="city" name="city" placeholder=" "
-                                                class="input-sty">
+                                            <input type="text" id="city" name="city" placeholder=" " class="input-sty">
                                             <label>City</label>
                                         </div>
                                     </div>
@@ -308,7 +473,8 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn-green float-end" onclick="handleSubmit()">Update</button>
+                                    <button type="button" class="btn-green float-end"
+                                        onclick="handleSubmit()">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -334,10 +500,11 @@
         <div class="spinner"></div>
     </div>
     <script>
+        // JavaScript to preview the uploaded image
 
-document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = '../index.html';
+        document.querySelector('.btn-yes').addEventListener('click', function () {
+            localStorage.clear();
+            window.location.href = '../index.html';
         });
 
         document.getElementById('sidebarToggle').addEventListener('click', function () {
@@ -368,8 +535,48 @@ document.querySelector('.btn-yes').addEventListener('click', function () {
             }
         });
 
+        function updateSelection(className, inputSelector) {
+        const selectedCheckboxes = document.querySelectorAll(`${className} input[type='checkbox']:checked`);
+        const selectedValues = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
+        document.querySelector(inputSelector).value = selectedValues.join(", ") || "Select options";
+    }
 
+    // General function to toggle dropdown visibility
+    function toggleDropdown(className) {
+        const dropdowns = document.querySelectorAll(className);
+        dropdowns.forEach(dropdown => {
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        });
+    }
+
+    // Event listeners for dropdown toggles
+    document.querySelector(".multi-select-input").addEventListener('click', () => toggleDropdown(".multi-select-dropdown"));
+    document.querySelector(".multi-select-input1").addEventListener('click', () => toggleDropdown(".multi-select-dropdown1"));
+    document.querySelector(".multi-select-input3").addEventListener('click', () => toggleDropdown(".multi-select-dropdown3"));
+
+    // Event listeners for checkbox changes
+    document.querySelectorAll(".multi-select-option input").forEach(checkbox => {
+        checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown", ".multi-select-input"));
+    });
+    document.querySelectorAll(".multi-select-option1 input").forEach(checkbox => {
+        checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown1", ".multi-select-input1"));
+    });
+    document.querySelectorAll(".multi-select-option3 input").forEach(checkbox => {
+        checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown3", ".multi-select-input3"));
+    });
+
+        
+    
+        // Close the dropdown if clicked outside
+        window.onclick = function (event) {
+            const container = document.querySelector(".multi-select-container");
+            const dropdown = document.querySelector(".multi-select-dropdown");
+            if (!container.contains(event.target)) {
+                dropdown.style.display = "none";
+            }
+        }
     </script>
+
 </body>
 
 </html>

@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Function to load profile data from the API
 async function loadProfileDataFromAPI() {
-    
-const eid = localStorage.getItem("eid");
+
+    const eid = localStorage.getItem("eid");
     const url = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/get/${eid}`;
 
     try {
@@ -31,21 +31,21 @@ const eid = localStorage.getItem("eid");
             throw new Error(`Error fetching data: ${response.statusText}`);
         }
         profileData = await response.json(); // Store data in the global variable
-
+        console.log(profileData)
         // Process and populate the response data
         populateProfileData(profileData);
 
         // document.getElementById('overlay').style.display = 'none';
     } catch (error) {
         // document.getElementById('overlay').style.display = 'none';
-    
+
     }
 
 }
 
 // Function to populate profile data into the form fields
 function populateProfileData(data) {
-    
+
 
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
@@ -53,7 +53,7 @@ function populateProfileData(data) {
 
     document.getElementById('email').value = data.email || '';
     document.getElementById('phone_number').value = data.phone_number || '';
-    
+
     document.getElementById('street').value = data.street || '';
     document.getElementById('city').value = data.city || '';
     document.getElementById('Specialization').value = data.specialization || '';
@@ -63,12 +63,11 @@ function populateProfileData(data) {
 
     document.getElementById('assigned_locations').value = data.assigned_locations || '';
     document.getElementById('employee_status').value = data.employee_status || '';
-    
+
     document.getElementById('skills').value = data.skills || '';
     document.getElementById('qualification').value = data.qualification || '';
     document.getElementById('experience').value = data.experience || '';
     document.getElementById('available').value = data.available || '';
-
 }
 
 
@@ -79,7 +78,7 @@ function saveFormDataToLocalStorage() {
     ];
 
     fields.forEach(field => {
-            localStorage.setItem(field, document.getElementById(field).value);
+        localStorage.setItem(field, document.getElementById(field).value);
     });
 }
 
@@ -119,15 +118,15 @@ function handleSubmit(event) {
 
     fetch(updateApiUrl, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(profileData)
     })
-    .then(response => {
-        document.getElementById('l').style.display = 'none';
-        if (!response.ok) throw new Error(`Error: ${response.status}`);
-        return response.json();
-    })
-    .catch(error => document.getElementById('l').style.display = 'none');
+        .then(response => {
+            document.getElementById('l').style.display = 'none';
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            return response.json();
+        })
+        .catch(error => document.getElementById('l').style.display = 'none');
 }
 
 // When I click Logo go to home page 

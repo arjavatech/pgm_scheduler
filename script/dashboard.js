@@ -20,6 +20,7 @@ const dataSets = {
         data: [1, 5, 2, 4, 3]
     }
 };
+console.log(dataSets)
 
 let cid = localStorage.getItem("cid");
 console.log(cid);
@@ -139,6 +140,11 @@ let chart2 = new Chart(ctx2, {
 
 async function fetchEmployeeCounts() {
     try {       
+        document.getElementById('l').style.display = 'flex'; 
+        setTimeout(() => {
+            document.getElementById('l').style.display = 'none'; 
+        }, 1000);
+        
         const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_count/${cid}`);
         const data = await response.json();
        console.log(data);

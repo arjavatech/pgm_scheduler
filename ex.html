@@ -1,79 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Success and Failure Modals</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    .modal-header.success {
-      background-color: #28a745;
-      color: white;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC / Non-AC Checkbox</title>
+    <style>
+        /* CSS for styling the checkboxes */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
 
-    .modal-header.failure {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    .modal-body p {
-      margin: 0;
-    }
-  </style>
+        label {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
-  
-  <!-- Success Modal -->
-  <!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
-      <div class="modal-content">
-        <div class="modal-header success">
-          <h5 class="modal-title" id="successModalLabel">Success</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Your operation was successful!</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Failure Modal -->
-  <div class="modal fade" id="failureModal" tabindex="-1" aria-labelledby="failureModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
-      <div class="modal-content">
-        <div class="modal-header failure">
-          <h5 class="modal-title" id="failureModalLabel">Failure</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Something went wrong. Please try again.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Trigger Buttons -->
-  <div class="container mt-5 text-center">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#successModal">Show Success Modal</button>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#failureModal">Show Failure Modal</button>
-  </div>
+    <h1>Select Room Type</h1>
 
-  <!-- Bootstrap JS and dependencies -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- AC Checkbox -->
+    <label>
+        <input type="checkbox" id="acCheckbox" />
+        AC
+    </label>
 
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Non-AC Checkbox -->
+    <label>
+        <input type="checkbox" id="nonAcCheckbox" />
+        Non-AC
+    </label>
+
+    <!-- Message Area -->
+    <p id="statusMessage" style="font-family: Arial, sans-serif; color: gray;"></p>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const acCheckbox = document.getElementById("acCheckbox");
+            const nonAcCheckbox = document.getElementById("nonAcCheckbox");
+            const statusMessage = document.getElementById("statusMessage");
+            let Specialization;
+            // Fetch employee ID from localStorage
+            const eid = localStorage.getItem("eid");
+            console.log("Employee ID:", eid);
+
+            // Define the API URL using the employee ID
+            const url = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/get/${eid}`;
+
+            // Function to fetch room type from API
+            async function fetchRoomType() {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch room type: ${response.statusText}`);
+                    }
+                    const data = await response.json();
+                    console.log("API Response:", data); // Log the response for debugging
+                    Specialization = data.employee_status
+                    console.log(Specialization)
+                    return data.roomType; // Assume API returns { roomType: 1 } or { roomType: 0 }
+                } catch (error) {
+                    console.error("Error fetching room type:", error);
+                    return null; // Handle error gracefully
+                }
+            }
+
+
+
+            // Fetch the room type from the API
+            const roomType = await fetchRoomType()
+            if (roomType !== null) {
+                console.log(Specialization)
+                // Automatically tick the corresponding checkbox based on 1 (AC) or 0 (Non-AC)
+                if (Specialization === "Active") {
+                    acCheckbox.checked = true;
+                    statusMessage.textContent = "AC room selected.";
+                } else if (Specialization === "Non Active") {
+                    nonAcCheckbox.checked = true;
+                    statusMessage.textContent = "Non-AC room selected.";
+                } else {
+                    statusMessage.textContent = "Unknown room type received.";
+                }
+            } else {
+                statusMessage.textContent = "Failed to load room type.";
+            }
+        });
+    </script>
 </body>
+
 </html>

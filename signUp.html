@@ -199,6 +199,7 @@
                                 <input id="confirm-password" placeholder="Confirm password" type="password"
                                     class="input-bottom-border mt-4" required>
                                 <button type="submit" class="mt-5 login-button" id="submitBtn">Submit</button>
+                                <a href="index.html">Already have an account?</a>
                             </form>
                             <p class="mt-2" style="font-size: 18px;color: #52525b;">or Sign up with</p>
                             <p class="g_id_signin mt-2"></p>
@@ -372,9 +373,11 @@
                             document.getElementById('l').style.display = 'none'; 
                         } else {
                             setTimeout(function () {
-                                document.getElementById('l').style.display = 'none'; 
+                               
                                 if (urlParams.has('invite_id_c')) {
-                                    window.location.href = 'dashboard.html'; // Redirect for customers
+                                    window.location.href = 'dashboard.html';
+                                    document.getElementById('l').style.display = 'none'; 
+                                     // Redirect for customers
                                 } else if (urlParams.has('invite_id_e')) {
                                     window.location.href = 'index.html';
                                 }
@@ -392,7 +395,7 @@
                 popupModal.style.display = 'block';
                 mainContent.classList.add('blur-background');
                 closePopup.addEventListener('click', function () {
-                    window.location.href = 'index.html';
+                    window.location.href = 'signUp.html';
                 });
             }
         }
