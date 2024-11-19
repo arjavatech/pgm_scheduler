@@ -187,12 +187,13 @@
                     return response.json();
                 })
                 .then(data => {
+                    // console.log(data)
                     if (data.isSuperAdmin) {
                        
                         setTimeout(() => {
                             window.location.href = 'company.html';
                         }, 1000);
-                    } else if (data.isAdmin) {
+                    } else if (data.isadmin) {
                         companyIDget(userDetails.email);
                         setTimeout(() => {
                             window.location.href = 'dashboard.html';
