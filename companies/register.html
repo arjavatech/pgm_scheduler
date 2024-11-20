@@ -79,7 +79,8 @@
                             </div>
                             <div id="sidebar-content">
                                 <div class="list-group list-group-flush">
-                                    <a href="dashboard.html" class="list-group-item list-group-item-action bg-purple"><img
+                                    <a href="dashboard.html"
+                                        class="list-group-item list-group-item-action bg-purple"><img
                                             src="../icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Dashboard</span></a>
 
@@ -177,7 +178,7 @@
     <div class="loading" id="l">
         <div class="spinner"></div>
     </div>
-    
+
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content custom-modal-content">
@@ -194,20 +195,28 @@
 
     <script>
         document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = 'index.html';
+            localStorage.clear();
+            window.location.href = 'index.html';
         });
     </script>
     <script>
 
+        // Function to capitalize words
+        function capitalizeWords(str) {
+            return str.replace(/\b\w/g, char => char.toUpperCase());
+        }
+
+        // Add event listener for the Submit button
         document.getElementById('submit-btn').addEventListener('click', function (event) {
             event.preventDefault();
 
-
             const mainContent = document.getElementById('mainContent');
-            mainContent.classList.add('blur-background');
-            const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
-            loadingIndicator.style.display = 'flex'; // Show loading before fetch
+            const loadingIndicator = document.getElementById('l'); // Adjust this ID as necessary
+            const popupModal = document.getElementById('popupModal');
+            const popupModalFailure = document.getElementById('popupModalFailure');
+            const closePopup = document.getElementById('closePopup');
+            const closePopupFailure = document.getElementById('closePopupFailure');
+            const errorText = document.getElementById('txt'); // Error message container
 
             // Gather input values
             const data = {
@@ -218,7 +227,11 @@
                 email: document.getElementById('email').value.toLowerCase()
             };
 
+            // Blur content and show loading indicator
+            mainContent.classList.add('blur-background');
+            loadingIndicator.style.display = 'flex';
 
+            // Fetch data from the API
             fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev//company_register/create", {
                 method: 'POST',
                 headers: {
@@ -227,7 +240,7 @@
                 body: JSON.stringify(data)
             })
                 .then(response => {
-
+                    // Hide loading indicator
                     loadingIndicator.style.display = 'none';
 
                     if (!response.ok) {
@@ -237,39 +250,46 @@
                 })
                 .then(data => {
                     if (data.error) {
-                        document.getElementById("txt").innerHTML = data.error;
+                        // Show failure modal with error message
+                        errorText.textContent = data.error || "An unexpected error occurred.";
                         popupModalFailure.style.display = 'block';
                         mainContent.classList.add('blur-background');
-                        closePopupFailure.addEventListener('click', function () {
 
+                        closePopupFailure.addEventListener('click', function () {
                             popupModalFailure.style.display = 'none';
                             mainContent.classList.remove('blur-background');
                         });
-                    }
-                    else {
-                        //SuccessModal
+                    } else {
+                        // Show success modal
                         popupModal.style.display = 'block';
                         mainContent.classList.add('blur-background');
+
                         closePopup.addEventListener('click', function () {
-                            window.location.href = 'company.html';
+                            window.location.href = 'company.html'; // Redirect or proceed
                         });
                     }
                 })
                 .catch(error => {
-                    // Show failure modal on error
+                    // Handle network or other unexpected errors
                     loadingIndicator.style.display = 'none';
+                    errorText.textContent = `Unexpected error: ${error.message}`;
+                    popupModalFailure.style.display = 'block';
+                    mainContent.classList.add('blur-background');
+
+                    closePopupFailure.addEventListener('click', function () {
+                        popupModalFailure.style.display = 'none';
+                        mainContent.classList.remove('blur-background');
+                    });
                     console.error('Error:', error);
                 });
         });
 
+        // Toggle sidebar
         document.getElementById('sidebarToggle').addEventListener('click', function () {
             var sidebar = document.getElementById('left');
             sidebar.classList.toggle('active');
         });
 
-        function capitalizeWords(sentence) {
-            return sentence.replace(/\b\w/g, (char) => char.toUpperCase());
-        }
 
     </script>
 
