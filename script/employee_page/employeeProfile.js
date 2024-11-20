@@ -3,8 +3,6 @@ let profileData; // Variable to hold the profile data
 let getCustomerDatasFromDb;
 
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     // document.getElementById('overlay').style.display = 'flex';
 
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Function to load profile data from the API
 async function loadProfileDataFromAPI() {
-
     const eid = localStorage.getItem("eid");
     const url = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/get/${eid}`;
 
@@ -31,11 +28,11 @@ async function loadProfileDataFromAPI() {
             throw new Error(`Error fetching data: ${response.statusText}`);
         }
         profileData = await response.json(); // Store data in the global variable
-        console.log(profileData)
+        checkbox(profileData.specialization);
+        IsActive(profileData.is_active);
+        EmpStatus(profileData.employee_status);
         // Process and populate the response data
         populateProfileData(profileData);
-
-        // document.getElementById('overlay').style.display = 'none';
     } catch (error) {
         // document.getElementById('overlay').style.display = 'none';
 
@@ -46,7 +43,6 @@ async function loadProfileDataFromAPI() {
 // Function to populate profile data into the form fields
 function populateProfileData(data) {
 
-
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
     document.getElementById('last_name').value = data.last_name || '';
@@ -54,27 +50,48 @@ function populateProfileData(data) {
     document.getElementById('email').value = data.email || '';
     document.getElementById('phone_number').value = data.phone_number || '';
 
-    document.getElementById('street').value = data.street || '';
-    document.getElementById('city').value = data.city || '';
-    document.getElementById('Specialization').value = data.specialization || '';
-    document.getElementById('zip').value = data.zip || '';
 
     document.getElementById('areas_covered').value = data.areas_covered || '';
-
     document.getElementById('assigned_locations').value = data.assigned_locations || '';
-    document.getElementById('employee_status').value = data.employee_status || '';
 
-    document.getElementById('skills').value = data.skills || '';
     document.getElementById('qualification').value = data.qualification || '';
     document.getElementById('experience').value = data.experience || '';
-    document.getElementById('available').value = data.available || '';
+
+    document.getElementById('street').value = data.street || '';
+    document.getElementById('specialization').value = data.specialization || '';
+
+    document.getElementById('city').value = data.city || '';
+    document.getElementById('zip').value = data.zip || '';
+
+    
+    document.getElementById('status').value = data.employee_status || '';
+    document.getElementById('skills').value = data.skills || '';
+
+
+    
+    document.getElementById('availability').value = data.is_active === 1 ? 'Active' : 'In Active';
+
+
+}
+
+// Ensure the DOM is fully loaded before executing the script
+function checkbox(specialization) {
+    document.getElementById(specialization === "AC" ? "acCheckbox" : "nonAcCheckbox").checked = true;
+}
+
+function IsActive(isActive) {
+    document.getElementById(isActive === 1 ? "isAvailable" : "IsNotAvailable").checked = true;
+}
+
+function EmpStatus(empStatus) {
+    document.getElementById(empStatus === "Active" ? "acCheckbox1" : "nonAcCheckbox1").checked = true;
 }
 
 
 // Function to save form data to localStorage on submission
 function saveFormDataToLocalStorage() {
     const fields = [
-        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', 'email', 'Specialization', 'zip', 'experience', 'available', 'qualification', 'skills', 'employee_status', 'assigned_locations', 'areas_covered'
+        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', 'email', 'Specialization', 'zip', 'experience', 'availability', 'qualification', 'skills', 'employee_status', 'assigned_locations', 'areas_covered'
     ];
 
     fields.forEach(field => {
@@ -113,7 +130,7 @@ function handleSubmit(event) {
         skills: getFieldValue('skills'),
         qualification: getFieldValue('qualification'),
         experience: getFieldValue('experience'),
-        available: getFieldValue('available')
+        is_active: getFieldValue('availability')
     };
 
     fetch(updateApiUrl, {
@@ -136,3 +153,5 @@ function homePage() {
     const modalInstance = new bootstrap.Modal(modalElement);
     modalInstance.show();
 }
+
+checkbox();
