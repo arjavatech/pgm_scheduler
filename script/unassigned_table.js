@@ -226,8 +226,9 @@ async function assignedEmployee(cid, employee_id, ticket_id) {
           
         }
         const data = await response.json();
-        console.log("Employee assigned successfully:", data);
         loadingIndicator.style.display = 'none';
+        window.location.href = 'Unassigned.html';
+        
     } catch (error) {
         console.error("Failed to assign employee:", error.message);
         loadingIndicator.style.display = 'none';
@@ -259,21 +260,12 @@ async function handleReject(ticketid) {
 
     // Get today's date in "YYYY-MM-DD" format
     const today = new Date().toISOString().split('T')[0];
-    console.log(rowDetails);
-    // Find the ticket details from the global rowDetails array
-    const details = rowDetails.find(detail => detail.ticket_id === (ticketid));
 
-    if (!details) {
-        console.error('Ticket details not found for ticketID:', ticketid);
-        loadingIndicator.style.display = 'none';
-        return;
-    }
 
     // Define the body content to send, including row details
     const requestBody = {
         "rejected_reason": "xyz",
-        "rejected_date": today,
-        ...details
+        "rejected_date": today
     };
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/admin_reject_ticket/${ticketid}`;
@@ -296,6 +288,7 @@ async function handleReject(ticketid) {
         console.log("Ticket rejected successfully:", data);
 
         loadingIndicator.style.display = 'none';
+        window.location.href = 'Unassigned.html';
 
 
 
