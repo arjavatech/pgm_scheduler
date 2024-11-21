@@ -3,7 +3,10 @@ $(document).ready(function () {
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/${cid}`;
     let rowDetails = [];
     let index = 1;
+    const CName = localStorage.getItem("CName")
+    
 
+    document.getElementById("CName").innerHTML = CName;
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
     fetch(apiUrl)
@@ -191,16 +194,17 @@ const apiUrl = `${apiUrlBase}/create`;
 const cid = localStorage.getItem("cid");
 
 function createEmployee() {
-    const firstName = document.querySelector("input[placeholder='First Name']").value;
-    const lastName = document.querySelector("input[placeholder='Last Name']").value;
-    const email = document.querySelector("input[placeholder='Email']").value;
-    const phone = document.querySelector("input[placeholder='Phone Number']").value;
-    const location = document.querySelector("input[placeholder='Assigned Location']").value;
+    const firstName = document.querySelector("input[placeholder='First Name']").value.trim();
+    const lastName = document.querySelector("input[placeholder='Last Name']").value.trim();
+    const email = document.querySelector("input[placeholder='Email']").value.trim();
+    const phone = document.querySelector("input[placeholder='Phone Number']").value.trim();
+    const location = document.querySelector("input[placeholder='Assigned Location']").value.trim();
     const specialization = Array.from(document.querySelectorAll("#dropdownOptions input[type='checkbox']:checked"))
         .map(option => option.value);
 
     // Input validation
     if (!firstName || !lastName || !email || !phone || specialization.length === 0) {
+        console.error("Validation failed: Missing required fields");
         failureModal.show();
         return;
     }
@@ -212,12 +216,10 @@ function createEmployee() {
         phone_number: phone,
         specialization: specialization.join(", "),
         assigned_locations: location,
-        company_id: cid
+        company_id: cid // Ensure this variable is defined
     };
 
-    console.log("Employee Object:", employeeObject);
-
-    fetch(apiUrl, {
+    fetch(apiUrl, { // Ensure `apiUrl` is defined
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(employeeObject)
@@ -229,15 +231,22 @@ function createEmployee() {
             return response.json();
         })
         .then(data => {
+            console.log("Server Response:", data);
             successModal.show();
-            resetForm();
-            document.querySelectorAll("#dropdownOptions input[type='checkbox']").forEach(checkbox => checkbox.checked = false);
+            resetForm(); // Ensure resetForm is defined and works correctly
+            document.querySelectorAll("#dropdownOptions input[type='checkbox']")
+                .forEach(checkbox => checkbox.checked = false);
+                addEmployeeToTable(data);
+
         })
         .catch(error => {
             console.error('Error:', error.message);
             failureModal.show();
         });
+
+
 }
+
 // Function to add employee to the table
 function addEmployeeToTable(employee) {
     const tbody = document.getElementById("tBody");

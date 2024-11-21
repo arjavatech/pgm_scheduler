@@ -1,12 +1,13 @@
 const cid = localStorage.getItem("cid");
 $(document).ready(function () {
-    console.log(cid)
+   
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/unassigned/${cid}`;
     let rowDetails = [];
     let employeeOptions = ""; // Declare employeeOptions globally
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
-
+    const CName = localStorage.getItem("CName")
+    document.getElementById("CName").innerHTML = CName;
     // Fetch employee data for the select options
     const employeeUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_based_pending_works_count/ShddWeFGFGkk9b67STTJY4`;
     fetch(employeeUrl)

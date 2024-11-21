@@ -40,16 +40,7 @@ body {
 
 
 
-.chart-container2 {
-    margin-left: -10px;
-    background-color: white;
-    padding: 10px 15px 40px 10px;
-    border-radius: 10px;
-    width: 100% !important;
-    height: 255px;
-    position: relative;
-    box-sizing: border-box;
-}
+
 
 
 .box-border {
@@ -139,14 +130,14 @@ body {
 
 @media (max-width: 380px) {
     #btnmonths {
-        font-size: 9px;
+        font-size: 8px;
     }
 
 }
 
 @media (min-width: 385px) and (max-width: 490px) {
     #btnmonths {
-        font-size: 13px;
+        font-size: 10px;
     }
 }
 
@@ -165,15 +156,19 @@ body {
 
 @media (max-width: 380px) {
     #btnmonths {
-        font-size: 9px;
+        font-size: 8px;
     }
-
+    #ticketChart1{
+        padding: 0px !important;
+    }
 }
 
 @media (min-width: 385px) and (max-width: 490px) {
     #btnmonths {
-        font-size: 13px;
+        font-size: 10px;
     }
+
+    
 }
 
 @media (max-width:1194px) {

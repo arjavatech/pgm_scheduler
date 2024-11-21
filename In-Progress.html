@@ -94,7 +94,7 @@
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p id="header"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
-                            Admin <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
+                            Admin <span class="span"><span id="CName"></span> <img src="icon/Mask group (2).png" alt=""
                                     style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
@@ -142,35 +142,33 @@
                 </div>
             </div>
         </div>
-  <!-- Modal -->
-  <div class="modal fade" id="imageModel" tabindex="-1" aria-labelledby="imageModelLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal-content">
-            <div class="modal-body custom-modal-body">
-                The images are
-            </div>
-            <div class="modal-footer custom-modal-footer">
-                <img src="images/profile img.png" alt="Image 1" width="100px">
-                <img src="images/profile img.png"
-                    alt="Image 1" width="100px">
-            </div>
-            <div class="modal-footer custom-modal-footer">
-                <img src="images/profile img.png" alt="Image 1" width="100px">
-                <img src="images/profile img.png"
-                    alt="Image 1" width="100px">
+        <!-- Modal -->
+        <div class="modal fade" id="imageModel" tabindex="-1" aria-labelledby="imageModelLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-body custom-modal-body">
+                        The images are
+                    </div>
+                    <div class="modal-footer custom-modal-footer">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                    </div>
+                    <div class="modal-footer custom-modal-footer">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                        <img src="images/profile img.png" alt="Image 1" width="100px">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
         <div class="loading" id="l">
             <div class="spinner"></div>
         </div>
 
         <script>
             document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = 'index.html';
-        });
+                localStorage.clear();
+                window.location.href = 'index.html';
+            });
 
         </script>
 

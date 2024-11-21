@@ -1,7 +1,8 @@
 
 let profileData; // Variable to hold the profile data
 let getCustomerDatasFromDb;
-
+const CName = localStorage.getItem("CName")
+document.getElementById("CName").innerHTML = CName;
 
 document.addEventListener("DOMContentLoaded", function () {
     // document.getElementById('overlay').style.display = 'flex';
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to load profile data from the API
 async function loadProfileDataFromAPI() {
     const eid = localStorage.getItem("eid");
+    console.log(eid);
     const url = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/get/${eid}`;
 
     try {
@@ -63,12 +65,12 @@ function populateProfileData(data) {
     document.getElementById('city').value = data.city || '';
     document.getElementById('zip').value = data.zip || '';
 
-    
+
     document.getElementById('status').value = data.employee_status || '';
     document.getElementById('skills').value = data.skills || '';
 
 
-    
+
     document.getElementById('availability').value = data.is_active === 1 ? 'Active' : 'In Active';
 
 
@@ -132,6 +134,28 @@ function handleSubmit(event) {
         experience: getFieldValue('experience'),
         is_active: getFieldValue('availability')
     };
+
+
+    company_id: cid
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    phone_number: Optional[str] = None
+    email: Optional[str] = None
+    invite_url: Optional[str] = None
+    specialization: Optional[str] = None
+    areas_covered: Optional[str] = None
+    assigned_locations: Optional[str] = None
+    employee_status: Optional[str] = None
+    employee_no_of_completed_work: Optional[int] = None
+    no_of_pending_works: Optional[int] = None
+    street: Optional[str] = None
+    city: Optional[str] = None
+    zip: Optional[str] = None
+    skills: Optional[str] = None
+    qualification: Optional[str] = None
+    experience: Optional[str] = None
+    available: Optional[bool] = None
+    photo: Optional[bytes] = None
 
     fetch(updateApiUrl, {
         method: 'PUT',

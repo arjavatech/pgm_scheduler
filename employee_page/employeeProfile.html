@@ -26,6 +26,11 @@
         overflow: hidden;
     }
 
+
+    .span {
+        float: inline-end;
+    }
+
     .body-overlay {
         background-color: rgba(0, 0, 0, 0.5);
         transition: background-color 0.3s ease;
@@ -291,6 +296,11 @@
 
                     <!-- Right Column: Profile Form -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
+                        <p id="header"
+                            style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
+                            Employee <span class="span"><span id="CName"></span> <img src="../icon/Mask group (2).png" alt=""
+                                    style="width: 40px; padding-left: 10px;"></span>
+                        </p>
                         <h3 class="text-center fw-bold  mt-4" id="header">Profile</h3>
 
                         <div class="logo-sty">
@@ -395,7 +405,8 @@
                                     <div class="col-sm-6">
                                         <div class="multi-select-container">
                                             <div class="material-textfield">
-                                                <input type="text" id="status" name="status" placeholder=" " class="multi-select-input input-sty" readonly>
+                                                <input type="text" id="status" name="status" placeholder=" "
+                                                    class="multi-select-input input-sty" readonly>
                                                 <label>Status</label>
                                             </div>
                                             <div class="multi-select-dropdown">
@@ -410,20 +421,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                
+
                                     <div class="col-sm-6">
                                         <div class="multi-select-container">
                                             <div class="material-textfield">
-                                                <input type="text" id="availability" name="availability" placeholder=" " class="multi-select-input1 input-sty" readonly>
+                                                <input type="text" id="availability" name="availability" placeholder=" "
+                                                    class="multi-select-input1 input-sty" readonly>
                                                 <label>Available?</label>
                                             </div>
                                             <div class="multi-select-dropdown1">
                                                 <label class="multi-select-option1">
-                                                    <input type="checkbox" value="AC"  id="acCheckbox1"/>
+                                                    <input type="checkbox" value="AC" id="acCheckbox1" />
                                                     Active
                                                 </label>
                                                 <label class="multi-select-option1">
-                                                    <input type="checkbox" value="Fridge" id="nonAcCheckbox1"/>
+                                                    <input type="checkbox" value="Refrigerator " id="nonAcCheckbox1" />
                                                     InActive
                                                 </label>
                                             </div>
@@ -442,17 +454,18 @@
                                     <div class="col-sm-6">
                                         <div class="multi-select-container">
                                             <div class="material-textfield">
-                                                <input type="text" id="specialization" name="experience" placeholder=" " class="multi-select-input3 input-sty" readonly>
+                                                <input type="text" id="specialization" name="experience" placeholder=" "
+                                                    class="multi-select-input3 input-sty" readonly>
                                                 <label>Specialization</label>
                                             </div>
                                             <div class="multi-select-dropdown3">
                                                 <label class="multi-select-option3">
-                                                    <input type="checkbox" value="AC"  id="acCheckbox"/>
+                                                    <input type="checkbox" value="AC" id="acCheckbox" />
                                                     AC
                                                 </label>
                                                 <label class="multi-select-option3">
-                                                    <input type="checkbox" value="Fridge" id="nonAcCheckbox"/>
-                                                    Fridge
+                                                    <input type="checkbox" value="Refrigerator " id="nonAcCheckbox" />
+                                                    Refrigerator
                                                 </label>
                                             </div>
                                         </div>
@@ -536,37 +549,37 @@
         });
 
         function updateSelection(className, inputSelector) {
-        const selectedCheckboxes = document.querySelectorAll(`${className} input[type='checkbox']:checked`);
-        const selectedValues = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
-        document.querySelector(inputSelector).value = selectedValues.join(", ") || "Select options";
-    }
+            const selectedCheckboxes = document.querySelectorAll(`${className} input[type='checkbox']:checked`);
+            const selectedValues = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
+            document.querySelector(inputSelector).value = selectedValues.join(", ") || "Select options";
+        }
 
-    // General function to toggle dropdown visibility
-    function toggleDropdown(className) {
-        const dropdowns = document.querySelectorAll(className);
-        dropdowns.forEach(dropdown => {
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        // General function to toggle dropdown visibility
+        function toggleDropdown(className) {
+            const dropdowns = document.querySelectorAll(className);
+            dropdowns.forEach(dropdown => {
+                dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+            });
+        }
+
+        // Event listeners for dropdown toggles
+        document.querySelector(".multi-select-input").addEventListener('click', () => toggleDropdown(".multi-select-dropdown"));
+        document.querySelector(".multi-select-input1").addEventListener('click', () => toggleDropdown(".multi-select-dropdown1"));
+        document.querySelector(".multi-select-input3").addEventListener('click', () => toggleDropdown(".multi-select-dropdown3"));
+
+        // Event listeners for checkbox changes
+        document.querySelectorAll(".multi-select-option input").forEach(checkbox => {
+            checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown", ".multi-select-input"));
         });
-    }
+        document.querySelectorAll(".multi-select-option1 input").forEach(checkbox => {
+            checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown1", ".multi-select-input1"));
+        });
+        document.querySelectorAll(".multi-select-option3 input").forEach(checkbox => {
+            checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown3", ".multi-select-input3"));
+        });
 
-    // Event listeners for dropdown toggles
-    document.querySelector(".multi-select-input").addEventListener('click', () => toggleDropdown(".multi-select-dropdown"));
-    document.querySelector(".multi-select-input1").addEventListener('click', () => toggleDropdown(".multi-select-dropdown1"));
-    document.querySelector(".multi-select-input3").addEventListener('click', () => toggleDropdown(".multi-select-dropdown3"));
 
-    // Event listeners for checkbox changes
-    document.querySelectorAll(".multi-select-option input").forEach(checkbox => {
-        checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown", ".multi-select-input"));
-    });
-    document.querySelectorAll(".multi-select-option1 input").forEach(checkbox => {
-        checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown1", ".multi-select-input1"));
-    });
-    document.querySelectorAll(".multi-select-option3 input").forEach(checkbox => {
-        checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown3", ".multi-select-input3"));
-    });
 
-        
-    
         // Close the dropdown if clicked outside
         window.onclick = function (event) {
             const container = document.querySelector(".multi-select-container");
