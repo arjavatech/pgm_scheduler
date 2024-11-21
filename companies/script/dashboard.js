@@ -1,11 +1,43 @@
-const ctx = document.getElementById('requestHistoryChart').getContext('2d');
-let currentYear = 2024; // Initial year
-const dataByYear = {
-    2024: [10, 20, 15, 25, 8, 10, 5, 35, 20, 28, 35, 25],
-    2023: [15, 18, 12, 20, 10, 8, 7, 30, 25, 22, 30, 28],
-};
+document.addEventListener('DOMContentLoaded', viewcompanydetails);
 
-// Define month labels
+const ctx = document.getElementById('requestHistoryChart').getContext('2d');
+let currentYear = new Date().getFullYear()
+let dataByYear = {};
+
+function viewcompanydetails() {
+
+    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/invite_companies`;
+     
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById("sent_requests").textContent = data.sent_requests;
+            document.getElementById("pending_requests").textContent = data.pending_requests;
+            document.getElementById("accepted_requests").textContent = data.accepted_requests;
+        })
+        .catch(error => {
+            loadingIndicator.style.display = 'none'; // Hide loading on error
+            console.error('Fetch error:', error);
+            showAlert('Failed to load company details.');
+        });
+
+        const apiUrl2 = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_graph/get`;
+     
+    fetch(apiUrl2)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            dataByYear = data;
+            // Define month labels
 const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const sixMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']; // First six months
 
@@ -41,7 +73,7 @@ function createChart() {
                 legend: { display: false }
             },
             scales: {
-                y: { beginAtZero: true, max: 40 }
+                y: { beginAtZero: true, max: 14 }
             }
         }
     });
@@ -94,4 +126,16 @@ if (window.innerWidth <= 320) {
         // element.style.marginRight = '3px';
     });
 }
+
+
+        })
+        .catch(error => {
+            loadingIndicator.style.display = 'none'; // Hide loading on error
+            console.error('Fetch error:', error);
+            showAlert('Failed to load company details.');
+        });
+
+}
+
+
 
