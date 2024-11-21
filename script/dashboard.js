@@ -25,6 +25,9 @@ console.log(dataSets)
 let cid = localStorage.getItem("cid");
 console.log(cid);
 
+let CName = localStorage.getItem("CName");
+console.log(CName)
+document.getElementById("CName").textContent = CName;
 // Function to update chart data
 function updateChart(range, button) {
     // Update active button style
@@ -90,54 +93,6 @@ let chart = new Chart(ctx, {
 
 
 
-const months = ['Feb', 'Mar', 'Apr', 'May'];
-
-// Get the context of the canvas element
-let ctx2 = document.getElementById('myChart2').getContext('2d');
-let chart2 = new Chart(ctx2, {
-    type: 'bar',
-    data: {
-        labels: months,
-        datasets: [{
-            data: [200, 250, 150, 175], // Example data
-            backgroundColor: ['#C0C0C0', '#C0C0C0', '#C0C0C0', '#7706CD'], // Gray for first three bars, purple for the last
-            borderWidth: 0, // No border to match the design
-            barThickness: 10, // Set the bar thickness (adjust this value as needed)
-
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false // Hide legend to match your design
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    color: '#999',
-                    stepSize: 100,
-                    callback: function(value) { return '$' + value; } // Add dollar signs
-                },
-                grid: {
-                    color: '#e0e0e0'
-                }
-            },
-            x: {
-                ticks: {
-                    color: '#999'
-                },
-                grid: {
-                    display: false
-                }
-            }
-        }
-    }
-});
-
 async function fetchEmployeeCounts() {
     try {       
         document.getElementById('l').style.display = 'flex'; 
@@ -191,8 +146,7 @@ async function fetchCounts() {
 
 window.addEventListener('DOMContentLoaded', function() {
     fetchEmployeeCounts();
-    fetchCounts(); 
-   
+    fetchCounts();
 });
 
 

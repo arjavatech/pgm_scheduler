@@ -4,7 +4,9 @@ $(document).ready(function () {
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/inprogress_tickets/${cid}/${eid}`;
     let rowDetails = [];
-    const employees = [];
+    const CName = localStorage.getItem("CName")
+    
+    document.getElementById("CName").innerHTML = CName;
     
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
@@ -54,6 +56,7 @@ $(document).ready(function () {
     function format(rowData) {
         console.log(rowData);
         const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
+        console.log(rowData.work_started_time)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">

@@ -1,6 +1,10 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`;
+    const CName = localStorage.getItem("CName")
+        
+
+        document.getElementById("CName").innerHTML = CName;
     let rowDetails = [];
     let employeeOptions = ""; // Declare employeeOptions globally
 

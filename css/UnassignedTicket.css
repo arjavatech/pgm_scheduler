@@ -148,9 +148,9 @@ table.dataTable tbody tr:hover {
     border-radius: 50%;
 }
 
-#rejectedTicketTable td .issue-type.fridge .circle,
-#unassignedTicketTable td .issue-type.fridge .circle,
-#ticketTable td .issue-type.fridge .circle {
+#rejectedTicketTable td .issue-type.Refrigerator  .circle,
+#unassignedTicketTable td .issue-type.Refrigerator  .circle,
+#ticketTable td .issue-type.Refrigerator  .circle {
     background-color: #04b9f6;
     height: 5px;
     width: 5px;
@@ -169,9 +169,9 @@ table.dataTable tbody tr:hover {
     background-color: #f6eec9;
 }
 
-#rejectedTicketTable td .issue-type.fridge,
-#unassignedTicketTable td .issue-type.fridge,
-#ticketTable td .issue-type.fridge {
+#rejectedTicketTable td .issue-type.Refrigerator ,
+#unassignedTicketTable td .issue-type.Refrigerator ,
+#ticketTable td .issue-type.Refrigerator  {
     background-color: #caedf8;
 }
 

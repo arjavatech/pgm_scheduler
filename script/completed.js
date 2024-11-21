@@ -1,40 +1,15 @@
 
 $(document).ready(function () {
     let cid = localStorage.getItem("cid");
-    let user_id=localStorage.getItem('userId');
-    console.log(cid)
-    const apiu=`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/sign_up/get/${user_id}`
+
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/completed/${cid}`;
     let rowDetails = [];
+    const CName = localStorage.getItem("CName")
+    
 
+    document.getElementById("CName").innerHTML = CName;
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
-
-
-
-    fetch(apiu)
-    .then(response => {
-        response.json()
-        console.log(response)
-    }
-       )
-    .then(data => {
-        
-        loadingIndicator.style.display = 'none';
-       
-    })
-    .catch(error => {
-        console.error('Error fetching tickets:', error);
-        loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
-    });
-
-
-
-
-
-
-
-
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -91,8 +66,10 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
-        const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
-        const workEndedTime = new Date(rowData.work_ended_time).toISOString().split('T')[0];
+        const workStartedTime = new Date(rowData.work_started_time).toISOString();
+        const workEndedTime = new Date(rowData.work_ended_time).toISOString();
+        console.log(workStartedTime)
+        console.log(workEndedTime)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -121,18 +98,22 @@ $(document).ready(function () {
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-6">
-                            <strong>Description:</strong>
+                            <strong style="text-align:left !important">Description:</strong>
                             <p class="description">${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
+                            <div class="image-gallery d-flex justify-content-center mb-4">
                                 <img src="images/profile img.png" alt="Image 1" width="100px">
                                 <div class="image-container d-inline justify-content-center">
                                     <img src="images/profile img.png" alt="Image 1" width="100px">
                                     <div class="overlay"  data-bs-toggle="modal"
                                             data-bs-target="#imageModel">+3</div>
                                 </div>
-                                <h5>$100</h5>
+                               
                             </div>
+                            <strong class="mt-4">Received payment:  <h5>${rowData.payment}</h5></strong>
+
                         </div>
+
+
                     </div>
                 </td>
             </tr>`;
@@ -277,7 +258,7 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         input.forEach(function (row) {
             row.disabled = true;
         });
-        
+
 
     } else {
         // Sidebar is closed, reset colors

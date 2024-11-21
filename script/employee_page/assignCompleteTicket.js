@@ -3,7 +3,8 @@ $(document).ready(function () {
     const eid = localStorage.getItem("eid");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/pending_tickets/${cid}/${eid}`;
     let rowDetails = [];
-
+    const CName = localStorage.getItem("CName")
+    document.getElementById("CName").innerHTML = CName;
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
     fetch(apiUrl)

@@ -95,6 +95,10 @@
         color: white;
         opacity: 0.8;
     }
+
+    .span {
+        float: inline-end;
+    }
 </style>
 
 <body>
@@ -135,7 +139,7 @@
                                         <span style="padding-left: 10px;color: white;">Ticket</span>
                                     </a>
 
-                                   <div id="ticketSubmenu" class="collapse">
+                                    <div id="ticketSubmenu" class="collapse">
                                         <ul class="list-group list-group-flush" id="list-group-flush">
                                             <li class="list-group-item"><a href="Unassigned.html">Unassigned Tickets</a>
                                             </li>
@@ -170,9 +174,9 @@
                     <!-- Right Column: Profile Form -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p id="header"
-                            style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5);margin-left: -12px;padding: 20px;margin-right: -12px;font-weight: bold;">
-                            Admin <span class="span" style="float: inline-end;">XYZ Company <img
-                                    src="icon/Mask group (2).png" alt="" style="width: 40px;padding-left: 10px;"></span>
+                            style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
+                            Admin <span class="span"><span id="CName"></span> <img src="icon/Mask group (2).png" alt=""
+                                    style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
 
@@ -199,13 +203,13 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="companyName" placeholder=" " type="text" class="input-sty">
+                                            <input id="company_name" placeholder=" " type="text" class="input-sty">
                                             <label class="label-sty">Company Name</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input type="tel" id="phone" name="phoneNumber" placeholder=" "
+                                            <input type="tel" id="phone_number" name="phoneNumber" placeholder=" "
                                                 class="input-sty">
                                             <label>Phone Number</label>
 
@@ -215,21 +219,21 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="firstName" placeholder=" " type="text" class="input-sty">
+                                            <input id="first_name" placeholder=" " type="text" class="input-sty">
                                             <label class="label-sty">First name</label>
                                             <span class="text-danger" id="errorFName"></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="lastName" placeholder=" " type="text" class="input-sty">
+                                            <input id="last_name" placeholder=" " type="text" class="input-sty">
                                             <label class="label-sty">Last name</label>
                                             <span class="text-danger" id="errorLName"></span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    
+
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
                                             <input type="email" id="email" name="email" placeholder=" "
@@ -252,7 +256,7 @@
                                             <label class="label-sty">Street</label>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
                                             <input type="text" id="state" name="state" placeholder=" "
@@ -264,7 +268,8 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input type="text" id="addressLine" name="addressLine" placeholder=" " class="input-sty">
+                                            <input type="text" id="address_line" name="address_line" placeholder=" "
+                                                class="input-sty">
                                             <label>Address Line</label>
                                         </div>
                                     </div>
@@ -277,7 +282,7 @@
 
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn-green float-end">Update</button>
+                                    <button class="btn-green float-end" onclick="updateApiData()">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -304,13 +309,13 @@
     </div>
     <script>
         document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = 'index.html';
+            localStorage.clear();
+            window.location.href = 'index.html';
         });
 
-    </script>
-    <script>
+
         let cid = localStorage.getItem("cid");
+
         document.getElementById('uploadLogo').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -321,66 +326,130 @@
                 reader.readAsDataURL(file); // Convert the file into a data URL
             }
         });
-        const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/${cid}`;
 
-        const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
-        loadingIndicator.style.display = 'flex'; // Show loading before fetch
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Store the fetched data
-                employeesData = data;
-                console.log(employeesData)
-                loadingIndicator.style.display = 'none';
-                document.getElementById("companyName").value = employeesData.company_name
-                document.getElementById("phone").value = employeesData.phone_number
-                document.getElementById("firstName").value = employeesData.first_name
-                document.getElementById("lastName").value = employeesData.last_name
-                document.getElementById("street").value = employeesData.street
-                document.getElementById("city").value = employeesData.city
-                document.getElementById("zip").value = employeesData.zip
-                document.getElementById("email").value = employeesData.email
-                document.getElementById("state").value = employeesData.state
-            })
+        document.addEventListener("DOMContentLoaded", function () {
+            const cid = localStorage.getItem("cid"); // Retrieve the company ID from localStorage
+            if (!cid) {
+                console.error("Company ID not found in localStorage.");
+                alert("Company ID is missing. Please try logging in again.");
+                return;
+            }
 
-            .catch(error => {
-                console.error('Error fetching tickets:', error);
-                loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
-            });
+            console.log("Loaded CID:", cid);
 
-        document.getElementById('sidebarToggle').addEventListener('click', function () {
-            var sidebar = document.getElementById('left');
-            var body = document.body;
-            var box = document.querySelector(".box-sty");
-            var input = document.querySelectorAll(".input-sty");
+            const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/${cid}`;
+            const loadingIndicator = document.getElementById('l'); // Ensure the loading indicator exists
+
+            loadingIndicator.style.display = 'flex'; // Show loading indicator
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(employeesData => {
+                    console.log("Fetched Data:", employeesData);
+
+                    // Populate form fields with data
+                    document.getElementById("company_name").value = employeesData.company_name || "";
+                    document.getElementById("phone_number").value = employeesData.phone_number || "";
+                    document.getElementById("first_name").value = employeesData.first_name || "";
+                    document.getElementById("last_name").value = employeesData.last_name || "";
+                    document.getElementById("street").value = employeesData.street || "";
+                    document.getElementById("city").value = employeesData.city || "";
+                    document.getElementById("zip").value = employeesData.zip || "";
+                    document.getElementById("email").value = employeesData.email || "";
+                    document.getElementById("state").value = employeesData.state || "";
+                    document.getElementById("address_line").value = employeesData.address_line || "";
+                })
+                .catch(error => {
+                    console.error("Error fetching company data:", error);
+                    // alert("Failed to load company data. Please try again later.");
+                })
+                .finally(() => {
+                    loadingIndicator.style.display = 'none'; // Hide loading indicator
+                });
+        });
+
+        // Sidebar toggle logic
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('left');
+            const body = document.body;
+            const box = document.querySelector(".box-sty");
+            const inputs = document.querySelectorAll(".input-sty");
 
             sidebar.classList.toggle('active');
 
             if (sidebar.classList.contains('active')) {
-                // Sidebar is active (open)
                 body.classList.add('no-scroll', 'body-overlay');
                 box.style.backgroundColor = "transparent";
 
-                input.forEach(function (inputElement) {
-                    inputElement.style.backgroundColor = "transparent";  // Input background transparent
-                    inputElement.classList.add('placeholder-transparent');  // Make placeholder transparent
+                inputs.forEach(input => {
+                    input.style.backgroundColor = "transparent";
+                    input.classList.add('placeholder-transparent');
                 });
             } else {
-                // Sidebar is inactive (closed)
                 body.classList.remove('no-scroll', 'body-overlay');
                 box.style.backgroundColor = "";
 
-                input.forEach(function (inputElement) {
-                    inputElement.style.backgroundColor = "";  // Reset background color
-                    inputElement.classList.remove('placeholder-transparent');  // Reset placeholder transparency
+                inputs.forEach(input => {
+                    input.style.backgroundColor = "";
+                    input.classList.remove('placeholder-transparent');
                 });
             }
         });
+
+
+        function updateApiData(event) {
+            let cid = localStorage.getItem("cid")
+            console.log(cid)
+            const updateApiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/update/${cid}`;
+
+            const companyData = {
+                company_id: cid,
+                company_name: document.getElementById("company_name").value,
+                phone_number: document.getElementById("phone_number").value,
+                email: document.getElementById("email").value,
+                first_name: document.getElementById("first_name").value,
+                last_name: document.getElementById("last_name").value,
+                street: document.getElementById("street").value,
+                city: document.getElementById("city").value,
+                zip: document.getElementById("zip").value,
+                state: document.getElementById("state").value,
+                address_line: document.getElementById("address_line").value
+            };
+
+            console.log(companyData)
+
+            alert("text")
+
+
+            fetch(updateApiUrl, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(companyData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                        alert(response.status)
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Update successful:', data);
+                    alert(data)
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                    alert(error)
+                });
+        }
+
 
 
     </script>

@@ -18,12 +18,21 @@
 </head>
 
 <style>
+
+    @media (max-width:991px) {
+        #notification{
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 5%;
+        }
+
+    }
     @media (max-width:768px) {
         .chart-container2 {
             margin-left: 0;
         }
 
-        #notification{
+        #notification {
             margin-bottom: 5%;
         }
     }
@@ -104,7 +113,7 @@
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p id="header"
                             style="background-color: white;box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
-                            Admin <span class="span">XYZ Company <img src="icon/Mask group (2).png" alt=""
+                            Admin <span class="span"> <span id="CName"></span><img src="icon/Mask group (2).png" alt=""
                                     style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
@@ -144,58 +153,57 @@
                         <div class="container-fluid mt-4">
                             <div class="row">
                                 <div class="col-12 col-lg-8">
-                                    <div class="row" id="ticketChart1">
-                                        <div class="col-12 col-md-2">
-                                            <p class="fw-bold mt-4 db" style="text-align: start;font-size: 12px">Ticket
-                                                History</p>
-                                        </div>
-                                        <div class="col-12 col-md-10 d-flex justify-content-center mt-3"
-                                            style="gap: 3%;">
-                                            <button onclick="updateChart('12months', this)" class="btn active"
-                                                id="btn12months">12 Months</button>
-                                            <button onclick="updateChart('6months', this)" class="btn" id="btnmonths">6
-                                                Months</button>
-                                            <button onclick="updateChart('30days', this)" class="btn" id="btnmonths">30
-                                                Days</button>
-                                            <button onclick="updateChart('7days', this)" class="btn" id="btnmonths">7
-                                                Days</button>
-                                            <button onclick="updateChart('today', this)" class="btn"
-                                                id="btnmonths">Today</button>
-                                        </div>
+                                    <div class="row">
+                                        <div class="col-12 col-lg-12">
+                                            <div class="row" id="ticketChart1">
+                                                <div class="col-12 col-md-2">
+                                                    <p class="fw-bold mt-4 db"
+                                                        style="text-align: start;font-size: 12px">
+                                                        Ticket
+                                                        History</p>
+                                                </div>
+                                                <div class="col-12 col-md-10 d-flex justify-content-center mt-3"
+                                                    style="gap: 3%;">
+                                                    <button onclick="updateChart('12months', this)" class="btn active"
+                                                        id="btn12months">12 Months</button>
+                                                    <button onclick="updateChart('6months', this)" class="btn"
+                                                        id="btnmonths">6
+                                                        Months</button>
+                                                    <button onclick="updateChart('30days', this)" class="btn"
+                                                        id="btnmonths">30
+                                                        Days</button>
+                                                    <button onclick="updateChart('7days', this)" class="btn"
+                                                        id="btnmonths">7
+                                                        Days</button>
+                                                    <button onclick="updateChart('today', this)" class="btn"
+                                                        id="btnmonths">Today</button>
+                                                </div>
 
-                                        <div class="col-12 mt-5">
-                                            <canvas id="myChart" class="responsive-canvas" height="120px"></canvas>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-5 mb-5">
-                                        <div class="col-12 col-md-5 mb-4">
-                                            <div class="chart-container2">
-                                                <p
-                                                    style="font-weight: bold; margin-bottom: 4px;font-size: 12px; text-align: center;">
-                                                    Revenue <span style="font-weight: normal;">(Last Four months)</span>
-                                                </p>
-                                                <canvas id="myChart2"></canvas>
+                                                <div class="col-12 mt-5">
+                                                    <canvas id="myChart" class="responsive-canvas"
+                                                        height="120px"></canvas>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-7">
-                                            <div class="box-border" style="height: 255px;">
-                                                <h5 style="font-size:medium;font-weight: bold;font-size: 12px;"
-                                                    class="mb-4">Employees
-                                                    Count</h5>
-                                                <div class="row mt-3 justify-content-center align-content-center">
-                                                    <div class="col-12 col-sm-6 mb-3">
-                                                        <div class="box2">
-                                                            <h3>23</h3>
-                                                            <p>Total Employees</p>
-                                                        </div>
+                                    </div>
+                                    <div class="row mt-3 mb-3">
+                                        <div class="box-border" style="height: 255px;">
+                                            <h5 style="font-size:medium;font-weight: bold;font-size: 12px;"
+                                                class="mb-4">Employees
+                                                Count</h5>
+                                            <div class="row mt-3 justify-content-center align-content-center">
+                                                <div class="col-12 col-sm-6 mb-3">
+                                                    <div class="box2">
+                                                        <h3>23</h3>
+                                                        <p>Total Employees</p>
                                                     </div>
-                                                    <div class="col-12 col-sm-6 mb-3">
-                                                        <div class="box3">
-                                                            <h3>13</h3>
-                                                            <p>Available Employees</p>
-                                                        </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6 mb-3">
+                                                    <div class="box3">
+                                                        <h3>13</h3>
+                                                        <p>Available Employees</p>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -203,15 +211,15 @@
                                 </div>
 
                                 <div class="col-12 col-lg-4" id="notification">
-                                    <div style="background-color: white; padding: 20px;border-radius: 13px;">
-                                        <p class="fw-bold mt-1" style="text-align: start;font-size: 12px;">Notification
+                                    <div style="background-color: white; padding: 20px;border-radius: 13px;" id="divNotification">
+                                        <p class="fw-bold mt-1" style="text-align: start;font-size: 12px;">
+                                            Notification
                                         </p>
                                         <ul id="notification-list" class="list-group"
                                             style="padding-left: 20px !important;padding-right: 20px !important;line-height: 30px;font-size: small;">
                                         </ul>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
