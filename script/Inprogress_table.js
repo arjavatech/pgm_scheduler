@@ -12,7 +12,7 @@ $(document).ready(function () {
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
     // Fetch employee data for the select options
-    const employeeUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_based_pending_works_count/ShddWeFGFGkk9b67STTJY4`;
+    const employeeUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_based_pending_works_count/${cid}`;
     fetch(employeeUrl)
         .then(response => response.json())
         .then(data => {
