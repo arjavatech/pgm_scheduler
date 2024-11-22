@@ -4,7 +4,8 @@ $(document).ready(function () {
     const cid = localStorage.getItem("cid");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`;
     const CName = localStorage.getItem("CName")
-        
+        console.log(cid)
+        console.log(CName)
 
         document.getElementById("CName").innerHTML = CName;
     let rowDetails = [];
@@ -56,12 +57,12 @@ $(document).ready(function () {
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
             `<span id="ticketId">${ticket.ticket_id}</span>`,
-            `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
+            `<div class="issue-type ${ticket.ticket_type}"><span class="circle"></span>${ticket.ticket_type}</div>`,
             ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,
             ticket.city,
-            `<span class="assigned-employee" data-old-emp="${ticket.employee_id}">${ticket.first_name}</span>`
+            `<span class="assigned-employee" data-old-emp="${ticket.employee_id}">${ticket.first_name} ${ticket.last_name}</span>`
         ]).draw(false).node();
         $(rowNode).find('td:first').addClass('details-control');
     }
@@ -79,7 +80,7 @@ $(document).ready(function () {
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
                             <label>Employee Name</label>
                             <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" id="employee-select-${rowData.ticket_id}" disabled>
-                            <option>${rowData.first_name}</option>
+                            <option  disabled selected>${rowData.first_name} ${rowData.last_name}</option>
                             ${employee_det_options_get(rowData.ticket_type)}
                             </select>
                              <small id="pending-count-${rowData.ticket_id}">Pending work: </small>

@@ -9,9 +9,7 @@ document.getElementById("CName").textContent = CName;
 async function fetchEmployeeCounts() {
     try {       
         document.getElementById('l').style.display = 'flex'; 
-        setTimeout(() => {
-            document.getElementById('l').style.display = 'none'; 
-        }, 1000);
+        
         
         const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_count/${cid}`);
         const data = await response.json();
@@ -25,7 +23,7 @@ async function fetchEmployeeCounts() {
 
         const api2 = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_history/${cid}`);
         dataSets = await api2.json();
-        
+     
         // Initialize chart with 12 months data
         let ctx = document.getElementById('myChart').getContext('2d');
         chart = new Chart(ctx, { // Assign to the global `chart` variable
@@ -74,7 +72,7 @@ async function fetchEmployeeCounts() {
                 }
             }
         });
-
+        document.getElementById('l').style.display = 'none';
     } catch (error) {
         console.error("Error fetching employee data:", error);
     }

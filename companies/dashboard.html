@@ -65,6 +65,11 @@
             padding-top: 12% !important;
             font-weight: bold;
         }
+
+        .modal-header {
+            background-image: radial-gradient(#004102, #131313) !important;
+            color: white;
+        }
     </style>
 </head>
 
@@ -97,7 +102,8 @@
                             </div>
                             <div id="sidebar-content">
                                 <div class="list-group list-group-flush">
-                                    <a href="dashboard.html" class="list-group-item list-group-item-action bg-purple"><img
+                                    <a href="dashboard.html"
+                                        class="list-group-item list-group-item-action bg-purple"><img
                                             src="../icon/Mask group-2.png" style="width: 25px;margin-top: -5px;"><span
                                             style="padding-left: 10px;color: white;">Dashboard</span></a>
 
@@ -199,17 +205,26 @@
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content custom-modal-content">
+
+                <!-- Modal Header with Title -->
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+
+                </div>
+
+                <!-- Modal Body -->
                 <div class="modal-body custom-modal-body">
                     Are you sure you want to log out?
                 </div>
+
+                <!-- Modal Footer -->
                 <div class="modal-footer custom-modal-footer">
-                    <button type="button" class="btn-yes ">Yes</button>
-                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn-yes">Yes</button>
+                    <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="loading" id="l">
         <div class="spinner"></div>
     </div>
@@ -219,10 +234,10 @@
     <!-- Notification List Script -->
     <script>
         document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = '../index.html';
+            localStorage.clear();
+            window.location.href = '../index.html';
         });
-        
+
         const listItems = [
             "Repair Ticket Management: Customers can easily raise repair tickets, specifying details like issue type, severity, and preferred appointment times.",
             "Real-Time Notifications: Customers receive email or text updates about their ticket status, providing transparency throughout the process.",

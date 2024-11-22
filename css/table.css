@@ -649,6 +649,16 @@ tr.shown td.details-control {
     font-size: 8px !important;
 }
 
+#rejectedTicketTable td .circle,
+#unassignedTicketTable td .circle,
+#ticketTable td .circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background: #daba1ece;
+}
+
 #rejectedTicketTable td,
 #unassignedTicketTable td,
 #ticketTable td {

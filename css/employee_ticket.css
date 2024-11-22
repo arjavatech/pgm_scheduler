@@ -144,9 +144,9 @@ table.dataTable tbody tr:hover {
     margin-right: 5px;
 }
 
-#rejectedTicketTable td .issue-type.ac .circle,
-#unassignedTicketTable td .issue-type.ac .circle,
-#ticketTable td .issue-type.ac .circle {
+#rejectedTicketTable td .issue-type .AC .circle,
+#unassignedTicketTable td .issue-type .AC .circle,
+#ticketTable td .issue-type .AC .circle {
     background-color: #daba1ece;
     height: 5px;
     width: 5px;
@@ -165,9 +165,9 @@ table.dataTable tbody tr:hover {
 
 
 
-#rejectedTicketTable tbody td .issue-type,
-#unassignedTicketTable tbody td .issue-type,
-#ticketTable tbody td .issue-type {
+#rejectedTicketTable tbody td .issue-type.AC,
+#unassignedTicketTable tbody td .issue-type.AC,
+#ticketTable tbody td .issue-type.AC{
     display: flex;
     align-items: center;
     border-radius: 10px;
@@ -178,8 +178,21 @@ table.dataTable tbody tr:hover {
 #unassignedTicketTable td .issue-type.Refrigerator ,
 #ticketTable td .issue-type.Refrigerator  {
     background-color: #caedf8;
+    border-radius: 10px;
+    
 }
 
+#rejectedTicketTable td .issue-type.rc ,
+#unassignedTicketTable td .issue-type.rc ,
+#ticketTable td .issue-type.rc  {
+    display: none;
+}
+
+#rejectedTicketTable td .issue-type.margin ,
+#unassignedTicketTable td .issue-type.margin ,
+#ticketTable td .issue-type.margin  {
+    margin-top: 3px;
+}
 #rejectedTicketTable,
 #unassignedTicketTable,
 #ticketTable {
@@ -204,7 +217,6 @@ table.dataTable tbody tr:hover {
 #ticketTable tbody tr {
     background-color: #fff;
     transition: background-color 0.3s ease;
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 #rejectedTicketTable tbody tr:hover,
@@ -216,7 +228,6 @@ table.dataTable tbody tr:hover {
 #rejectedTicketTable tbody td,
 #unassignedTicketTable tbody td,
 #ticketTable tbody td {
-
     padding-left: 12px;
     border-bottom: 1px solid #eaeaea;
     font-size: 0.9rem;
@@ -630,8 +641,18 @@ tr.shown td.details-control {
 #ticketTable td .circle {
     width: 8px;
     height: 8px;
-    /* border-radius: 50%; */
+    border-radius: 50%;
     margin-right: 5px;
+    background: #04b9f6;
+}
+#rejectedTicketTable td #circle2,
+#unassignedTicketTable td #circle2,
+#ticketTable td #circle2 {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background: red !important;
 }
 
 #rejectedTicketTable td div,

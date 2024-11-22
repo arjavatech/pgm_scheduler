@@ -4,7 +4,7 @@ $(document).ready(function () {
     let rowDetails = [];
     let index = 1;
     const CName = localStorage.getItem("CName")
-    
+
 
     document.getElementById("CName").innerHTML = CName;
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
@@ -52,10 +52,23 @@ $(document).ready(function () {
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
+        console.log(ticket)
+        // Clean the string by replacing curly quotes with straight quotes
+        const cleanedSpecialization = ticket.specialization.replace(/[“”]/g, '"');
+
+        // Parse the cleaned string into an array
+        const specializationArray = JSON.parse(cleanedSpecialization);
+
+        // Destructure the array into separate variables
+        const [ac, Refrigerator = "rc"] = specializationArray;
+
+        // Log the values
+        console.log(ac, Refrigerator); // Output: "Refrigerator"
+
         const rowNode = table.row.add([
             ticket.first_name,
             ticket.phone_number,
-            `<div class="issue-type ${ticket.specialization.toLowerCase()}"><span class="circle"></span>${ticket.specialization}</div>`,
+           `<div class="issue-type ${ac}"><span class="circle"> </span>${ac}</div><div class="issue-type ${Refrigerator} margin"><span class="circle2" id="circle2"></span>${Refrigerator}</div>`,
             ticket.email,
             ticket.assigned_locations,
             ticket.employee_no_of_completed_work,
@@ -236,7 +249,7 @@ function createEmployee() {
             resetForm(); // Ensure resetForm is defined and works correctly
             document.querySelectorAll("#dropdownOptions input[type='checkbox']")
                 .forEach(checkbox => checkbox.checked = false);
-                addEmployeeToTable(data);
+            addEmployeeToTable(data);
 
         })
         .catch(error => {

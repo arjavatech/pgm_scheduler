@@ -31,6 +31,11 @@
         float: inline-end;
     }
 
+    .modal-header {
+        background-image: radial-gradient(#004102, #131313) !important;
+        color: white;
+    }
+
     .body-overlay {
         background-color: rgba(0, 0, 0, 0.5);
         transition: background-color 0.3s ease;
@@ -262,7 +267,7 @@
                             </div>
                             <div id="sidebar-content">
                                 <div class="list-group list-group-flush">
-                                    
+
                                     <a class="list-group-item list-group-item-action bg-purple dropdown-toggle" href="#"
                                         id="ticketMenu" data-bs-toggle="collapse" data-bs-target="#ticketSubmenu"
                                         aria-expanded="false" aria-controls="ticketSubmenu">
@@ -296,8 +301,8 @@
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p id="header"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
-                            Employee <span class="span"><span id="CName"></span> <img src="../icon/Mask group (2).png" alt=""
-                                    style="width: 40px; padding-left: 10px;"></span>
+                            Employee <span class="span"><span id="CName"></span> <img src="../icon/Mask group (2).png"
+                                    alt="" style="width: 40px; padding-left: 10px;"></span>
                         </p>
                         <h3 class="text-center fw-bold  mt-4" id="header">Profile</h3>
 
@@ -497,12 +502,22 @@
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content custom-modal-content">
+
+                <!-- Modal Header with Title -->
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+
+                </div>
+
+                <!-- Modal Body -->
                 <div class="modal-body custom-modal-body">
                     Are you sure you want to log out?
                 </div>
+
+                <!-- Modal Footer -->
                 <div class="modal-footer custom-modal-footer">
-                    <button type="button" class="btn-yes ">Yes</button>
-                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn-yes">Yes</button>
+                    <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
