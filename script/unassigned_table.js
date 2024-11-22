@@ -9,7 +9,7 @@ $(document).ready(function () {
     const CName = localStorage.getItem("CName")
     document.getElementById("CName").innerHTML = CName;
     // Fetch employee data for the select options
-    const employeeUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_based_pending_works_count/ShddWeFGFGkk9b67STTJY4`;
+    const employeeUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_based_pending_works_count/${cid}`;
     fetch(employeeUrl)
         .then(response => response.json())
         .then(data => {
