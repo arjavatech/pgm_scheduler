@@ -3,6 +3,7 @@ $(document).ready(function () {
     const eid = localStorage.getItem("eid");
     const CName = localStorage.getItem("CName")
     document.getElementById("CName").innerHTML = CName;
+    document.getElementById("e_name").innerHTML = localStorage.getItem("e_name");
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/completed_tickets/${cid}/${eid}`;
     let rowDetails = [];
