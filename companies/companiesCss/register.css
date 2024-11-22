@@ -161,7 +161,7 @@ a {
 }
 
 #popupModal .close-btn {
-    background-image: radial-gradient(#004102, #131313 50%);
+    background-color: #006103;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -170,7 +170,7 @@ a {
 }
 
 #popupModalFailure .close-btn {
-    background-image: radial-gradient(#004102, #131313 50%);
+    background-color: #006103;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -216,7 +216,7 @@ a {
 }
 
 .submit-btn {
-    background-image: radial-gradient(green, black);
+    background-color: #006103;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -227,11 +227,6 @@ a {
     font-weight: bold;
 }
 
-.submit-btn:hover {
-    background-image: radial-gradient(green, black);
-    transform: scale(1.1);
-
-}
 
 .container-form {
     background-color: rgb(209, 240, 216);
