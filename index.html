@@ -226,7 +226,6 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
                     localStorage.setItem("cid", data.company_id);
                     localStorage.setItem("CName",data.company_name)
                 })
@@ -255,6 +254,7 @@
                 })
                 .then(data => {
                     localStorage.setItem("eid", data.employee_id);
+                    localStorage.setItem("e_name", data.first_name+ " "+ data.last_name);
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
