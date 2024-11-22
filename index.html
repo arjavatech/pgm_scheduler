@@ -199,7 +199,7 @@
                             window.location.href = 'dashboard.html';
                         }, 1000);
                     } else if (data.isEmployee) {
-                        companyIDget(userDetails.email);
+                        getEmpDetails(userDetails.email);
                         setTimeout(() => {
                             localStorage.setItem("userId",userDetails.email);
                             window.location.href = 'employee_page/inProcessTicket.html';
@@ -211,6 +211,31 @@
                     console.error('Fetch error:', error);
                 });
         }
+
+        function getEmpDetails(user_id) {
+            const mainContent = document.getElementById('mainContent');
+          
+            fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/signed_up_employee_detail_get/${user_id}`)
+
+                .then(response => {
+                    document.getElementById('l').style.display = 'none';
+                    if (!response.ok) {
+                        showPopupModal("User ID not found");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    localStorage.setItem("cid", data.company_id);
+                    localStorage.setItem("CName",data.company_name);
+                    localStorage.setItem("eid", data.employee_id);
+                    localStorage.setItem("e_name", data.e_name);
+                })
+                .catch(error => {
+                    document.getElementById('l').style.display = 'none';
+                    console.error('Fetch error:', error);
+                });
+        }
+
 
         // Fetch and store company ID
         function companyIDget(user_id) {
