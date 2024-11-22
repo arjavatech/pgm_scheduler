@@ -1,9 +1,10 @@
+var emp_details_map;
+
 const cid = localStorage.getItem("cid");
 $(document).ready(function () {
    
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/unassigned/${cid}`;
     let rowDetails = [];
-    let employeeOptions = ""; // Declare employeeOptions globally
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
     const CName = localStorage.getItem("CName")
@@ -14,9 +15,7 @@ $(document).ready(function () {
         .then(response => response.json())
         .then(data => {
             // Populate global employeeOptions for use in both addCard and format
-            employeeOptions = data.map(employee =>
-                `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
-            ).join("");
+            emp_details_map = data;
 
         })
         .catch(error => console.error('Error fetching employees:', error));
@@ -86,7 +85,7 @@ $(document).ready(function () {
                             <label class="mt-3 d-flex justify-content-left"><strong>Employee Name</strong></label>
                             <select class="form-select employee-select mt-2" id="employee-select-${rowData.ticket_id}">
                             <option value="" disabled selected>Select</option>
-                                ${employeeOptions}
+                            ${employee_det_options_get(rowData.ticket_type)}
                             </select>
                              <small id="pending-count-${rowData.ticket_id}">Pending work: N/A</small>
                         </div>
@@ -171,7 +170,7 @@ $(document).ready(function () {
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p><strong>Employee:</strong>
                         <select class="form-select employee-select">
-                            ${employeeOptions}
+                        ${employee_det_options_get(employee.ticket_type)}
                         </select>
                     </p>
                     <div class="image-gallery d-flex justify-content-center">
@@ -298,7 +297,15 @@ async function handleReject(ticketid) {
     }
 }
 
+function employee_det_options_get(ticketType)
+{
+    var employeeOptions = emp_details_map[ticketType].map(employee =>
+            
+        `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
+    ).join("");
 
+    return employeeOptions;
+}
 
 
 
