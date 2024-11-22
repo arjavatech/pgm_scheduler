@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', viewcompanydetails);
 
 function viewcompanydetails() {
     document.getElementById('l').style.display = 'flex';
+
     const tableBody = document.getElementById("tBody");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/getall`;
 
@@ -19,7 +20,7 @@ function viewcompanydetails() {
             loadingIndicator.style.display = 'none'; // Hide loading after response is received
             employeesData = data;
             tableBody.innerHTML = ''; // Clear any previous rows
-
+            console.log(data);
             // Populate the table
             employeesData.forEach(element => {
                 const newRow = document.createElement('tr');
@@ -49,7 +50,7 @@ function viewcompanydetails() {
                         mail="${element.email}"
                         style="border:none; background:transparent"
                         ${element.status === "Accepted" ? "disabled" : ""}>
-                        <img src="${element.status === "Accepted" ? "icon/sendDiasable.png" : "icon/icons8-forward-message-20.png"}">
+                        <img src="${element.status === "Accepted" ? "../icon/sendDiasable.png" : "../icon/icons8-forward-message-20.png"}">
                     </button>
                 </td>
             `;
@@ -89,6 +90,7 @@ function viewcompanydetails() {
                     const phnNo = resendButton.getAttribute('phnNo');
                     const fName = resendButton.getAttribute('fName');
                     const lName = resendButton.getAttribute('lName');
+                    var body = document.body;
                     const mail = resendButton.getAttribute('mail');
 
                     loadingIndicator.style.display = 'flex'; // Show loading for resend operation
@@ -122,8 +124,10 @@ function viewcompanydetails() {
                             // SuccessModal
                             popupModal.style.display = 'block';
                             mainContent.classList.add('blur-background');
+                            body.classList.add('no-scroll');
                             closePopup.addEventListener('click', function () {
                                 window.location.href = 'company.html';
+                                body.classList.remove('no-scroll');
                             });
                         })
                         .catch(error => {
@@ -149,7 +153,7 @@ function viewcompanydetails() {
                             method: 'PUT',
                         })
                             .then(response => {
-                                loadingIndicator.style.display = 'none'; 
+                                loadingIndicator.style.display = 'none';
                                 if (!response.ok) {
                                     throw new Error(`Error: ${response.status}`);
                                 }
@@ -160,7 +164,7 @@ function viewcompanydetails() {
                             })
                             .catch(error => {
                                 console.error('Delete error:', error);
-                                loadingIndicator.style.display = 'none'; 
+                                loadingIndicator.style.display = 'none';
                                 showAlert('Failed to delete the company.');
                             });
                     });
@@ -242,22 +246,28 @@ function addCard(employee) {
                             <span class="icon" title="Edit" style="cursor: pointer;">
                                 <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
                             </span>
-                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" data-id="${employee.company_id}" email-id="${employee.email}" delete-comp="${employee.company_name}">
+                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" 
+                                data-id="${employee.company_id}" 
+                                email-id="${employee.email}" 
+                                delete-comp="${employee.company_name}">
                                 <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
                             </span>
                         </div>
                     </div>
                     <div class="col-6">
-                        <p class="d-flex justify-content-center"><button id="send" class="${employee.status == "Accepted" ? " " : "re-send "} " 
-                        companyIdSends="${employee.company_id}" 
-                        companyNameForsend="${employee.company_name}"
-                        phnNo="${employee.phone_number}"
-                        fName="${employee.first_name}"
-                        lName="${employee.last_name}"
-                        mail="${employee.email}"
-                        style="border:none; background:transparent"${employee.status == "Accepted" ? "disabled" : ""}>
-                          <img  src=${employee.status == "Accepted" ? "icon/sendDiasable.png" : "icon/icons8-forward-message-20.png"}></img>
-                       </button></p>
+                        <p class="d-flex justify-content-center">
+                            <button id="send" class="${employee.status === "Accepted" ? "" : "re-send"}" 
+                                companyIdSends="${employee.company_id}" 
+                                companyNameForsend="${employee.company_name}"
+                                phnNo="${employee.phone_number}"
+                                fName="${employee.first_name}"
+                                lName="${employee.last_name}"
+                                mail="${employee.email}"
+                                style="border:none; background:transparent" 
+                                ${employee.status === "Accepted" ? "disabled" : ""}>
+                                <img src="${employee.status === "Accepted" ? "../icon/sendDiasable.png" : "../icon/icons8-forward-message-20.png"}">
+                            </button>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -265,6 +275,7 @@ function addCard(employee) {
     `;
     $('#card-container').append(cardHtml);
 }
+
 
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {

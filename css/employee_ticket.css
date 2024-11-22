@@ -22,6 +22,11 @@ body {
     border: none;
 }
 
+.modal-header {
+    background-image: radial-gradient(#004102, #131313) !important;
+    color: white;
+}
+
 .dropdown-item {
     color: white;
 }
