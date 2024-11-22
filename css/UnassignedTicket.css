@@ -620,10 +620,11 @@ tr.shown td.details-control {
 #rejectedTicketTable td .circle,
 #unassignedTicketTable td .circle,
 #ticketTable td .circle {
-    width: 8px;
-    height: 8px;
-    /* border-radius: 50%; */
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
     margin-right: 5px;
+    background: #daba1ece;
 }
 
 #rejectedTicketTable td div,

@@ -52,7 +52,7 @@ $(document).ready(function () {
         const rowNode = table.row.add([
             `<span></span>`,
             ticket.ticket_id,
-            `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
+            `<div class="issue-type ${ticket.ticket_type}"><span class="circle"></span>${ticket.ticket_type}</div>`,
             ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,
@@ -64,46 +64,41 @@ $(document).ready(function () {
 
     // Function to format each row with expandable details
     function format(rowData) {
-        console.log(rowData.ticket_id); // Log the ticket ID
-    
-        // Escape function to prevent XSS attacks
-        function escapeHTML(html) {
-            const text = document.createTextNode(html);
-            const div = document.createElement('div');
-            div.appendChild(text);
-            return div.innerHTML;
-        }
+        console.log(rowData.ticket_type); // Log the ticket ID
+        // Output: "Refrigerator"
    
         return `
-            <tr class="collapse-content details-row">
+           <tr class="collapse-content details-row">
                 <td colspan="8">
                     <div class="row">
-                        <div class="col-md-1"></div>
+                    <div class="col-md-1"></div>
                         <div class="col-md-4">
                             <strong>Customer Address</strong>
-                            <p>${escapeHTML(rowData.street || 'No address available')}, ${escapeHTML(rowData.city || 'N/A')}, ${escapeHTML(rowData.zip || 'N/A')}, ${escapeHTML(rowData.state || 'N/A')}</p>
-                            <label class="mt-3 d-flex justify-content-left"><strong>Employee Name</strong></label>
+                            <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
+                            <label>Employee Name</label>
                             <select class="form-select employee-select mt-2" id="employee-select-${rowData.ticket_id}">
                             <option value="" disabled selected>Select</option>
                             ${employee_det_options_get(rowData.ticket_type)}
                             </select>
                              <small id="pending-count-${rowData.ticket_id}">Pending work: N/A</small>
                         </div>
+                        <div class="col-md-1"></div>
                         <div class="col-md-6">
                             <strong>Description:</strong>
-                            <p>${escapeHTML(rowData.description || 'No description available')}</p>
+                            <p>${rowData.description}</p>
                             <div class="image-gallery d-flex justify-content-center">
                                 <img src="images/profile img.png" alt="Image for ticket" width="100px">
                                 <div class="image-container">
                                     <img src="images/profile img.png" alt="Additional image for ticket" width="100px">
                                     <div class="overlay"  data-bs-toggle="modal"
                                             data-bs-target="#imageModel">+3</div>
-                                </div>
-                            </div> 
+                                    </div>
+                                </div> 
                             
-                            <div class="mt-3 mb-3">
-                            <button type="button" class="btn-yes" onclick="handleAssign('${cid}', ${rowData.ticket_id})">Assigned</button>
-                            <button type="button" class="btn-no" onclick="handleReject(${rowData.ticket_id})">Reject</button>
+                                <div class="mt-3 mb-3">
+                                     <button type="button" class="btn-yes" onclick="handleAssign('${cid}', ${rowData.ticket_id})">Assigned</button>
+                                    <button type="button" class="btn-no" onclick="handleReject(${rowData.ticket_id})">Reject</button>
+                                </div>
                             </div>
                         </div>
                     </div>

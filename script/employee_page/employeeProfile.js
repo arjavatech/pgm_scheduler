@@ -2,7 +2,7 @@
 let profileData; // Variable to hold the profile data
 let getCustomerDatasFromDb;
 const CName = localStorage.getItem("CName")
-document.getElementById("CName").innerHTML = CName;
+
 
 document.addEventListener("DOMContentLoaded", function () {
     // document.getElementById('overlay').style.display = 'flex';
