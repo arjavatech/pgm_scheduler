@@ -227,7 +227,7 @@ function createEmployee() {
         last_name: lastName,
         email: email,
         phone_number: phone,
-        specialization: specialization.join(", "),
+        specialization: specialization,
         assigned_locations: location,
         company_id: cid // Ensure this variable is defined
     };
