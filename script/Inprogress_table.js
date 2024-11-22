@@ -1,3 +1,5 @@
+var emp_details_map;
+
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`;
@@ -6,7 +8,7 @@ $(document).ready(function () {
 
         document.getElementById("CName").innerHTML = CName;
     let rowDetails = [];
-    let employeeOptions = ""; // Declare employeeOptions globally
+    // let employeeOptions = ""; // Declare employeeOptions globally
 
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
@@ -17,10 +19,7 @@ $(document).ready(function () {
         .then(response => response.json())
         .then(data => {
             // Populate global employeeOptions for use in both addCard and format
-            employeeOptions = data.map(employee =>
-                
-                `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
-            ).join("");
+            emp_details_map = data;
 
         })
         .catch(error => console.error('Error fetching employees:', error));
@@ -81,7 +80,7 @@ $(document).ready(function () {
                             <label>Employee Name</label>
                             <select class="form-select mt-2 employee-select employee-select-${rowData.ticket_id}" id="employee-select-${rowData.ticket_id}" disabled>
                             <option>${rowData.first_name}</option>
-                            ${employeeOptions}
+                            ${employee_det_options_get(rowData.ticket_type)}
                             </select>
                              <small id="pending-count-${rowData.ticket_id}">Pending work: </small>
                         </div>
@@ -104,6 +103,18 @@ $(document).ready(function () {
                 </td>
             </tr>`;
     }
+
+
+    function employee_det_options_get(ticketType)
+    {
+        var employeeOptions = emp_details_map[ticketType].map(employee =>
+                
+            `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
+        ).join("");
+
+        return employeeOptions;
+    }
+    
     
     // Toggle arrow
     $(document).on('click', 'td.details-control', function () {
@@ -177,7 +188,7 @@ function getPendingWorkCount(employeeId) {
                 <div class="show-more" style="display:none">
                     <p><strong>Employee Name:</strong>
                         <select class="form-select mt-2 employee-select employee-select-${employee.ticket_id}" id="employee_select-${employee.ticket_id}" disabled>
-                        ${employeeOptions}
+                        ${employee_det_options_get(employee.ticket_type)}
                     </select>
                     </p>
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
