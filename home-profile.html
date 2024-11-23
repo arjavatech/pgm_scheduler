@@ -319,6 +319,8 @@
 
         let cid = localStorage.getItem("cid");
 
+        document.getElementById("CName").innerHTML = localStorage.getItem("CName");
+
         document.getElementById('uploadLogo').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
@@ -477,6 +479,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.file_url) {
+                        alert("Upload succeed: " + data);
                         updateLink(data.file_url); 
                     } else {
                         alert("Upload failed: " + data.detail);
@@ -506,6 +509,7 @@
                 });
 
                 if (response.ok) {
+                    alert("link data updated")
                 } else {
                     alert('Error updating link.');
                 }
