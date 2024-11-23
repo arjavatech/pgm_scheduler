@@ -2,7 +2,7 @@
 let profileData; // Variable to hold the profile data
 let getCustomerDatasFromDb;
 const CName = localStorage.getItem("CName")
-document.getElementById("e_name").innerHTML = localStorage.getItem("e_name");
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
