@@ -10,8 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
@@ -189,17 +188,13 @@
                             <div class="spinner"></div>
                         </div>
                         <div class="logo-sty">
-                            <label for="uploadLogo" class="upload-label d-flex justify-content-center">
-
-                                <img id="logoPreview" alt="Upload Logo" style="max-width: 100%; height: auto;">
-                                <input type="file" id="uploadLogo" accept="image/*">
-                                <!-- Pencil icon -->
+                            
+                            <label for="uploadLogo" class="upload-label d-flex justify-content-center"> <img
+                                    id="logoPreview" alt="Upload Logo" style="max-width: 100%; height: auto;"> <input
+                                    type="file" id="uploadLogo" accept="image/*" onchange="handleFileSelect(event)">
                                 <span class="icon-pencil"><i style="cursor: pointer;"
-                                        class="fas fa-pencil-alt"></i></span>
-
-                            </label>
+                                        class="fas fa-pencil-alt"></i></span> </label>
                         </div>
-
 
 
                         <div class="container box-sty">
@@ -343,8 +338,6 @@
                 return;
             }
 
-            console.log("Loaded CID:", cid);
-
             const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/get/${cid}`;
             const loadingIndicator = document.getElementById('l'); // Ensure the loading indicator exists
 
@@ -358,9 +351,9 @@
                     return response.json();
                 })
                 .then(employeesData => {
-                    console.log("Fetched Data:", employeesData);
 
                     // Populate form fields with data
+                    document.getElementById("logoPreview").src = employeesData.logo || "";
                     document.getElementById("company_name").value = employeesData.company_name || "";
                     document.getElementById("phone_number").value = employeesData.phone_number || "";
                     document.getElementById("first_name").value = employeesData.first_name || "";
@@ -380,6 +373,52 @@
                     loadingIndicator.style.display = 'none'; // Hide loading indicator
                 });
         });
+
+        async function updateApiData() {
+            let cid = localStorage.getItem("cid")
+            const updateApiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/update/${cid}`;
+            let updated_data = {
+                company_id: cid,
+                company_name: document.getElementById("company_name").value,
+                phone_number: document.getElementById("phone_number").value,
+                email: document.getElementById("email").value,
+                first_name: document.getElementById("first_name").value,
+                last_name: document.getElementById("last_name").value,
+                street: document.getElementById("street").value,
+                city: document.getElementById("city").value,
+                zip: document.getElementById("zip").value,
+                state: document.getElementById("state").value,
+                address_line: document.getElementById("address_line").value
+            }
+
+
+            try {
+                const response = await fetch(updateApiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updated_data),
+                });
+
+                if (!response.ok) {
+                    loadingIndicator.style.display = 'none';
+                    const errorMessage = await response.text();
+                    throw new Error(`Error: ${response.status} - ${errorMessage}`);
+
+                }
+
+                const data = await response.json();
+
+                setTimeout(() => {
+                    window.location.href = 'home-profile.html';
+                }, 1200);
+
+            } catch (error) {
+                console.error("Failed to assign employee:", error.message);
+                loadingIndicator.style.display = 'none';
+            }
+        }
 
         // Sidebar toggle logic
         document.getElementById('sidebarToggle').addEventListener('click', () => {
@@ -410,56 +449,71 @@
         });
 
 
-        function updateApiData(event) {
-            let cid = localStorage.getItem("cid")
-            console.log(cid)
-            const updateApiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/update/${cid}`;
 
-            const companyData = {
-                company_id: cid,
-                company_name: document.getElementById("company_name").value,
-                phone_number: document.getElementById("phone_number").value,
-                email: document.getElementById("email").value,
-                first_name: document.getElementById("first_name").value,
-                last_name: document.getElementById("last_name").value,
-                street: document.getElementById("street").value,
-                city: document.getElementById("city").value,
-                zip: document.getElementById("zip").value,
-                state: document.getElementById("state").value,
-                address_line: document.getElementById("address_line").value
+
+    </script>
+
+    <script>
+
+        async function handleFileSelect(event) {
+            const formData = new FormData();
+            formData.append("file", $("#uploadLogo")[0].files[0]);
+            const file = event.target.files[0];
+            if (!file) {
+                alert("No file selected.");
+                return;
+            }
+
+            // Preview the selected image
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('logoPreview').src = e.target.result;
             };
 
-            console.log(companyData)
-
-            alert("text")
-
-
-            fetch(updateApiUrl, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(companyData)
+            fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/upload-logo", {
+                method: "POST",
+                body: formData,
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Error: ${response.status}`);
-                        alert(response.status)
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Update successful:', data);
-                    alert(data)
+                    if (data.file_url) {
+                        updateLink(data.file_url); 
+                    } else {
+                        alert("Upload failed: " + data.detail);
+                    }
                 })
                 .catch(error => {
-                    console.error('Error updating data:', error);
-                    alert(error)
+                    console.error("Error:", error);
                 });
+            
         }
 
+        async function updateLink(url) {
+            const cid = localStorage.getItem("cid");
+            const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/update/${cid}`;
+            const payload = {
+                company_id: cid,
+                logo: url
+            };
 
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
 
+                if (response.ok) {
+                } else {
+                    alert('Error updating link.');
+                }
+            } catch (error) {
+                console.error('Error updating link:', error);
+                alert('Error updating link. Check console for details.');
+            }
+        }
     </script>
 </body>
 
