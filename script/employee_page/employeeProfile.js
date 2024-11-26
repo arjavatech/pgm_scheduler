@@ -6,13 +6,13 @@ const CName = localStorage.getItem("CName")
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    // document.getElementById('overlay').style.display = 'flex';
+    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
     // Check if profile data is already loaded
     if (profileData) {
         // Use the already loaded data
         populateProfileData(profileData);
-        // document.getElementById('overlay').style.display = 'none';
     } else {
         // Load data from API
         loadProfileDataFromAPI();
@@ -75,20 +75,23 @@ function populateProfileData(data) {
 
     document.getElementById('availability').value = data.is_active === 1 ? 'Active' : 'In Active';
 
+    const loadingIndicator = document.getElementById('l'); 
+    loadingIndicator.style.display = 'none';
+
 
 }
 
 // Ensure the DOM is fully loaded before executing the script
 function checkbox(specialization) {
-    document.getElementById(specialization === "AC" ? "acCheckbox" : "nonAcCheckbox").checked = true;
+    // document.getElementById(specialization === "AC" ? "acCheckbox" : "nonAcCheckbox").checked = true;
 }
 
 function IsActive(isActive) {
-    document.getElementById(isActive === 1 ? "isAvailable" : "IsNotAvailable").checked = true;
+    // document.getElementById(isActive === 1 ? "isAvailable" : "IsNotAvailable").checked = true;
 }
 
 function EmpStatus(empStatus) {
-    document.getElementById(empStatus === "Active" ? "acCheckbox1" : "nonAcCheckbox1").checked = true;
+    // document.getElementById(empStatus === "Active" ? "acCheckbox1" : "nonAcCheckbox1").checked = true;
 }
 
 
