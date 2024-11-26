@@ -144,9 +144,9 @@ table.dataTable tbody tr:hover {
     margin-right: 5px;
 }
 
-#rejectedTicketTable td .issue-type .AC .circle,
-#unassignedTicketTable td .issue-type .AC .circle,
-#ticketTable td .issue-type .AC .circle {
+#rejectedTicketTable td .issue-type.AC .circle,
+#unassignedTicketTable td .issue-type.AC .circle,
+#ticketTable td .issue-type.AC .circle {
     background-color: #daba1ece;
     height: 5px;
     width: 5px;
@@ -156,10 +156,10 @@ table.dataTable tbody tr:hover {
 #rejectedTicketTable td .issue-type.Refrigerator  .circle,
 #unassignedTicketTable td .issue-type.Refrigerator  .circle,
 #ticketTable td .issue-type.Refrigerator  .circle {
-    background-color: #04b9f6;
-    height: 5px;
-    width: 5px;
-    border-radius: 50%;
+    background-color: #04b9f6 !important;
+    height: 5px !important;
+    width: 5px !important;
+    border-radius: 50% !important;
 }
 
 
@@ -177,9 +177,11 @@ table.dataTable tbody tr:hover {
 #rejectedTicketTable td .issue-type.Refrigerator ,
 #unassignedTicketTable td .issue-type.Refrigerator ,
 #ticketTable td .issue-type.Refrigerator  {
-    background-color: #caedf8;
-    border-radius: 10px;
     
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: #caedf8;
 }
 
 #rejectedTicketTable td .issue-type.rc ,
@@ -320,10 +322,10 @@ a {
 }
 
 
-
+/* 
 .toggle-row.expanded .collapse-icon::before {
     content: "⮟";
-}
+} */
 
 .dataTables_wrapper .dataTables_paginate {
     display: flex !important;
@@ -584,29 +586,6 @@ td.details-control {
 }
 
 
-/* Default down arrow */
-td.details-control::before {
-    content: '';
-    border: solid rgb(72, 70, 70);
-    border-width: 0 2px 1px 0;
-    display: inline-block;
-    padding: 2px;
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    /* Arrow */
-
-}
-
-td.details-control.active::before {
-    content: '';
-    border: solid rgb(72, 70, 70);
-    border-width: 0 1px 2px 0;
-    display: inline-block;
-    padding: 2px;
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-}
-
 /* When toggled, show up arrow */
 tr.shown td.details-control {
     content: ' ';
@@ -643,17 +622,8 @@ tr.shown td.details-control {
     height: 8px;
     border-radius: 50%;
     margin-right: 5px;
-    background: #04b9f6;
 }
-#rejectedTicketTable td #circle2,
-#unassignedTicketTable td #circle2,
-#ticketTable td #circle2 {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 5px;
-    background: red !important;
-}
+
 
 #rejectedTicketTable td div,
 #unassignedTicketTable td div,
@@ -667,7 +637,7 @@ tr.shown td.details-control {
     color: #006103;
     font-weight: bold;
     text-transform: uppercase !important;
-    font-size: 8px !important;
+    font-size: 7px !important;
 }
 
 #rejectedTicketTable td,
@@ -931,7 +901,7 @@ strong {
         color: #006103;
         font-weight: bold;
         text-transform: uppercase !important;
-        font-size: 7px !important;
+        font-size: 6px !important;
     }
 
     #rejectedTicketTable td,
@@ -988,12 +958,12 @@ strong {
 
 @media (max-width:450px) {
     #fix {
-        margin-top: 19% !important;
+        margin-top: 10% !important;
     }
 }
 
 @media (max-width:350px) {
     #fix {
-        margin-top: 25% !important;
+        margin-top: 8% !important;
     }
 }
