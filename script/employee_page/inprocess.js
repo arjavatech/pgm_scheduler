@@ -93,11 +93,24 @@ $(document).ready(function () {
                                    <img src="../images/profile img.png" alt="Image 1" width="100px">
                                 </div>
                                 <div class="uploads">
-                               <label for="upload-${rowData.ticket_id}" class="upload-label">
-                                <span> Add photo</span>
-                                <i class="fa fa-paperclip" aria-hidden="true" style="color:black; text-align:right"></i> 
-                               </label>
-                               <input type="file" id="upload-${rowData.ticket_id}" accept="image/*" style="display: none;"  multiple accept="image/*" >
+                               
+                               <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
+  
+                                <input 
+                                    type="file" 
+                                    id="upload-${rowData.ticket_id}" 
+                                    accept="image/*" 
+                                    style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
+                                    multiple 
+                                />
+                                <!-- Styled Label -->
+                                <label 
+                                    for="upload-${rowData.ticket_id}" 
+                                    style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
+                                    +
+                                </label>
+                                </div>
+
                                </div> 
                              </div>
                              
@@ -213,37 +226,68 @@ $(document).ready(function () {
         });
     
 
-        document.addEventListener('change', function (event) {
-            // Check if the file input changed
-            if (event.target.id.startsWith('upload-')) {
-                const photoInput = event.target;
-                const previewContainer = document.getElementById('image-preview-container');
-                
-                // Clear any existing previews
-              
-        
-                // Loop through the selected files
-                for (const file of photoInput.files) {
-                    const reader = new FileReader();
-        
-                    // Create a preview when the file is read
-                    reader.onload = function (e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result; // Use the file's data URL
-                        img.style.width = '50px'; // Set a width for the preview
-                        img.style.margin = '2px'; // Add some margin
-                        previewContainer.appendChild(img); // Add the image to the preview container
-                    };
-        
-                    // Read the file as a data URL
-                    reader.readAsDataURL(file);
-                }
-            }
-        });
-        
-// Save button 
-
+  
 // Use event delegation to handle clicks on elements with the 'save' class
+
+document.addEventListener('change', function (event) {
+    // Check if the event target is a file input with an ID starting with 'upload-'
+    if (event.target.id.startsWith('upload-')) {
+        const photoInput = event.target; // The file input element
+        const previewContainer = document.getElementById('image-preview-container');
+
+        // Maintain a list of uploaded files
+        const uploadedFiles = Array.from(previewContainer.children).map(child => child.dataset.filename || '');
+        const newFiles = Array.from(photoInput.files);
+
+        // Check the combined file count
+        if (uploadedFiles.length + newFiles.length > 3) {
+            
+            photoInput.value = ''; // Clear the input
+            return;
+        }
+
+        // Loop through the new files and create previews
+        for (const file of newFiles) {
+            if (uploadedFiles.includes(file.name)) {
+                alert(`File "${file.name}" is already uploaded.`);
+                continue; // Skip duplicates
+            }
+
+            const reader = new FileReader();
+
+            // Create a preview when the file is read
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result; 
+                img.style.width = '100px'; 
+                img.style.margin = '2px'; 
+                img.style.border = '1px solid #ccc'; 
+                img.dataset.filename = file.name; 
+                previewContainer.appendChild(img); 
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+        }
+
+        // Disable the input if the total uploaded files reach the limit
+        if (previewContainer.children.length >= 3) {
+            photoInput.disabled = true;
+            alert("You have uploaded the maximum number of photos. The input is now disabled.");
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
 document.addEventListener('click', async function (event) {
     // Check if the clicked element has the class 'save'
     if (event.target.classList.contains('save')) {

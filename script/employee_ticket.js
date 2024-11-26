@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
-        console.log(ticket)
+        // console.log(ticket)
         // Clean the string by replacing curly quotes with straight quotes
         const cleanedSpecialization = ticket.specialization.replace(/[“”]/g, '"');
 
@@ -63,38 +63,49 @@ $(document).ready(function () {
         const [ac, Refrigerator = "rc"] = specializationArray;
 
         // Log the values
-        console.log(ac, Refrigerator); // Output: "Refrigerator"
+        // console.log(ac, Refrigerator); // Output: "Refrigerator"
 
         const rowNode = table.row.add([
             ticket.first_name,
             ticket.phone_number,
-           `<div class="issue-type ${ac}"><span class="circle"> </span>${ac}</div><div class="issue-type ${Refrigerator} margin"><span class="circle2" id="circle2"></span>${Refrigerator}</div>`,
+            `<div class="issue-type ${ac}"><span class="circle"> </span>${ac}</div><div class="issue-type ${Refrigerator} margin"><span class="circle"></span>${Refrigerator}</div>`,
             ticket.email,
             ticket.assigned_locations,
             ticket.employee_no_of_completed_work,
             ticket.no_of_pending_works,
         ]).draw(false).node(); // Get the row node after adding
+        $(rowNode).find('td:first').addClass('details-control');
     }
 
     // Function to create and append the card for mobile view
     function addCard(employee, index) {
+        const cleanedSpecialization = employee.specialization.replace(/[“”]/g, '"');
+
+        // Parse the cleaned string into an array
+        const specializationArray = JSON.parse(cleanedSpecialization);
+
+        // Destructure the array into separate variables
+        const [ac, Refrigerator = "rc"] = specializationArray;
+
+        // Log the values
+        // console.log(ac, Refrigerator); // Output: "Refrigerator"
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Emp ID </strong>  00${index}</p>
+                        <p><strong>Emp ID :</strong>  00${index}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Phone Number </strong>  ${employee.phone_number}</p>
+                        <p><strong>Phone Number :</strong>  ${employee.phone_number}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Emp Name </strong>  ${employee.first_name}</p>
+                        <p><strong>Emp Name :</strong>  ${employee.first_name}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Specialization </strong>  ${employee.specialization}</p>
+                        <p><strong>Specialization :</strong>  ${ac} <span id="${Refrigerator}">${Refrigerator}</span></p>
                     </div>
                 </div>
                 <div class="row">
@@ -214,6 +225,11 @@ function createEmployee() {
     const location = document.querySelector("input[placeholder='Assigned Location']").value.trim();
     const specialization = Array.from(document.querySelectorAll("#dropdownOptions input[type='checkbox']:checked"))
         .map(option => option.value);
+    
+    
+
+    // Convert the array to a string with curly quotes
+    const formattedOutputOfspecialization = `["${specialization.join('","').replace(/"/g, '“').replace(/"/g, '”')}"]`;
 
     // Input validation
     if (!firstName || !lastName || !email || !phone || specialization.length === 0) {
@@ -227,10 +243,11 @@ function createEmployee() {
         last_name: lastName,
         email: email,
         phone_number: phone,
-        specialization: specialization,
+        specialization: formattedOutputOfspecialization,
         assigned_locations: location,
         company_id: cid // Ensure this variable is defined
     };
+    console.log(employeeObject)
 
     fetch(apiUrl, { // Ensure `apiUrl` is defined
         method: 'POST',

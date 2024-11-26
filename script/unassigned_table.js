@@ -2,7 +2,7 @@ var emp_details_map;
 
 const cid = localStorage.getItem("cid");
 $(document).ready(function () {
-   
+
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/unassigned/${cid}`;
     let rowDetails = [];
     const loadingIndicator = document.getElementById('l');
@@ -66,7 +66,7 @@ $(document).ready(function () {
     function format(rowData) {
         console.log(rowData.ticket_type); // Log the ticket ID
         // Output: "Refrigerator"
-   
+
         return `
            <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -105,7 +105,7 @@ $(document).ready(function () {
                 </td>
             </tr>`;
     }
-    
+
     // Expand row details on click
     $('#ticketTable tbody').on('click', 'td.details-control', function () {
         const tr = $(this).closest('tr');
@@ -163,10 +163,13 @@ $(document).ready(function () {
                 <div class="show-more" style="display:none">
                     <p><strong>Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p><strong>Employee:</strong>
-                        <select class="form-select employee-select">
+                   <p><strong>Employee Name:</strong>
+                        <select class="form-select mt-2 employee-select employee-select-${employee.ticket_id}" id="employee_select-${employee.ticket_id}">
                         ${employee_det_options_get(employee.ticket_type)}
-                        </select>
+                    </select>
+                    </p>
+                    <p><strong>Employee pending Work:</strong>
+                          <small id="pending-count-${employee.ticket_id}">Pending work: N/A</small>
                     </p>
                     <div class="image-gallery d-flex justify-content-center">
                         <img src="images/profile img.png" alt="Image 1" width="100px">
@@ -205,7 +208,7 @@ async function assignedEmployee(cid, employee_id, ticket_id) {
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
     const assignAPI = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/approve_ticket/${cid}/${ticket_id}/${employee_id}`;
-    
+
     try {
         const response = await fetch(assignAPI, {
             method: 'PUT',
@@ -217,12 +220,12 @@ async function assignedEmployee(cid, employee_id, ticket_id) {
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Error: ${response.status} - ${errorMessage}`);
-          
+
         }
         const data = await response.json();
         loadingIndicator.style.display = 'none';
         window.location.href = 'Unassigned.html';
-        
+
     } catch (error) {
         console.error("Failed to assign employee:", error.message);
         loadingIndicator.style.display = 'none';
@@ -291,12 +294,16 @@ async function handleReject(ticketid) {
         loadingIndicator.style.display = 'none';
     }
 }
+function employee_det_options_get(ticketType) {
+    if (!emp_details_map || !emp_details_map[ticketType]) {
+        console.error(`Invalid ticketType: ${ticketType}`);
+        return `<option disabled>No employees available for ${ticketType}</option>`;
+    }
 
-function employee_det_options_get(ticketType)
-{
     var employeeOptions = emp_details_map[ticketType].map(employee =>
-            
-        `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>${employee.employee_name}</option>`
+        `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>
+            ${employee.employee_name}
+        </option>`
     ).join("");
 
     return employeeOptions;

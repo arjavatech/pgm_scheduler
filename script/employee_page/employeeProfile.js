@@ -47,6 +47,14 @@ function populateProfileData(data) {
 
     console.log(data)
 
+    const cleanedSpecialization = data.specialization.replace(/[“”]/g, '"');
+
+        // Parse the cleaned string into an array
+    const specializationArray = JSON.parse(cleanedSpecialization);
+
+    // Destructure the array into separate variables
+    const [ac, Refrigerator = ""] = specializationArray;
+
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
     document.getElementById('last_name').value = data.last_name || '';
@@ -64,7 +72,7 @@ function populateProfileData(data) {
     document.getElementById('experience').value = data.experience || '';
 
     document.getElementById('street').value = data.street || '';
-    document.getElementById('specialization').value = data.specialization || '';
+    document.getElementById('specialization').value = [ac, Refrigerator] || '';
 
     document.getElementById('city').value = data.city || '';
     document.getElementById('zip').value = data.zip || '';
