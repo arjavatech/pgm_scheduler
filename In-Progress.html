@@ -15,6 +15,46 @@
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/image.css">
 </head>
+<style>
+    #rejectedTicketTable td .issue-type.AC .circle,
+    #unassignedTicketTable td .issue-type.AC .circle,
+    #ticketTable td .issue-type.AC .circle {
+        background-color: #daba1ece !important;
+        height: 5px;
+        width: 5px;
+        border-radius: 50%;
+    }
+
+    #rejectedTicketTable td .issue-type.Refrigerator .circle,
+    #unassignedTicketTable td .issue-type.Refrigerator .circle,
+    #ticketTable td .issue-type.Refrigerator .circle {
+        background-color: #04b9f6 !important;
+        height: 5px;
+        width: 5px;
+        border-radius: 50%;
+    }
+
+
+
+
+    #rejectedTicketTable tbody td .issue-type.AC,
+    #unassignedTicketTable tbody td .issue-type.AC,
+    #ticketTable tbody td .issue-type.AC {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        background-color: #f6eec9;
+    }
+
+    #rejectedTicketTable td .issue-type.Refrigerator,
+    #unassignedTicketTable td .issue-type.Refrigerator,
+    #ticketTable td .issue-type.Refrigerator {
+        background-color: #caedf8;
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+    }
+</style>
 
 <body>
     <div id="nav" class="mb-5">
@@ -81,7 +121,7 @@
                                             style="padding-left: 10px;color: white;">Profile</span></a>
                                     <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
                                         class="m-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                         <img src="icon/Vector.png" style="width: 30px;margin-top: -5px;">
+                                        <img src="icon/Vector.png" style="width: 30px;margin-top: -5px;">
                                         <span class="content text-white list-group-item" data-bs-toggle="modal"
                                             data-bs-target="#logoutModal">Logout</span>
                                     </div>
@@ -129,30 +169,30 @@
             </div>
         </div>
 
-       
-  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content custom-modal-content">
 
-        <!-- Modal Header with Title -->
-        <div class="modal-header justify-content-center">
-          <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content custom-modal-content">
 
+                    <!-- Modal Header with Title -->
+                    <div class="modal-header justify-content-center">
+                        <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body custom-modal-body">
+                        Are you sure you want to log out?
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer custom-modal-footer">
+                        <button type="button" class="btn-yes">Yes</button>
+                        <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Modal Body -->
-        <div class="modal-body custom-modal-body">
-          Are you sure you want to log out?
-        </div>
-
-        <!-- Modal Footer -->
-        <div class="modal-footer custom-modal-footer">
-          <button type="button" class="btn-yes">Yes</button>
-          <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
-        </div>
-      </div>
-    </div>
-  </div>
         <!-- Modal -->
         <div class="modal fade" id="imageModel" tabindex="-1" aria-labelledby="imageModelLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
