@@ -45,6 +45,8 @@ async function loadProfileDataFromAPI() {
 // Function to populate profile data into the form fields
 function populateProfileData(data) {
 
+    console.log(data)
+
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
     document.getElementById('last_name').value = data.last_name || '';
