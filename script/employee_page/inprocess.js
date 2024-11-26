@@ -86,32 +86,98 @@ $(document).ready(function () {
                         <div class="col-md-6"style="text-align:left">
                             <strong>Description:</strong>
                             <p>${rowData.description}</p>
-                            <div class="image-gallery d-flex">
-                              
-                                <div id="image-preview-container">
+                           <div class="image-gallery d-flex">
+                           <div id="image-preview-container"></div>
+                            <div class="uploads">
+                                <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
+                                    <input 
+                                        type="file" 
+                                        id="upload1-${rowData.ticket_id}-${rowData.id}"  
+                                        accept="image/*" 
+                                        onchange="handleFileSelect1(event)"
+                                        style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
+                                         
+                                    />
+                                    <!-- Styled Label -->
+                                    ${rowData.photo_1 ? `
+                                    <img 
+                                        id="image-preview-${rowData.ticket_id}-${rowData.id}" 
+                                        src="${rowData.photo_1}" 
+                                        alt="Uploaded Image" 
+                                        style="width: 100%; height: 100%; object-fit: cover;" 
+                                    />
+                                ` : `
+                                    <label 
+                                        for="upload1-${rowData.ticket_id}-${rowData.id}"  
+                                        style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
+                                        +
+                                    </label>
+                                `}
+                                </div>
                                 
-                                   <img src="../images/profile img.png" alt="Image 1" width="100px">
-                                </div>
-                                <div class="uploads">
-                               
-                               <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
-  
-                                <input 
-                                    type="file" 
-                                    id="upload-${rowData.ticket_id}" 
-                                    accept="image/*" 
-                                    style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
-                                    multiple 
-                                />
-                                <!-- Styled Label -->
-                                <label 
-                                    for="upload-${rowData.ticket_id}" 
-                                    style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
-                                    +
-                                </label>
-                                </div>
+                            </div>
+                            
 
-                               </div> 
+                            <div class="uploads">
+                                <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
+                                    <input 
+                                        type="file" 
+                                        id="upload2-${rowData.ticket_id}-${rowData.id}"  
+                                        accept="image/*" 
+                                        onchange="handleFileSelect2(event)"
+                                        style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
+                                         
+                                    />
+                                    <!-- Styled Label -->
+                                    ${rowData.photo_2 ? `
+                                    <img 
+                                        id="image-preview-${rowData.ticket_id}-${rowData.id}" 
+                                        src="${rowData.photo_2}" 
+                                        alt="Uploaded Image" 
+                                        style="width: 100%; height: 100%; object-fit: cover;" 
+                                    />
+                                ` : `
+                                    <label 
+                                        for="upload2-${rowData.ticket_id}-${rowData.id}"  
+                                        style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
+                                        +
+                                    </label>
+                                `}
+                                </div>
+                                
+                            </div>
+
+                            <div class="uploads">
+                                <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
+                                    <input 
+                                        type="file" 
+                                        id="upload3-${rowData.ticket_id}-${rowData.id}" 
+                                        accept="image/*" 
+                                        src="${rowData.photo_3}"
+                                        onchange="handleFileSelect3(event)"
+                                        style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
+                                         
+                                    />
+                                    <!-- Styled Label -->
+                                     ${rowData.photo_3 ? `
+                                    <img 
+                                        id="image-preview-${rowData.ticket_id}-${rowData.id}" 
+                                        src="${rowData.photo_3}" 
+                                        alt="Uploaded Image" 
+                                        style="width: 100%; height: 100%; object-fit: cover;" 
+                                    />
+                                ` : `
+                                    <label 
+                                        for="upload3-${rowData.ticket_id}-${rowData.id}"  
+                                        style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
+                                        +
+                                    </label>
+                                `}
+                                </div>
+                                
+                            </div>
+
+                        </div>
                              </div>
                              
                         </div>
@@ -226,135 +292,30 @@ $(document).ready(function () {
         });
     
 
-  
-// Use event delegation to handle clicks on elements with the 'save' class
-
-document.addEventListener('change', function (event) {
-    // Check if the event target is a file input with an ID starting with 'upload-'
-    if (event.target.id.startsWith('upload-')) {
-        const photoInput = event.target; // The file input element
-        const previewContainer = document.getElementById('image-preview-container');
-
-        // Maintain a list of uploaded files
-        const uploadedFiles = Array.from(previewContainer.children).map(child => child.dataset.filename || '');
-        const newFiles = Array.from(photoInput.files);
-
-        // Check the combined file count
-        if (uploadedFiles.length + newFiles.length > 3) {
-            
-            photoInput.value = ''; // Clear the input
-            return;
-        }
-
-        // Loop through the new files and create previews
-        for (const file of newFiles) {
-            if (uploadedFiles.includes(file.name)) {
-                alert(`File "${file.name}" is already uploaded.`);
-                continue; // Skip duplicates
-            }
-
-            const reader = new FileReader();
-
-            // Create a preview when the file is read
-            reader.onload = function (e) {
-                const img = document.createElement('img');
-                img.src = e.target.result; 
-                img.style.width = '100px'; 
-                img.style.margin = '2px'; 
-                img.style.border = '1px solid #ccc'; 
-                img.dataset.filename = file.name; 
-                previewContainer.appendChild(img); 
-            };
-
-            // Read the file as a data URL
-            reader.readAsDataURL(file);
-        }
-
-        // Disable the input if the total uploaded files reach the limit
-        if (previewContainer.children.length >= 3) {
-            photoInput.disabled = true;
-            alert("You have uploaded the maximum number of photos. The input is now disabled.");
-        }
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-document.addEventListener('click', async function (event) {
-    // Check if the clicked element has the class 'save'
-    if (event.target.classList.contains('save')) {
-        const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
-        loadingIndicator.style.display = 'flex'; // Show loading before fetch
-
-        const closestSendElement = event.target.closest('.save');
-
-        if (closestSendElement) {
-           
-            const ticketId = closestSendElement.getAttribute('ticket-tocken');
-            const Id = closestSendElement.getAttribute('id');
-           
-            const workStartedTime = document.getElementById(`start-time-${Id}`).value;
-            const workEndedTime = document.getElementById(`end-time-${Id}`).value;
-            const photos = ""; // Assuming you will add photo logic later
-
-            const photoInput = document.getElementById(`upload-${Id}`);
-            const formData = new FormData();
-    
-            // Check for photos
-            if (photoInput) {
-                for (const file of photoInput.files) {
-                    formData.append('photos', file); // Adjust 'photos' to the expected field name in your backend
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileInput = document.getElementById(`upload-${rowData.ticket_id}`);
+            const maxFiles = 3;
+        
+            fileInput.addEventListener("change", function (event) {
+                const files = event.target.files;
+        
+                // If more than 3 files are selected, keep only the first 3
+                if (files.length > maxFiles) {
+                    alert(`You can only select up to ${maxFiles} files.`);
+                    
+                    // Convert FileList to Array and keep only the first 3 files
+                    const fileArray = Array.from(files).slice(0, maxFiles);
+                    
+                    // Create a DataTransfer object to modify FileList
+                    const dataTransfer = new DataTransfer();
+                    fileArray.forEach(file => dataTransfer.items.add(file));
+                    
+                    // Assign modified FileList back to the input
+                    fileInput.files = dataTransfer.files;
                 }
-            } else {
-                console.warn(`No file input found for ID: upload-${Id}`);
-            }
-          
-           // Output the ticket ID for debugging
+            });
+        });
 
-            try {
-                // Make the API call to save the ticket status
-                const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/save/${ticketId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        work_started_time : workStartedTime == "" ? null : workStartedTime,
-                        work_ended_time : workEndedTime == "" ? null : workEndedTime
-                    })
-                });
-
-                // Check for HTTP response errors
-                if (!response.ok) throw new Error(`Error: ${response.status}`);
-                
-                // Parse the JSON response
-                const data = await response.json();
-                if(data.message)
-                {
-                    setTimeout(() => {
-                        loadingIndicator.style.display = 'none';
-                        window.location.href = 'inProcessTicket.html';
-                    }, 1000);
-                }
-                else
-                {
-                    loadingIndicator.style.display = 'none';
-                }
-            } catch (error) {
-                loadingIndicator.style.display = 'none';
-                console.error("Failed to save ticket status:", error.message);
-            }
-        } else {
-            console.error("No closest element with ID 'btn' found.");
-        }
-    }
-});
 
 // card part
     // Function to create and append the card for mobile view
@@ -400,11 +361,10 @@ document.addEventListener('click', async function (event) {
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
                     <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
                         <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3</div>
+                            <img src="${employee.photo_1}" alt="Image 1" width="100px">
+                            <img src="${employee.photo_2}" alt="Image 1" width="100px">
+                            <img src="${employee.photo_3}" alt="Image 1" width="100px">
                         </div>
                     </div>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
@@ -471,3 +431,186 @@ function disable(ticket_id) {
     document.querySelector(`.employee-select-${ticket_id}`).disabled = false;
     document.getElementById(`conform-${ticket_id}`).style.display = "block";
 }
+
+
+async function handleFileSelect1(event) {
+    const file = event.target.files[0]; // Get the selected file
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
+
+    // Convert file to Base64 format
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+
+        const ticketId = event.target.id.split("-")[1];
+        const ticketToken = event.target.id.split("-")[2];
+        const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
+        const fileName = file.name;
+
+        document.getElementById(`upload1-${ticketId}-${ticketToken}`).src = e.target.result;
+
+        try {
+            // Send Base64 data to the server
+            const response = await fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_logo_upload", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    file_name: fileName,
+                    file_data: base64Data,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Upload succeeded: " + data.file_url);
+                updateLink(data.file_url, 1, ticketId, ticketToken); // Update UI with the uploaded file URL
+            } else {
+                alert("Upload failed: " + data.detail);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred during the upload. Please try again.");
+        }
+    };
+
+    reader.readAsDataURL(file); // Read file as Base64
+}
+
+async function handleFileSelect2(event) {
+    const ticketId = event.target.id.split("-")[1];
+    const ticketToken = event.target.id.split("-")[2];
+    const file = event.target.files[0]; // Get the selected file
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
+
+    // Convert file to Base64 format
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
+        const fileName = file.name;
+        document.getElementById(`upload2-${ticketId}-${ticketToken}`).src = e.target.result;
+
+        try {
+            // Send Base64 data to the server
+            const response = await fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_logo_upload", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    file_name: fileName,
+                    file_data: base64Data,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Upload succeeded: " + data.file_url);
+                updateLink(data.file_url, 2, ticketId, ticketToken); // Update UI with the uploaded file URL
+            } else {
+                alert("Upload failed: " + data.detail);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred during the upload. Please try again.");
+        }
+    };
+
+    reader.readAsDataURL(file); // Read file as Base64
+}
+
+async function handleFileSelect3(event) {
+    const ticketId = event.target.id.split("-")[1];
+    const ticketToken = event.target.id.split("-")[2];
+    
+    const file = event.target.files[0]; // Get the selected file
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
+
+    // Convert file to Base64 format
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
+        const fileName = file.name;
+        document.getElementById(`upload3-${ticketId}-${ticketToken}`).src = e.target.result;
+
+        try {
+            // Send Base64 data to the server
+            const response = await fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_logo_upload", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    file_name: fileName,
+                    file_data: base64Data,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Upload succeeded: " + data.file_url);
+                updateLink(data.file_url, 3, ticketId, ticketToken); // Update UI with the uploaded file URL
+            } else {
+                alert("Upload failed: " + data.detail);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred during the upload. Please try again.");
+        }
+    };
+
+    reader.readAsDataURL(file); // Read file as Base64
+}
+
+        async function updateLink(url, id, ticketId, ticketToken) {
+            const cid = localStorage.getItem("cid");
+            const eid = localStorage.getItem("eid");
+            const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/update/${ticketToken}`;
+            const payload = id == 1 ? {
+                company_id: cid,
+                employee_id: eid,
+                ticket_id: parseInt(ticketId),
+                photo_1: url
+            } : id ==2 ?  {
+                company_id: cid,
+                employee_id: eid,
+                ticket_id: parseInt(ticketId),
+                photo_2: url
+            } : {
+                company_id: cid,
+                employee_id: eid,
+                ticket_id: parseInt(ticketId),
+                photo_3: url
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert("link data updated")
+                } else {
+                    alert('Error updating link.');
+                }
+            } catch (error) {
+                console.error('Error updating link:', error);
+                alert('Error updating link. Check console for details.');
+            }
+        }
