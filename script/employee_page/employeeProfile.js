@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to load profile data from the API
 async function loadProfileDataFromAPI() {
     const eid = localStorage.getItem("eid");
-    console.log(eid);
     const url = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/get/${eid}`;
 
     try {
@@ -30,7 +29,7 @@ async function loadProfileDataFromAPI() {
         if (!response.ok) {
             throw new Error(`Error fetching data: ${response.statusText}`);
         }
-        profileData = await response.json(); // Store data in the global variable
+        profileData = await response.json(); 
         checkbox(profileData.specialization);
         IsActive(profileData.is_active);
         EmpStatus(profileData.employee_status);
@@ -49,6 +48,8 @@ function populateProfileData(data) {
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
     document.getElementById('last_name').value = data.last_name || '';
+
+    document.getElementById("logoPreview").src = data.photo || '';
 
     document.getElementById('email').value = data.email || '';
     document.getElementById('phone_number').value = data.phone_number || '';
@@ -180,3 +181,75 @@ function homePage() {
 }
 
 checkbox();
+
+async function handleFileSelect(event) {
+    const file = event.target.files[0]; // Get the selected file
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
+
+    // Convert file to Base64 format
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
+        const fileName = file.name;
+
+        try {
+            // Send Base64 data to the server
+            const response = await fetch("https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_logo_upload", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    file_name: fileName,
+                    file_data: base64Data,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert("Upload succeeded: " + data.file_url);
+                updateLink(data.file_url); // Update UI with the uploaded file URL
+            } else {
+                alert("Upload failed: " + data.detail);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred during the upload. Please try again.");
+        }
+    };
+
+    reader.readAsDataURL(file); // Read file as Base64
+}
+
+async function updateLink(url) {
+    const cid = localStorage.getItem("cid");
+    const eid = localStorage.getItem("eid");
+    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/update/${eid}`;
+    const payload = {
+        company_id: cid,
+        photo: url
+    };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            alert("link data updated")
+        } else {
+            alert('Error updating link.');
+        }
+    } catch (error) {
+        console.error('Error updating link:', error);
+        alert('Error updating link. Check console for details.');
+    }
+}

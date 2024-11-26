@@ -502,40 +502,6 @@ async function handleFileSelect(event) {
     reader.readAsDataURL(file); // Read file as Base64
 }
 
-        // async function handleFileSelect(event) {
-        //     const formData = new FormData();
-        //     formData.append("file", $("#uploadLogo")[0].files[0]);
-        //     const file = event.target.files[0];
-        //     if (!file) {
-        //         alert("No file selected.");
-        //         return;
-        //     }
-
-        //     // Preview the selected image
-        //     const reader = new FileReader();
-        //     reader.onload = function (e) {
-        //         document.getElementById('logoPreview').src = e.target.result;
-        //     };
-
-        //     fetch("http://127.0.0.1:8000/company_logo_upload", {
-        //         method: "POST",
-        //         body: formData,
-        //     })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             if (data.file_url) {
-        //                 alert("Upload succeed: " + data);
-        //                 updateLink(data.file_url); 
-        //             } else {
-        //                 alert("Upload failed: " + data.detail);
-        //             }
-        //         })
-        //         .catch(error => {
-        //             console.error("Error:", error);
-        //         });
-            
-        // }
-
         async function updateLink(url) {
             const cid = localStorage.getItem("cid");
             const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/update/${cid}`;
