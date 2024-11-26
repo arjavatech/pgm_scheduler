@@ -17,7 +17,27 @@
 </head>
 
 <style>
+#rejectedTicketTable tbody td .issue-type.AC,
+#unassignedTicketTable tbody td .issue-type.AC,
+#ticketTable tbody td .issue-type.AC {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #f6eec9;
+}
 
+#rejectedTicketTable td .issue-type.Refrigerator ,
+#unassignedTicketTable td .issue-type.Refrigerator ,
+#ticketTable td .issue-type.Refrigerator  {
+    background-color: #caedf8;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+#rc{
+    display: none;
+}
 </style>
 
 
@@ -123,7 +143,7 @@
                                                 onclick="event.stopPropagation()">
                                                 <label><input type="checkbox" value="AC" onchange="updateButton(this)">
                                                     AC</label>
-                                                <label><input type="checkbox" value="Refrigerator "
+                                                <label><input type="checkbox" value="Refrigerator"
                                                         onchange="updateButton(this)"> Refrigerator </label>
 
                                             </div>

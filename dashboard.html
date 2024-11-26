@@ -18,20 +18,20 @@
 </head>
 
 <style>
-    
-.modal-header {
-    background-image: radial-gradient(#004102, #131313) !important;
-    color: white;
-}
+    .modal-header {
+        background-image: radial-gradient(#004102, #131313) !important;
+        color: white;
+    }
 
     @media (max-width:991px) {
-        #notification{
+        #notification {
             background-color: white;
             border-radius: 10px;
             margin-bottom: 5%;
         }
 
     }
+
     @media (max-width:768px) {
         .chart-container2 {
             margin-left: 0;
@@ -39,6 +39,12 @@
 
         #notification {
             margin-bottom: 5%;
+        }
+    }
+
+    @media (max-width:670px) {
+        #ticketChart1 p{
+            font-size: 9px !important;
         }
     }
 </style>
@@ -161,16 +167,16 @@
                                     <div class="row">
                                         <div class="col-12 col-lg-12">
                                             <div class="row" id="ticketChart1">
-                                                <div class="col-12 col-md-2">
+                                                <div class="col-12 col-md-2 col-sm-2">
                                                     <p class="fw-bold mt-4 db"
                                                         style="text-align: start;font-size: 12px">
                                                         Ticket
                                                         History</p>
                                                 </div>
-                                                <div class="col-12 col-md-10 d-flex justify-content-center mt-3"
+                                                <div class="col-12 col-md-10 col-sm-10 d-flex justify-content-center mt-3"
                                                     style="gap: 3%;">
                                                     <button onclick="updateChart('12months', this)" class="btn active"
-                                                        id="btn12months">12 Months</button>
+                                                        id="btnmonths">12 Months</button>
                                                     <button onclick="updateChart('6months', this)" class="btn"
                                                         id="btnmonths">6
                                                         Months</button>
@@ -214,7 +220,8 @@
                                 </div>
 
                                 <div class="col-12 col-lg-4" id="notification">
-                                    <div style="background-color: white; padding: 20px;border-radius: 13px;" id="divNotification">
+                                    <div style="background-color: white; padding: 20px;border-radius: 13px;"
+                                        id="divNotification">
                                         <p class="fw-bold mt-1" style="text-align: start;font-size: 12px;">
                                             Notification
                                         </p>
@@ -232,27 +239,27 @@
     </div>
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content custom-modal-content">
-    
-            <!-- Modal Header with Title -->
-            <div class="modal-header justify-content-center">
-              <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
-    
+            <div class="modal-content custom-modal-content">
+
+                <!-- Modal Header with Title -->
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn-yes">Yes</button>
+                    <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
+                </div>
             </div>
-    
-            <!-- Modal Body -->
-            <div class="modal-body custom-modal-body">
-              Are you sure you want to log out?
-            </div>
-    
-            <!-- Modal Footer -->
-            <div class="modal-footer custom-modal-footer">
-              <button type="button" class="btn-yes">Yes</button>
-              <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
     <div class="loading" id="l">
         <div class="spinner"></div>
     </div>
