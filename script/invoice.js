@@ -67,6 +67,8 @@ $(document).ready(function () {
     function format(rowData) {
         const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
         const workEndedTime = new Date(rowData.work_ended_time).toISOString().split('T')[0];
+        console.log(workStartedTime)
+        console.log(workEndedTime)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -80,21 +82,21 @@ $(document).ready(function () {
                             
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="start-time">Work started time:</label>
-                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${workStartedTime}">
+                                    value="${rowData.work_started_time}">
                             </div>
 
 
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="end-time">Work ended time :</label>
-                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${workEndedTime}">                                
-                            </div>                            
+                                    value="${rowData.work_ended_time}">                                
+                            </div>                             
                         </div>
                         <div class="col-md-1"></div>
-                        <div class="col-md-6">
+                       <div class="col-md-6">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
                             <div class="image-gallery d-flex justify-content-center">
@@ -185,6 +187,9 @@ $(document).ready(function () {
                                             data-bs-target="#imageModel">+3</div>
                         </div>
                     </div>
+                    <button type="button" id="invoice" class="btn-yes btn-reassign mt-3" style="width:100%" data-bs-toggle="modal" data-bs-target="#InvoiceModal">
+                        Generate Invoice
+                    </button>
                     <p class="text-center pt-3 mb-2 showLessButton">show less &#9650;</p>       
                 </div>
             </div>
