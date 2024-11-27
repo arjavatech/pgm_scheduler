@@ -41,7 +41,7 @@ $(document).ready(function () {
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
             ticket.ticket_id,
-            `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
+            `<div class="issue-type ${ticket.ticket_type}"><span class="circle"></span>${ticket.ticket_type}</div>`,
             ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,

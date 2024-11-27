@@ -62,7 +62,7 @@ $(document).ready(function () {
         // Destructure the array into separate variables
         const [ac, Refrigerator = "rc"] = specializationArray;
 
-        const deleteButton = `<button class="delete-btn btn" data-id="${ticket.employee_id}">Delete</button>`;
+        const deleteButton = `<button class="delete-btn btn" onclick="showDeleteEmployeeModal('${ticket.employee_id}')">Delete</button>`;
 
         // Log the values
         // console.log(ac, Refrigerator); // Output: "Refrigerator"
@@ -138,34 +138,74 @@ $(document).ready(function () {
         $('#card-container').append(cardHtml);
     }
 
-    $(document).on('click', '.delete-btn', function () {
-        const eid = $(this).data('id');
-        const row = $(this).closest('tr');
-        const loadingIndicator = document.getElementById('l');
-        loadingIndicator.style.display = 'flex';
-
-        
-        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete/${eid}`, {
-            method: 'PUT'
-        })
-            .then(response => {
-                loadingIndicator.style.display = 'none';
-                if (!response.ok) {
-                    throw new Error('Failed to delete ticket');
-                }
-                table.row(row).remove().draw();
-                
-            })
-            .catch(error => {
-                alert('Failed to delete ticket. Please try again.');
-            });
-
-    });
-
 });
 
+function showDeleteEmployeeModal(datas) {
+    // Create modal elements
+    const modal = document.createElement('div');
+    modal.classList.add('modal', 'fade');
+    modal.id = 'deleteModal';
+    modal.tabIndex = -1;
+    modal.setAttribute('aria-labelledby', 'deleteModalLabel');
+    modal.setAttribute('aria-hidden', 'true');
 
+    const modalDialog = document.createElement('div');
+    modalDialog.classList.add('modal-dialog', 'modal-dialog-centered');
 
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content', 'custom-modal-content');
+
+    const modalHeader = document.createElement('div');
+    modalHeader.classList.add('modal-header', 'justify-content-center');
+    
+    const modalTitle = document.createElement('h5');
+    modalTitle.classList.add('modal-title');
+    modalTitle.id = 'deleteModalLabel';
+    modalTitle.textContent = 'Delete';
+
+    const modalBody = document.createElement('div');
+    modalBody.classList.add('modal-body', 'custom-modal-body');
+    modalBody.textContent = 'Are you sure you want to delete the employee?';
+
+    const modalFooter = document.createElement('div');
+    modalFooter.classList.add('modal-footer', 'custom-modal-footer');
+
+    const btnYes = document.createElement('button');
+    btnYes.type = 'button';
+    btnYes.classList.add('btn-yes');
+    btnYes.textContent = 'Yes';
+    btnYes.onclick = function() {
+        // Handle delete logic
+        deleteEmp(datas)
+        console.log('Employee deleted');
+        modal.remove();
+        modalInstance.hide();
+    };
+
+    const btnNo = document.createElement('button');
+    btnNo.type = 'button';
+    btnNo.classList.add('btn-no');
+    btnNo.setAttribute('data-bs-dismiss', 'modal');
+    btnNo.textContent = 'No';
+    btnNo.onclick = function() {
+        modal.remove();
+        modalInstance.hide();
+    };
+
+    // Append elements to create the full modal structure
+    modalFooter.appendChild(btnYes);
+    modalFooter.appendChild(btnNo);
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+    modalContent.appendChild(modalFooter);
+    modalDialog.appendChild(modalContent);
+    modal.appendChild(modalDialog);
+
+    // Append the modal to the body and show it
+    document.body.appendChild(modal);
+    const modalInstance = new bootstrap.Modal(modal);
+    modalInstance.show();
+}
 
 
 
@@ -240,6 +280,35 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         });
     }
 });
+
+
+
+function deleteEmp(data) {
+    console.log(data)
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
+
+    
+    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete/${data.employee_id}`, {
+        method: 'PUT'
+    })
+        .then(response => {
+            loadingIndicator.style.display = 'none';
+            if (!response.ok) {
+                throw new Error('Failed to delete ticket');
+            }
+            table.row(row).remove().draw();
+            
+        })
+        .catch(error => {
+            alert('Failed to delete ticket. Please try again.');
+        });
+        // addTicket(data);
+
+     }
+     
+
+
 
 
 const successModal = new bootstrap.Modal(document.getElementById('successModal'));

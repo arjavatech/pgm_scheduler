@@ -48,7 +48,7 @@ $(document).ready(function () {
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
             ticket.ticket_id,
-            `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
+            `<div class="issue-type ${ticket.ticket_type}"><span class="circle"></span>${ticket.ticket_type}</div>`,
             ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,
@@ -66,10 +66,6 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
-        const workStartedTime = new Date(rowData.work_started_time).toISOString();
-        const workEndedTime = new Date(rowData.work_ended_time).toISOString();
-        console.log(workStartedTime)
-        console.log(rowData)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -83,17 +79,17 @@ $(document).ready(function () {
                             
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="start-time">Work started time:</label>
-                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${workStartedTime}">
+                                    value="${rowData.work_started_time}">
                             </div>
 
 
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="end-time">Work ended time :</label>
-                                <input type="date" class="input-bottom-border mt-2" style="background:transparent"
+                                <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${workEndedTime}">                                
+                                    value="${rowData.work_ended_time}">                                
                             </div>                             
                         </div>
                         <div class="col-md-1"></div>
@@ -200,15 +196,15 @@ $(document).ready(function () {
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="start-time">Work started time:</label>
-                                <input type="date" class="input-bottom-border"
+                                <input type="datetime-local" class="input-bottom-border"
                                     id="start-time-${employee.ticket_id}" 
-                                    value="${workStartedTime}">
+                                    value="${employee.work_started_time}">
                             </div>
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="end-time">Work ended time :</label>
-                                <input type="date" class="input-bottom-border"
+                                <input type="datetime-local" class="input-bottom-border"
                                     id="start-time-${employee.ticket_id}" 
-                                    value="${workEndedTime}">
+                                    value="${employee.work_ended_time}">
                             </div>
                             <h5 class="pt-4 text-center">$100</h5>
                     <div class="image-gallery d-flex justify-content-center mt-3">

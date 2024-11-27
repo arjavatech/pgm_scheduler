@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Complated tickets</title>
+    <title>Invoice Tickets</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- DataTables CSS -->
@@ -13,9 +13,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/table.css">
-    <link rel="stylesheet" href="css/home_profile.css">
     <link rel="stylesheet" href="css/image.css">
 </head>
+
+<style>
+    #rejectedTicketTable tbody td .issue-type.AC,
+    #unassignedTicketTable tbody td .issue-type.AC,
+    #ticketTable tbody td .issue-type.AC {
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        background-color: #f6eec9;
+    }
+
+    #rejectedTicketTable td .issue-type.Refrigerator,
+    #unassignedTicketTable td .issue-type.Refrigerator,
+    #ticketTable td .issue-type.Refrigerator {
+        background-color: #caedf8;
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+    }
+</style>
 
 <body>
     <div id="nav" class="mb-5">
@@ -82,7 +101,7 @@
                                             style="padding-left: 10px;color: white;">Profile</span></a>
                                     <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
                                         class="m-3" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                         <img src="icon/Vector.png" style="width: 30px;margin-top: -5px;">
+                                        <img src="icon/Vector.png" style="width: 30px;margin-top: -5px;">
                                         <span class="content text-white list-group-item" data-bs-toggle="modal"
                                             data-bs-target="#logoutModal">Logout</span>
                                     </div>
@@ -130,30 +149,30 @@
             </div>
         </div>
 
-       
-  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content custom-modal-content">
 
-        <!-- Modal Header with Title -->
-        <div class="modal-header justify-content-center">
-          <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content custom-modal-content">
 
+                    <!-- Modal Header with Title -->
+                    <div class="modal-header justify-content-center">
+                        <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body custom-modal-body">
+                        Are you sure you want to log out?
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer custom-modal-footer">
+                        <button type="button" class="btn-yes">Yes</button>
+                        <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Modal Body -->
-        <div class="modal-body custom-modal-body">
-          Are you sure you want to log out?
-        </div>
-
-        <!-- Modal Footer -->
-        <div class="modal-footer custom-modal-footer">
-          <button type="button" class="btn-yes">Yes</button>
-          <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
-        </div>
-      </div>
-    </div>
-  </div>
         <!-- Modal -->
         <div class="modal fade" id="imageModel" tabindex="-1" aria-labelledby="imageModelLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -176,30 +195,21 @@
             <div class="spinner"></div>
         </div>
 
-        <div class="modal fade" id="InvoiceModal" tabindex="-1" aria-labelledby="InvoiceModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content custom-modal-content">
-                    <div class="modal-body custom-modal-body">
-                        <h5 class="modal-title pt-2 pt-3" id="InvoiceModalLabel" style="font-weight: 600;">InvoiceModal</h5>
-                        <textarea placeholder="Description" class="input-bottom-border mb-4 mt-4"
-                            style="background-color: transparent;" rows="1"></textarea>
-
-                        <input placeholder="Amount" type="number" class="input-bottom-border mb-4"
-                            style="background-color: transparent;">
-
-
-                        <div class="d-flex justify-content-center mt-2 mb-4">
-                            <button type="submit" class="btn-green" style="width: 90% !important;">Pay</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <script>
             document.querySelector('.btn-yes').addEventListener('click', function () {
                 localStorage.clear();
                 window.location.href = 'index.html';
             });
+
+            async function updatePayment(paymentId, payment, paymentDescription) {
+                
+            }
+
+
+            
+
+
 
         </script>
 

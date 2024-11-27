@@ -43,7 +43,7 @@ $(document).ready(function () {
         const rowNode = table.row.add([
             `<span></span>`, // Control for expanding the row
             `<span id="ticketId"  ticket-tocken=${ticket.id}>${ticket.ticket_id}</span>`,
-            `<div class="issue-type ${ticket.ticket_type.toLowerCase()}"><span class="circle"></span>${ticket.ticket_type}</div>`,
+            `<div class="issue-type ${ticket.ticket_type}"><span class="circle"></span>${ticket.ticket_type}</div>`,
             ticket.name,
             ticket.phone_number,
             ticket.complain_raised_date,
@@ -55,6 +55,7 @@ $(document).ready(function () {
 
 
     function format(rowData) {
+        
         console.log(rowData);
         const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
         console.log(rowData.work_started_time)
