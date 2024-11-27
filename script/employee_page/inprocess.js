@@ -67,13 +67,13 @@ $(document).ready(function () {
                             <strong>Customer Address</strong>
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
                            
-                           <div class="input-container">
+                        <div class="input-container">
                           
-                                <label for="start-time">Work started time :</label>
+                            <label for="start-time">Work started time :</label>
 
-                                <input type="datetime-local" id="start-time-${rowData.ticket_id}" value="${rowData.work_started_time}">
+                            <input type="datetime-local" id="start-time-${rowData.ticket_id}" value="${rowData.work_started_time}">
             
-                             </div>
+                        </div>
 
                             <div class="input-container">
                             <label for="end-time">Work ended time :</label>
@@ -86,98 +86,95 @@ $(document).ready(function () {
                         <div class="col-md-6"style="text-align:left">
                             <strong>Description:</strong>
                             <p>${rowData.description}</p>
-                           <div class="image-gallery d-flex">
-                           <div id="image-preview-container"></div>
-                            <div class="uploads">
-                                <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
-                                    <input 
-                                        type="file" 
-                                        id="upload1-${rowData.ticket_id}-${rowData.id}"  
-                                        accept="image/*" 
-                                        onchange="handleFileSelect1(event)"
-                                        style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
-                                         
-                                    />
-                                    <!-- Styled Label -->
-                                    ${rowData.photo_1 ? `
-                                    <img 
-                                        id="image-preview-${rowData.ticket_id}-${rowData.id}" 
-                                        src="${rowData.photo_1}" 
-                                        alt="Uploaded Image" 
-                                        style="width: 100%; height: 100%; object-fit: cover;" 
-                                    />
-                                ` : `
-                                    <label 
-                                        for="upload1-${rowData.ticket_id}-${rowData.id}"  
-                                        style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
-                                        +
-                                    </label>
-                                `}
-                                </div>
-                                
-                            </div>
-                            
+                       <div class="image-gallery row g-2 ">
+    <!-- Upload 1 -->
+   <div class="col-5 col-sm-4 col-md-3">
+        <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+            <input 
+                type="file" 
+                id="upload1-${rowData.ticket_id}-${rowData.id}"  
+                accept="image/*" 
+                onchange="handleFileSelect1(event)"
+                class="position-absolute top-0 start-0 w-100 h-100 opacity-0" 
+            />
+            ${rowData.photo_1 ? `
+            <img 
+                id="image-preview1-${rowData.ticket_id}-${rowData.id}" 
+                src="${rowData.photo_1}" 
+                alt="Uploaded Image" 
+                class="w-100 h-100" 
+                style="object-fit: cover;" 
+            />
+            ` : `
+            <label 
+                for="upload1-${rowData.ticket_id}-${rowData.id}"  
+                class="d-flex align-items-center justify-content-center w-100 h-100 fw-bold text-success" 
+                style="cursor: pointer; font-size: 24px;">
+                +
+            </label>
+            `}
+        </div>
+    </div>
 
-                            <div class="uploads">
-                                <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
-                                    <input 
-                                        type="file" 
-                                        id="upload2-${rowData.ticket_id}-${rowData.id}"  
-                                        accept="image/*" 
-                                        onchange="handleFileSelect2(event)"
-                                        style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
-                                         
-                                    />
-                                    <!-- Styled Label -->
-                                    ${rowData.photo_2 ? `
-                                    <img 
-                                        id="image-preview-${rowData.ticket_id}-${rowData.id}" 
-                                        src="${rowData.photo_2}" 
-                                        alt="Uploaded Image" 
-                                        style="width: 100%; height: 100%; object-fit: cover;" 
-                                    />
-                                ` : `
-                                    <label 
-                                        for="upload2-${rowData.ticket_id}-${rowData.id}"  
-                                        style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
-                                        +
-                                    </label>
-                                `}
-                                </div>
-                                
-                            </div>
+    <!-- Upload 2 -->
+   <div class="col-5 col-sm-4 col-md-3">
+        <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+            <input 
+                type="file" 
+                id="upload2-${rowData.ticket_id}-${rowData.id}"  
+                accept="image/*" 
+                onchange="handleFileSelect2(event)"
+                class="position-absolute top-0 start-0 w-100 h-100 opacity-0" 
+            />
+            ${rowData.photo_2 ? `
+            <img 
+                id="image-preview2-${rowData.ticket_id}-${rowData.id}" 
+                src="${rowData.photo_2}" 
+                alt="Uploaded Image" 
+                class="w-100 h-100" 
+                style="object-fit: cover;" 
+            />
+            ` : `
+            <label 
+                for="upload2-${rowData.ticket_id}-${rowData.id}"  
+                class="d-flex align-items-center justify-content-center w-100 h-100 fw-bold text-success" 
+                style="cursor: pointer; font-size: 24px;">
+                +
+            </label>
+            `}
+        </div>
+    </div>
 
-                            <div class="uploads">
-                                <div style="position: relative; width: 100px; height: 100px; border: 1px solid #ccc;">
-                                    <input 
-                                        type="file" 
-                                        id="upload3-${rowData.ticket_id}-${rowData.id}" 
-                                        accept="image/*" 
-                                        src="${rowData.photo_3}"
-                                        onchange="handleFileSelect3(event)"
-                                        style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2;" 
-                                         
-                                    />
-                                    <!-- Styled Label -->
-                                     ${rowData.photo_3 ? `
-                                    <img 
-                                        id="image-preview-${rowData.ticket_id}-${rowData.id}" 
-                                        src="${rowData.photo_3}" 
-                                        alt="Uploaded Image" 
-                                        style="width: 100%; height: 100%; object-fit: cover;" 
-                                    />
-                                ` : `
-                                    <label 
-                                        for="upload3-${rowData.ticket_id}-${rowData.id}"  
-                                        style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-size: 24px; font-weight: bold; color: #004102; cursor: pointer;">
-                                        +
-                                    </label>
-                                `}
-                                </div>
-                                
-                            </div>
+    <!-- Upload 3 -->
+    <div class="col-5 col-sm-4 col-md-3">
+        <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+            <input 
+                type="file" 
+                id="upload3-${rowData.ticket_id}-${rowData.id}" 
+                accept="image/*" 
+                onchange="handleFileSelect3(event)"
+                class="position-absolute top-0 start-0 w-100 h-100 opacity-0" 
+            />
+            ${rowData.photo_3 ? `
+            <img 
+                id="image-preview3-${rowData.ticket_id}-${rowData.id}" 
+                src="${rowData.photo_3}" 
+                alt="Uploaded Image" 
+                class="w-100 h-100" 
+                style="object-fit: cover;" 
+            />
+            ` : `
+            <label 
+                for="upload3-${rowData.ticket_id}-${rowData.id}"  
+                class="d-flex align-items-center justify-content-center w-100 h-100 fw-bold text-success" 
+                style="cursor: pointer; font-size: 24px;">
+                +
+            </label>
+            `}
+        </div>
+    </div>
+</div>
 
-                        </div>
                              </div>
                              
                         </div>
@@ -360,11 +357,12 @@ $(document).ready(function () {
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
-                    <div class="image-gallery d-flex justify-content-center">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="${employee.photo_1}" alt="Image 1" width="100px">
-                            <img src="${employee.photo_2}" alt="Image 1" width="100px">
-                            <img src="${employee.photo_3}" alt="Image 1" width="100px">
+                   <div class="image-gallery d-flex flex-row justify-content-center">
+                        <div class="image-container d-flex flex-row justify-content-center">
+
+                         ${employee.photo_1 ? ` <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
+                           ${employee.photo_2 ? ` <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                           ${employee.photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
                         </div>
                     </div>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
