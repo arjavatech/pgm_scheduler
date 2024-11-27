@@ -265,7 +265,8 @@
                 })
                 .then(data => {
                     localStorage.setItem("cid", data.company_id);
-                    localStorage.setItem("CName",data.company_name)
+                    localStorage.setItem("CName",data.company_name);
+                    localStorage.setItem("Clogo",data.logo)
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
@@ -291,6 +292,7 @@
                     return response.json();
                 })
                 .then(data => {
+                    console.log(data)
                     localStorage.setItem("eid", data.employee_id);
                     localStorage.setItem("e_name", data.first_name+ " "+ data.last_name);
                 })
@@ -319,6 +321,7 @@
                 .then(data => {
                     localStorage.setItem("cid", data.company_id);
                     localStorage.setItem("CName",data.company_name)
+                    localStorage.setItem("Clogo",data.logo)
                     if (data.password === password && data.is_employee === 0) {
                         setTimeout(() => {
                             window.location.href = 'dashboard.html';

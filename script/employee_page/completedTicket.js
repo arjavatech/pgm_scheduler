@@ -2,6 +2,7 @@ $(document).ready(function () {
     const cid = localStorage.getItem("cid");
     const eid = localStorage.getItem("eid");
     const CName = localStorage.getItem("CName")
+    document.getElementById("Clogo").src = localStorage.getItem("Clogo");
     document.getElementById("CName").innerHTML = CName;
     document.getElementById("e_name").innerHTML = localStorage.getItem("e_name");
 

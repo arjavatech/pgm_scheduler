@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const cid = localStorage.getItem("cid");
+    document.getElementById("Clogo").src = localStorage.getItem("Clogo");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/rejected/${cid}`
     let rowDetails = [];
     const CName = localStorage.getItem("CName")

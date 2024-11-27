@@ -301,10 +301,10 @@
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p id="header"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
-                            <span id="emp_name">Placeholder</span>
+                            <span id="e_name"></span>
                             <span class="span">
                                 <span id="CName"></span>
-                                <img src="../icon/Mask group (2).png" alt="" style="width: 40px; padding-left: 10px;">
+                                <img src="../icon/Mask group (2).png" id="Clogo" alt="" style="width: 40px; padding-left: 10px;">
                             </span>
                         </p>
 
@@ -605,11 +605,8 @@
             }
         }
 
-        const CName = localStorage.getItem("CName")
-        const e_name = localStorage.getItem("e_name");
-        console.log(e_name);
-        document.getElementById("CName").innerHTML = CName;
-        document.getElementById("emp_name").innerHTML = e_name ;
+        document.getElementById('CName').textContent = localStorage.getItem("CName");
+        document.getElementById('e_name').textContent = localStorage.getItem("e_name");
     </script>
 
 </body>

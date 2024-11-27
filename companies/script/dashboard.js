@@ -24,7 +24,7 @@ function viewcompanydetails() {
         .catch(error => {
             
             console.error('Fetch error:', error);
-            showAlert('Failed to load company details.');
+            showalert('Failed to load company details.');
         });
 
     const apiUrl2 = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company_graph/get`;
@@ -134,7 +134,7 @@ function viewcompanydetails() {
         .catch(error => {
             document.getElementById('l').style.display = 'none';
             console.error('Fetch error:', error);
-            showAlert('Failed to load company details.');
+            showalert('Failed to load company details.');
         });
 
 }

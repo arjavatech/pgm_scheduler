@@ -1,13 +1,12 @@
 
 let profileData; // Variable to hold the profile data
 let getCustomerDatasFromDb;
-const CName = localStorage.getItem("CName")
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
+    document.getElementById("Clogo").src = localStorage.getItem("Clogo");
 
     // Check if profile data is already loaded
     if (profileData) {
@@ -44,8 +43,6 @@ async function loadProfileDataFromAPI() {
 
 // Function to populate profile data into the form fields
 function populateProfileData(data) {
-
-    console.log(data)
 
     const cleanedSpecialization = data.specialization.replace(/[“”]/g, '"');
 
@@ -198,7 +195,7 @@ checkbox();
 async function handleFileSelect(event) {
     const file = event.target.files[0]; // Get the selected file
     if (!file) {
-        alert("No file selected.");
+        // alert("No file selected.");
         return;
     }
 
@@ -224,14 +221,14 @@ async function handleFileSelect(event) {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Upload succeeded: " + data.file_url);
+                // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url); // Update UI with the uploaded file URL
             } else {
-                alert("Upload failed: " + data.detail);
+                // alert("Upload failed: " + data.detail);
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("An error occurred during the upload. Please try again.");
+            // alert("An error occurred during the upload. Please try again.");
         }
     };
 
@@ -257,12 +254,12 @@ async function updateLink(url) {
         });
 
         if (response.ok) {
-            alert("link data updated")
+            // alert("link data updated")
         } else {
-            alert('Error updating link.');
+            // alert('Error updating link.');
         }
     } catch (error) {
         console.error('Error updating link:', error);
-        alert('Error updating link. Check console for details.');
+        // alert('Error updating link. Check console for details.');
     }
 }

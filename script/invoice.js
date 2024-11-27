@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
     let cid = localStorage.getItem("cid");
+    document.getElementById("Clogo").src = localStorage.getItem("Clogo");
     console.log(cid)
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/invoice/${cid}`;
     let rowDetails = [];
