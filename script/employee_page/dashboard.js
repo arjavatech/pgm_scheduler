@@ -1,5 +1,8 @@
 const ctx = document.getElementById('requestHistoryChart').getContext('2d');
 let currentYear = 2024; // Initial year
+
+document.getElementById("Clogo").src = localStorage.getItem("Clogo");
+
 const dataByYear = {
     2024: [10, 20, 15, 25, 8, 10, 5, 35, 20, 28, 35, 25],
     2023: [15, 18, 12, 20, 10, 8, 7, 30, 25, 22, 30, 28],

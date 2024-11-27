@@ -83,6 +83,11 @@ a {
     animation: spin 1s linear infinite;
 }
 
+#Clogo{
+    border-radius: 42%;
+    width: 55px !important;
+    height: 40px !important;
+}
 
 .loading {
     display: none;

@@ -1,6 +1,7 @@
 var emp_details_map;
 
 const cid = localStorage.getItem("cid");
+document.getElementById("Clogo").src = localStorage.getItem("Clogo");
 $(document).ready(function () {
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/unassigned/${cid}`;

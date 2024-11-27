@@ -162,7 +162,7 @@ function viewcompanydetails() {
                             .catch(error => {
                                 console.error('Delete error:', error);
                                 loadingIndicator.style.display = 'none'; 
-                                showAlert('Failed to delete the company.');
+                                showalert('Failed to delete the company.');
                             });
                     });
                 }
@@ -171,7 +171,7 @@ function viewcompanydetails() {
         .catch(error => {
             loadingIndicator.style.display = 'none'; // Hide loading on error
             console.error('Fetch error:', error);
-            showAlert('Failed to load company details.');
+            showalert('Failed to load company details.');
         });
 
 }
@@ -203,7 +203,7 @@ function showConfirmModal(onConfirm) {
 }
 
 // Function to show the alert modal
-function showAlert(message) {
+function showalert(message) {
     const alertModal = document.getElementById('alertModal');
     const alertMessage = document.getElementById('alertMessage');
     const alertOkBtn = document.getElementById('alertOkBtn');

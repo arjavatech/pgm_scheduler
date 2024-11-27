@@ -5,6 +5,7 @@ let cid = localStorage.getItem("cid");
 
 let CName = localStorage.getItem("CName");
 document.getElementById("CName").textContent = CName;
+document.getElementById("Clogo").src = localStorage.getItem("Clogo");
 
 async function fetchEmployeeCounts() {
     try {       

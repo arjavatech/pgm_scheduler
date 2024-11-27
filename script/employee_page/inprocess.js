@@ -3,6 +3,8 @@ $(document).ready(function () {
     const eid = localStorage.getItem("eid");
     document.getElementById("e_name").innerHTML = localStorage.getItem("e_name");
 
+    document.getElementById("Clogo").src = localStorage.getItem("Clogo");
+
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/inprogress_tickets/${cid}/${eid}`;
     let rowDetails = [];
     const CName = localStorage.getItem("CName")
@@ -299,7 +301,7 @@ $(document).ready(function () {
         
                 // If more than 3 files are selected, keep only the first 3
                 if (files.length > maxFiles) {
-                    alert(`You can only select up to ${maxFiles} files.`);
+                    // alert(`You can only select up to ${maxFiles} files.`);
                     
                     // Convert FileList to Array and keep only the first 3 files
                     const fileArray = Array.from(files).slice(0, maxFiles);
@@ -435,7 +437,7 @@ function disable(ticket_id) {
 async function handleFileSelect1(event) {
     const file = event.target.files[0]; // Get the selected file
     if (!file) {
-        alert("No file selected.");
+        // alert("No file selected.");
         return;
     }
 
@@ -466,14 +468,14 @@ async function handleFileSelect1(event) {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Upload succeeded: " + data.file_url);
+                // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 1, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                alert("Upload failed: " + data.detail);
+                // alert("Upload failed: " + data.detail);
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("An error occurred during the upload. Please try again.");
+            // alert("An error occurred during the upload. Please try again.");
         }
     };
 
@@ -485,7 +487,7 @@ async function handleFileSelect2(event) {
     const ticketToken = event.target.id.split("-")[2];
     const file = event.target.files[0]; // Get the selected file
     if (!file) {
-        alert("No file selected.");
+        // alert("No file selected.");
         return;
     }
 
@@ -512,14 +514,14 @@ async function handleFileSelect2(event) {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Upload succeeded: " + data.file_url);
+                // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 2, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                alert("Upload failed: " + data.detail);
+                // alert("Upload failed: " + data.detail);
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("An error occurred during the upload. Please try again.");
+            // alert("An error occurred during the upload. Please try again.");
         }
     };
 
@@ -532,7 +534,7 @@ async function handleFileSelect3(event) {
     
     const file = event.target.files[0]; // Get the selected file
     if (!file) {
-        alert("No file selected.");
+        // alert("No file selected.");
         return;
     }
 
@@ -559,14 +561,14 @@ async function handleFileSelect3(event) {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Upload succeeded: " + data.file_url);
+                // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 3, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                alert("Upload failed: " + data.detail);
+                // alert("Upload failed: " + data.detail);
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("An error occurred during the upload. Please try again.");
+            // alert("An error occurred during the upload. Please try again.");
         }
     };
 
@@ -604,12 +606,12 @@ async function handleFileSelect3(event) {
                 });
 
                 if (response.ok) {
-                    alert("link data updated")
+                    // alert("link data updated")
                 } else {
-                    alert('Error updating link.');
+                    // alert('Error updating link.');
                 }
             } catch (error) {
                 console.error('Error updating link:', error);
-                alert('Error updating link. Check console for details.');
+                // alert('Error updating link. Check console for details.');
             }
         }
