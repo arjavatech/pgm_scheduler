@@ -889,6 +889,21 @@ strong {
     color: white;
 }
 
+.delete-btn{
+    background-color: #004102;
+    color: white;
+    font-size: 12px;
+}
+.delete-btn:hover{
+    background-color: #004102;
+    color: white;
+    font-size: 12px;
+}
+.delete-btn:focus{
+    background-color: #004102 !important;
+    color: white !important;
+    font-size: 12px;
+}
 .modal-body p {
     margin: 0;
 }
