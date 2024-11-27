@@ -62,19 +62,22 @@ $(document).ready(function () {
         // Destructure the array into separate variables
         const [ac, Refrigerator = "rc"] = specializationArray;
 
+        const deleteButton = `<button class="delete-btn btn" data-id="${ticket.employee_id}">Delete</button>`;
+
         // Log the values
         // console.log(ac, Refrigerator); // Output: "Refrigerator"
 
         const rowNode = table.row.add([
             ticket.first_name,
             ticket.phone_number,
-            `<div class="issue-type ${ac}"><span class="circle"> </span>${ac}</div><div class="issue-type ${Refrigerator} margin"><span class="circle"></span>${Refrigerator}</div>`,
+            `<div class="issue-type ${ac}"><span class="circle"></span>${ac}</div>
+             <div class="issue-type ${Refrigerator} margin"><span class="circle"></span>${Refrigerator}</div>`,
             ticket.email,
             ticket.assigned_locations,
             ticket.employee_no_of_completed_work,
             ticket.no_of_pending_works,
-        ]).draw(false).node(); // Get the row node after adding
-        $(rowNode).find('td:first').addClass('details-control');
+            deleteButton // Add the delete button to the row
+        ]).draw(false).node();
     }
 
     // Function to create and append the card for mobile view
@@ -131,11 +134,39 @@ $(document).ready(function () {
             </div>
         </div>
         `;
-
         // Append the card to the card container for mobile view
         $('#card-container').append(cardHtml);
     }
+
+    $(document).on('click', '.delete-btn', function () {
+        const eid = $(this).data('id');
+        const row = $(this).closest('tr');
+        const loadingIndicator = document.getElementById('l');
+        loadingIndicator.style.display = 'flex';
+
+        
+        fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete/${eid}`, {
+            method: 'PUT'
+        })
+            .then(response => {
+                loadingIndicator.style.display = 'none';
+                if (!response.ok) {
+                    throw new Error('Failed to delete ticket');
+                }
+                table.row(row).remove().draw();
+                
+            })
+            .catch(error => {
+                alert('Failed to delete ticket. Please try again.');
+            });
+
+    });
+
 });
+
+
+
+
 
 
 document.getElementById('sidebarToggle').addEventListener('click', function () {
@@ -225,8 +256,8 @@ function createEmployee() {
     const location = document.querySelector("input[placeholder='Assigned Location']").value.trim();
     const specialization = Array.from(document.querySelectorAll("#dropdownOptions input[type='checkbox']:checked"))
         .map(option => option.value);
-    
-    
+
+
 
     // Convert the array to a string with curly quotes
     const formattedOutputOfspecialization = `["${specialization.join('","').replace(/"/g, '“').replace(/"/g, '”')}"]`;
