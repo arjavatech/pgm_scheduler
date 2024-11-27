@@ -16,6 +16,7 @@
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/home_profile.css">
+    <link rel="stylesheet" href="script/profile.js">
 
 
 </head>
@@ -282,7 +283,8 @@
                                 </div>
 
                                 <div class="d-flex justify-content-center">
-                                    <button class="btn-green float-end" onclick="updateApiData()">Update</button>
+                                    <button type="button" class="btn-green float-end"
+                                        onclick="handleSubmit()">Update</button>
                                 </div>
 
                             </form>
@@ -380,52 +382,6 @@
                     loadingIndicator.style.display = 'none'; // Hide loading indicator
                 });
         });
-
-        async function updateApiData() {
-            let cid = localStorage.getItem("cid")
-            const updateApiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/update/${cid}`;
-            let updated_data = {
-                company_id: cid,
-                company_name: document.getElementById("company_name").value,
-                phone_number: document.getElementById("phone_number").value,
-                email: document.getElementById("email").value,
-                first_name: document.getElementById("first_name").value,
-                last_name: document.getElementById("last_name").value,
-                street: document.getElementById("street").value,
-                city: document.getElementById("city").value,
-                zip: document.getElementById("zip").value,
-                state: document.getElementById("state").value,
-                address_line: document.getElementById("address_line").value
-            }
-
-
-            try {
-                const response = await fetch(updateApiUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(updated_data),
-                });
-
-                if (!response.ok) {
-                    loadingIndicator.style.display = 'none';
-                    const errorMessage = await response.text();
-                    throw new Error(`Error: ${response.status} - ${errorMessage}`);
-
-                }
-
-                const data = await response.json();
-
-                setTimeout(() => {
-                    window.location.href = 'home-profile.html';
-                }, 1200);
-
-            } catch (error) {
-                console.error("Failed to assign employee:", error.message);
-                loadingIndicator.style.display = 'none';
-            }
-        }
 
         // Sidebar toggle logic
         document.getElementById('sidebarToggle').addEventListener('click', () => {
@@ -530,6 +486,55 @@
             // alert('Error updating link. Check console for details.');
         }
     }
+
+    async function handleSubmit() {
+    let cid = localStorage.getItem("cid")
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
+    const updateApiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/update/${cid}`;
+    let updated_data = {
+        company_id: cid,
+        company_name: document.getElementById("company_name").value,
+        phone_number: document.getElementById("phone_number").value,
+        email: document.getElementById("email").value,
+        first_name: document.getElementById("first_name").value,
+        last_name: document.getElementById("last_name").value,
+        street: document.getElementById("street").value,
+        city: document.getElementById("city").value,
+        zip: document.getElementById("zip").value,
+        state: document.getElementById("state").value,
+        address_line: document.getElementById("address_line").value
+    }
+
+
+    try {
+        const response = await fetch(updateApiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updated_data),
+        });
+
+        if (!response.ok) {
+            loadingIndicator.style.display = 'none';
+            const errorMessage = await response.text();
+            throw new Error(`Error: ${response.status} - ${errorMessage}`);
+
+        }
+
+        const data = await response.json();
+
+        setTimeout(() => {
+            window.location.href = 'home-profile.html';
+        }, 1200);
+
+    } catch (error) {
+        console.error("Failed to assign employee:", error.message);
+        loadingIndicator.style.display = 'none';
+    }
+}
+
 
     </script>
 </body>
