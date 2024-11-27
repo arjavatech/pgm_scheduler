@@ -52,6 +52,7 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
+        console.log(rowData)
         // const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
         const tickerRejectDate = new Date(rowData.rejected_date).toISOString().split('T')[0];
         return `
@@ -79,14 +80,43 @@ $(document).ready(function () {
                         <div class="col-md-6">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center">
-                                <img src="images/profile img.png" alt="Image 1" width="100px">
-                                <div class="image-container d-inline justify-content-center">
-                                    <img src="images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3</div>
-                                </div>
-                            </div>
+                             <div class="image-gallery row g-2 justify-content-center">
+                            <!-- Upload 1 -->
+                            
+                                     ${rowData.ti_photo_1 ? `
+                                           <div class="col-5 col-sm-4 col-md-3">
+                                            <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
+                                                style="object-fit: cover;" />
+                                            </div>
+                                            </div>
+                                        ` : `
+            
+                                    `}
+                                <!-- Upload 2 -->
+        
+                                    ${rowData.ti_photo_2 ? `
+                                    <div class="col-5 col-sm-4 col-md-3">
+                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_2}" alt="Uploaded Image" class="w-100 h-100" 
+                                    style="object-fit: cover;" />
+                                    </div>
+                                    </div>
+                                ` : `  `}
+                        
+                                    <!-- Upload 3 -->
+                        
+                                    ${rowData.ti_photo_3 ? `
+                                    <div class="col-5 col-sm-4 col-md-3">
+                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.ti_photo_3}" 
+                                    alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
+                                    </div>
+                                    </div>
+                                ` : ` `} 
+                            
+                             
+                        </div>
                         </div>
                     </div>
                 </td>
@@ -111,6 +141,8 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
+        
+        console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
@@ -144,12 +176,12 @@ $(document).ready(function () {
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p class="text-left"><strong >Reason : </strong>${employee.rejected_reason}</p>
                     <p class="text-left"><strong>Reject Date : </strong>${employee.rejected_date}</p>
-                    <div class="image-gallery d-flex justify-content-center">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3</div>
+                    <div class="image-gallery d-flex justify-content-center mt-3">
+                          <div class="image-container d-flex flex-row justify-content-center">
+
+                         ${employee.ti_photo_1 ? ` <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
+                           ${employee.ti_photo_2 ? ` <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                           ${employee.ti_photo_3 ? ` <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
                         </div>
                     </div>
                     <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             

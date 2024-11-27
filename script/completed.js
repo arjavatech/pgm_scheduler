@@ -69,7 +69,7 @@ $(document).ready(function () {
         const workStartedTime = new Date(rowData.work_started_time).toISOString();
         const workEndedTime = new Date(rowData.work_ended_time).toISOString();
         console.log(workStartedTime)
-        console.log(workEndedTime)
+        console.log(rowData)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -100,14 +100,42 @@ $(document).ready(function () {
                         <div class="col-md-6">
                             <strong style="text-align:left !important">Description:</strong>
                             <p class="description">${rowData.description}</p>
-                            <div class="image-gallery d-flex justify-content-center mb-4">
-                                <img src="images/profile img.png" alt="Image 1" width="100px">
-                                <div class="image-container d-inline justify-content-center">
-                                    <img src="images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3</div>
-                                </div>
-                               
+                            <div class="image-gallery row g-2 justify-content-center">
+                            <!-- Upload 1 -->
+                            
+                                     ${rowData.photo_1 ? `
+                                            <div class="col-5 col-sm-4 col-md-3">
+                                            <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
+                                                style="object-fit: cover;" />
+                                            </div>
+                                            </div>
+                                        ` : `
+            
+                                    `}
+                                <!-- Upload 2 -->
+        
+                                    ${rowData.photo_2 ? `
+                                    <div class="col-5 col-sm-4 col-md-3">
+                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image" class="w-100 h-100" 
+                                    style="object-fit: cover;" />
+                                    </div>
+                                    </div>
+                                ` : `  `}
+                        
+                                    <!-- Upload 3 -->
+                        
+                                    ${rowData.photo_3 ? `
+                                   <div class="col-5 col-sm-4 col-md-3">
+                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.photo_3}" 
+                                    alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
+                                    </div>
+                                    </div>
+                                ` : ` `} 
+                            
+                             
                             </div>
                             <strong class="mt-4">Received payment:  <h5>${rowData.payment}</h5></strong>
 
@@ -184,11 +212,11 @@ $(document).ready(function () {
                             </div>
                             <h5 class="pt-4 text-center">$100</h5>
                     <div class="image-gallery d-flex justify-content-center mt-3">
-                        <img src="images/profile img.png" alt="Image 1" width="100px">
-                        <div class="image-container d-inline justify-content-center">
-                            <img src="images/profile img.png" alt="Image 1" width="100px">
-                            <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3</div>
+                          <div class="image-container d-flex flex-row justify-content-center">
+
+                         ${employee.ti_photo_1 ? ` <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
+                           ${employee.ti_photo_2 ? ` <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                           ${employee.ti_photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
                         </div>
                     </div>
                     
