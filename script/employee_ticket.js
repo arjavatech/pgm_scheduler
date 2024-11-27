@@ -140,7 +140,7 @@ $(document).ready(function () {
 
 });
 
-function showDeleteEmployeeModal(datas) {
+function showDeleteEmployeeModal(eid) {
     // Create modal elements
     const modal = document.createElement('div');
     modal.classList.add('modal', 'fade');
@@ -176,8 +176,7 @@ function showDeleteEmployeeModal(datas) {
     btnYes.textContent = 'Yes';
     btnYes.onclick = function() {
         // Handle delete logic
-        deleteEmp(datas)
-        console.log('Employee deleted');
+        deleteEmp(eid)
         modal.remove();
         modalInstance.hide();
     };
@@ -283,13 +282,13 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
 
 
 
-function deleteEmp(data) {
-    console.log(data)
+function deleteEmp(eid) {
+    console.log(eid)
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
 
     
-    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete/${data.employee_id}`, {
+    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete/${eid}`, {
         method: 'PUT'
     })
         .then(response => {
@@ -297,7 +296,10 @@ function deleteEmp(data) {
             if (!response.ok) {
                 throw new Error('Failed to delete ticket');
             }
-            table.row(row).remove().draw();
+            else
+            {
+                window.location.href = "employee_ticket.html";
+            }
             
         })
         .catch(error => {
