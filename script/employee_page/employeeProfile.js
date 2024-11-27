@@ -30,7 +30,7 @@ async function loadProfileDataFromAPI() {
         }
         profileData = await response.json(); 
         checkbox(profileData.specialization);
-        IsActive(profileData.is_active);
+        IsActive(profileData.available);
         EmpStatus(profileData.employee_status);
         // Process and populate the response data
         populateProfileData(profileData);
@@ -44,13 +44,7 @@ async function loadProfileDataFromAPI() {
 // Function to populate profile data into the form fields
 function populateProfileData(data) {
 
-    const cleanedSpecialization = data.specialization.replace(/[“”]/g, '"');
-
-        // Parse the cleaned string into an array
-    const specializationArray = JSON.parse(cleanedSpecialization);
-
-    // Destructure the array into separate variables
-    const [ac, Refrigerator = ""] = specializationArray;
+    console.log(data)
 
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
@@ -69,7 +63,8 @@ function populateProfileData(data) {
     document.getElementById('experience').value = data.experience || '';
 
     document.getElementById('street').value = data.street || '';
-    document.getElementById('specialization').value = [ac, Refrigerator] || '';
+    document.getElementById('specialization').value = data.specialization || '';
+    document.getElementById('driving_license').value = data.driving_license || '';
 
     document.getElementById('city').value = data.city || '';
     document.getElementById('zip').value = data.zip || '';
@@ -80,7 +75,7 @@ function populateProfileData(data) {
 
 
 
-    document.getElementById('availability').value = data.is_active === 1 ? 'Active' : 'In Active';
+    document.getElementById('availability').value = data.available === 1 ? 'Yes' : 'No';
 
     const loadingIndicator = document.getElementById('l'); 
     loadingIndicator.style.display = 'none';
@@ -90,22 +85,39 @@ function populateProfileData(data) {
 
 // Ensure the DOM is fully loaded before executing the script
 function checkbox(specialization) {
-    // document.getElementById(specialization === "AC" ? "acCheckbox" : "nonAcCheckbox").checked = true;
+    if (specialization == "AC") {
+        document.getElementById("acCheckbox").checked = true;
+    }
+    if (specialization == "Refrigerator") {
+        document.getElementById("nonAcCheckbox").checked = true;
+    }
+    else if(specialization == null)
+    {
+
+    }
+    else
+    {
+        document.getElementById("acCheckbox").checked = true;
+        document.getElementById("nonAcCheckbox").checked = true;
+    }
+
+
 }
 
 function IsActive(isActive) {
-    // document.getElementById(isActive === 1 ? "isAvailable" : "IsNotAvailable").checked = true;
+    document.getElementById(isActive === 1 ? "Yes" : "No").checked = true;
 }
 
 function EmpStatus(empStatus) {
-    // document.getElementById(empStatus === "Active" ? "acCheckbox1" : "nonAcCheckbox1").checked = true;
+    console.log(empStatus)
+    document.getElementById(empStatus === "Active" ? "isAvailable" : "IsNotAvailable").checked = true;
 }
 
 
 // Function to save form data to localStorage on submission
 function saveFormDataToLocalStorage() {
     const fields = [
-        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', 'email', 'Specialization', 'zip', 'experience', 'availability', 'qualification', 'skills', 'employee_status', 'assigned_locations', 'areas_covered'
+        'first_name', 'last_name', 'phone_number', 'street', 'addressLine', "driving_license", 'email', 'Specialization', 'zip', 'experience', 'availability', 'qualification', 'skills', 'employee_status', 'assigned_locations', 'areas_covered'
     ];
 
     fields.forEach(field => {
@@ -134,40 +146,19 @@ function handleSubmit(event) {
         last_name: getFieldValue('last_name'),
         street: getFieldValue('street'),
         zip: getFieldValue('zip'),
-        specialization: getFieldValue('Specialization'),
+        specialization: getFieldValue('specialization'),
         city: getFieldValue('city'),
         email: getFieldValue('email'),
         phone_number: getFieldValue('phone_number'),
         areas_covered: getFieldValue('areas_covered'),
         assigned_locations: getFieldValue('assigned_locations'),
-        employee_status: getFieldValue('employee_status'),
+        employee_status: getFieldValue('status'),
+        available: getFieldValue('availability') == "Yes" ? 1 : 0,
         skills: getFieldValue('skills'),
+        driving_license: getFieldValue('driving_license'),
         qualification: getFieldValue('qualification'),
-        experience: getFieldValue('experience'),
-        is_active: getFieldValue('availability')
+        experience: getFieldValue('experience')
     };
-
-
-    company_id: cid
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    phone_number: Optional[str] = None
-    email: Optional[str] = None
-    invite_url: Optional[str] = None
-    specialization: Optional[str] = None
-    areas_covered: Optional[str] = None
-    assigned_locations: Optional[str] = None
-    employee_status: Optional[str] = None
-    employee_no_of_completed_work: Optional[int] = None
-    no_of_pending_works: Optional[int] = None
-    street: Optional[str] = None
-    city: Optional[str] = None
-    zip: Optional[str] = None
-    skills: Optional[str] = None
-    qualification: Optional[str] = None
-    experience: Optional[str] = None
-    available: Optional[bool] = None
-    photo: Optional[bytes] = None
 
     fetch(updateApiUrl, {
         method: 'PUT',
