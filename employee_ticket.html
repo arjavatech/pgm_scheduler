@@ -246,7 +246,7 @@
                     <p>Employee Added successfully</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" id="modal-close">OK</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Ok</button>
                 </div>
             </div>
         </div>
@@ -254,21 +254,21 @@
 
     <!-- Failure Modal -->
     <div class="modal fade" id="failureModal" tabindex="-1" aria-labelledby="failureModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered -->
-            <div class="modal-content">
-                <div class="modal-header failure">
-                    <h5 class="modal-title" id="failureModalLabel">Failure</h5>
-
-                </div>
-                <div class="modal-body">
-                    <p id="failure-content"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"  aria-label="Close">Close</button>
-                </div>
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header failure">
+              <h5 class="modal-title" id="failureModalLabel">Failure</h5>
             </div>
+            <div class="modal-body">
+              <p id="failure-content"></p>
+            </div>
+            <div class="modal-footer">
+              <!-- Updated data attribute -->
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
