@@ -320,6 +320,8 @@ const apiUrl = `${apiUrlBase}/create`;
 const cid = localStorage.getItem("cid");
 
 function createEmployee() {
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
     const firstName = document.querySelector("input[placeholder='First Name']").value.trim();
     const lastName = document.querySelector("input[placeholder='Last Name']").value.trim();
     const email = document.querySelector("input[placeholder='Email']").value.trim();
@@ -335,11 +337,13 @@ function createEmployee() {
 
     // Input validation
     if (!firstName || !lastName || !email || !phone || specialization.length === 0) {
-        console.error("Validation failed: Missing required fields");
+        document.getElementById("failure-content").textContent = "Validation failed: Missing required fields";
+        loadingIndicator.style.display = 'none';
         failureModal.show();
         return;
     }
     else{
+
         const employeeObject = {
             first_name: firstName,
             last_name: lastName,
@@ -355,6 +359,7 @@ function createEmployee() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(employeeObject)
         }).then(response => {
+                loadingIndicator.style.display = 'none';
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -363,18 +368,13 @@ function createEmployee() {
             .then(data => {
                 if(data.error)
                 {
-                    console.error('Error:', data.error);
                     document.getElementById("failure-content").textContent = data.error;
                     failureModal.show();
-
                 }
                 else
                 {
                     successModal.show();
-                    resetForm(); // Ensure resetForm is defined and works correctly
-                    document.querySelectorAll("#dropdownOptions input[type='checkbox']")
-                        .forEach(checkbox => checkbox.checked = false);
-                    addEmployeeToTable(data);
+                    resetForm(); 
                 }
             })
             .catch(error => {
@@ -414,12 +414,6 @@ function resetForm() {
 
     cancel(); // Hide the input fields
 }
-
-// Event listener for the "Add Employee" button
-document.getElementById("addEmployee").addEventListener("click", function (event) {
-    event.preventDefault();
-    createEmployee();
-});
 
 function show() {
     const inputElements = document.querySelectorAll(".input-bottom-border");
@@ -477,3 +471,7 @@ window.onclick = function () {
     const dropdownOptions = document.getElementById("dropdownOptions");
     dropdownOptions.style.display = "none";
 };
+
+document.getElementById("success-model-ok").addEventListener('click', function () {
+    window.location.href = "employee_ticket.html";
+})
