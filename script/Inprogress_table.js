@@ -5,8 +5,6 @@ $(document).ready(function () {
     document.getElementById("Clogo").src = localStorage.getItem("Clogo");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/inprogress/${cid}`;
     const CName = localStorage.getItem("CName")
-    console.log(cid)
-    console.log(CName)
 
     document.getElementById("CName").innerHTML = CName;
     let rowDetails = [];
@@ -163,9 +161,8 @@ $(document).ready(function () {
         const selectedOption = $(this).find(':selected');
         const pendingWork = selectedOption.attr('pending');
         const ticketId = $(this).attr('id').split('-')[2];
-        console.log(ticketId) // Extract ticket ID from select element ID
         $(`#pending-count-${ticketId}`).text(`Pending work: ${pendingWork || 'N/A'}`);
-        console.log(pendingWork)
+
         // document.getElementById(`pending-count-${ticketId}`).textContent = `Pending work: ${pendingWork || 'N/A'}`
     });
 
@@ -354,7 +351,7 @@ function disable2(ticket_id) {
 
 async function handleConfirm(old_eid, ticketId) {
     const cid = localStorage.getItem("cid");
-    const selectElement = document.getElementById(`employee_select-${ticketId}`);
+    const selectElement = document.getElementById(`employee-select-${ticketId}`);
     const selectedValue = selectElement.value;
     const requestBody = {
         company_id: cid,

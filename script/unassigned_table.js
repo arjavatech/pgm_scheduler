@@ -254,7 +254,7 @@ async function assignedEmployee(cid, employee_id, ticket_id) {
         }
         const data = await response.json();
         loadingIndicator.style.display = 'none';
-        window.location.href = 'Unassigned.html';
+        window.location.href = 'In-Progress.html';
 
     } catch (error) {
         console.error("Failed to assign employee:", error.message);
@@ -315,7 +315,7 @@ async function handleReject(ticketid) {
         console.log("Ticket rejected successfully:", data);
 
         loadingIndicator.style.display = 'none';
-        window.location.href = 'Unassigned.html';
+        window.location.href = 'RejectedTicket.html';
 
 
 

@@ -83,7 +83,7 @@ $(document).ready(function () {
                                 <label for="start-time">Work started time:</label>
                              <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${rowData.work_started_time}">
+                                    value="${rowData.work_started_time}" disabled>
                             </div>
 
 
@@ -91,7 +91,7 @@ $(document).ready(function () {
                                 <label for="end-time">Work ended time :</label>
                                 <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${rowData.work_ended_time}">                                
+                                    value="${rowData.work_ended_time}" disabled>                                
                             </div>                             
                         </div>
                         
@@ -207,13 +207,13 @@ $(document).ready(function () {
                                 <label for="start-time">Work started time:</label>
                                 <input type="datetime-local" class="input-bottom-border"
                                     id="start-time-${employee.ticket_id}" 
-                                    value="${employee.work_started_time}">
+                                    value="${employee.work_started_time}" disabled>
                             </div>
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="end-time">Work ended time :</label>
                                 <input type="datetime-local" class="input-bottom-border"
                                     id="start-time-${employee.ticket_id}" 
-                                    value="${employee.work_started_time}">
+                                    value="${employee.work_started_time}" disabled>
                             </div>
                     <div class="image-gallery d-flex justify-content-center mt-3">
                           <div class="image-container d-flex flex-row justify-content-center">
