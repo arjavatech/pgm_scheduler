@@ -359,8 +359,9 @@ function createEmployee() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(employeeObject)
         }).then(response => {
-                loadingIndicator.style.display = 'none';
+                
                 if (!response.ok) {
+                    loadingIndicator.style.display = 'none';
                     throw new Error(`Error: ${response.status}`);
                 }
                 return response.json();
@@ -369,12 +370,13 @@ function createEmployee() {
                 if(data.error)
                 {
                     document.getElementById("failure-content").textContent = data.error;
+                    loadingIndicator.style.display = 'none';
                     failureModal.show();
                 }
                 else
                 {
+                    loadingIndicator.style.display = 'none';
                     successModal.show();
-                    resetForm(); 
                 }
             })
             .catch(error => {
