@@ -22,7 +22,6 @@ $(document).ready(function () {
             });
         })
         .catch(error => {
-            console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 
@@ -340,44 +339,51 @@ function createEmployee() {
         failureModal.show();
         return;
     }
+    else{
+        const employeeObject = {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone_number: phone,
+            specialization: formattedOutputOfspecialization,
+            assigned_locations: location,
+            company_id: cid
+        };
 
-    const employeeObject = {
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        phone_number: phone,
-        specialization: formattedOutputOfspecialization,
-        assigned_locations: location,
-        company_id: cid // Ensure this variable is defined
-    };
-    console.log(employeeObject)
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(employeeObject)
+        }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.error)
+                {
+                    console.error('Error:', data.error);
+                    document.getElementById("failure-content").textContent = data.error;
+                    failureModal.show();
 
-    fetch(apiUrl, { // Ensure `apiUrl` is defined
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(employeeObject)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Server Response:", data);
-            successModal.show();
-            resetForm(); // Ensure resetForm is defined and works correctly
-            document.querySelectorAll("#dropdownOptions input[type='checkbox']")
-                .forEach(checkbox => checkbox.checked = false);
-            addEmployeeToTable(data);
+                }
+                else
+                {
+                    successModal.show();
+                    resetForm(); // Ensure resetForm is defined and works correctly
+                    document.querySelectorAll("#dropdownOptions input[type='checkbox']")
+                        .forEach(checkbox => checkbox.checked = false);
+                    addEmployeeToTable(data);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error.message);
+                document.getElementById("failure-content").textContent = "Something went wrong. Please try again."
+                failureModal.show();
+            });
 
-        })
-        .catch(error => {
-            console.error('Error:', error.message);
-            failureModal.show();
-        });
-
-
+    }
 }
 
 // Function to add employee to the table
