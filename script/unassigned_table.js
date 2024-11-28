@@ -65,8 +65,6 @@ $(document).ready(function () {
 
     // Function to format each row with expandable details
     function format(rowData) {
-        console.log(rowData); // Log the ticket ID
-        // Output: "Refrigerator"
 
         return ` <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -312,7 +310,6 @@ async function handleReject(ticketid) {
         }
 
         const data = await response.json();
-        console.log("Ticket rejected successfully:", data);
 
         loadingIndicator.style.display = 'none';
         window.location.href = 'RejectedTicket.html';
@@ -331,7 +328,7 @@ function employee_det_options_get(ticketType) {
     }
 
     var employeeOptions = emp_details_map[ticketType].map(employee =>
-        `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>
+        `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 5 ? 'disabled' : ''}>
             ${employee.employee_name}
         </option>`
     ).join("");

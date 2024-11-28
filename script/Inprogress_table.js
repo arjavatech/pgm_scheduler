@@ -141,7 +141,7 @@ $(document).ready(function () {
         }
 
         var employeeOptions = emp_details_map[ticketType].map(employee =>
-            `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 3 ? 'disabled' : ''}>
+            `<option pending="${employee.no_of_pending_works}" value="${employee.employee_id}" ${employee.no_of_pending_works > 5 ? 'disabled' : ''}>
                 ${employee.employee_name}
             </option>`
         ).join("");
