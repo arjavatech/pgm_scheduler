@@ -74,7 +74,7 @@ $(document).ready(function () {
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <input type="date" class="input-bottom-border"style="text-align:left !important"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${tickerRejectDate}">                                
+                                    value="${tickerRejectDate}" disabled>                                
                             </div>
                         </div>
                         <div class="col-md-1"></div>
