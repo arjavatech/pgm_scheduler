@@ -71,15 +71,15 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="row">
-                        <div class="col-md-1"></div>
+                    <div class="r">
+                        
                         <div class="col-md-4" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
                             
-                            <div class="input-container mt-3" style="text-align:left !important">
+                            <div class="input-container mt-3" style="text-align:left !important; padding:0 !important">
                                 <label for="start-time">Work started time:</label>
                              <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
@@ -87,7 +87,7 @@ $(document).ready(function () {
                             </div>
 
 
-                            <div class="input-container mt-3" style="text-align:left !important">
+                            <div class="input-container mt-3" style="text-align:left !important;padding:0 !important">
                                 <label for="end-time">Work ended time :</label>
                                 <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
@@ -95,14 +95,14 @@ $(document).ready(function () {
                             </div>                             
                         </div>
                         
-                       <div class="col-md-6">
+                       <div class="col-md-6 box2">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
-                             <div class="image-gallery row g-2 justify-content-center">
+                             <div class="image-gallery row g-2 ">
                             <!-- Upload 1 -->
                             
                                      ${rowData.photo_1 ? `
-                                            <div class="col-4 col-sm-3 col-md-2">
+                                            <div class="col-5 col-sm-4 col-md-3">
                                             <div class="uploads position-relative border" style="width: 100%; height: 100px;">
                                             <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
                                                 style="object-fit: cover;" />
@@ -114,7 +114,7 @@ $(document).ready(function () {
                                 <!-- Upload 2 -->
         
                                     ${rowData.photo_2 ? `
-                                    <div class="col-4 col-sm-3 col-md-2">
+                                   <div class="col-5 col-sm-4 col-md-3">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
                                     <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image" class="w-100 h-100" 
                                     style="object-fit: cover;" />
@@ -125,7 +125,7 @@ $(document).ready(function () {
                                     <!-- Upload 3 -->
                         
                                     ${rowData.photo_3 ? `
-                                    <div class="col-4 col-sm-3 col-md-2">
+                                    <div class="col-5 col-sm-4 col-md-3">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
                                     <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.photo_3}" 
                                     alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>

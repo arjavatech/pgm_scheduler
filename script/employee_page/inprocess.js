@@ -64,29 +64,29 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="row">
-                    <div class="col-md-1"></div>
-                        <div class="col-md-4"style="text-align:left">
+                    <div class="r">
+                    
+                        <div class="col-md-4 box1">
                             <strong>Customer Address</strong>
                             <p>${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}</p>
                            
-                        <div class="input-container">
-                          
-                            <label for="start-time">Work started time :</label>
-
-                            <input type="datetime-local" id="start-time-${rowData.ticket_id}" value="${rowData.work_started_time}">
-            
-                        </div>
-
-                            <div class="input-container">
-                            <label for="end-time">Work ended time :</label>
-                                <input type="datetime-local" id="end-time-${rowData.ticket_id}" placeholder="End Time " value="${rowData.work_ended_time}">
-                                
+                         <div class="input-container mt-3" style="text-align:left !important; padding:0 !important">
+                                <label for="start-time">Work started time:</label>
+                                <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
+                                    id="start-time-${rowData.ticket_id}" 
+                                    value="${rowData.work_started_time}">
                             </div>
+
+                             <div class="input-container mt-3" style="text-align:left !important;  padding:0 !important">
+                                <label for="end-time">Work ended time :</label>
+                                <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
+                                    id="start-time-${rowData.ticket_id}" 
+                                    value="${rowData.work_ended_time}">                                
+                            </div>  
                            
                             </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-6"style="text-align:left">
+                       
+                        <div class="col-md-6 box2">
                             <strong>Description:</strong>
                             <p>${rowData.description}</p>
                        <div class="image-gallery row g-2 ">
