@@ -39,6 +39,7 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
+       
         paging: true,
         lengthChange: true,
         searching: true,
@@ -68,9 +69,9 @@ $(document).ready(function () {
 
         return ` <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-4" >
+                    <div class="r">
+                       
+                        <div class="col-md-4 box1" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
@@ -83,8 +84,8 @@ $(document).ready(function () {
                             </select>
                              <small id="pending-count-${rowData.ticket_id}">Pending work: N/A</small>                           
                         </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-6">
+                       
+                        <div class="col-md-6 box2">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
                           <div class="image-gallery row g-2 justify-content-center">

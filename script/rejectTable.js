@@ -59,8 +59,8 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="row">
-                        <div class="col-md-1"></div>
+                    <div class="r">
+                        
                         <div class="col-md-4">
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
@@ -77,11 +77,11 @@ $(document).ready(function () {
                                     value="${tickerRejectDate}" disabled>                                
                             </div>
                         </div>
-                        <div class="col-md-1"></div>
+                        
                         <div class="col-md-6">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
-                             <div class="image-gallery row g-2 justify-content-center">
+                             <div class="image-gallery row g-2 ">
                             <!-- Upload 1 -->
                             
                                      ${rowData.ti_photo_1 ? `

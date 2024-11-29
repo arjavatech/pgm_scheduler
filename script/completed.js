@@ -68,17 +68,17 @@ $(document).ready(function () {
     // Format the row details
     function format(rowData) {
         return `
-            <tr class="collapse-content details-row">
+           <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-4" >
+                    <div class="r">
+                       
+                        <div class="col-md-4 box1" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
                             
-                            <div class="input-container mt-3" style="text-align:left !important">
+                            <div class="input-container mt-3" style="text-align:left !important;padding:0  !important">
                                 <label for="start-time">Work started time:</label>
                                 <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
@@ -86,18 +86,18 @@ $(document).ready(function () {
                             </div>
 
 
-                            <div class="input-container mt-3" style="text-align:left !important">
+                            <div class="input-container mt-3" style="text-align:left !important;padding:0  !important">
                                 <label for="end-time">Work ended time :</label>
                                 <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
                                     id="start-time-${rowData.ticket_id}" 
                                     value="${rowData.work_ended_time}" disabled>                                
                             </div>                             
                         </div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-6 box2">
                             <strong style="text-align:left !important">Description:</strong>
                             <p class="description">${rowData.description}</p>
-                            <div class="image-gallery row g-2 justify-content-center">
+                            <div class="image-gallery row g-2 ">
                             <!-- Upload 1 -->
                             
                                      ${rowData.photo_1 ? `
