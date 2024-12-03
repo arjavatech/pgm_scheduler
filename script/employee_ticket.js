@@ -331,8 +331,7 @@ function deleteEmp(eid) {
 
 const successModal = new bootstrap.Modal(document.getElementById('successModal'));
 const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
-const apiUrlBase = "https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee";
-const apiUrl = `${apiUrlBase}/create`;
+const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/create`;
 const cid = localStorage.getItem("cid");
 
 function createEmployee() {

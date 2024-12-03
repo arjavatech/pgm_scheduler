@@ -223,7 +223,11 @@ $(document).ready(function () {
                            ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                            ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                    
+                     <button type="button" class="btn-yes btn-reassign" style="width:100% !important" data-bs-toggle="modal" data-bs-target="#InvoiceModal"
+    onclick="openModal('${employee.id}','${employee.ticket_id}','${employee.employee_id}')">
+    <!-- Pass the ticketID dynamically -->
+    Generate Invoice
+</button>
                     <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>       
                 </div>
             </div>
@@ -268,7 +272,7 @@ function openModal(tockenID, ticketID, eid) {
                     </h5>
                 </div>
 
-                <div class="modal-body">
+       
                     <div class="modal-body custom-modal-body">
                         <textarea placeholder="Description" id="description" class="input-bottom-border mb-4 mt-4"
                             style="background-color: transparent;" rows="1"></textarea>
@@ -288,7 +292,7 @@ function openModal(tockenID, ticketID, eid) {
                                 font-size: medium !important;" 
                                 onclick="handlePayment('${tockenID}','${ticketID}','${eid}')">Pay</button>
                         </div>
-                    </div>
+                    
                 </div>
               
             </div>

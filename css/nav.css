@@ -53,6 +53,7 @@ a {
 
 #list-group-flush {
     margin-left: 40px !important;
+    font-size: 12px;
 }
 
 #nav {
@@ -205,7 +206,7 @@ a {
         width: 30%;
         height: 100vh;
         z-index: 999;
-        background-color: #ff0000;
+        
         transition: all 0.3s ease;
         margin-top: 6% !important;
         padding-top: 20px;
@@ -213,7 +214,8 @@ a {
 
     #left.active {
         left: 0;
-        width: 30%;
+        width: 25%;
+        padding-top: 7%;
     }
 
     .sidebar-toggle {
@@ -245,7 +247,7 @@ a {
     }
 }
 
-@media (max-width:702px) {
+@media (max-width:742px) {
     #left {
         width: 40% !important;
         margin-top: 7% !important;
@@ -278,7 +280,7 @@ a {
 
 @media (max-width: 450px) {
     #left {
-        width: 61% !important;
+        width: 46% !important;
         margin-top: 10% !important;
     }
     .sidebar-toggle {
@@ -299,7 +301,7 @@ a {
 @media (max-width:330px) {
     #left {
         width: 69% !important;
-        padding-top: 10%;
+        padding-top: 10% !important;
     }
 
     .sidebar-toggle {
@@ -345,14 +347,52 @@ a {
     .container-sty h1{
         font-size: 17px;
     }
-}
-
-@media (max-width:350px) {
-    #fix {
-        margin-top: 25% !important;
+    p{
+        font-size: 11px;
+    }
+    strong{
+        font-size: 12px !important;
+    }
+    .list-group-item{
+        font-size: 10px !important;
     }
 }
 
+@media (max-width:369px) {
+    #fix {
+        margin-top: 25% !important;
+    }
+    p{
+        font-size: 9px;
+    }
+    label{
+        font-size: 10px !important;
+    }
+    strong{
+        font-size: 10px !important;
+    }
+    .input-bottom-border{
+        font-size: 9px;
+
+    }
+}
+
+@media (max-width:290px) {
+    .list-group-item{
+        font-size: 10px !important;
+    }
+    #left{
+        padding-top: 13% !important;
+    }
+
+    p{
+        font-size: 8px;
+    }
+    strong{
+        font-size: 8px !important;
+    }
+    
+}
 
 
 /* Modal styles */

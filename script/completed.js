@@ -213,7 +213,7 @@ $(document).ready(function () {
                                     id="start-time-${employee.ticket_id}" 
                                     value="${employee.work_ended_time}" disabled>
                             </div>
-                            <h5 class="pt-4 text-center">${employee.payment}</h5>
+                            <h5 class="pt-4 text-center"><strong>Received Amount : </strong>${employee.payment}</h5>
                    <div class="image-gallery d-flex justify-content-center mt-3">
                           
 
