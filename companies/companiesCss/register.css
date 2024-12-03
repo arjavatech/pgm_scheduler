@@ -1,12 +1,10 @@
 * {
     margin: 0;
     padding: 0;
-    color: #52525b;
 }
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    overflow-y: hidden !important;
 }
 
 .login-img-sty {
@@ -339,7 +337,7 @@ input {
     z-index: 10;
     left: 0;
     top: 0;
-    width: 100%;
+    width: 50%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     /* Background blur */
@@ -361,7 +359,7 @@ input {
     z-index: 10;
     left: 0;
     top: 0;
-    width: 100%;
+    width: 50%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     /* Background blur */

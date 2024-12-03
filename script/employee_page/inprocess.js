@@ -98,7 +98,7 @@ $(document).ready(function () {
                             <p>${rowData.description}</p>
                        <div class="image-gallery row g-2 ">
     <!-- Upload 1 -->
-   <div class="col-5 col-sm-4 col-md-3">
+   <div class="col-5 col-sm-4 col-md-4">
         <div class="uploads position-relative border" style="width: 100%; height: 100px;">
             <input 
                 type="file" 
@@ -127,7 +127,7 @@ $(document).ready(function () {
     </div>
 
     <!-- Upload 2 -->
-   <div class="col-5 col-sm-4 col-md-3">
+   <div class="col-5 col-sm-4 col-md-4">
         <div class="uploads position-relative border" style="width: 100%; height: 100px;">
             <input 
                 type="file" 
@@ -156,7 +156,7 @@ $(document).ready(function () {
     </div>
 
     <!-- Upload 3 -->
-    <div class="col-5 col-sm-4 col-md-3">
+    <div class="col-5 col-sm-4 col-md-4">
         <div class="uploads position-relative border" style="width: 100%; height: 100px;">
             <input 
                 type="file" 
@@ -188,6 +188,7 @@ $(document).ready(function () {
                              </div>
                              
                         </div>
+
                          <div  class="buttonContainer" id="btn">
                              <button id="completed" class="completed-button" data-ticket-id="${rowData.ticket_id}">Completed</button>
                              <button class="save" ticket-tocken=${rowData.id} start-time=${workStartedTime}  id=${rowData.ticket_id}>Save</button>
@@ -327,28 +328,29 @@ $(document).ready(function () {
 // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
+        const workStartedTime = new Date(employee.work_started_time).toISOString().split('T')[0];
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Name </strong>  ${employee.name}</p>
+                        <p><strong>Name:</strong>  ${employee.name}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Ticket ID </strong>  ${employee.ticket_id}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <p><strong>Issue type </strong>  ${employee.ticket_type}</p>
-                    </div>
-                    <div class="col-6">
-                        <p><strong>Date </strong>  ${employee.complain_raised_date}</p>
+                        <p><strong>Ticket ID:</strong>  ${employee.ticket_id}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Phone </strong> ${employee.phone_number}</p>
+                        <p><strong>Issue type:</strong>  ${employee.ticket_type}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Date:</strong>  ${employee.complain_raised_date}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Phone:</strong> ${employee.phone_number}</p>
                     </div>
                     <div class="col-6">
                         <p><strong>City:</strong> ${employee.city}</p>
@@ -356,17 +358,21 @@ $(document).ready(function () {
                 </div>
                 <p class="text-center mb-2 showMoreButton">Show more ⮟</p>     
                 <div class="show-more" style="display:none">
-                    <p><strong>Employee Name:</strong>
-                        <select class="form-select mt-2 employee-select">
-                            <option value="ganesh">Mani</option>
-                            <option value="saab">Arunkumar</option>
-                            <option value="mercedes">Sakthi</option>
-                            <option value="audi">Logeshwari</option>
-                        </select>
-                    </p>
+                    
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
+                    <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="start-time">Work started time:</label>
+                                <input type="datetime-local" class="input-bottom-border"
+                                    id="start-time-${employee.ticket_id}" 
+                                    value="${employee.work_started_time}">
+                            </div>
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="end-time">Work ended time :</label>
+                                <input type="datetime-local" class="input-bottom-border"
+                                    id="start-time-${employee.ticket_id}" 
+                                    value="${employee.work_ended_time}">
+                            </div>
                    <div class="image-gallery d-flex flex-row justify-content-center">
                         <div class="image-container d-flex flex-row justify-content-center">
 
@@ -375,6 +381,15 @@ $(document).ready(function () {
                            ${employee.photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
                         </div>
                     </div>
+                    <div class="row">
+
+                      <div class="col-6">
+                            <button class="form-control mt-2 employee-select comform completed-button" style="width:100%" data-ticket-id="${employee.ticket_id}">Completed</button>
+                        </div>
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select cancel save" style="width:100%" ticket-tocken=${employee.id} start-time=${workStartedTime}  id=${employee.ticket_id}>Save</button>
+                        </div>
+                        </div>
                     <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>             
                 </div>
             </div>

@@ -242,11 +242,30 @@ $(document).ready(function () {
                            ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                            ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                  
-                     <div class="mt-3 mb-3  d-flex justify-content-center" style="gap:20px">
-                            <button type="button" class="btn-yes">Assigned</button>
-                                <button type="button" class="btn-no">Reject</button>
+
+                         <div class="row">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticket_id}" style="width:100%;border: none !important;background-color: transparent;outline: none;
+                border-bottom: 1px solid #9e9e9e !important;display:none">
+                                </div>
                             </div>
+                  
+                  <div class="row mt-2" id="acceptButton-${employee.ticket_id}">
+                                <div class="col-6">
+                               <button type="button" class="btn-yes" style="width:100%" onclick="handleAssign('${cid}', ${employee.ticket_id})">Assigned</button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="form-control employee-select cancel btn-no" style="width:100%" onclick="reason('${employee.ticket_id}')" id="cancel">Reject</button>
+                                </div>
+                            </div>
+                            <div class="row" id="comformButton-${employee.ticket_id}" style="display:none">
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select btn-yes comform" onclick="handleReject(${employee.ticket_id})" style="width:100%" id="completed">Confirm</button>
+                        </div>
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${employee.ticket_id}')"  id="cancel">Cancel</button>
+                        </div>
+                    </div>
                     <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>
                 </div>
             </div>
@@ -279,6 +298,9 @@ function reason(ticketID) {
 
     } else {
         console.error(`Elements not found for ticketID: ${ticketID}`);
+        reasonInput.style.display = 'block';
+        acceptButton.style.display = 'none';
+        confirmButton.style.display = 'flex';
     }
 }
 function cancel(ticketID) {

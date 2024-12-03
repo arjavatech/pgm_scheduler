@@ -28,6 +28,12 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
+        language: {
+            paginate: {
+                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
+                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
+            }
+        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -55,6 +61,7 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
+        console.log(rowData)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -71,12 +78,44 @@ $(document).ready(function () {
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
                             <div class="image-gallery d-flex justify-content-center">
-                                <img src="../../images/profile img.png" alt="Image 1" width="100px">
-                                <div class="image-container d-inline justify-content-center">
-                                    <img src="../../images/profile img.png" alt="Image 1" width="100px">
-                                    <div class="overlay"  data-bs-toggle="modal"
-                                            data-bs-target="#imageModel">+3</div>
-                                </div>
+                                <div class="image-gallery row g-2 justify-content-center">
+                            <!-- Upload 1 -->
+                            
+                                     ${rowData.photo_1 ? `
+                                           <div class="col-5 col-sm-4 col-md-4">
+                                            <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
+                                                style="object-fit: cover;" />
+                                            </div>
+                                            </div>
+                                        ` : `
+            
+                                    `}
+                                <!-- Upload 2 -->
+        
+                                    ${rowData.photo_2 ? `
+                                    <div class="col-5 col-sm-4 col-md-4">
+                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image" class="w-100 h-100" 
+                                    style="object-fit: cover;" />
+                                    </div>
+                                    </div>
+                                ` : `  `}
+                        
+                                    <!-- Upload 3 -->
+                        
+                                    ${rowData.photo_3 ? `
+                                    <div class="col-5 col-sm-4 col-md-4">
+                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.photo_3}" 
+                                    alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
+                                    </div>
+                                    </div>
+                                ` : ` `} 
+                            
+                             
+                        </div>
+
                             </div>
                         </div>
                     </div>
@@ -129,6 +168,7 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
+        console.log(employee)
         const cardHtml = `
         <div class="card mb-3" id="card-${employee.ticket_id}">
             <div class="card-body">
@@ -171,7 +211,7 @@ $(document).ready(function () {
                 </div>
                 <div class="row">
                     <div class="d-flex justify-content-center align-items-center">
-                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticket_id}" style="display:none;width:100%;border: none !important;background-color: transparent;outline: none;">
+                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticket_id}" style="display:none;width:100%;background-color: transparent;outline: none;border-bottom:1px solid #9e9e9e !important;border:none">
                     </div>
                 </div>
                 <div class="row mt-2" id="acceptButton-${employee.ticket_id}">
@@ -188,7 +228,7 @@ $(document).ready(function () {
                             <button class="form-control mt-2 employee-select comform" style="width:100%" onclick="rejectedTicket('${employee.company_id}','${employee.ticket_id}','${employee.employee_id}')" id="completed">Confirm</button>
                         </div>
                        <div class="col-6">
-                            <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${employee.ticket_id}')"  id="cancel">Cancel</button>
+                            <button class="form-control mt-2 employee-select cancel" style="width:100%;border:1px solid #006103 !important" onclick="cancel('${employee.ticket_id}')"  id="cancel">Cancel</button>
                         </div>
                     </div>
                 
@@ -277,12 +317,17 @@ function getUTCDateString() {
 function rejectedTicket(cid, tic_id, eid) {
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
+    let rejected_reason = document.getElementById(`reason-${tic_id}`).value
+    if (!rejected_reason.value) {
+        loadingIndicator.style.display = 'none';
+        return alert("Enter the reason");
+    }
 
     let data = {
         company_id: cid,
         ticket_id: parseInt(tic_id),
         employee_id: eid,
-        rejected_reason: document.getElementById(`reason-${tic_id}`).value,
+        rejected_reason: rejected_reason,
         rejected_date: getUTCDateString()
     }
 

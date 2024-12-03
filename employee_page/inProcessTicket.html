@@ -33,9 +33,9 @@
     }
 
     #image-preview-container img {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
     .buttonContainer {
         display: flex;
@@ -56,12 +56,12 @@
         border-radius: 10px;
     }
 
-    .save{
+    .save {
         border: 1px solid #004102;
         background-color: transparent;
         color: #004102;
-        border-radius: 10px;
-        font-weight: bold;
+        border-radius: 0.375rem;
+        /* font-weight: bold; */
     }
 
     .input-container input {
@@ -153,6 +153,16 @@
     #file-input {
         display: none;
     }
+
+    @media (max-width:290px) {
+        .list-group-item {
+            font-size: 10px !important;
+        }
+
+        #left {
+            padding-top: 13%;
+        }
+    }
 </style>
 
 <body>
@@ -184,7 +194,7 @@
                             </div>
                             <div id="sidebar-content">
                                 <div class="list-group list-group-flush">
-                                    
+
                                     <a class="list-group-item list-group-item-action bg-purple dropdown-toggle" href="#"
                                         id="ticketMenu" data-bs-toggle="collapse" data-bs-target="#ticketSubmenu"
                                         aria-expanded="false" aria-controls="ticketSubmenu">
@@ -207,7 +217,7 @@
 
                                     <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
                                         data-bs-toggle="modal" data-bs-target="#logoutModal" class="m-3">
-                                         <img src="../icon/Vector.png" style="width: 30px;margin-top: -5px;">
+                                        <img src="../icon/Vector.png" style="width: 30px;margin-top: -5px;">
                                         <span class="content text-white list-group-item">Logout</span>
                                     </div>
                                 </div>
@@ -219,7 +229,8 @@
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
                         <p id="header"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
-                            <span id="e_name"></span> <span class="span"><span id="CName"></span> <img src="../icon/Mask group (2).png" id="Clogo" alt=""
+                            <span id="e_name"></span> <span class="span"><span id="CName"></span> <img
+                                    src="../icon/Mask group (2).png" id="Clogo" alt=""
                                     style="width: 40px; padding-left: 10px;"></span>
                         </p>
 
@@ -255,29 +266,29 @@
         </div>
     </div>
 
-     <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content custom-modal-content">
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
 
-        <!-- Modal Header with Title -->
-        <div class="modal-header justify-content-center">
-          <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
+                <!-- Modal Header with Title -->
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="logoutModalLabel">Logout</h5>
 
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body custom-modal-body">
+                    Are you sure you want to log out?
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn-yes">Yes</button>
+                    <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
         </div>
-
-        <!-- Modal Body -->
-        <div class="modal-body custom-modal-body">
-          Are you sure you want to log out?
-        </div>
-
-        <!-- Modal Footer -->
-        <div class="modal-footer custom-modal-footer">
-          <button type="button" class="btn-yes">Yes</button>
-          <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
-        </div>
-      </div>
     </div>
-  </div>
 
     <div class="loading" id="l">
         <div class="spinner"></div>
@@ -294,10 +305,10 @@
 
     <script>
         document.querySelector('.btn-yes').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = '../index.html';
+            localStorage.clear();
+            window.location.href = '../index.html';
         });
-        
+
         document.getElementById('sidebarToggle').addEventListener('click', function () {
             var sidebar = document.getElementById('left');
             var body = document.body;
@@ -364,6 +375,44 @@
                 });
             }
         });
+    </script>
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+        // ]]>
     </script>
 </body>
 

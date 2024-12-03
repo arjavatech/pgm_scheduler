@@ -5,10 +5,10 @@ function viewcompanydetails() {
 
     const tableBody = document.getElementById("tBody");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/company/getall`;
-    
+
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
-     
+
     fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
@@ -25,35 +25,35 @@ function viewcompanydetails() {
             employeesData.forEach(element => {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                <td class="pin-column">${element.company_name}</td>
-                <td class="name-column">${element.first_name}</td>
-                <td class="phone-column">${element.phone_number}</td>
-                <td class="isAdmin">${element.email}</td>
-                <td>
-                    <div>
-                        <span class="icon" title="Edit" style="cursor: pointer;">
-                            <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
-                        </span>
-                        <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" 
-                            data-id="${element.company_id}" email-id="${element.email}" delete-comp="${element.company_name}">
-                            <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
-                        </span>
-                    </div>
-                </td>
-                <td>
-                    <button id="send" class="${element.status === "Accepted" ? "" : "re-send"}" 
-                        companyIdSends="${element.company_id}" 
-                        companyNameForsend="${element.company_name}"
-                        phnNo="${element.phone_number}"
-                        fName="${element.first_name}"
-                        lName="${element.last_name}"
-                        mail="${element.email}"
-                        style="border:none; background:transparent"
-                        ${element.status === "Accepted" ? "disabled" : ""}>
-                        <img src="${element.status === "Accepted" ? "../icon/sendDiasable.png" : "../icon/icons8-forward-message-20.png"}">
-                    </button>
-                </td>
-            `;
+                    <td class="pin-column">${element.company_name}</td>
+                    <td class="name-column">${element.first_name}</td>
+                    <td class="phone-column">${element.phone_number}</td>
+                    <td class="isAdmin">${element.email}</td>
+                    <td>
+                        <div>
+                            <span class="icon edit-icon" title="Edit" style="cursor: pointer;">
+                                <i class="fa fa-pencil" aria-hidden="true" style="color: #006103;"></i>
+                            </span>
+                            <span class="icon delete-icon" title="Delete" style="cursor: pointer; margin-left: 10px;" 
+                                data-id="${element.company_id}" email-id="${element.email}" delete-comp="${element.company_name}">
+                                <i class="fa fa-trash" aria-hidden="true" style="color: #006103;"></i>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <button id="send" class="${element.status === "Accepted" ? "" : "re-send"}" 
+                            companyIdSends="${element.company_id}" 
+                            companyNameForsend="${element.company_name}"
+                            phnNo="${element.phone_number}"
+                            fName="${element.first_name}"
+                            lName="${element.last_name}"
+                            mail="${element.email}"
+                            style="border:none; background:transparent"
+                            ${element.status === "Accepted" ? "disabled" : ""}>
+                            <img src="${element.status === "Accepted" ? "../icon/sendDiasable.png" : "../icon/icons8-forward-message-20.png"}">
+                        </button>
+                    </td>
+                `;
 
                 tableBody.appendChild(newRow);
 
@@ -86,7 +86,10 @@ function viewcompanydetails() {
                     }
                 });
             });
-            
+
+
+           
+
 
             // Event listeners
             tableBody.addEventListener('click', function (event) {
@@ -157,7 +160,7 @@ function viewcompanydetails() {
                             method: 'PUT',
                         })
                             .then(response => {
-                                loadingIndicator.style.display = 'none'; 
+                                loadingIndicator.style.display = 'none';
                                 if (!response.ok) {
                                     throw new Error(`Error: ${response.status}`);
                                 }
@@ -168,7 +171,7 @@ function viewcompanydetails() {
                             })
                             .catch(error => {
                                 console.error('Delete error:', error);
-                                loadingIndicator.style.display = 'none'; 
+                                loadingIndicator.style.display = 'none';
                                 showalert('Failed to delete the company.');
                             });
                     });

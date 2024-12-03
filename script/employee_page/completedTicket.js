@@ -187,28 +187,29 @@ $(document).ready(function () {
 // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
+        console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Name </strong>  ${employee.name}</p>
+                        <p><strong>Name:</strong>  ${employee.name}</p>
                     </div>
                     <div class="col-6">
-                        <p><strong>Ticket ID </strong>  ${employee.ticket_id}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <p><strong>Issue type </strong>  ${employee.ticket_type}</p>
-                    </div>
-                    <div class="col-6">
-                        <p><strong>Date </strong>  ${employee.complain_raised_date}</p>
+                        <p><strong>Ticket ID:</strong>  ${employee.ticket_id}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <p><strong>Phone </strong> ${employee.phone_number}</p>
+                        <p><strong>Issue type:</strong>  ${employee.ticket_type}</p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Date:</strong>  ${employee.complain_raised_date}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p><strong>Phone:</strong> ${employee.phone_number}</p>
                     </div>
                     <div class="col-6">
                         <p><strong>City:</strong> ${employee.city}</p>
@@ -216,25 +217,29 @@ $(document).ready(function () {
                 </div>
                 <p class="text-center mb-2 showMoreButton">Show more ⮟</p>     
                 <div class="show-more" style="display:none">
-                    <p><strong>Employee Name:</strong>
-                        <select class="form-select mt-2 employee-select">
-                            <option value="ganesh">Mani</option>
-                            <option value="saab">Arunkumar</option>
-                            <option value="mercedes">Sakthi</option>
-                            <option value="audi">Logeshwari</option>
-                        </select>
-                    </p>
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
-                    <p class="text-center"><strong>Employee:</strong> ${employee.name}</p>
-                    <div class="image-gallery d-flex flex-row justify-content-center">
-                        <div class="image-container d-flex flex-row justify-content-center">
 
-                         ${employee.photo_1 ? ` <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
-                           ${employee.photo_2 ? ` <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
-                           ${employee.photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                    <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="start-time">Work started time:</label>
+                                <input type="datetime-local" class="input-bottom-border"
+                                    id="start-time-${employee.ticket_id}" 
+                                    value="${employee.work_started_time}" disabled>
+                            </div>
+                            <div class="input-container mt-3" style="text-align:left !important">
+                                <label for="end-time">Work ended time :</label>
+                                <input type="datetime-local" class="input-bottom-border"
+                                    id="start-time-${employee.ticket_id}" 
+                                    value="${employee.work_ended_time}" disabled>
+                            </div>
+                   
+                    <div class="image-gallery d-flex justify-content-center mt-3">
+                          
+
+                         ${employee.photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
+                           ${employee.photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                           ${employee.photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                    </div>
                     <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>             
                 </div>
             </div>
