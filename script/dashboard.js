@@ -102,7 +102,6 @@ async function fetchCounts() {
     try {
         const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_counts/${cid}`);
         const data = await response.json();
-        console.log(data);
 
         // Update the HTML with fetched data
         document.querySelector('.UnassignedCount h3').textContent = data.pending_tickets;
