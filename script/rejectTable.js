@@ -59,7 +59,7 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="r">
+                    <div class="row">
                         
                         <div class="col-md-4">
                             <strong class="d-flex justify-content-left">Customer Address</strong>
@@ -77,7 +77,7 @@ $(document).ready(function () {
                                     value="${tickerRejectDate}" disabled>                                
                             </div>
                         </div>
-                        
+                        <div class="col-md-2"></div>
                         <div class="col-md-6">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
@@ -171,21 +171,20 @@ $(document).ready(function () {
                         <p><strong>City:</strong> ${employee.city}</p>
                     </div>
                 </div>
-                <p class="text-center mb-2 showMoreButton">show more ⮟</p>     
+                <p class="text-center mb-2 showMoreButton">Show more ⮟</p>     
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p class="text-left"><strong >Reason : </strong>${employee.rejected_reason}</p>
                     <p class="text-left"><strong>Reject Date : </strong>${employee.rejected_date}</p>
                     <div class="image-gallery d-flex justify-content-center mt-3">
-                          <div class="image-container d-flex flex-row justify-content-center">
+                          
 
-                         ${employee.ti_photo_1 ? ` <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
-                           ${employee.ti_photo_2 ? ` <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
-                           ${employee.ti_photo_3 ? ` <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
+                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                    </div>
-                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
+                    <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>             
                 </div>
             </div>
         </div>

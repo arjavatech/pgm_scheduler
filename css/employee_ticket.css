@@ -343,6 +343,8 @@ a {
 
     list-style: none;
 
+    gap: 5px;
+
 }
 
 /* Pagination buttons */
@@ -451,7 +453,7 @@ a {
 
     border-radius: 10px;
 
-    padding: 8px 15px;
+    padding: 8px 7px;
 
     font-size: 0.85rem;
 

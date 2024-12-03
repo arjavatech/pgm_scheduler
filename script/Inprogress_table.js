@@ -42,6 +42,12 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
+        language: {
+            paginate: {
+                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
+                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
+            }
+        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -50,6 +56,7 @@ $(document).ready(function () {
         autoWidth: false,
         responsive: true
     });
+
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
@@ -72,7 +79,7 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="r">
+                    <div class="row">
                     
                         <div class="col-md-4 box1">
                             <strong>Customer Address</strong>
@@ -84,7 +91,7 @@ $(document).ready(function () {
                             </select>
                              <small id="pending-count-${rowData.ticket_id}">Pending work: </small>
                         </div>
-                       
+                       <div class="col-md-2"></div>
                         <div class="col-md-6 box2">
                             <strong>Description:</strong>
                             <p>${rowData.description}</p>
@@ -232,16 +239,15 @@ $(document).ready(function () {
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p class="text-center"><strong>Employee:</strong> ${employee.first_name} ${employee.last_name}</p>
                      <div class="image-gallery d-flex justify-content-center mt-3">
-                          <div class="image-container d-flex flex-row justify-content-center">
+                          
 
-                         ${employee.ti_photo_1 ? ` <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
-                           ${employee.ti_photo_2 ? ` <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
-                           ${employee.ti_photo_3 ? ` <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
+                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                    </div>
                     <button class="btn-yes mt-4" id="reassign-${employee.ticket_id}" onclick="disable2(${employee.ticket_id})" style="width:100%">Reassign</button>
                     <button class="btn-yes btn-reassign mt-4" id="confirm-${employee.ticket_id}" style="display:none;width:100%" onclick="handleConfirm('${employee.employee_id}', ${employee.ticket_id})">Confirm</button>
-                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
+                    <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>             
                 </div>
             </div>
         </div>

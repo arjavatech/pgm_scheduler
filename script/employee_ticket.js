@@ -41,6 +41,12 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
+        language: {
+            paginate: {
+                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
+                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
+            }
+        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -157,15 +163,16 @@ function showDeleteEmployeeModal(eid) {
 
     const modalHeader = document.createElement('div');
     modalHeader.classList.add('modal-header', 'justify-content-center');
-    
+    modalHeader.textContent = "Delete Employee"
     const modalTitle = document.createElement('h5');
     modalTitle.classList.add('modal-title');
     modalTitle.id = 'deleteModalLabel';
     modalTitle.textContent = 'Delete';
 
+
     const modalBody = document.createElement('div');
     modalBody.classList.add('modal-body', 'custom-modal-body');
-    modalBody.textContent = 'Are you sure you want to delete the employee?';
+    modalBody.textContent = 'You want to delete the employee?';
 
     const modalFooter = document.createElement('div');
     modalFooter.classList.add('modal-footer', 'custom-modal-footer');
@@ -174,7 +181,7 @@ function showDeleteEmployeeModal(eid) {
     btnYes.type = 'button';
     btnYes.classList.add('btn-yes');
     btnYes.textContent = 'Yes';
-    btnYes.onclick = function() {
+    btnYes.onclick = function () {
         // Handle delete logic
         deleteEmp(eid)
         modal.remove();
@@ -186,7 +193,7 @@ function showDeleteEmployeeModal(eid) {
     btnNo.classList.add('btn-no');
     btnNo.setAttribute('data-bs-dismiss', 'modal');
     btnNo.textContent = 'No';
-    btnNo.onclick = function() {
+    btnNo.onclick = function () {
         modal.remove();
         modalInstance.hide();
     };
@@ -283,12 +290,14 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
 
 
 function deleteEmp(eid) {
+    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
     console.log(eid)
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
 
-    
-    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete/${eid}`, {
+
+    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete//${eid}`, {
         method: 'PUT'
     })
         .then(response => {
@@ -296,19 +305,26 @@ function deleteEmp(eid) {
             if (!response.ok) {
                 throw new Error('Failed to delete ticket');
             }
-            else
-            {
-                window.location.href = "employee_ticket.html";
+            else {
+                document.getElementById("success_content").textContent = "Employee deleted successfuly"
+                successModal.show();
+
+                document.querySelector(".btn-success").addEventListener("click", function () {
+                    window.location = "employee_ticket.html"
+                }
+                )
             }
-            
+
         })
         .catch(error => {
-            alert('Failed to delete ticket. Please try again.');
+            document.getElementById("failure-content").textContent = "Failed to delete ticket. Please try again."
+            // alert('Failed to delete ticket. Please try again.');
+            failureModal.show()
         });
-        // addTicket(data);
+    // addTicket(data);
 
-     }
-     
+}
+
 
 
 
@@ -342,7 +358,7 @@ function createEmployee() {
         failureModal.show();
         return;
     }
-    else{
+    else {
 
         const employeeObject = {
             first_name: firstName,
@@ -359,22 +375,20 @@ function createEmployee() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(employeeObject)
         }).then(response => {
-                
-                if (!response.ok) {
-                    loadingIndicator.style.display = 'none';
-                    throw new Error(`Error: ${response.status}`);
-                }
-                return response.json();
-            })
+
+            if (!response.ok) {
+                loadingIndicator.style.display = 'none';
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
             .then(data => {
-                if(data.error)
-                {
+                if (data.error) {
                     document.getElementById("failure-content").textContent = data.error;
                     loadingIndicator.style.display = 'none';
                     failureModal.show();
                 }
-                else
-                {
+                else {
                     loadingIndicator.style.display = 'none';
                     successModal.show();
                 }
