@@ -316,7 +316,7 @@ function deleteEmp(eid) {
 
         })
         .catch(error => {
-            document.getElementById("failure-content").textContent = "Failed to delete ticket. Please try again."
+            document.getElementById("failure-content").textContent = "Employee Deletion Failed!!!!"
             // alert('Failed to delete ticket. Please try again.');
             failureModal.show()
         });
