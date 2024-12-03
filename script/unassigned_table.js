@@ -252,7 +252,8 @@ $(document).ready(function () {
                   
                   <div class="row mt-2" id="acceptButton-${employee.ticket_id}">
                                 <div class="col-6">
-                               <button type="button" class="btn-yes" style="width:100%" onclick="handleAssign('${cid}', ${employee.ticket_id})">Assigned</button>
+                               <button type="button" class="btn-yes" style="width:100%;    padding-top: 5px !important;
+    padding-bottom: 5px !important;" onclick="handleAssign('${cid}', ${employee.ticket_id})">Assigned</button>
                                 </div>
                                 <div class="col-6">
                                     <button class="form-control employee-select cancel btn-no" style="width:100%" onclick="reason('${employee.ticket_id}')" id="cancel">Reject</button>
@@ -260,7 +261,8 @@ $(document).ready(function () {
                             </div>
                             <div class="row" id="comformButton-${employee.ticket_id}" style="display:none">
                        <div class="col-6">
-                            <button class="form-control mt-2 employee-select btn-yes comform" onclick="handleReject(${employee.ticket_id})" style="width:100%" id="completed">Confirm</button>
+                            <button class="form-control mt-2 employee-select btn-yes comform" onclick="handleReject(${employee.ticket_id})" style="width:100%;    padding-top: 5px !important;
+    padding-bottom: 5px !important;" id="completed">Confirm</button>
                         </div>
                        <div class="col-6">
                             <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${employee.ticket_id}')"  id="cancel">Cancel</button>
