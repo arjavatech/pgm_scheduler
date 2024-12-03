@@ -17,7 +17,7 @@ $(document).ready(function () {
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
-                addCard(ticket); 
+                addCard(ticket);
                 index++;
             });
         })
@@ -48,7 +48,7 @@ $(document).ready(function () {
             ticket.complain_raised_date,
             ticket.city
         ],
-    '').draw(false).node();
+            '').draw(false).node();
 
         $(rowNode).find('td:first').addClass('details-control');
     }
@@ -58,14 +58,14 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="r">
-                       
+                    <div class="row">
                         <div class="col-md-4 box1">
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
                             </p>
                         </div>
+                        <div class="col-md-2"></div>
                      
                         <div class="col-md-6 box2">
                             <strong>Description:</strong>
@@ -81,10 +81,11 @@ $(document).ready(function () {
                         </div>
                     </div>
                     <div class="row">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${rowData.ticket_id}" style="display:none;width:100%">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${rowData.ticket_id}" style="display:none;width:100%;border: none !important;background-color: transparent;outline: none;
+        border-bottom: 1px solid #9e9e9e !important;">
+                        </div>
                     </div>
-                </div>
                 <div class="row mt-2" id="acceptButton-${rowData.ticket_id}">
                     <div class="col-6">
                        <button class="form-control mt-2 employee-select comform" 
@@ -156,7 +157,7 @@ $(document).ready(function () {
                     </div>
                 </div>
 
-                <p class="text-center mb-2 showMoreButton">show more ⮟</p>
+                <p class="text-center mb-2 showMoreButton">Show more ⮟</p>
                 <div class="show-more" style="display:none">
                 <div class="row">
                     <div class="col-12">
@@ -170,7 +171,7 @@ $(document).ready(function () {
                 </div>
                 <div class="row">
                     <div class="d-flex justify-content-center align-items-center">
-                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticket_id}" style="display:none;width:100%">
+                        <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticket_id}" style="display:none;width:100%;border: none !important;background-color: transparent;outline: none;">
                     </div>
                 </div>
                 <div class="row mt-2" id="acceptButton-${employee.ticket_id}">
@@ -191,26 +192,26 @@ $(document).ready(function () {
                         </div>
                     </div>
                 
-                <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>
+                <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>
                 </div>  
             </div>
         </div>
     `;
-    $('#card-container').append(cardHtml);
+        $('#card-container').append(cardHtml);
 
-    // Show more functionality with event delegation
-    $(document).on('click', '.showMoreButton', function () {
-        const cardBody = $(this).closest('.card-body');
-        cardBody.find('.show-more').slideDown(); // Slide down the content
-        $(this).hide(); // Hide "show more" button
-    });
+        // Show more functionality with event delegation
+        $(document).on('click', '.showMoreButton', function () {
+            const cardBody = $(this).closest('.card-body');
+            cardBody.find('.show-more').slideDown(); // Slide down the content
+            $(this).hide(); // Hide "show more" button
+        });
 
-    $(document).on('click', '.showLessButton', function () {
-        const cardBody = $(this).closest('.card-body');
-        cardBody.find('.show-more').slideUp(); // Slide up the content
-        cardBody.find('.showMoreButton').show(); // Show "show more" button
-    });
-}
+        $(document).on('click', '.showLessButton', function () {
+            const cardBody = $(this).closest('.card-body');
+            cardBody.find('.show-more').slideUp(); // Slide up the content
+            cardBody.find('.showMoreButton').show(); // Show "show more" button
+        });
+    }
 
 
 
@@ -254,12 +255,12 @@ function reason(ticketID) {
     const reasonInput = document.getElementById(`reason-${ticketID}`);
     const acceptButton = document.getElementById(`acceptButton-${ticketID}`);
     const confirmButton = document.getElementById(`comformButton-${ticketID}`);
-    
+
     if (reasonInput && acceptButton && confirmButton) {
         reasonInput.style.display = 'block';
         acceptButton.style.display = 'none';
         confirmButton.style.display = 'flex';
-        
+
     } else {
         console.error(`Elements not found for ticketID: ${ticketID}`);
     }
@@ -270,20 +271,19 @@ function getUTCDateString() {
     // Extract the date part (YYYY-MM-DD)
     const utcDate = isoString.split('T')[0];
     return utcDate;
-  }
-  
+}
 
-function rejectedTicket(cid, tic_id, eid)
-{
+
+function rejectedTicket(cid, tic_id, eid) {
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
     let data = {
-        company_id : cid,
-        ticket_id : parseInt(tic_id),
-        employee_id : eid,
-        rejected_reason : document.getElementById(`reason-${tic_id}`).value,
-        rejected_date : getUTCDateString()
+        company_id: cid,
+        ticket_id: parseInt(tic_id),
+        employee_id: eid,
+        rejected_reason: document.getElementById(`reason-${tic_id}`).value,
+        rejected_date: getUTCDateString()
     }
 
     fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_rejected_ticket`, {
@@ -292,7 +292,7 @@ function rejectedTicket(cid, tic_id, eid)
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        })
+    })
         .then((response) => {
 
             if (!response.ok) {
@@ -301,13 +301,12 @@ function rejectedTicket(cid, tic_id, eid)
             return response.json();
         })
         .then((data) => {
-            
+
             if (data.error) {
                 loadingIndicator.style.display = 'none';
                 console.error("Error in response:", data.error);
             }
-            else
-            {
+            else {
                 setTimeout(() => {
                     loadingIndicator.style.display = 'none';
                     window.location.href = 'AssignedTickets.html';
@@ -316,7 +315,7 @@ function rejectedTicket(cid, tic_id, eid)
         })
         .catch((error) => {
             loadingIndicator.style.display = 'none';
-            console.error("Error in response:", data.error);
+            console.error("Error in response:", error);
         });
 }
 
@@ -324,19 +323,18 @@ function cancel(ticketID) {
     const reasonInput = document.getElementById(`reason-${ticketID}`);
     const acceptButton = document.getElementById(`acceptButton-${ticketID}`);
     const confirmButton = document.getElementById(`comformButton-${ticketID}`);
-    
+
     if (reasonInput && acceptButton && confirmButton) {
         reasonInput.style.display = 'none';
         acceptButton.style.display = 'flex';
         confirmButton.style.display = 'none';
-        
+
     } else {
         console.error(`Elements not found for ticketID: ${ticketID}`);
     }
 }
 
-function acceptClick(token)
-{
+function acceptClick(token) {
     const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
@@ -345,7 +343,7 @@ function acceptClick(token)
         headers: {
             'Content-Type': 'application/json',
         },
-        })
+    })
         .then((response) => {
 
             if (!response.ok) {
@@ -354,13 +352,12 @@ function acceptClick(token)
             return response.json();
         })
         .then((data) => {
-            
+
             if (data.error) {
                 loadingIndicator.style.display = 'none';
                 console.error("Error in response:", data.error);
             }
-            else
-            {
+            else {
                 setTimeout(() => {
                     loadingIndicator.style.display = 'none';
                     window.location.href = 'inProcessTicket.html';

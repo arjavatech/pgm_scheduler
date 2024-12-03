@@ -35,6 +35,12 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
+        language: {
+            paginate: {
+                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
+                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
+            }
+        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -70,7 +76,7 @@ $(document).ready(function () {
         return `
            <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="r">
+                    <div class="row">
                        
                         <div class="col-md-4 box1" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
@@ -93,7 +99,7 @@ $(document).ready(function () {
                                     value="${rowData.work_ended_time}" disabled>                                
                             </div>                             
                         </div>
-                        
+                        <div class="col-md-2"></div>
                         <div class="col-md-6 box2">
                             <strong style="text-align:left !important">Description:</strong>
                             <p class="description">${rowData.description}</p>
@@ -191,7 +197,7 @@ $(document).ready(function () {
                         
                     </div>
                 </div>
-                <p class="text-center mb-2 showMoreButton">show more &#9660;</p>
+                <p class="text-center mb-2 showMoreButton">Show more ⮟</p>
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
@@ -207,17 +213,16 @@ $(document).ready(function () {
                                     id="start-time-${employee.ticket_id}" 
                                     value="${employee.work_ended_time}" disabled>
                             </div>
-                            <h5 class="pt-4 text-center">$100</h5>
-                    <div class="image-gallery d-flex justify-content-center mt-3">
-                          <div class="image-container d-flex flex-row justify-content-center">
+                            <h5 class="pt-4 text-center">${employee.payment}</h5>
+                   <div class="image-gallery d-flex justify-content-center mt-3">
+                          
 
-                         ${employee.ti_photo_1 ? ` <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
-                           ${employee.ti_photo_2 ? ` <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
-                           ${employee.ti_photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
+                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                    </div>
                     
-                    <p class="text-center pt-3 mb-2 showLessButton">show less &#9650;</p>       
+                    <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>       
                 </div>
             </div>
         </div>

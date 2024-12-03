@@ -711,6 +711,10 @@ strong {
     background: linear-gradient(to bottom, transparent 0%, transparent) !important
 }
 
+.empty{
+    display: none;
+}
+
 @media (max-width:930px) {
 
     #rejectedTicketTable thead th,

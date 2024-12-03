@@ -34,6 +34,12 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
+        language: {
+            paginate: {
+                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
+                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
+            }
+        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -42,6 +48,7 @@ $(document).ready(function () {
         autoWidth: false,
         responsive: true
     });
+
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
@@ -71,7 +78,7 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="r">
+                    <div class="row">
                         
                         <div class="col-md-4" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
@@ -94,7 +101,7 @@ $(document).ready(function () {
                                     value="${rowData.work_ended_time}" disabled>                                
                             </div>                             
                         </div>
-                        
+                        <div class="col-md-2"></div>
                        <div class="col-md-6 box2">
                             <strong>Description:</strong>
                             <p class="description">${rowData.description}</p>
@@ -136,15 +143,11 @@ $(document).ready(function () {
                              
                             </div>
                             <br>
-                               <button 
-    type="button" 
-    class="btn-yes btn-reassign" 
-    data-bs-toggle="modal" 
-    data-bs-target="#InvoiceModal"
-    onclick="createInvoiceModal('${rowData.id}','${rowData.ticket_id}','${rowData.employee_id}')"> <!-- Pass the ticketID dynamically -->
+                               <button type="button" class="btn-yes btn-reassign" style="width:100% !important" data-bs-toggle="modal" data-bs-target="#InvoiceModal"
+    onclick="openModal('${rowData.id}','${rowData.ticket_id}','${rowData.employee_id}')">
+    <!-- Pass the ticketID dynamically -->
     Generate Invoice
 </button>
-
                             
                         </div>
                     </div>
@@ -170,8 +173,6 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
-        const workStartedTime = new Date(employee.work_started_time).toISOString().split('T')[0];
-        const workEndedTime = new Date(employee.work_ended_time).toISOString().split('T')[0];
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
@@ -199,7 +200,7 @@ $(document).ready(function () {
                         <p><strong>City:</strong> ${employee.city}</p>
                     </div>
                 </div>
-                <p class="text-center mb-2 showMoreButton">show more &#9660;</p>
+                <p class="text-center mb-2 showMoreButton">Show more ⮟</p>
                 <div class="show-more" style="display:none">
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
@@ -215,18 +216,15 @@ $(document).ready(function () {
                                     id="start-time-${employee.ticket_id}" 
                                     value="${employee.work_started_time}" disabled>
                             </div>
-                    <div class="image-gallery d-flex justify-content-center mt-3">
-                          <div class="image-container d-flex flex-row justify-content-center">
+                            <div class="image-gallery d-flex justify-content-center mt-3">
+                          
 
-                         ${employee.photo_1 ? ` <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px">` : ``}   
-                           ${employee.photo_2 ? ` <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px">` : ``} 
-                           ${employee.photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">` : ``} 
+                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
+                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                    </div>
-                    <button type="button" id="invoice" class="btn-yes btn-reassign mt-3" style="width:100%" data-bs-toggle="modal" data-bs-target="#InvoiceModal">
-                        Generate Invoice
-                    </button>
-                    <p class="text-center pt-3 mb-2 showLessButton">show less &#9650;</p>       
+                    
+                    <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>       
                 </div>
             </div>
         </div>
@@ -252,93 +250,68 @@ $(document).ready(function () {
 });
 
 
-
-function createInvoiceModal(tockenID, ticketID, eid) {
-    // Check if the modal already exists
-    let existingModal = document.getElementById("InvoiceModal");
+function openModal(tockenID, ticketID, eid) {
+    // Remove existing modal if it exists
+    const existingModal = document.getElementById('dynamicModal');
     if (existingModal) {
-        existingModal.remove(); // Remove existing modal if any
+        existingModal.remove();
     }
 
-    // Create modal container
-    const modal = document.createElement("div");
-    modal.className = "modal fade";
-    modal.id = "InvoiceModal";
-    modal.tabIndex = "-1";
-    modal.setAttribute("aria-labelledby", "InvoiceModalLabel");
-    modal.setAttribute("aria-hidden", "true");
+    // Create the modal structure dynamically
+    const modalHTML = `
+        <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered"> <!-- Centered modal -->
+            <div class="modal-content custom-modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center" id="dynamicModalLabel" style="font-weight: 600;">
+                        Generate Invoice
+                    </h5>
+                </div>
 
-    // Add modal dialog
-    modal.innerHTML = `
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content custom-modal-content">
-    <div class="modal-body custom-modal-body">
-        <h5 class="modal-title pt-2 pt-3" id="InvoiceModalLabel" style="font-weight: 600;">
-            Generate Invoice
-        </h5>
-        <textarea placeholder="Description" class="input-bottom-border mb-4 mt-4"
-            style="background-color: transparent;" rows="1"></textarea>
-<input 
-                    id="amountInput" 
-                    placeholder="Amount" 
-                    type="number" 
-                    class="input-bottom-border mb-4" 
-                    style="background-color: transparent;" />
+                <div class="modal-body">
+                    <div class="modal-body custom-modal-body">
+                        <textarea placeholder="Description" id="description" class="input-bottom-border mb-4 mt-4"
+                            style="background-color: transparent;" rows="1"></textarea>
+                        <input 
+                            id="amountInput" 
+                            placeholder="Amount" 
+                            type="number" 
+                            class="input-bottom-border mb-4" 
+                            style="background-color: transparent;" />
 
 
-        <div class="d-flex justify-content-center mt-2 mb-4">
-            <button type="submit" class="btn-green btn btn-reassign" style="width: 90% !important;background: #004102 !important;
-    color: white !important;
-    padding: 6px !important;
-    border-radius: 10px !important;
-    font-size: medium !important;" 
-                onclick="handlePayment('${tockenID}','${ticketID}','${eid}')">Pay</button>
+                        <div class="d-flex justify-content-center mt-2 mb-4">
+                            <button type="submit" class="btn-green btn btn-reassign" style="width: 90% !important;background: #004102 !important;
+                                color: white !important;
+                                padding: 6px !important;
+                                border-radius: 10px !important;
+                                font-size: medium !important;" 
+                                onclick="handlePayment('${tockenID}','${ticketID}','${eid}')">Pay</button>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+          </div>
         </div>
-    </div>
-</div>
-</div>
-`;
+    `;
 
-    // Append modal to the body
-    document.body.appendChild(modal);
+    // Append the modal to the body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
 
     // Show the modal
-    const modalElement = new bootstrap.Modal(document.getElementById("InvoiceModal"));
-    modalElement.show();
+    const myModal = new bootstrap.Modal(document.getElementById('dynamicModal'));
+    myModal.show();
 }
 
-document.getElementById("amountInput").addEventListener("input", function (e) {
-    // Allow only digits by replacing non-numeric characters
-    this.value = this.value.replace(/[^0-9]/g, '');
-
-
-    // Allow: Backspace, Delete, Tab, Escape, Enter, and Arrow keys
-    if (
-        e.key === "Backspace" ||
-        e.key === "Delete" ||
-        e.key === "Tab" ||
-        e.key === "Escape" ||
-        e.key === "Enter" ||
-        (e.key >= "0" && e.key <= "9") || // Allow numbers
-        (e.key === "ArrowLeft" || e.key === "ArrowRight") // Allow navigation
-    ) {
-        return; // Let it happen
-    }
-
-    // Block any other key presses (non-numeric)
-    e.preventDefault();
-});
-
-
-// Example of handling payment button click
 async function handlePayment(tockenID, ticket_id, eid) {
+    const modalElement = bootstrap.Modal.getInstance(document.getElementById("dynamicModal"));
+    modalElement.hide();
+    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
 
-    console.log(tockenID)
-    const cid = localStorage.getItem("cid");
 
-
-
-    const description = document.querySelector("#InvoiceModal textarea").value;
+    const description = document.querySelector("#dynamicModal textarea").value;
     const amount = getAmountAsInteger(); // Convert amount to integer
 
 
@@ -357,7 +330,6 @@ async function handlePayment(tockenID, ticket_id, eid) {
         status: 4,
         
     }
-    console.log(datas)
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket/update/${ticket_id}`; // Replace with your API endpoint
 
@@ -380,18 +352,12 @@ async function handlePayment(tockenID, ticket_id, eid) {
         // Parse and log the response data
         const data = await response.json();
         console.log('Payment updated successfully:', data);
-
-        // Provide user feedback (optional)
-        alert('Payment updated successfully!');
-
-        // Hide the modal
-        const modalElement = bootstrap.Modal.getInstance(document.getElementById("InvoiceModal"));
-        modalElement.hide();
-
+        successModal.show();
         return data;
     } catch (error) {
         console.error('Failed to update payment:', error);
-        alert(`Failed to update payment: ${error.message}`);
+        // alert(`Failed to update payment: ${error.message}`);
+        failureModal.show();
     }
 }
 

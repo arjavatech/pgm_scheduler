@@ -30,15 +30,22 @@ $(document).ready(function () {
         });
 
     // Initialize DataTable
-    const table = $('#ticketTable').DataTable({
-        paging: true,
-        lengthChange: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-        responsive: true
-    });
+  // Initialize DataTable
+  const table = $('#ticketTable').DataTable({
+    language: {
+        paginate: {
+            previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
+            next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
+        }
+        },
+    paging: true,
+    lengthChange: true,
+    searching: true,
+    ordering: true,
+    info: true,
+    autoWidth: false,
+    responsive: true
+});
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
@@ -64,7 +71,7 @@ $(document).ready(function () {
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="r">
+                    <div class="row">
                     
                         <div class="col-md-4 box1">
                             <strong>Customer Address</strong>
@@ -85,7 +92,7 @@ $(document).ready(function () {
                             </div>  
                            
                             </div>
-                       
+                       <div class="col-md-2"></div>
                         <div class="col-md-6 box2">
                             <strong>Description:</strong>
                             <p>${rowData.description}</p>
@@ -182,8 +189,8 @@ $(document).ready(function () {
                              
                         </div>
                          <div  class="buttonContainer" id="btn">
-                             <button id="completed" class="completed-button" data-ticket-id="${rowData.ticket_id}">completed</button>
-                             <button class="save" ticket-tocken =${rowData.id} start-time=${workStartedTime}  id=${rowData.ticket_id}>save</button>
+                             <button id="completed" class="completed-button" data-ticket-id="${rowData.ticket_id}">Completed</button>
+                             <button class="save" ticket-tocken=${rowData.id} start-time=${workStartedTime}  id=${rowData.ticket_id}>Save</button>
                         </div>
                     </div>
                 </td>
@@ -347,7 +354,7 @@ $(document).ready(function () {
                         <p><strong>City:</strong> ${employee.city}</p>
                     </div>
                 </div>
-                <p class="text-center mb-2 showMoreButton">show more ⮟</p>     
+                <p class="text-center mb-2 showMoreButton">Show more ⮟</p>     
                 <div class="show-more" style="display:none">
                     <p><strong>Employee Name:</strong>
                         <select class="form-select mt-2 employee-select">
@@ -368,7 +375,7 @@ $(document).ready(function () {
                            ${employee.photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
                         </div>
                     </div>
-                    <p class="text-center pt-3 mb-2 showLessButton">show less ⮝</p>             
+                    <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>             
                 </div>
             </div>
         </div>

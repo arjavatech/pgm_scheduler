@@ -39,7 +39,12 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
-       
+        language: {
+            paginate: {
+                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
+                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
+            }
+        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -69,7 +74,7 @@ $(document).ready(function () {
 
         return ` <tr class="collapse-content details-row">
                 <td colspan="8">
-                    <div class="r">
+                    <div class="row">
                        
                         <div class="col-md-4 box1" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
@@ -84,6 +89,7 @@ $(document).ready(function () {
                             </select>
                              <small id="pending-count-${rowData.ticket_id}">Pending work: N/A</small>                           
                         </div>
+                        <div class="col-md-2"></div>
                        
                         <div class="col-md-6 box2">
                             <strong>Description:</strong>
@@ -125,16 +131,44 @@ $(document).ready(function () {
                             
                              
                         </div>
+
+                        
                          <div class="mt-3 mb-3">
-                                     <button type="button" class="btn-yes" onclick="handleAssign('${cid}', ${rowData.ticket_id})">Assigned</button>
-                                    <button type="button" class="btn-no" onclick="handleReject(${rowData.ticket_id})">Reject</button>
+                            <div class="row">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${rowData.ticket_id}" style="width:100%;border: none !important;background-color: transparent;outline: none;
+                border-bottom: 1px solid #9e9e9e !important;display:none">
+                                </div>
+                            </div>
+                            <div class="row mt-2" id="acceptButton-${rowData.ticket_id}">
+                                <div class="col-6">
+                               <button type="button" class="btn-yes" style="width:100%" onclick="handleAssign('${cid}', ${rowData.ticket_id})">Assigned</button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="form-control employee-select cancel btn-no" style="width:100%" onclick="reason('${rowData.ticket_id}')" id="cancel">Reject</button>
+                                </div>
+                            </div>
+
+                            <div class="row" id="comformButton-${rowData.ticket_id}" style="display:none">
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select btn-yes comform" onclick="handleReject(${rowData.ticket_id})" style="width:100%" id="completed">Confirm</button>
+                        </div>
+                       <div class="col-6">
+                            <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${rowData.ticket_id}')"  id="cancel">Cancel</button>
+                        </div>
+                    </div>
+
+                                    
                                 </div>
 
                     </div>
+                    
                 </td>
             </tr>`;
     }
 
+
+    
     // Expand row details on click
     $('#ticketTable tbody').on('click', 'td.details-control', function () {
         const tr = $(this).closest('tr');
@@ -161,6 +195,7 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
+        console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
@@ -201,13 +236,13 @@ $(document).ready(function () {
                           <small id="pending-count-${employee.ticket_id}">Pending work: N/A</small>
                     </p>
                       <div class="image-gallery d-flex justify-content-center mt-3">
-                          <div class="image-container d-flex flex-row justify-content-center">
+                          
 
-                         ${employee.ti_photo_1 ? ` <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
-                           ${employee.ti_photo_2 ? ` <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
-                           ${employee.ti_photo_3 ? ` <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
+                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
                         </div>
-                    </div>
+                  
                      <div class="mt-3 mb-3  d-flex justify-content-center" style="gap:20px">
                             <button type="button" class="btn-yes">Assigned</button>
                                 <button type="button" class="btn-no">Reject</button>
@@ -232,6 +267,34 @@ $(document).ready(function () {
     });
 });
 
+function reason(ticketID) {
+    const reasonInput = document.getElementById(`reason-${ticketID}`);
+    const acceptButton = document.getElementById(`acceptButton-${ticketID}`);
+    const confirmButton = document.getElementById(`comformButton-${ticketID}`);
+
+    if (reasonInput && acceptButton && confirmButton) {
+        reasonInput.style.display = 'block';
+        acceptButton.style.display = 'none';
+        confirmButton.style.display = 'flex';
+
+    } else {
+        console.error(`Elements not found for ticketID: ${ticketID}`);
+    }
+}
+function cancel(ticketID) {
+    const reasonInput = document.getElementById(`reason-${ticketID}`);
+    const acceptButton = document.getElementById(`acceptButton-${ticketID}`);
+    const confirmButton = document.getElementById(`comformButton-${ticketID}`);
+
+    if (reasonInput && acceptButton && confirmButton) {
+        reasonInput.style.display = 'none';
+        acceptButton.style.display = 'flex';
+        confirmButton.style.display = 'none';
+
+    } else {
+        console.error(`Elements not found for ticketID: ${ticketID}`);
+    }
+}
 
 async function assignedEmployee(cid, employee_id, ticket_id) {
     const loadingIndicator = document.getElementById('l');
@@ -290,8 +353,8 @@ async function handleReject(ticketid) {
 
     // Define the body content to send, including row details
     const requestBody = {
-        "rejected_reason": "xyz",
-        "rejected_date": today
+        rejected_reason: document.getElementById(`reason-${ticketid}`).value,
+        rejected_date: today
     };
 
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/admin_reject_ticket/${ticketid}`;

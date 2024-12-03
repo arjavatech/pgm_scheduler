@@ -156,3 +156,23 @@ h1 {
     opacity: 0.8;
     /* Darker red on hover */
 }
+
+@media (max-width:768px) {
+    .custom-modal-content {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        border: none;
+        width: 100% !important;
+    }
+
+    .custom-modal-body {
+        font-size: 18px;
+        text-align: center;
+        padding: 10px;
+        color: #333;
+    }
+    .btn-yes,.btn-no{
+        width: 40%;
+    }
+    
+}

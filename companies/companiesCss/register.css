@@ -198,7 +198,7 @@ a {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 300px;
+    width: 96%;
     text-align: center;
     border-radius: 8px;
 }
@@ -350,7 +350,7 @@ input {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 500px;
+    width: 96%;
     text-align: center;
     border-radius: 8px;
 }
@@ -372,7 +372,7 @@ input {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 500px;
+    width: 96%;
     text-align: center;
     border-radius: 8px;
 }
@@ -388,9 +388,6 @@ input {
     stroke-dasharray: 76;
     stroke-dashoffset: 76;
     animation: draw 1s forwards;
-
-
-
     stroke: #4CAF50;
     fill: none;
     animation: drawCircle 1s ease-in-out forwards;

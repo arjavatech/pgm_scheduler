@@ -356,7 +356,12 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     margin: 0;
    
     list-style: none;
+    gap: 5px;
+  
 
+}
+.dataTables_wrapper .dataTables_paginate .pagination .page-item .page-link {
+display: inline-block !important;
 }
 @media (max-width: 480px) {
     /* Stack Previous and Next Buttons */
@@ -504,7 +509,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 #addEmployee {
     padding: 4px 10px 4px 10px;
-    width: 70%;
+    /* width: 70%; */
     border-radius: 7px;
     border: none;
     background-color: #006103;
@@ -514,7 +519,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 #addEmployee2 {
     padding: 4px 10px 4px 10px;
-    width: 70%;
+    /* width: 70%; */
     border-radius: 7px;
     border: none;
     background-color: #006103;
@@ -523,7 +528,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 
 #cancel {
     padding: 3px 10px 3px 10px;
-    width: 70%;
+    /* width: 70%; */
     border: 1px solid #006103;
     color: #006103;
     border-radius: 7px;
@@ -873,10 +878,14 @@ strong {
     #fix {
         margin-top: 10% !important;
     }
+
+    #icon{
+        width: 22% !important;
+    }
 }
 
 @media (max-width:350px) {
     #fix {
-        margin-top: 25% !important;
+        margin-top: 10% !important;
     }
 }

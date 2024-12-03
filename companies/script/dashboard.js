@@ -141,3 +141,19 @@ function viewcompanydetails() {
 
 
 
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    var sidebar = document.getElementById('left');   
+    var body = document.body; 
+    sidebar.classList.toggle('active');
+
+    if (sidebar.classList.contains('active')) {
+        // Sidebar is open, apply transparency
+        body.classList.add('no-scroll');
+        // body.classList.add('body-overlay');
+    }
+    else {
+        // Sidebar is closed, reset colors
+        body.classList.remove('no-scroll');
+        // body.classList.remove('body-overlay');
+    }
+});  
