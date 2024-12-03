@@ -292,12 +292,11 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
 function deleteEmp(eid) {
     const successModal = new bootstrap.Modal(document.getElementById('successModal'));
     const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
-    console.log(eid)
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
 
 
-    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete//${eid}`, {
+    fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/delete/${eid}`, {
         method: 'PUT'
     })
         .then(response => {
