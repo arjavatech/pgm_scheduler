@@ -81,10 +81,10 @@ $(document).ready(function () {
                                 <div class="image-gallery row g-2 justify-content-center">
                             <!-- Upload 1 -->
                             
-                                     ${rowData.photo_1 ? `
+                                     ${rowData.ti_photo_1 ? `
                                            <div class="col-5 col-sm-4 col-md-4">
                                             <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
                                                 style="object-fit: cover;" />
                                             </div>
                                             </div>
@@ -93,10 +93,10 @@ $(document).ready(function () {
                                     `}
                                 <!-- Upload 2 -->
         
-                                    ${rowData.photo_2 ? `
+                                    ${rowData.ti_photo_2 ? `
                                     <div class="col-5 col-sm-4 col-md-4">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image" class="w-100 h-100" 
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_2}" alt="Uploaded Image" class="w-100 h-100" 
                                     style="object-fit: cover;" />
                                     </div>
                                     </div>
@@ -104,10 +104,10 @@ $(document).ready(function () {
                         
                                     <!-- Upload 3 -->
                         
-                                    ${rowData.photo_3 ? `
+                                    ${rowData.ti_photo_3 ? `
                                     <div class="col-5 col-sm-4 col-md-4">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                    <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.photo_3}" 
+                                    <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.ti_photo_3}" 
                                     alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
                                     </div>
                                     </div>
@@ -209,6 +209,14 @@ $(document).ready(function () {
                         <p><strong>Description</strong>: ${employee.description}</p>
                     </div>
                 </div>
+                 <div class="image-gallery d-flex flex-row justify-content-center">
+                        <div class="image-container d-flex flex-row justify-content-center">
+
+                         ${employee.ti_photo_1 ? ` <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
+                           ${employee.ti_photo_2 ? ` <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                           ${employee.ti_photo_3 ? ` <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                        </div>
+                </div>
                 <div class="row">
                     <div class="d-flex justify-content-center align-items-center">
                         <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${employee.ticket_id}" style="display:none;width:100%;background-color: transparent;outline: none;border-bottom:1px solid #9e9e9e !important;border:none">
@@ -222,6 +230,7 @@ $(document).ready(function () {
                         <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="reason('${employee.ticket_id}')" id="cancel">Reject</button>
                     </div>
                 </div>
+               
 
                 <div class="row" id="comformButton-${employee.ticket_id}" style="display:none">
                        <div class="col-6">
@@ -315,10 +324,11 @@ function getUTCDateString() {
 
 
 function rejectedTicket(cid, tic_id, eid) {
-    const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+    const loadingIndicator = document.getElementById('l'); 
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
     let rejected_reason = document.getElementById(`reason-${tic_id}`).value
-    if (!rejected_reason.value) {
+
+    if (!rejected_reason) {
         loadingIndicator.style.display = 'none';
         return alert("Enter the reason");
     }

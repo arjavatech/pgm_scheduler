@@ -64,10 +64,7 @@ $(document).ready(function () {
 
 
     function format(rowData) {
-        
-        console.log(rowData);
         const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
-        console.log(rowData.work_started_time)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -87,7 +84,7 @@ $(document).ready(function () {
                              <div class="input-container mt-3" style="text-align:left !important;  padding:0 !important">
                                 <label for="end-time">Work ended time :</label>
                                 <input type="datetime-local" class="input-bottom-border mt-2" style="background:transparent"
-                                    id="start-time-${rowData.ticket_id}" 
+                                    id="end-time-${rowData.ticket_id}" 
                                     value="${rowData.work_ended_time}">                                
                             </div>  
                            
@@ -191,7 +188,7 @@ $(document).ready(function () {
 
                          <div  class="buttonContainer" id="btn">
                              <button id="completed" class="completed-button" data-ticket-id="${rowData.ticket_id}">Completed</button>
-                             <button class="save" ticket-tocken=${rowData.id} start-time=${workStartedTime}  id=${rowData.ticket_id}>Save</button>
+                             <button class="save" ticket-tocken=${rowData.id} id=${rowData.ticket_id} data-ticket-id="${rowData.ticket_id}">Save</button>
                         </div>
                     </div>
                 </td>
@@ -253,25 +250,66 @@ $(document).ready(function () {
     // Completed button 
 
         // Event listener for the completed button
-        $(document).on('click', '.completed-button', async function () {
+        $(document).on('click', '.save', async function () {
             const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
             loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
-            const ticketID = $(this).data('ticket-id');
-            const workStartedTime = $(this).closest('tr').find('#start-time').val();
-            const workEndedTime = $(this).closest('tr').find('#end-time').val();
-            // const photos = ""; // You can handle the image upload and include it here if needed
-    
+            const ticket_token = this.getAttribute('ticket-tocken');
+            const ticket_id = this.getAttribute("data-ticket-id");
+
+            const workStartedTime = document.getElementById(`start-time-${ticket_id}`).value;
+            const workEndedTime = document.getElementById(`end-time-${ticket_id}`).value;
             const requestBody = {
-                company_id: localStorage.getItem("cid"), // Replace with actual company ID
-                employee_id: localStorage.getItem("eid"), // Replace with actual employee ID
-                ticket_id: ticketID,
-                work_started_time: workStartedTime || null, // Optional
-                work_ended_time: workEndedTime || null, // Optional
-                // photos: photos || null // Optional
+                work_started_time: workStartedTime || null, 
+                work_ended_time: workEndedTime || null, 
             };
 
-            console.log(requestBody);
+            console.log(requestBody)
+    
+            try {
+                const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/save/${ticket_token}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestBody)
+                });
+    
+                if (!response.ok) throw new Error(`Error: ${response.status}`);
+                const data = await response.json();
+                if(data.message)
+                {
+                    setTimeout(() => {
+                        loadingIndicator.style.display = 'none';
+                        window.location.href = 'inProcessTicket.html';
+                    }, 1000);
+                }
+                else
+                {
+                    loadingIndicator.style.display = 'none';
+                }
+            } catch (error) {
+                loadingIndicator.style.display = 'none';
+                console.error("Failed to mark ticket as completed:", error.message);
+            }
+        });
+
+        // Event listener for the completed button
+        $(document).on('click', '.completed-button', async function () {
+            const loadingIndicator = document.getElementById('l'); 
+            loadingIndicator.style.display = 'flex'; 
+
+            const ticketID = $(this).data('ticket-id');
+            const ticket_id = this.getAttribute("data-ticket-id");
+
+            const workStartedTime = document.getElementById(`start-time-${ticket_id}`).value;
+            const workEndedTime = document.getElementById(`end-time-${ticket_id}`).value;
+    
+            const requestBody = {
+                company_id: localStorage.getItem("cid"), 
+                employee_id: localStorage.getItem("eid"), 
+                ticket_id: ticketID,
+                work_started_time: workStartedTime || null, 
+                work_ended_time: workEndedTime || null, 
+            };
     
             try {
                 const response = await fetch('https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_complted_ticket', {
@@ -370,7 +408,7 @@ $(document).ready(function () {
                             <div class="input-container mt-3" style="text-align:left !important">
                                 <label for="end-time">Work ended time :</label>
                                 <input type="datetime-local" class="input-bottom-border"
-                                    id="start-time-${employee.ticket_id}" 
+                                    id="end-time-${employee.ticket_id}" 
                                     value="${employee.work_ended_time}">
                             </div>
                    <div class="image-gallery d-flex flex-row justify-content-center">
@@ -387,7 +425,7 @@ $(document).ready(function () {
                             <button class="form-control mt-2 employee-select comform completed-button" style="width:100%" data-ticket-id="${employee.ticket_id}">Completed</button>
                         </div>
                        <div class="col-6">
-                            <button class="form-control mt-2 employee-select cancel save" style="width:100%" ticket-tocken=${employee.id} start-time=${workStartedTime}  id=${employee.ticket_id}>Save</button>
+                            <button class="form-control mt-2 employee-select cancel save" style="width:100%" ticket-tocken=${employee.id}  id=${employee.ticket_id} data-ticket-id="${employee.ticket_id}">Save</button>
                         </div>
                         </div>
                     <p class="text-center pt-3 mb-2 showLessButton">Show less ⮝</p>             
@@ -457,11 +495,15 @@ function disable(ticket_id) {
 
 
 async function handleFileSelect1(event) {
-    const file = event.target.files[0]; // Get the selected file
+    const file = event.target.files[0]; 
+    
     if (!file) {
         // alert("No file selected.");
         return;
     }
+
+    const loadingIndicator = document.getElementById('l'); 
+    loadingIndicator.style.display = 'flex'; 
 
     // Convert file to Base64 format
     const reader = new FileReader();
@@ -472,7 +514,23 @@ async function handleFileSelect1(event) {
         const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
         const fileName = file.name;
 
-        document.getElementById(`upload1-${ticketId}-${ticketToken}`).src = e.target.result;
+        let imagePreview = document.getElementById(`image-preview1-${ticketId}-${ticketToken}`);
+        if (!imagePreview) {
+            // Dynamically create an <img> element if it doesn't exist
+            imagePreview = document.createElement('img');
+            imagePreview.id = `image-preview1-${ticketId}-${ticketToken}`;
+            imagePreview.className = 'w-100 h-100';
+            imagePreview.style.objectFit = 'cover';
+
+            // Replace the label with the newly created <img> element
+            const label = document.querySelector(`label[for="upload1-${ticketId}-${ticketToken}"]`);
+            if (label) {
+                label.parentNode.replaceChild(imagePreview, label);
+            }
+        }
+
+        // Update the image preview's `src` attribute
+        imagePreview.src = e.target.result;
 
         try {
             // Send Base64 data to the server
@@ -490,14 +548,13 @@ async function handleFileSelect1(event) {
             const data = await response.json();
 
             if (response.ok) {
-                // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 1, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                // alert("Upload failed: " + data.detail);
+                loadingIndicator.style.display = 'none'; 
             }
         } catch (error) {
             console.error("Error:", error);
-            // alert("An error occurred during the upload. Please try again.");
+            loadingIndicator.style.display = 'none'; 
         }
     };
 
@@ -508,17 +565,37 @@ async function handleFileSelect2(event) {
     const ticketId = event.target.id.split("-")[1];
     const ticketToken = event.target.id.split("-")[2];
     const file = event.target.files[0]; // Get the selected file
+    
     if (!file) {
         // alert("No file selected.");
         return;
     }
+
+    const loadingIndicator = document.getElementById('l'); 
+    loadingIndicator.style.display = 'flex'; 
 
     // Convert file to Base64 format
     const reader = new FileReader();
     reader.onload = async function (e) {
         const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
         const fileName = file.name;
-        document.getElementById(`upload2-${ticketId}-${ticketToken}`).src = e.target.result;
+        let imagePreview = document.getElementById(`image-preview2-${ticketId}-${ticketToken}`);
+        if (!imagePreview) {
+            // Dynamically create an <img> element if it doesn't exist
+            imagePreview = document.createElement('img');
+            imagePreview.id = `image-preview2-${ticketId}-${ticketToken}`;
+            imagePreview.className = 'w-100 h-100';
+            imagePreview.style.objectFit = 'cover';
+
+            // Replace the label with the newly created <img> element
+            const label = document.querySelector(`label[for="upload2-${ticketId}-${ticketToken}"]`);
+            if (label) {
+                label.parentNode.replaceChild(imagePreview, label);
+            }
+        }
+
+        // Update the image preview's `src` attribute
+        imagePreview.src = e.target.result;
 
         try {
             // Send Base64 data to the server
@@ -539,11 +616,11 @@ async function handleFileSelect2(event) {
                 // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 2, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                // alert("Upload failed: " + data.detail);
+                loadingIndicator.style.display = 'none'; 
             }
         } catch (error) {
             console.error("Error:", error);
-            // alert("An error occurred during the upload. Please try again.");
+            loadingIndicator.style.display = 'none'; 
         }
     };
 
@@ -555,17 +632,38 @@ async function handleFileSelect3(event) {
     const ticketToken = event.target.id.split("-")[2];
     
     const file = event.target.files[0]; // Get the selected file
+    
     if (!file) {
         // alert("No file selected.");
         return;
     }
+    const loadingIndicator = document.getElementById('l'); 
+    loadingIndicator.style.display = 'flex'; 
 
     // Convert file to Base64 format
     const reader = new FileReader();
     reader.onload = async function (e) {
         const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
         const fileName = file.name;
-        document.getElementById(`upload3-${ticketId}-${ticketToken}`).src = e.target.result;
+        let imagePreview = document.getElementById(`image-preview3-${ticketId}-${ticketToken}`);
+        if (!imagePreview) {
+            // Dynamically create an <img> element if it doesn't exist
+            imagePreview = document.createElement('img');
+            imagePreview.id = `image-preview3-${ticketId}-${ticketToken}`;
+            imagePreview.className = 'w-100 h-100';
+            imagePreview.style.objectFit = 'cover';
+
+            // Replace the label with the newly created <img> element
+            const label = document.querySelector(`label[for="upload3-${ticketId}-${ticketToken}"]`);
+            if (label) {
+                label.parentNode.replaceChild(imagePreview, label);
+            }
+        }
+
+        // Update the image preview's `src` attribute
+        imagePreview.src = e.target.result;
+
+        
 
         try {
             // Send Base64 data to the server
@@ -586,54 +684,56 @@ async function handleFileSelect3(event) {
                 // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 3, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                // alert("Upload failed: " + data.detail);
+                loadingIndicator.style.display = 'none'; 
             }
         } catch (error) {
             console.error("Error:", error);
-            // alert("An error occurred during the upload. Please try again.");
+            loadingIndicator.style.display = 'none'; 
         }
     };
 
     reader.readAsDataURL(file); // Read file as Base64
 }
 
-        async function updateLink(url, id, ticketId, ticketToken) {
-            const cid = localStorage.getItem("cid");
-            const eid = localStorage.getItem("eid");
-            const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/update/${ticketToken}`;
-            const payload = id == 1 ? {
-                company_id: cid,
-                employee_id: eid,
-                ticket_id: parseInt(ticketId),
-                photo_1: url
-            } : id ==2 ?  {
-                company_id: cid,
-                employee_id: eid,
-                ticket_id: parseInt(ticketId),
-                photo_2: url
-            } : {
-                company_id: cid,
-                employee_id: eid,
-                ticket_id: parseInt(ticketId),
-                photo_3: url
-            };
+async function updateLink(url, id, ticketId, ticketToken) {
+    const cid = localStorage.getItem("cid");
+    const eid = localStorage.getItem("eid");
+    const loadingIndicator = document.getElementById('l'); 
+    loadingIndicator.style.display = 'flex'; 
+    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/update/${ticketToken}`;
+    const payload = id == 1 ? {
+        company_id: cid,
+        employee_id: eid,
+        ticket_id: parseInt(ticketId),
+        photo_1: url
+    } : id ==2 ?  {
+        company_id: cid,
+        employee_id: eid,
+        ticket_id: parseInt(ticketId),
+        photo_2: url
+    } : {
+        company_id: cid,
+        employee_id: eid,
+        ticket_id: parseInt(ticketId),
+        photo_3: url
+    };
 
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
 
-                if (response.ok) {
-                    // alert("link data updated")
-                } else {
-                    // alert('Error updating link.');
-                }
-            } catch (error) {
-                console.error('Error updating link:', error);
-                // alert('Error updating link. Check console for details.');
-            }
+        if (response.ok) {
+            loadingIndicator.style.display = 'none'; 
+        } else {
+            loadingIndicator.style.display = 'none'; 
         }
+    } catch (error) {
+        console.error('Error updating link:', error);
+        loadingIndicator.style.display = 'none'; 
+    }
+}

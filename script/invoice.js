@@ -352,15 +352,12 @@ async function handlePayment(tockenID, ticket_id, eid) {
         if (!response.ok) {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
-
-        // Parse and log the response data
         const data = await response.json();
-        console.log('Payment updated successfully:', data);
         successModal.show();
-        return data;
+        success-modal-ok.addEventListener('click', function () {
+            window.location.href = 'index.html';
+        });
     } catch (error) {
-        console.error('Failed to update payment:', error);
-        // alert(`Failed to update payment: ${error.message}`);
         failureModal.show();
     }
 }
