@@ -85,6 +85,10 @@
         }
 
     }
+
+    .error-message {
+        color: red;
+    }
 </style>
 
 <body>
@@ -147,27 +151,42 @@
                         <div class="container container-sty text-center">
                             <h2 class="text-center m-3 fw-bold"> COMPANY REGISTRATION </h2>
                             <div class="container-form">
-                                <form id="registerForm">
-                                    <input type="text" class="form-control" id="companyName" placeholder="Company Name*"
-                                        required>
-
-
-                                    <div class="inline-fields">
-                                        <input type="text" class="form-control" id="firstName" placeholder="First Name*"
-                                            required>
-                                        <input type="text" class="form-control" id="lastName" placeholder="Last Name*"
-                                            required>
+                                <form id="registerForm" novalidate>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="companyName"
+                                            placeholder="Company Name*" required>
+                                        <small class="error-message" id="companyNameError"></small>
                                     </div>
 
-                                    <input type="email" class="form-control" id="email" placeholder="Email*" required>
-                                    <input type="tel" class="form-control" id="phone" placeholder="Phone Number*"
-                                        required>
+                                    <div class="inline-fields">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="firstName"
+                                                placeholder="First Name*" required>
+                                            <small class="error-message" id="firstNameError"></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="lastName"
+                                                placeholder="Last Name*" required>
+                                            <small class="error-message" id="lastNameError"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="email" placeholder="Email*"
+                                            required>
+                                        <small class="error-message" id="emailError"></small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="tel" class="form-control" id="phone" placeholder="Phone Number*"
+                                            required>
+                                        <small class="error-message" id="phoneError"></small>
+                                    </div>
 
                                     <div class="submit-btn-container">
                                         <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -281,6 +300,16 @@
         document.getElementById('submit-btn').addEventListener('click', function (event) {
             event.preventDefault();
 
+            let company_name = capitalizeWords(document.getElementById('companyName').value)
+            let phone_number = document.getElementById('phone').value.toString()
+            let first_name = capitalizeWords(document.getElementById('firstName').value)
+            let last_name = capitalizeWords(document.getElementById('lastName').value)
+            let email = document.getElementById('email').value.toLowerCase()
+
+            if (!validateForm()) {
+                return false
+            }
+
             const mainContent = document.getElementById('mainContent');
             const loadingIndicator = document.getElementById('l'); // Adjust this ID as necessary
             const popupModal = document.getElementById('popupModal');
@@ -290,11 +319,11 @@
 
             // Gather input values
             const data = {
-                company_name: capitalizeWords(document.getElementById('companyName').value),
-                phone_number: document.getElementById('phone').value.toString(),
-                first_name: capitalizeWords(document.getElementById('firstName').value),
-                last_name: capitalizeWords(document.getElementById('lastName').value),
-                email: document.getElementById('email').value.toLowerCase()
+                company_name: company_name,
+                phone_number: phone_number,
+                first_name: first_name,
+                last_name: last_name,
+                email: email
             };
 
             // Blur content and show loading indicator
@@ -340,15 +369,94 @@
         });
 
         function reset() {
-            document.getElementById('companyName').value =""
-            document.getElementById('phone').value=""
-            document.getElementById('firstName').value=""
-            document.getElementById('lastName').value=""
-            document.getElementById('email').value=""
+            document.getElementById('companyName').value = ""
+            document.getElementById('phone').value = ""
+            document.getElementById('firstName').value = ""
+            document.getElementById('lastName').value = ""
+            document.getElementById('email').value = ""
         }
 
 
+        function validateForm() {
+            let isValid = true;
+
+            // Clear previous error messages
+            document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
+
+            // Company Name validation
+            const companyName = document.getElementById("companyName");
+            const companyNameError = document.getElementById("companyNameError");
+            if (!companyName.value.trim()) {
+                companyNameError.textContent = "Company Name is required.";
+                isValid = false;
+            }
+
+            // First Name validation
+            const firstName = document.getElementById("firstName");
+            const firstNameError = document.getElementById("firstNameError");
+            if (!firstName.value.trim()) {
+                firstNameError.textContent = "First Name is required.";
+                isValid = false;
+            }
+
+            // Last Name validation
+            const lastName = document.getElementById("lastName");
+            const lastNameError = document.getElementById("lastNameError");
+            if (!lastName.value.trim()) {
+                lastNameError.textContent = "Last Name is required.";
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById("email");
+            const emailError = document.getElementById("emailError");
+            const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+            if (!email.value.trim()) {
+                emailError.textContent = "Email is required.";
+                isValid = false;
+            } else if (!emailPattern.test(email.value.trim())) {
+                emailError.textContent = "Enter a valid email address.";
+                isValid = false;
+            }
+
+            // Phone validation
+            const phone = document.getElementById("phone");
+            const phoneError = document.getElementById("phoneError");
+            if (!phone.value.trim()) {
+                phoneError.textContent = "Phone Number is required.";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+
+        // Real-time validation to clear error messages
+        function addRealTimeValidation() {
+            const fields = [
+                { id: "companyName", errorId: "companyNameError" },
+                { id: "firstName", errorId: "firstNameError" },
+                { id: "lastName", errorId: "lastNameError" },
+                { id: "email", errorId: "emailError", pattern: /^[^@\s]+@[^@\s]+\.[^@\s]+$/ },
+                { id: "phone", errorId: "phoneError" }
+            ];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+
+                input.addEventListener("input", () => {
+                    if (input.value.trim() && (!field.pattern || field.pattern.test(input.value.trim()))) {
+                        errorElement.textContent = ""; // Clear the error message if valid
+                    }
+                });
+            });
+        }
+        addRealTimeValidation();
+
+
     </script>
+    <script src="../script/navbar.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

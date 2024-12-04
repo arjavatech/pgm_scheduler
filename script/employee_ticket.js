@@ -41,12 +41,6 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
-        language: {
-            paginate: {
-                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
-                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
-            }
-        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -163,7 +157,7 @@ function showDeleteEmployeeModal(eid) {
 
     const modalHeader = document.createElement('div');
     modalHeader.classList.add('modal-header', 'justify-content-center');
-    modalHeader.textContent = "Delete Employee"
+    modalHeader.textContent = "Confirm Employee Deletion";
     const modalTitle = document.createElement('h5');
     modalTitle.classList.add('modal-title');
     modalTitle.id = 'deleteModalLabel';
@@ -353,7 +347,7 @@ function createEmployee() {
     if (!firstName || !lastName || !email || !phone || specialization.length === 0) {
         document.getElementById("failure-content").textContent = "Validation failed: Missing required fields";
         loadingIndicator.style.display = 'none';
-        failureModal.show();
+        // failureModal.show();
         return;
     }
     else {
@@ -385,18 +379,25 @@ function createEmployee() {
                     document.getElementById("failure-content").textContent = data.error;
                     loadingIndicator.style.display = 'none';
                     failureModal.show();
+                    console.error('Error:', error.message);
+                    document.getElementById("failed_ok_button").addEventListener("click", function () {
+                        window.location.href = "employee_ticket.html"
+                    })
+
                 }
                 else {
                     loadingIndicator.style.display = 'none';
                     successModal.show();
+                    document.getElementById("success-modal-ok").addEventListener("click", function () {
+                        window.location.href = "employee_ticket.html"
+                    })
                 }
             })
             .catch(error => {
                 console.error('Error:', error.message);
-                document.getElementById("failure-content").textContent = "Something went wrong. Please try again."
+                document.getElementById("failure-content").textContent = "Your Email Id is already register."
                 failureModal.show();
             });
-
     }
 }
 
@@ -432,7 +433,6 @@ function resetForm() {
 function show() {
     const inputElements = document.querySelectorAll(".input-bottom-border");
 
-    // Loop through each element and set the display style to "inline"
     inputElements.forEach(element => {
         element.style.display = "inline";
     });
@@ -443,6 +443,11 @@ function show() {
 
 // Hide the input fields when "Cancel" button is clicked
 function cancel() {
+    resetForm();
+    const error = document.querySelectorAll('.error-text');
+    error.forEach(element => {
+        element.style.display = "none";
+    });
     const inputElements = document.querySelectorAll(".input-bottom-border");
 
     // Loop through each element and set the display style to "none"
@@ -452,6 +457,7 @@ function cancel() {
     document.getElementById("cancel").style.display = "none";
     document.getElementById("addEmployee2").style.display = "inline";
     document.getElementById("addEmployee").style.display = "none";
+    
 }
 
 const MAX_SELECTION = 3;
@@ -477,7 +483,7 @@ function updateButton(checkbox) {
     const dropdownButton = document.getElementById("dropdownButton");
     dropdownButton.textContent = selectedValues.length > 0
         ? selectedValues.join(", ")
-        : "Select your favorite fruits";
+        : "Specialization";
 }
 
 // Close the dropdown if the user clicks outside of it
@@ -489,3 +495,6 @@ window.onclick = function () {
 document.getElementById("success-model-ok").addEventListener('click', function () {
     window.location.href = "employee_ticket.html";
 })
+
+
+

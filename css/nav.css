@@ -84,11 +84,12 @@ a {
     animation: spin 1s linear infinite;
 }
 
-#Clogo{
-    border-radius: 42%;
-    width: 55px !important;
-    height: 40px !important;
-}
+
+    #Clogo {
+        border-radius: 50%;
+        width: 40px !important;
+        height: 40px !important;
+    }
 
 .loading {
     display: none;
@@ -112,7 +113,9 @@ a {
     animation: spin 1s linear infinite;
 
 }
-
+.modal.show .modal-dialog {
+    justify-content: center !important;
+}
 @keyframes spin {
     0% {
         transform: rotate(0deg);

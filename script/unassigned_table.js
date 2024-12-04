@@ -39,12 +39,6 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
-        language: {
-            paginate: {
-                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
-                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
-            }
-        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -79,15 +73,23 @@ $(document).ready(function () {
                         <div class="col-md-4 box1" >
                             <strong class="d-flex justify-content-left">Customer Address</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
-                                ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
-                            </p>
+    ${(rowData?.street || 'N/A')}, 
+    ${(rowData?.city || 'N/A')}, 
+    ${(rowData?.zip || 'N/A')}, 
+    ${(rowData?.state || 'N/A')}
+</p>
+
                             
                            <label>Employee Name</label>
-                            <select class="form-select employee-select mt-2" id="employee-select-${rowData.ticket_id}">
-                            <option value="" disabled selected>Select</option>
-                            ${employee_det_options_get(rowData.ticket_type)}
-                            </select>
-                             <small id="pending-count-${rowData.ticket_id}">Pending work: N/A</small>                           
+   <select class="form-select employee-select mt-2" 
+            id="employee-select-${rowData.ticket_id}" 
+            onchange="clearEmployeeError(${rowData.ticket_id})" 
+            required>
+        <option value="" disabled selected>Select</option>
+        ${employee_det_options_get(rowData.ticket_type)}
+    </select>
+    <small id="employee-error-${rowData.ticket_id}" style="color: red; display: none;">Please select an employee.</small>
+    <small >Pending work: <span id="pending-count-${rowData.ticket_id}">N/A</span></small>                         
                         </div>
                         <div class="col-md-2"></div>
                        
@@ -133,33 +135,47 @@ $(document).ready(function () {
                         </div>
 
                         
-                         <div class="mt-3 mb-3">
+                        <div class="mt-3 mb-3">
                             <div class="row">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${rowData.ticket_id}" style="width:100%;border: none !important;background-color: transparent;outline: none;
-                border-bottom: 1px solid #9e9e9e !important;display:none">
+                                <div class="d-flex flex-column justify-content-center align-items-center">
+                                    <input type="text" placeholder="Reason" 
+                                        class="input-bottom-reason mt-3" 
+                                        id="reason-${rowData.ticket_id}" 
+                                        style="width:100%;border: none !important;background-color: transparent;outline: none; 
+                                                border-bottom: 1px solid #9e9e9e !important;display:none">
+                                    <small id="error-message-${rowData.ticket_id}" 
+                                        style="color: red; display: none;">Reason is required.</small>
                                 </div>
                             </div>
                             <div class="row mt-2" id="acceptButton-${rowData.ticket_id}">
                                 <div class="col-6">
-                               <button type="button" class="btn-yes" style="width:100%" onclick="handleAssign('${cid}', ${rowData.ticket_id})">Assigned</button>
+                                    <button type="submit" class="btn-yes" 
+                                            style="width:100%" 
+                                            onclick="handleAssign('${cid}', ${rowData.ticket_id})">Assign</button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="form-control employee-select cancel btn-no" style="width:100%" onclick="reason('${rowData.ticket_id}')" id="cancel">Reject</button>
+                                    <button class="form-control employee-select cancel btn-no" 
+                                            style="width:100%" 
+                                            onclick="reason('${rowData.ticket_id}')" 
+                                            id="cancel">Reject</button>
                                 </div>
                             </div>
 
                             <div class="row" id="comformButton-${rowData.ticket_id}" style="display:none">
-                       <div class="col-6">
-                            <button class="form-control mt-2 employee-select btn-yes comform" onclick="handleReject(${rowData.ticket_id})" style="width:100%" id="completed">Confirm</button>
-                        </div>
-                       <div class="col-6">
-                            <button class="form-control mt-2 employee-select cancel" style="width:100%" onclick="cancel('${rowData.ticket_id}')"  id="cancel">Cancel</button>
-                        </div>
-                    </div>
-
-                                    
+                                <div class="col-6">
+                                    <button class="form-control mt-2 employee-select btn-yes comform" 
+                                            onclick="handleReject(${rowData.ticket_id})" 
+                                            style="width:100%" 
+                                            id="completed">Confirm</button>
                                 </div>
+                                <div class="col-6">
+                                    <button class="form-control mt-2 employee-select cancel" 
+                                            style="width:100%" 
+                                            onclick="cancel('${rowData.ticket_id}')"  
+                                            id="cancel">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     
@@ -168,7 +184,7 @@ $(document).ready(function () {
     }
 
 
-    
+
     // Expand row details on click
     $('#ticketTable tbody').on('click', 'td.details-control', function () {
         const tr = $(this).closest('tr');
@@ -190,7 +206,7 @@ $(document).ready(function () {
         const selectedOption = $(this).find(':selected');
         const pendingWork = selectedOption.attr('pending');
         const ticketId = $(this).attr('id').split('-')[2]; // Extract ticket ID from select element ID
-        $(`#pending-count-${ticketId}`).text(`Pending work: ${pendingWork || 'N/A'}`);
+        $(`#pending-count-${ticketId}`).text(`${pendingWork || 'N/A'}`);
     });
 
     // Function to create and append the card for mobile view
@@ -228,19 +244,25 @@ $(document).ready(function () {
                     <p><strong>Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
                    <p><strong>Employee Name:</strong>
-                        <select class="form-select mt-2 employee-select employee-select-${employee.ticket_id}" id="employee_select-${employee.ticket_id}">
-                        ${employee_det_options_get(employee.ticket_type)}
-                    </select>
+                        <select class="form-select employee-select mt-2" 
+            id="employee-select-${employee.ticket_id}" 
+            onchange="clearEmployeeError(${employee.ticket_id})" 
+            required>
+        <option value="" disabled selected>Select</option>
+        ${employee_det_options_get(employee.ticket_type)}
+    </select>
+    <small id="employee-error-${employee.ticket_id}" style="color: red; display: none;">Please select an employee.</small>
+   
                     </p>
                     <p><strong>Employee pending Work:</strong>
-                          <small id="pending-count-${employee.ticket_id}">Pending work: N/A</small>
+                          <small id="pending-count-${employee.ticket_id}"> N/A</small>
                     </p>
                       <div class="image-gallery d-flex justify-content-center mt-3">
                           
 
-                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
-                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
-                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>` : `<p id="empty"></p>`}   
+                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>` : `<p id="empty"></p>`} 
+                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>` : `<p id="empty"></p>`} 
                         </div>
 
                          <div class="row">
@@ -287,7 +309,10 @@ $(document).ready(function () {
         $(this).closest('.card-body').find('.showMoreButton').show();
     });
 });
-
+function clearEmployeeError(ticketId) {
+    const employeeError = document.getElementById(`employee-error-${ticketId}`);
+    employeeError.style.display = 'none'; // Hide the error message when a valid option is selected
+}
 function reason(ticketID) {
     const reasonInput = document.getElementById(`reason-${ticketID}`);
     const acceptButton = document.getElementById(`acceptButton-${ticketID}`);
@@ -321,6 +346,11 @@ function cancel(ticketID) {
 }
 
 async function assignedEmployee(cid, employee_id, ticket_id) {
+
+    if (!employee_id) {
+        alert("fjkfha")
+        return;
+    }
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
     const assignAPI = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/approve_ticket/${cid}/${ticket_id}/${employee_id}`;
@@ -355,6 +385,15 @@ function handleAssign(cid, ticketId) {
     const selectElement = document.getElementById(`employee-select-${ticketId}`);
     const selectedValue = selectElement.value;
 
+    const employeeSelect = document.getElementById(`employee-select-${ticketId}`);
+    const employeeError = document.getElementById(`employee-error-${ticketId}`);
+
+    if (!employeeSelect.value) {
+        employeeError.style.display = 'block'; // Show error if no selection
+        employeeSelect.focus();
+        return;
+    }
+
     // Ensure ticketId is a number, if not, convert it to a valid format
     const ticketIdInt = parseInt(ticketId, 10);
     if (isNaN(ticketIdInt)) {
@@ -367,6 +406,16 @@ function handleAssign(cid, ticketId) {
 
 
 async function handleReject(ticketid) {
+
+    const reasonInput = document.getElementById(`reason-${ticketid}`);
+    const reason = reasonInput.value.trim();
+    const errorMessage = document.getElementById(`error-message-${ticketid}`);
+
+    if (!reason) {
+        errorMessage.style.display = 'block'; // Show the error message
+        reasonInput.focus();
+        return;
+    }
     // Show loading indicator
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex';
@@ -400,7 +449,7 @@ async function handleReject(ticketid) {
         const data = await response.json();
 
         loadingIndicator.style.display = 'none';
-        window.location.href = 'RejectedTicket.html';
+        window.location.href = 'Unassigned.html';
 
 
 
@@ -492,3 +541,5 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         });
     }
 });
+
+

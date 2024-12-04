@@ -8,9 +8,9 @@ $(document).ready(function () {
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employees/inprogress_tickets/${cid}/${eid}`;
     let rowDetails = [];
     const CName = localStorage.getItem("CName")
-    
+
     document.getElementById("CName").innerHTML = CName;
-    
+
     const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
@@ -30,22 +30,16 @@ $(document).ready(function () {
         });
 
     // Initialize DataTable
-  // Initialize DataTable
-  const table = $('#ticketTable').DataTable({
-    language: {
-        paginate: {
-            previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
-            next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
-        }
-        },
-    paging: true,
-    lengthChange: true,
-    searching: true,
-    ordering: true,
-    info: true,
-    autoWidth: false,
-    responsive: true
-});
+    // Initialize DataTable
+    const table = $('#ticketTable').DataTable({
+        paging: true,
+        lengthChange: true,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        responsive: true
+    });
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
@@ -194,7 +188,7 @@ $(document).ready(function () {
                 </td>
             </tr>`;
     }
-    
+
 
     // Toggle arrow
     $(document).on('click', 'td.details-control', function () {
@@ -249,121 +243,117 @@ $(document).ready(function () {
 
     // Completed button 
 
-        // Event listener for the completed button
-        $(document).on('click', '.save', async function () {
-            const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
-            loadingIndicator.style.display = 'flex'; // Show loading before fetch
+    // Event listener for the completed button
+    $(document).on('click', '.save', async function () {
+        const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+        loadingIndicator.style.display = 'flex'; // Show loading before fetch
 
-            const ticket_token = this.getAttribute('ticket-tocken');
-            const ticket_id = this.getAttribute("data-ticket-id");
+        const ticket_token = this.getAttribute('ticket-tocken');
+        const ticket_id = this.getAttribute("data-ticket-id");
 
-            const workStartedTime = document.getElementById(`start-time-${ticket_id}`).value;
-            const workEndedTime = document.getElementById(`end-time-${ticket_id}`).value;
-            const requestBody = {
-                work_started_time: workStartedTime || null, 
-                work_ended_time: workEndedTime || null, 
-            };
+        const workStartedTime = document.getElementById(`start-time-${ticket_id}`).value;
+        const workEndedTime = document.getElementById(`end-time-${ticket_id}`).value;
+        const requestBody = {
+            work_started_time: workStartedTime || null,
+            work_ended_time: workEndedTime || null,
+        };
 
-            console.log(requestBody)
-    
-            try {
-                const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/save/${ticket_token}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(requestBody)
-                });
-    
-                if (!response.ok) throw new Error(`Error: ${response.status}`);
-                const data = await response.json();
-                if(data.message)
-                {
-                    setTimeout(() => {
-                        loadingIndicator.style.display = 'none';
-                        window.location.href = 'inProcessTicket.html';
-                    }, 1000);
-                }
-                else
-                {
-                    loadingIndicator.style.display = 'none';
-                }
-            } catch (error) {
-                loadingIndicator.style.display = 'none';
-                console.error("Failed to mark ticket as completed:", error.message);
-            }
-        });
+        console.log(requestBody)
 
-        // Event listener for the completed button
-        $(document).on('click', '.completed-button', async function () {
-            const loadingIndicator = document.getElementById('l'); 
-            loadingIndicator.style.display = 'flex'; 
-
-            const ticketID = $(this).data('ticket-id');
-            const ticket_id = this.getAttribute("data-ticket-id");
-
-            const workStartedTime = document.getElementById(`start-time-${ticket_id}`).value;
-            const workEndedTime = document.getElementById(`end-time-${ticket_id}`).value;
-    
-            const requestBody = {
-                company_id: localStorage.getItem("cid"), 
-                employee_id: localStorage.getItem("eid"), 
-                ticket_id: ticketID,
-                work_started_time: workStartedTime || null, 
-                work_ended_time: workEndedTime || null, 
-            };
-    
-            try {
-                const response = await fetch('https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_complted_ticket', {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(requestBody)
-                });
-    
-                if (!response.ok) throw new Error(`Error: ${response.status}`);
-                const data = await response.json();
-                if(data.message)
-                {
-                    setTimeout(() => {
-                        loadingIndicator.style.display = 'none';
-                        window.location.href = 'inProcessTicket.html';
-                    }, 1000);
-                }
-                else
-                {
-                    loadingIndicator.style.display = 'none';
-                }
-            } catch (error) {
-                loadingIndicator.style.display = 'none';
-                console.error("Failed to mark ticket as completed:", error.message);
-            }
-        });
-    
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const fileInput = document.getElementById(`upload-${rowData.ticket_id}`);
-            const maxFiles = 3;
-        
-            fileInput.addEventListener("change", function (event) {
-                const files = event.target.files;
-        
-                // If more than 3 files are selected, keep only the first 3
-                if (files.length > maxFiles) {
-                    // alert(`You can only select up to ${maxFiles} files.`);
-                    
-                    // Convert FileList to Array and keep only the first 3 files
-                    const fileArray = Array.from(files).slice(0, maxFiles);
-                    
-                    // Create a DataTransfer object to modify FileList
-                    const dataTransfer = new DataTransfer();
-                    fileArray.forEach(file => dataTransfer.items.add(file));
-                    
-                    // Assign modified FileList back to the input
-                    fileInput.files = dataTransfer.files;
-                }
+        try {
+            const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/save/${ticket_token}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
             });
+
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            const data = await response.json();
+            if (data.message) {
+                setTimeout(() => {
+                    loadingIndicator.style.display = 'none';
+                    window.location.href = 'inProcessTicket.html';
+                }, 1000);
+            }
+            else {
+                loadingIndicator.style.display = 'none';
+            }
+        } catch (error) {
+            loadingIndicator.style.display = 'none';
+            console.error("Failed to mark ticket as completed:", error.message);
+        }
+    });
+
+    // Event listener for the completed button
+    $(document).on('click', '.completed-button', async function () {
+        const loadingIndicator = document.getElementById('l');
+        loadingIndicator.style.display = 'flex';
+
+        const ticketID = $(this).data('ticket-id');
+        const ticket_id = this.getAttribute("data-ticket-id");
+
+        const workStartedTime = document.getElementById(`start-time-${ticket_id}`).value;
+        const workEndedTime = document.getElementById(`end-time-${ticket_id}`).value;
+
+        const requestBody = {
+            company_id: localStorage.getItem("cid"),
+            employee_id: localStorage.getItem("eid"),
+            ticket_id: ticketID,
+            work_started_time: workStartedTime || null,
+            work_ended_time: workEndedTime || null,
+        };
+
+        try {
+            const response = await fetch('https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee_complted_ticket', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            const data = await response.json();
+            if (data.message) {
+                setTimeout(() => {
+                    loadingIndicator.style.display = 'none';
+                    window.location.href = 'inProcessTicket.html';
+                }, 1000);
+            }
+            else {
+                loadingIndicator.style.display = 'none';
+            }
+        } catch (error) {
+            loadingIndicator.style.display = 'none';
+            console.error("Failed to mark ticket as completed:", error.message);
+        }
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById(`upload-${rowData.ticket_id}`);
+        const maxFiles = 3;
+
+        fileInput.addEventListener("change", function (event) {
+            const files = event.target.files;
+
+            // If more than 3 files are selected, keep only the first 3
+            if (files.length > maxFiles) {
+                // alert(`You can only select up to ${maxFiles} files.`);
+
+                // Convert FileList to Array and keep only the first 3 files
+                const fileArray = Array.from(files).slice(0, maxFiles);
+
+                // Create a DataTransfer object to modify FileList
+                const dataTransfer = new DataTransfer();
+                fileArray.forEach(file => dataTransfer.items.add(file));
+
+                // Assign modified FileList back to the input
+                fileInput.files = dataTransfer.files;
+            }
         });
+    });
 
 
-// card part
+    // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
         const workStartedTime = new Date(employee.work_started_time).toISOString().split('T')[0];
@@ -414,9 +404,9 @@ $(document).ready(function () {
                    <div class="image-gallery d-flex flex-row justify-content-center">
                         <div class="image-container d-flex flex-row justify-content-center">
 
-                         ${employee.photo_1 ? ` <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
-                           ${employee.photo_2 ? ` <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
-                           ${employee.photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                         ${employee.photo_1 ? ` <img src="${employee.photo_1}" alt="Image 1" class="p-2" width="100px">` : ``}   
+                           ${employee.photo_2 ? ` <img src="${employee.photo_2}" alt="Image 1" class="p-2" width="100px">` : ``} 
+                           ${employee.photo_3 ? ` <img src="${employee.photo_3}" alt="Image 1" class="p-2" width="100px">` : ``} 
                         </div>
                     </div>
                     <div class="row">
@@ -495,15 +485,15 @@ function disable(ticket_id) {
 
 
 async function handleFileSelect1(event) {
-    const file = event.target.files[0]; 
-    
+    const file = event.target.files[0];
+
     if (!file) {
         // alert("No file selected.");
         return;
     }
 
-    const loadingIndicator = document.getElementById('l'); 
-    loadingIndicator.style.display = 'flex'; 
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
 
     // Convert file to Base64 format
     const reader = new FileReader();
@@ -550,11 +540,11 @@ async function handleFileSelect1(event) {
             if (response.ok) {
                 updateLink(data.file_url, 1, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                loadingIndicator.style.display = 'none'; 
+                loadingIndicator.style.display = 'none';
             }
         } catch (error) {
             console.error("Error:", error);
-            loadingIndicator.style.display = 'none'; 
+            loadingIndicator.style.display = 'none';
         }
     };
 
@@ -565,14 +555,14 @@ async function handleFileSelect2(event) {
     const ticketId = event.target.id.split("-")[1];
     const ticketToken = event.target.id.split("-")[2];
     const file = event.target.files[0]; // Get the selected file
-    
+
     if (!file) {
         // alert("No file selected.");
         return;
     }
 
-    const loadingIndicator = document.getElementById('l'); 
-    loadingIndicator.style.display = 'flex'; 
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
 
     // Convert file to Base64 format
     const reader = new FileReader();
@@ -616,11 +606,11 @@ async function handleFileSelect2(event) {
                 // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 2, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                loadingIndicator.style.display = 'none'; 
+                loadingIndicator.style.display = 'none';
             }
         } catch (error) {
             console.error("Error:", error);
-            loadingIndicator.style.display = 'none'; 
+            loadingIndicator.style.display = 'none';
         }
     };
 
@@ -630,15 +620,15 @@ async function handleFileSelect2(event) {
 async function handleFileSelect3(event) {
     const ticketId = event.target.id.split("-")[1];
     const ticketToken = event.target.id.split("-")[2];
-    
+
     const file = event.target.files[0]; // Get the selected file
-    
+
     if (!file) {
         // alert("No file selected.");
         return;
     }
-    const loadingIndicator = document.getElementById('l'); 
-    loadingIndicator.style.display = 'flex'; 
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
 
     // Convert file to Base64 format
     const reader = new FileReader();
@@ -663,7 +653,7 @@ async function handleFileSelect3(event) {
         // Update the image preview's `src` attribute
         imagePreview.src = e.target.result;
 
-        
+
 
         try {
             // Send Base64 data to the server
@@ -684,11 +674,11 @@ async function handleFileSelect3(event) {
                 // alert("Upload succeeded: " + data.file_url);
                 updateLink(data.file_url, 3, ticketId, ticketToken); // Update UI with the uploaded file URL
             } else {
-                loadingIndicator.style.display = 'none'; 
+                loadingIndicator.style.display = 'none';
             }
         } catch (error) {
             console.error("Error:", error);
-            loadingIndicator.style.display = 'none'; 
+            loadingIndicator.style.display = 'none';
         }
     };
 
@@ -698,15 +688,15 @@ async function handleFileSelect3(event) {
 async function updateLink(url, id, ticketId, ticketToken) {
     const cid = localStorage.getItem("cid");
     const eid = localStorage.getItem("eid");
-    const loadingIndicator = document.getElementById('l'); 
-    loadingIndicator.style.display = 'flex'; 
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex';
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/update/${ticketToken}`;
     const payload = id == 1 ? {
         company_id: cid,
         employee_id: eid,
         ticket_id: parseInt(ticketId),
         photo_1: url
-    } : id ==2 ?  {
+    } : id == 2 ? {
         company_id: cid,
         employee_id: eid,
         ticket_id: parseInt(ticketId),
@@ -728,12 +718,12 @@ async function updateLink(url, id, ticketId, ticketToken) {
         });
 
         if (response.ok) {
-            loadingIndicator.style.display = 'none'; 
+            loadingIndicator.style.display = 'none';
         } else {
-            loadingIndicator.style.display = 'none'; 
+            loadingIndicator.style.display = 'none';
         }
     } catch (error) {
         console.error('Error updating link:', error);
-        loadingIndicator.style.display = 'none'; 
+        loadingIndicator.style.display = 'none';
     }
 }

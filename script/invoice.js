@@ -34,12 +34,6 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
-        language: {
-            paginate: {
-                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
-                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
-            }
-        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -219,9 +213,9 @@ $(document).ready(function () {
                             <div class="image-gallery d-flex justify-content-center mt-3">
                           
 
-                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`}   
-                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
-                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>`: `<p id="empty"></p>`} 
+                         ${employee.ti_photo_1 ? ` <div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px"> </div>` : `<p id="empty"></p>`}   
+                           ${employee.ti_photo_2 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px"> </div>` : `<p id="empty"></p>`} 
+                           ${employee.ti_photo_3 ? `<div class="image-container d-flex flex-row justify-content-center"> <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px"> </div>` : `<p id="empty"></p>`} 
                         </div>
                      <button type="button" class="btn-yes btn-reassign" style="width:100% !important" data-bs-toggle="modal" data-bs-target="#InvoiceModal"
     onclick="openModal('${employee.id}','${employee.ticket_id}','${employee.employee_id}')">
@@ -307,38 +301,39 @@ function openModal(tockenID, ticketID, eid) {
     const myModal = new bootstrap.Modal(document.getElementById('dynamicModal'));
     myModal.show();
 }
-
-async function handlePayment(tockenID, ticket_id, eid) {
-    const modalElement = bootstrap.Modal.getInstance(document.getElementById("dynamicModal"));
-    modalElement.hide();
-    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-    const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
-
-
-    const description = document.querySelector("#dynamicModal textarea").value;
-    const amount = getAmountAsInteger(); // Convert amount to integer
-
-
-    if (!description || !amount) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-
-    const payment = parseInt(amount); // Ensure the amount is treated as a number
-    const paymentDescription = description;
-
-    const datas = {
-        payment: `$${payment}`,
-        payment_description: paymentDescription,
-        status: 4,
-        
-    }
-
-    const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket/update/${ticket_id}`; // Replace with your API endpoint
-
-
+async function handlePayment(tokenID, ticket_id, eid) {
     try {
+        // Retrieve and hide the dynamic modal
+        const modalElement = bootstrap.Modal.getInstance(document.getElementById("dynamicModal"));
+        if (modalElement) modalElement.hide();
+
+        // Prepare success and failure modals
+        const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+        const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
+
+        // Get user inputs
+        const description = document.querySelector("#dynamicModal textarea").value.trim();
+        const amount = getAmountAsInteger(); // Convert amount to integer
+
+        // Validate inputs
+        if (!description || !amount) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        // Prepare the data payload
+        const payment = parseInt(amount, 10); // Ensure the amount is treated as a number
+        const paymentDescription = description;
+
+        const datas = {
+            payment: `$${payment}`,
+            payment_description: paymentDescription,
+            status: 4,
+        };
+
+        // Define the API URL
+        const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket/update/${ticket_id}`;
+
         // Make the API call
         const response = await fetch(apiUrl, {
             method: 'PUT',
@@ -348,19 +343,25 @@ async function handlePayment(tockenID, ticket_id, eid) {
             body: JSON.stringify(datas),
         });
 
-        // Check if the response is successful
+        // Handle API response
         if (!response.ok) {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
+
         const data = await response.json();
+
+        // Show success modal and add event listener for redirection
         successModal.show();
-        success-modal-ok.addEventListener('click', function () {
-            window.location.href = 'index.html';
+        document.getElementById('success-modal-ok').addEventListener('click', function () {
+            window.location.href = 'invoice.html';
         });
     } catch (error) {
+        console.error("An error occurred:", error); // Log the error for debugging
+        const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
         failureModal.show();
     }
 }
+
 
 
 async function updateLink(url, id, ticketId, ticketToken) {
@@ -500,3 +501,4 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         });
     }
 });
+
