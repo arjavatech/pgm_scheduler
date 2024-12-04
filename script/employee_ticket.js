@@ -13,13 +13,16 @@ $(document).ready(function () {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            loadingIndicator.style.display = 'none';
+            
+
             data.forEach(ticket => {
                 rowDetails.push(ticket);
                 addTicket(ticket);
                 addCard(ticket, index); // Pass index for unique IDs
                 index++;
             });
+
+            loadingIndicator.style.display = 'none';
         })
         .catch(error => {
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
