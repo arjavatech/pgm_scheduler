@@ -167,8 +167,12 @@ function handleSubmit(event) {
     })
         .then(response => {
             document.getElementById('l').style.display = 'none';
-            if (!response.ok) throw new Error(`Error: ${response.status}`);
-            return response.json();
+            if (!response.ok){
+                throw new Error(`Error: ${response.status}`);
+            }
+            else{
+                window.location.href = "employeeProfile.html"
+            }
         })
         .catch(error => document.getElementById('l').style.display = 'none');
 }
@@ -190,11 +194,31 @@ async function handleFileSelect(event) {
         return;
     }
 
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
     // Convert file to Base64 format
     const reader = new FileReader();
     reader.onload = async function (e) {
         const base64Data = e.target.result.split(",")[1]; // Extract Base64 portion
         const fileName = file.name;
+
+        let imagePreview = document.getElementById(`logoPreview`);
+        if (!imagePreview) {
+            // Dynamically create an <img> element if it doesn't exist
+            imagePreview = document.createElement('img');
+            imagePreview.id = `logoPreview`;
+            imagePreview.style.objectFit = 'cover';
+
+            // Replace the label with the newly created <img> element
+            const label = document.querySelector(`label[for="upload2-${ticketId}-${ticketToken}"]`);
+            if (label) {
+                label.parentNode.replaceChild(imagePreview, label);
+            }
+        }
+
+        // Update the image preview's `src` attribute
+        imagePreview.src = e.target.result;
 
         try {
             // Send Base64 data to the server
@@ -216,9 +240,11 @@ async function handleFileSelect(event) {
                 updateLink(data.file_url); // Update UI with the uploaded file URL
             } else {
                 // alert("Upload failed: " + data.detail);
+                loadingIndicator.style.display = 'none';
             }
         } catch (error) {
             console.error("Error:", error);
+            loadingIndicator.style.display = 'none';
             // alert("An error occurred during the upload. Please try again.");
         }
     };
@@ -227,6 +253,8 @@ async function handleFileSelect(event) {
 }
 
 async function updateLink(url) {
+    const loadingIndicator = document.getElementById('l');
+    loadingIndicator.style.display = 'flex'; // Show loading before fetch
     const cid = localStorage.getItem("cid");
     const eid = localStorage.getItem("eid");
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/update/${eid}`;
@@ -243,13 +271,14 @@ async function updateLink(url) {
             },
             body: JSON.stringify(payload)
         });
-
+        loadingIndicator.style.display = 'none';
         if (response.ok) {
-            // alert("link data updated")
+           
         } else {
             // alert('Error updating link.');
         }
     } catch (error) {
+        loadingIndicator.style.display = 'none';
         console.error('Error updating link:', error);
         // alert('Error updating link. Check console for details.');
     }
