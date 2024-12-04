@@ -62,19 +62,22 @@ $(document).ready(function () {
                     <div class="row">
                         
                         <div class="col-md-4">
-                            <strong class="d-flex justify-content-left">Customer Address</strong>
+                            <strong class="d-flex justify-content-left">Customer Address :</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
-                                ${rowData.street}, ${rowData.city}, ${rowData.zip}, ${rowData.state}
+                                ${(rowData?.street || '')}, 
+                                ${(rowData?.city || '')}, 
+                                ${(rowData?.zip || '')}, 
+                                ${(rowData?.state || '')}
                             </p>
                             <strong class="d-flex justify-content-left">Reason :</strong>
                             <p class="pt-2" style="font-size: 13px; text-align: left;">
                                 ${rowData.rejected_reason}
                             </p>
-                           <strong> <label class="mt-3 d-flex justify-content-left">Reject Date</label></strong>
-                            <div class="input-container mt-3" style="text-align:left !important">
-                                <input type="date" class="input-bottom-border"style="text-align:left !important"
+                           <strong> <label class="mt-3 d-flex justify-content-left">Reject Date :</label></strong>
+                            <div class="input-container" style="text-align:left !important">
+                               <input type="date" class="input-bottom-border"
                                     id="start-time-${rowData.ticket_id}" 
-                                    value="${tickerRejectDate}" disabled>                                
+                                    value="${rowData.rejected_date}" disabled>                           
                             </div>
                         </div>
                         <div class="col-md-2"></div>
@@ -278,3 +281,5 @@ $(document).ready(function () {
         }
     });
 });
+
+

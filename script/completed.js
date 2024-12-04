@@ -35,12 +35,7 @@ $(document).ready(function () {
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
-        language: {
-            paginate: {
-                previous: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M8 0 L0 6 L8 12 Z" fill="#000"/></svg>',
-                next: '<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 0 L12 6 L4 12 Z" fill="#000"/></svg>'
-            }
-        },
+        
         paging: true,
         lengthChange: true,
         searching: true,
@@ -321,3 +316,6 @@ document.getElementById('sidebarToggle').addEventListener('click', function () {
         });
     }
 });
+
+
+

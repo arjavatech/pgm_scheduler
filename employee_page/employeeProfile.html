@@ -289,7 +289,7 @@
                                     </a>
                                     <div style="position: fixed; bottom: 0; display: inline-flex;cursor: pointer;"
                                         data-bs-toggle="modal" data-bs-target="#logoutModal" class="m-3">
-                                         <img src="../icon/Vector.png" style="width: 30px;margin-top: -5px;">
+                                        <img src="../icon/Vector.png" style="width: 30px;margin-top: -5px;">
                                         <span class="content text-white list-group-item">Logout</span>
                                     </div>
                                 </div>
@@ -299,19 +299,19 @@
 
                     <!-- Right Column: Profile Form -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
-                        <p id="header"
+                        <p id="header" class="pb-4"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
                             <span id="e_name"></span>
                             <span class="span">
                                 <span id="CName"></span>
-                                <img src="../icon/Mask group (2).png" id="Clogo" alt="" style="width: 40px; padding-left: 10px;">
+                                <img src="../icon/Mask group (2).png" id="Clogo" alt="" style="width: 40px;">
                             </span>
                         </p>
 
                         <h3 class="text-center fw-bold  mt-4" id="header">Profile</h3>
 
                         <div class="logo-sty">
-                            
+
                             <label for="uploadLogo" class="upload-label d-flex justify-content-center"> <img
                                     id="logoPreview" alt="Upload Logo" style="max-width: 100%; height: auto;"> <input
                                     type="file" id="uploadLogo" accept="image/*" onchange="handleFileSelect(event)">
@@ -326,15 +326,21 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="first_name" placeholder=" " type="text" class="input-sty">
+                                            <input id="first_name" placeholder=" " type="text"
+                                                class="input-sty input-bottom-border" oninput="remove()">
                                             <label class="label-sty">First name</label>
+                                            <div class="error-text" id="first_name_error"
+                                                style="display: none;color: red;">Please fill the field</div>
                                             <span class="text-danger" id="errorFName"></span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="last_name" placeholder=" " type="text" class="input-sty">
+                                            <input id="last_name" placeholder=" " type="text" class="input-sty"
+                                                oninput="remove()">
                                             <label class="label-sty">Last name</label>
+                                            <div class="error-text" id="last_name_error"
+                                                style="display: none;color: red;">Please fill the field</div>
                                             <span class="text-danger" id="errorLName"></span>
                                         </div>
                                     </div>
@@ -344,30 +350,41 @@
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
                                             <input type="email" id="email" name="email" placeholder=" "
-                                                class="input-sty">
+                                                class="input-sty" oninput="remove()">
                                             <label>Email</label>
+                                            <div class="error-text" id="email_error" style="display: none;color: red;">
+                                                Please fill the field</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input id="phone_number" placeholder=" " type="text" class="input-sty">
+                                            <input id="phone_number" placeholder=" " type="text" class="input-sty"
+                                                oninput="remove()">
                                             <label class="label-sty">Phone Number</label>
+                                            <div class="error-text" id="phone_number_error"
+                                                style="display: none;color: red;">Please fill the field</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="areas_covered" placeholder=" " type="text" class="input-sty">
+                                            <input id="areas_covered" placeholder=" " type="text" class="input-sty"
+                                                oninput="remove()">
                                             <label class="label-sty">Areas Covered</label>
+                                            <div class="error-text" id="areas_covered_error"
+                                                style="display: none;color: red;">Please fill the field</div>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
                                             <input type="text" id="assigned_locations" name="assigned_locations"
-                                                placeholder=" " class="input-sty">
+                                                placeholder=" " class="input-sty" oninput="remove()">
                                             <label>Assigned Locations</label>
+                                            <div class="error-text" id="assigned_locations_error"
+                                                style="display: none;color: red;">Please fill the field</div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -375,16 +392,21 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="qualification" placeholder=" " type="text" class="input-sty">
+                                            <input id="qualification" placeholder=" " type="text" class="input-sty"
+                                                oninput="remove()">
                                             <label class="label-sty">Qualification</label>
+                                            <div class="error-text" id="qualification_error"
+                                                style="display: none;color: red;">Please fill the field</div>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
                                             <input type="text" id="experience" name="experience" placeholder=" "
-                                                class="input-sty">
+                                                class="input-sty" oninput="remove()">
                                             <label>Experience</label>
+                                            <div class="error-text" id="experience_error"
+                                                style="display: none;color: red;">Please fill the field</div>
                                         </div>
                                     </div>
                                 </div>
@@ -392,16 +414,21 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="skills" placeholder=" " type="text" class="input-sty">
+                                            <input id="skills" placeholder=" " type="text" class="input-sty"
+                                                oninput="remove()">
                                             <label class="label-sty">skills</label>
+                                            <div class="error-text" id="skills_error" style="display: none;color: red;">
+                                                Please fill the field</div>
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
                                             <input type="text" id="driving_license" name="driving" placeholder=" "
-                                                class="input-sty">
+                                                class="input-sty" oninput="remove()">
                                             <label>Driving License</label>
+                                            <div class="error-text" id="driving_license_error"
+                                                style="display: none;color: red;">Please fill the field</div>
                                         </div>
                                     </div>
                                 </div>
@@ -412,8 +439,10 @@
                                         <div class="multi-select-container">
                                             <div class="material-textfield">
                                                 <input type="text" id="status" name="status" placeholder=" "
-                                                    class="multi-select-input input-sty" readonly>
+                                                    class="multi-select-input input-sty" readonly oninput="remove()">
                                                 <label>Status</label>
+                                                <div class="error-text" id="status_error"
+                                                    style="display: none;color: red;">Please fill the field</div>
                                             </div>
                                             <div class="multi-select-dropdown">
                                                 <label class="multi-select-option">
@@ -424,6 +453,7 @@
                                                     <input type="checkbox" value="InActive" id="IsNotAvailable" />
                                                     InActive
                                                 </label>
+
                                             </div>
                                         </div>
                                     </div>
@@ -432,8 +462,10 @@
                                         <div class="multi-select-container">
                                             <div class="material-textfield">
                                                 <input type="text" id="availability" name="availability" placeholder=" "
-                                                    class="multi-select-input1 input-sty" readonly>
+                                                    class="multi-select-input1 input-sty" readonly oninput="remove()">
                                                 <label>Available?</label>
+                                                <div class="error-text" id="availability_error"
+                                                    style="display: none;color: red;">Please fill the field</div>
                                             </div>
                                             <div class="multi-select-dropdown1">
                                                 <label class="multi-select-option1">
@@ -452,8 +484,11 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield mb-4">
-                                            <input id="street" placeholder=" " type="text" class="input-sty">
+                                            <input id="street" placeholder=" " type="text" class="input-sty"
+                                                oninput="remove()">
                                             <label class="label-sty">Street</label>
+                                            <div class="error-text" id="street_error" style="display: none;color: red;">
+                                                Please fill the field</div>
                                         </div>
                                     </div>
 
@@ -474,26 +509,40 @@
                                                     Refrigerator
                                                 </label>
                                             </div>
+                                            <!-- Error Message -->
+                                            <div class="error-text" id="specialization_error"
+                                                style="display: none; color: red;">
+                                                Please select at least one specialization.
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input type="text" id="city" name="city" placeholder=" " class="input-sty">
+                                            <input type="text" id="city" name="city" placeholder=" " class="input-sty"
+                                                oninput="remove()">
                                             <label>City</label>
+                                            <div class="error-text" id="city_error" style="display: none;color: red;">
+                                                Please fill the field</div>
+                                            <div class="error-text" id="city_error" style="display: none;color: red;">
+                                                Please fill the field</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="material-textfield">
-                                            <input type="text" id="zip" name="zip" placeholder=" " class="input-sty">
+                                            <input type="text" id="zip" name="zip" placeholder=" " class="input-sty"
+                                                oninput="remove()">
                                             <label>Zip</label>
+                                            <div class="error-text" id="zip_error" style="display: none;color: red;">
+                                                Please fill the field</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <button type="button" class="btn-green float-end"
-                                        onclick="handleSubmit()">Update</button>
+                                        onclick="handleSubmit();validateForm()">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -529,6 +578,49 @@
         <div class="spinner"></div>
     </div>
     <script>
+
+
+        function remove() {
+            const inputs = document.querySelectorAll('.input-sty');
+
+            inputs.forEach(input => {
+                const errorId = input.id + '_error'; // Construct the error message ID dynamically
+                const errorText = document.getElementById(errorId); // Get the error message element by ID
+                errorText.style.display = 'none'; // Hide the error message
+
+
+
+            });
+        }
+
+        function validateForm() {
+            const inputs = document.querySelectorAll('.input-sty'); // Select all inputs inside the form
+            let isValid = true; // Flag to track form validity
+
+            inputs.forEach(input => {
+                const errorId = input.id + '_error'; // Construct the error message ID dynamically
+                const errorText = document.getElementById(errorId); // Get the error message element by ID
+
+                if (input.value.trim() === '') {
+                    isValid = false; // Mark form as invalid
+                    if (errorText) {
+                        errorText.style.display = 'block'; // Show the error message
+                    }
+                } else {
+                    if (errorText) {
+                        errorText.style.display = 'none'; // Hide the error message
+                    }
+                }
+            });
+
+            if (isValid) {
+                // If the form is valid, you can proceed with your submit logic
+                console.log('Form is valid!');
+            } else {
+                console.log('Please fill out all required fields.');
+            }
+        }
+
         // JavaScript to preview the uploaded image
 
         document.querySelector('.btn-yes').addEventListener('click', function () {
@@ -608,7 +700,7 @@
         document.getElementById('CName').textContent = localStorage.getItem("CName");
         document.getElementById('e_name').textContent = localStorage.getItem("e_name");
     </script>
-
+    <script src="../script/navbar.js"></script>
 </body>
 
 </html>

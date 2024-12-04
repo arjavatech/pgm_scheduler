@@ -42,6 +42,7 @@
 
 
 
+
     /* General modal styles */
     .custom-modal-content {
         border-radius: 8px;
@@ -161,6 +162,10 @@
         outline: none;
         box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
     }
+
+    .error-text {
+        color: red;
+    }
 </style>
 
 
@@ -237,10 +242,10 @@
                     </div>
                     <!-- Main Content -->
                     <div class="col-sm-12 col-xl-10 col-md-10 col-lg-10 col-sty" id="fix">
-                        <p id="header"
+                        <p id="header" class="pb-4"
                             style="box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.5); margin-left: -12px; padding: 20px; margin-right: -12px; font-weight: bold;">
                             Admin <span class="span"><span id="CName"></span> <img src="icon/Mask group (2).png"
-                                    id="Clogo" alt="" style="width: 40px; padding-left: 10px;"></span>
+                                    id="Clogo" alt="" style="width: 40px;"></span>
                         </p>
 
                         <div class="container container-sty">
@@ -249,28 +254,50 @@
                             <div class="container-fluid center-container">
                                 <div class="row">
                                     <div class="col-md-3 text-center">
-                                        <input type="text" class="input-bottom-border mt-4" placeholder="First Name">
-                                        <input type="text" class="input-bottom-border mt-4" placeholder="Last Name">
+                                        <input type="text" class="input-bottom-border mt-4" placeholder="First Name"
+                                            oninput="remove()" required>
+                                        <div class="error-text" style="display: none;" id="firstnameerr">Please fill the
+                                            fieldn</div>
+                                        <input type="text" class="input-bottom-border mt-4" placeholder="Last Name"
+                                            oninput="remove()" required>
+                                        <div class="error-text" style="display: none;" id="lastnameerr">Please fill the
+                                            field</div>
                                     </div>
                                     <div class="col-md-3 text-center">
-                                        <input type="text" class="input-bottom-border mt-4" placeholder="Email">
-                                        <input type="text" class="input-bottom-border mt-4" placeholder="Phone Number">
+                                        <input type="text" class="input-bottom-border mt-4" placeholder="Email"
+                                            oninput="remove()" required>
+                                        <div class="error-text" style="display: none;" id="emailerr">Please fill the
+                                            field</div>
+                                        <input type="text" class="input-bottom-border mt-4" placeholder="Phone Number"
+                                            required>
+                                        <div class="error-text" style="display: none;" id="phoneNumberError">Please fill
+                                            the field</div>
                                     </div>
                                     <div class="col-md-3 text-center">
-                                        <input type="text" class="input-bottom-border mt-4"
-                                            placeholder="Assigned Location">
+                                        <input type="text" class="input-bottom-border mt-4" oninput="remove()"
+                                            placeholder="Assigned Location" required>
+                                        <div class="error-text" style="display: none;" id="locationerr">Please fill the
+                                            field</div>
+
+
                                         <div class="dropdown">
                                             <button id="dropdownButton" class="input-bottom-border mt-4"
                                                 onclick="toggleDropdown(event)">Specialization</button>
                                             <div class="dropdown-options input-bottom-border" id="dropdownOptions"
                                                 onclick="event.stopPropagation()">
-                                                <label><input type="checkbox" value="AC" onchange="updateButton(this)">
-                                                    AC</label>
+                                                <label><input type="checkbox" value="AC"
+                                                        onchange="validateSpecialization()"> AC</label>
                                                 <label><input type="checkbox" value="Refrigerator"
-                                                        onchange="updateButton(this)"> Refrigerator </label>
-
+                                                        onchange="validateSpecialization()"> Refrigerator </label>
                                             </div>
                                         </div>
+                                        <div class="error-text" style="display: none;" id="specializationError">Please
+                                            Please fill the
+                                            field</div>
+
+                                        <div class="error-text" style="display: none;" id="locationerr">Please fill the
+                                            field</div>
+
                                     </div>
 
 
@@ -279,13 +306,15 @@
                                         <button type="submit" class="mt-4 login-button" id="cancel"
                                             onclick="cancel()">Cancel</button>
                                         <button type="submit" class="mt-4 login-button" id="addEmployee"
-                                            style="display: none;" id="addEmployee" onclick="createEmployee()">Add
+                                            style="display: none;" id="addEmployee"
+                                            onclick="createEmployee();validateForm()">Add
                                             employee</button>
                                         <button type="submit" class="mt-4 login-button" id="addEmployee2"
                                             onclick="show()">Add employee</button>
                                     </div>
                                 </div>
                             </div>
+
 
                             <!-- Table -->
                             <div class="container-fluid mt-5  mb-5 justify-content-center" id="card">
@@ -349,65 +378,69 @@
                     <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
                 </div>
                 <div class="modal-body custom-modal-body">
-                    Are you sure you want to Delete Employee?
+                    Are you sure you want to delete the employee?
                 </div>
                 <div class="modal-footer custom-modal-footer">
                     <button type="button" class="btn-yes">Yes</button>
-                    <button type="button" class="btn-no " data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn-no" data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
     </div>
 
-<!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal-content">
-            <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="successModalLabel">Success</h5>
-            </div>
-            <div class="modal-body custom-modal-body">
-                <p id="success_content">Employee added successfully!</p>
-                <div class="checkmark-container">
-                    <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
-                        <g stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-                            <path class="circle"
-                                d="M13 1C6.372583 1 1 6.372583 1 13s5.372583 12 12 12 12-5.372583 12-12S19.627417 1 13 1z" />
-                            <path class="tick" d="M6.5 13.5L10 17l8.808621-8.308621" />
-                        </g>
-                    </svg>
-                </div>
-            </div>
-            <div class="modal-footer custom-modal-footer">
-                <button type="button" class="btn btn-success" style="width: 100%;" data-bs-dismiss="modal" id="success-modal-ok">Ok</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Failure Modal -->
-<div class="modal fade" id="failureModal" tabindex="-1" aria-labelledby="failureModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal-content">
-            <div class="modal-header justify-content-center">
-                <h5 class="modal-title" id="failureModalLabel">Failure</h5>
-            </div>
-            <div class="modal-body custom-modal-body">
-                <p id="failure-content">An error occurred while adding the employee!</p>
-                <div class="checkmark-container">
-                    <svg class="cross__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                        <circle class="cross__circle" cx="26" cy="26" r="25" fill="none" />
-                        <path class="cross__path cross__path--right" fill="none" d="M16,16 l20,20" />
-                        <path class="cross__path cross__path--left" fill="none" d="M16,36 l20,-20" />
-                    </svg>
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
                 </div>
-            </div>
-            <div class="modal-footer custom-modal-footer">
-                <button type="button" class="btn btn-danger" style="width: 100%;" data-bs-dismiss="modal">Close</button>
+                <div class="modal-body custom-modal-body">
+                    <p id="success_content">Employee added successfully!</p>
+                    <div class="checkmark-container">
+                        <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+                            <g stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path class="circle"
+                                    d="M13 1C6.372583 1 1 6.372583 1 13s5.372583 12 12 12 12-5.372583 12-12S19.627417 1 13 1z" />
+                                <path class="tick" d="M6.5 13.5L10 17l8.808621-8.308621" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn btn-success" style="width: 100%;" data-bs-dismiss="modal"
+                        id="success-modal-ok">Ok</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Failure Modal -->
+    <div class="modal fade" id="failureModal" tabindex="-1" aria-labelledby="failureModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="failureModalLabel">Failure</h5>
+                </div>
+                <div class="modal-body custom-modal-body">
+                    <p id="failure-content">An error occurred while adding the employee!</p>
+                    <div class="checkmark-container">
+                        <svg class="cross__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="cross__circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="cross__path cross__path--right" fill="none" d="M16,16 l20,20" />
+                            <path class="cross__path cross__path--left" fill="none" d="M16,36 l20,-20" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="modal-footer custom-modal-footer">
+                    <button type="button" class="btn btn-danger" style="width: 100%;" data-bs-dismiss="modal"
+                        id="failed_ok_button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -432,9 +465,78 @@
 
 
         document.getElementById("CName").innerHTML = CName;
+
+        function remove() {
+            const firstnameerr = document.getElementById('firstnameerr');
+            const lastnameerr = document.getElementById('lastnameerr');
+            const phoneNumberError = document.getElementById('phoneNumberError');
+            const emailerr = document.getElementById('emailerr');
+            const locationerr = document.getElementById('locationerr');
+
+            firstnameerr.style.display = 'none';
+            lastnameerr.style.display = 'none';
+            phoneNumberError.style.display = 'none';
+            emailerr.style.display = 'none';
+            locationerr.style.display = 'none';
+
+
+        }
+
+
+        function validateForm() {
+            const inputs = document.querySelectorAll('.input-bottom-border');
+            let isValid = true;
+
+
+            inputs.forEach(input => {
+                const errorText = input.nextElementSibling;
+
+                if (input.value.trim() === '') {
+                    isValid = false;
+                    errorText.style.display = 'block';
+                } else {
+                    errorText.style.display = 'none';
+                }
+            });
+
+            const specializationOptions = document.querySelectorAll('.dropdown-options input[type="checkbox"]');
+            const specializationFeedback = document.getElementById('specializationFeedback');
+            const specializationSelected = Array.from(specializationOptions).some(option => option.checked);
+
+            if (!specializationSelected) {
+                isValid = false;
+                specializationFeedback.style.display = 'block';
+            } else {
+                specializationFeedback.style.display = 'none';
+            }
+
+            return isValid;
+        }
+
+        function validateSpecialization() {
+            const checkboxes = document.querySelectorAll('#dropdownOptions input[type="checkbox"]');
+            const errorElement = document.getElementById('specializationError');
+            let isChecked = false;
+
+            // Check if at least one checkbox is selected
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    isChecked = true;
+                }
+            });
+
+            // Show or hide the error message
+            if (isChecked) {
+                errorElement.style.display = 'none';
+            } else {
+                errorElement.style.display = 'block';
+            }
+        }
+
+
     </script>
 
-
+    <script src="script/navbar.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
