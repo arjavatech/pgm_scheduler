@@ -55,7 +55,7 @@ $(document).ready(function () {
             ticket.phone_number,
             ticket.complain_raised_date,
             ticket.city,
-            `<span class="assigned-employee">${ticket.first_name} ${ticket.last_name}</span>` // Assigned employee
+            `<span class="assigned-employee">${ticket.payment}</span>` 
         ]).draw(false).node(); // Get the row node after adding
 
         $(rowNode).find('td:first').addClass('details-control');
@@ -135,7 +135,7 @@ $(document).ready(function () {
                             
                              
                             </div>
-                            <strong class="mt-4">Received payment:  <h5>${rowData.payment}</h5></strong>
+                            <strong class="mt-4">Invoiced :  <h6>${rowData.payment}</h6></strong>
 
                         </div>
 
@@ -189,6 +189,9 @@ $(document).ready(function () {
                         <p><strong>Phone </strong> ${employee.phone_number}</p>
                     </div>
                     <div class="col-6">
+                        <p><strong class="mt-4">Invoiced :  </strong>${employee.payment} </p>
+                    </div>
+                    <div class="col-6">
                         
                     </div>
                 </div>
@@ -208,7 +211,6 @@ $(document).ready(function () {
                                     id="start-time-${employee.ticket_id}" 
                                     value="${employee.work_ended_time}" disabled>
                             </div>
-                            <h5 class="pt-4 text-center"><strong>Received Amount : </strong>${employee.payment}</h5>
                    <div class="image-gallery d-flex justify-content-center mt-3">
                           
 

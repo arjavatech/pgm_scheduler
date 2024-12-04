@@ -85,7 +85,7 @@ $(document).ready(function () {
                             ${employee_det_options_get(rowData.ticket_type)}
                             </select>
                              <small id="employee-error-${rowData.ticket_id}" style="color: red; display: none;">Please select an employee.</small>
-                             <small id="pending-count-${rowData.ticket_id}">Pending work: </small>
+                             <small><h4 id="pending-text-${rowData.ticket_id}"></h4><span id="pending-count-${rowData.ticket_id}"></span></small>
                         </div>
                        <div class="col-md-2"></div>
                         <div class="col-md-6 box2">
@@ -231,6 +231,7 @@ $(document).ready(function () {
                             ${employee_det_options_get(employee.ticket_type)}
                             </select>
                     </p>
+                    <small><h4 id="pending-text-${employee.ticket_id}"></h4><span id="pending-count-${employee.ticket_id}"></span></small>
                     <p><strong>Customer Address:</strong> ${employee.street}, ${employee.city}, ${employee.zip}</p>
                     <p><strong>Description:</strong> ${employee.description}</p>
                     <p class="text-center"><strong>Employee:</strong> ${employee.first_name} ${employee.last_name}</p>

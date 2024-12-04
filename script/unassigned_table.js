@@ -89,7 +89,7 @@ $(document).ready(function () {
         ${employee_det_options_get(rowData.ticket_type)}
     </select>
     <small id="employee-error-${rowData.ticket_id}" style="color: red; display: none;">Please select an employee.</small>
-    <small >Pending work: <span id="pending-count-${rowData.ticket_id}">N/A</span></small>                         
+    <small><label id="pending-text-${rowData.ticket_id}"></label><span id="pending-count-${rowData.ticket_id}"></span></small>                         
                         </div>
                         <div class="col-md-2"></div>
                        
@@ -205,7 +205,8 @@ $(document).ready(function () {
     $(document).on('change', '.employee-select', function () {
         const selectedOption = $(this).find(':selected');
         const pendingWork = selectedOption.attr('pending');
-        const ticketId = $(this).attr('id').split('-')[2]; // Extract ticket ID from select element ID
+        const ticketId = $(this).attr('id').split('-')[2]; 
+        $(`#pending-text-${ticketId}`).text(`Pending work : `);
         $(`#pending-count-${ticketId}`).text(`${pendingWork || 'N/A'}`);
     });
 
@@ -254,8 +255,8 @@ $(document).ready(function () {
     <small id="employee-error-${employee.ticket_id}" style="color: red; display: none;">Please select an employee.</small>
    
                     </p>
-                    <p><strong>Employee pending Work:</strong>
-                          <small id="pending-count-${employee.ticket_id}"> N/A</small>
+                    <p><strong id="pending-text-${employee.ticket_id}"></strong>
+                          <small id="pending-count-${employee.ticket_id}"></small>
                     </p>
                       <div class="image-gallery d-flex justify-content-center mt-3">
                           
