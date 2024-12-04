@@ -249,32 +249,32 @@
                         </p>
 
                         <div class="container container-sty">
-                            <h1 class="text-center m-3 mt-5 fw-bold">Employee Ticket</h1>
+                            <h1 class="text-center m-3 mt-5 fw-bold">Employee Management</h1>
 
                             <div class="container-fluid center-container">
                                 <div class="row">
                                     <div class="col-md-3 text-center">
                                         <input type="text" class="input-bottom-border mt-4" placeholder="First Name"
-                                            oninput="remove()" required>
+                                            oninput="remove(1)" required>
                                         <div class="error-text" style="display: none;" id="firstnameerr">Please fill the
                                             fieldn</div>
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Last Name"
-                                            oninput="remove()" required>
+                                            oninput="remove(2)" required>
                                         <div class="error-text" style="display: none;" id="lastnameerr">Please fill the
                                             field</div>
                                     </div>
                                     <div class="col-md-3 text-center">
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Email"
-                                            oninput="remove()" required>
+                                            oninput="remove(3)" required>
                                         <div class="error-text" style="display: none;" id="emailerr">Please fill the
                                             field</div>
                                         <input type="text" class="input-bottom-border mt-4" placeholder="Phone Number"
-                                            required>
+                                            required oninput="remove(4)">
                                         <div class="error-text" style="display: none;" id="phoneNumberError">Please fill
                                             the field</div>
                                     </div>
                                     <div class="col-md-3 text-center">
-                                        <input type="text" class="input-bottom-border mt-4" oninput="remove()"
+                                        <input type="text" class="input-bottom-border mt-4" oninput="remove(5)"
                                             placeholder="Assigned Location" required>
                                         <div class="error-text" style="display: none;" id="locationerr">Please fill the
                                             field</div>
@@ -285,18 +285,15 @@
                                                 onclick="toggleDropdown(event)">Specialization</button>
                                             <div class="dropdown-options input-bottom-border" id="dropdownOptions"
                                                 onclick="event.stopPropagation()">
-                                                <label><input type="checkbox" value="AC"
-                                                        onchange="validateSpecialization()"> AC</label>
-                                                <label><input type="checkbox" value="Refrigerator"
-                                                        onchange="validateSpecialization()"> Refrigerator </label>
-                                            </div>
-                                        </div>
-                                        <div class="error-text" style="display: none;" id="specializationError">Please
-                                            Please fill the
-                                            field</div>
+                                                <label><input type="checkbox" value="AC" onchange="updateButton(this)">
 
-                                        <div class="error-text" style="display: none;" id="locationerr">Please fill the
-                                            field</div>
+                                                    AC</label>
+                                                <label><input type="checkbox" value="Refrigerator"
+                                                        onchange="updateButton(this)"> Refrigerator </label>
+
+                                            </div>
+
+                                        </div>
 
                                     </div>
 
@@ -466,19 +463,36 @@
 
         document.getElementById("CName").innerHTML = CName;
 
-        function remove() {
+        function remove(num) {
             const firstnameerr = document.getElementById('firstnameerr');
             const lastnameerr = document.getElementById('lastnameerr');
             const phoneNumberError = document.getElementById('phoneNumberError');
             const emailerr = document.getElementById('emailerr');
             const locationerr = document.getElementById('locationerr');
 
-            firstnameerr.style.display = 'none';
-            lastnameerr.style.display = 'none';
-            phoneNumberError.style.display = 'none';
-            emailerr.style.display = 'none';
-            locationerr.style.display = 'none';
+              
+        switch (num) {
+            case 1: firstnameerr.style.display = 'none';
+                
+                break;
+                case 2: lastnameerr.style.display = 'none';
+                
+                break;
+                case 3:   emailerr.style.display = 'none';
+                
+                break;
+                case 4: phoneNumberError.style.display = 'none';
+                
+                break;
+                case 5:  locationerr.style.display = 'none';
 
+                
+                break;
+        
+            default:
+                break;
+        }
+           
 
         }
 
@@ -486,7 +500,6 @@
         function validateForm() {
             const inputs = document.querySelectorAll('.input-bottom-border');
             let isValid = true;
-
 
             inputs.forEach(input => {
                 const errorText = input.nextElementSibling;
@@ -512,28 +525,6 @@
 
             return isValid;
         }
-
-        function validateSpecialization() {
-            const checkboxes = document.querySelectorAll('#dropdownOptions input[type="checkbox"]');
-            const errorElement = document.getElementById('specializationError');
-            let isChecked = false;
-
-            // Check if at least one checkbox is selected
-            checkboxes.forEach((checkbox) => {
-                if (checkbox.checked) {
-                    isChecked = true;
-                }
-            });
-
-            // Show or hide the error message
-            if (isChecked) {
-                errorElement.style.display = 'none';
-            } else {
-                errorElement.style.display = 'block';
-            }
-        }
-
-
     </script>
 
     <script src="script/navbar.js"></script>
