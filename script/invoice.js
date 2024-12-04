@@ -321,6 +321,9 @@ async function handlePayment(tokenID, ticket_id, eid) {
             return;
         }
 
+        const loadingIndicator = document.getElementById('l'); // Adjust as per your actual loading element ID
+        loadingIndicator.style.display = 'flex'; // Show loading before fetch
+
         // Prepare the data payload
         const payment = parseInt(amount, 10); // Ensure the amount is treated as a number
         const paymentDescription = description;
@@ -342,7 +345,7 @@ async function handlePayment(tokenID, ticket_id, eid) {
             },
             body: JSON.stringify(datas),
         });
-
+        loadingIndicator.style.display = 'none'; 
         // Handle API response
         if (!response.ok) {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
@@ -356,7 +359,7 @@ async function handlePayment(tokenID, ticket_id, eid) {
             window.location.href = 'invoice.html';
         });
     } catch (error) {
-        console.error("An error occurred:", error); // Log the error for debugging
+        loadingIndicator.style.display = 'none'; 
         const failureModal = new bootstrap.Modal(document.getElementById('failureModal'));
         failureModal.show();
     }

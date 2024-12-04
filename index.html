@@ -215,7 +215,7 @@
                         getEmpDetails(userDetails.email);
                         setTimeout(() => {
                             localStorage.setItem("userId",userDetails.email);
-                            window.location.href = 'employee_page/inProcessTicket.html';
+                            window.location.href = 'employee_page/AssignedTickets.html';
                         }, 1000);
                     }
                 })
@@ -329,7 +329,7 @@
                     } else if (data.password === password && data.is_employee === 1) {
                         getEmployeeID(data.signup_url);
                         setTimeout(() => {
-                            window.location.href = 'employee_page/inProcessTicket.html';
+                            window.location.href = 'employee_page/AssignedTickets.html';
                         }, 1200);
                     } else if (password == "" && username == "") {
                         showPopupModal("Enter the Username And password")
