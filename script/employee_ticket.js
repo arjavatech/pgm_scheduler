@@ -55,7 +55,7 @@ $(document).ready(function () {
 
     // Function to add a ticket to the DataTable
     function addTicket(ticket) {
-        // // console.log(ticket)
+        // console.log(ticket)
         // Clean the string by replacing curly quotes with straight quotes
         const cleanedSpecialization = ticket.specialization.replace(/[“”]/g, '"');
 
@@ -68,7 +68,7 @@ $(document).ready(function () {
         const deleteButton = `<button class="delete-btn btn" onclick="showDeleteEmployeeModal('${ticket.employee_id}')">Delete</button>`;
 
         // Log the values
-        // // console.log(ac, Refrigerator); // Output: "Refrigerator"
+        // console.log(ac, Refrigerator); // Output: "Refrigerator"
 
         const rowNode = table.row.add([
             ticket.first_name,
@@ -94,7 +94,7 @@ $(document).ready(function () {
         const [ac, Refrigerator = "rc"] = specializationArray;
 
         // Log the values
-        // // console.log(ac, Refrigerator); // Output: "Refrigerator"
+        // console.log(ac, Refrigerator); // Output: "Refrigerator"
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
@@ -382,7 +382,7 @@ function createEmployee() {
                     document.getElementById("failure-content").textContent = data.error;
                     loadingIndicator.style.display = 'none';
                     failureModal.show();
-                    // console.error('Error:', error.message);
+                    console.error('Error:', error.message);
                     document.getElementById("failed_ok_button").addEventListener("click", function () {
                         window.location.href = "employee_ticket.html"
                     })
@@ -397,7 +397,7 @@ function createEmployee() {
                 }
             })
             .catch(error => {
-                // console.error('Error:', error.message);
+                console.error('Error:', error.message);
                 document.getElementById("failure-content").textContent = "Your Email Id is already register."
                 failureModal.show();
             });

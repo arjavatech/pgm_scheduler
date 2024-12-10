@@ -200,7 +200,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    // // console.log(data)
+                    // console.log(data)
                     if (data.isSuperAdmin) {
                        
                         setTimeout(() => {
@@ -221,7 +221,7 @@
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
-                    // console.error('Fetch error:', error);
+                    console.error('Fetch error:', error);
                 });
         }
 
@@ -245,7 +245,7 @@
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
-                    // console.error('Fetch error:', error);
+                    console.error('Fetch error:', error);
                 });
         }
 
@@ -270,7 +270,7 @@
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
-                    // console.error('Fetch error:', error);
+                    console.error('Fetch error:', error);
                 });
         }
 
@@ -292,13 +292,13 @@
                     return response.json();
                 })
                 .then(data => {
-                    // console.log(data)
+                    console.log(data)
                     localStorage.setItem("eid", data.employee_id);
                     localStorage.setItem("e_name", data.first_name+ " "+ data.last_name);
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
-                    // console.error('Fetch error:', error);
+                    console.error('Fetch error:', error);
                 });
         }
 
@@ -340,7 +340,7 @@
                 })
                 .catch(error => {
                     document.getElementById('l').style.display = 'none';
-                    // console.error('Fetch error:', error);
+                    console.error('Fetch error:', error);
                 });
         }
 
@@ -364,7 +364,7 @@
                 if (response.status === 'connected') {
                     window.location.href = 'dashboard.html';
                 } else {
-                    // console.log('User did not authorize the app');
+                    console.log('User did not authorize the app');
                 }
             }, { scope: 'public_profile,email' });
         }

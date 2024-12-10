@@ -22,7 +22,7 @@ $(document).ready(function () {
             emp_details_map = data;
 
         })
-        .catch(error => // console.error('Error fetching employees:', error));
+        .catch(error => console.error('Error fetching employees:', error));
 
 
     fetch(apiUrl)
@@ -36,7 +36,7 @@ $(document).ready(function () {
             loadingIndicator.style.display = 'none'; // Hide loading after processing
         })
         .catch(error => {
-            // console.error('Error fetching tickets:', error);
+            console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading on error
         });
 
@@ -139,7 +139,7 @@ $(document).ready(function () {
 
     function employee_det_options_get(ticketType) {
         if (!emp_details_map || !emp_details_map[ticketType]) {
-            // console.error(`Invalid ticketType: ${ticketType}`);
+            console.error(`Invalid ticketType: ${ticketType}`);
             return `<option disabled>No employees available for ${ticketType}</option>`;
         }
 
@@ -392,7 +392,7 @@ async function handleConfirm(old_eid, ticketId) {
             }, 1000);
 
         } catch (error) {
-            // console.error("Failed to assign employee:", error.message);
+            console.error("Failed to assign employee:", error.message);
             loadingIndicator.style.display = 'none';
         }
     }

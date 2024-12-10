@@ -15,10 +15,10 @@ $(document).ready(function () {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-           //  // console.log(data);
+           //  console.log(data);
             loadingIndicator.style.display = 'none';
             if (!(data.detail)) {
-               //  // console.log("yes")
+               //  console.log("yes")
                 data.forEach(ticket => {
                     rowDetails.push(ticket);
                     addTicket(ticket);
@@ -28,7 +28,7 @@ $(document).ready(function () {
             }
         })
         .catch(error => {
-            // console.error('Error fetching tickets:', error);
+            console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 

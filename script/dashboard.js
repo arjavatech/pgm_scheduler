@@ -78,14 +78,14 @@ async function fetchEmployeeCounts() {
         });
         document.getElementById('l').style.display = 'none';
     } catch (error) {
-        // console.error("Error fetching employee data:", error);
+        console.error("Error fetching employee data:", error);
     }
 }
 
 // Function to update chart data
 function updateChart(range, button) {
     if (!chart || !dataSets[range]) {
-        // console.error("Chart or dataset not found.");
+        console.error("Chart or dataset not found.");
         return;
     }
 
@@ -107,12 +107,12 @@ async function fetchCounts() {
         let date_val = CurrDate.getFullYear() + "-" +
             String(CurrDate.getMonth() + 1).padStart(2, '0') + "-" +
             String(CurrDate.getDate()).padStart(2, '0');
-       //  // console.log(date_val); // Output: 2024-12-05 (for example)
+       //  console.log(date_val); // Output: 2024-12-05 (for example)
 
-       //  // console.log(CurrDate)
+       //  console.log(CurrDate)
         const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_counts/${cid}/${date_val}`);
         const data = await response.json();
-        ////  // console.log(data)
+        ////  console.log(data)
         notification(data)
         // Update the HTML with fetched data
         document.querySelector('.UnassignedCount h3').textContent = data.pending_tickets;
@@ -121,7 +121,7 @@ async function fetchCounts() {
         document.querySelector('.ticketcount h3').textContent = data.total_tickets;
 
     } catch (error) {
-        // console.error("Error fetching employee data:", error);
+        console.error("Error fetching employee data:", error);
     }
 }
 
@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 function notification(data) {
-    // console.log(data)
+    console.log(data)
     const listItems = [
         `Daily Summary: You have currently ${data.current_day_pending_count} pending tickets & ${data.current_day_inprogress_count} in-progress tickets.`,
         `Pending Tickets: The following Ticket Id's are awaiting action - ${data.current_day_pending_ticket_ids == null ? "No tickets available.": data.current_day_pending_ticket_ids}.`,

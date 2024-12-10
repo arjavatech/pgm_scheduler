@@ -22,7 +22,7 @@ $(document).ready(function () {
             });
         })
         .catch(error => {
-            // console.error('Error fetching tickets:', error);
+            console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 
@@ -56,7 +56,7 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
-        //  // console.log(rowData)
+        //  console.log(rowData)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -165,7 +165,7 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
-        //  // console.log(employee)
+        //  console.log(employee)
         const cardHtml = `
         <div class="card mb-3" id="card-${employee.ticket_id}">
             <div class="card-body">
@@ -308,7 +308,7 @@ function reason(ticketID) {
         confirmButton.style.display = 'flex';
 
     } else {
-        // console.error(`Elements not found for ticketID: ${ticketID}`);
+        console.error(`Elements not found for ticketID: ${ticketID}`);
     }
 }
 function getUTCDateString() {
@@ -357,7 +357,7 @@ function rejectedTicket(cid, tic_id, eid) {
 
             if (data.error) {
                 loadingIndicator.style.display = 'none';
-                // console.error("Error in response:", data.error);
+                console.error("Error in response:", data.error);
             }
             else {
                 setTimeout(() => {
@@ -368,7 +368,7 @@ function rejectedTicket(cid, tic_id, eid) {
         })
         .catch((error) => {
             loadingIndicator.style.display = 'none';
-            // console.error("Error in response:", error);
+            console.error("Error in response:", error);
         });
 }
 
@@ -383,7 +383,7 @@ function cancel(ticketID) {
         confirmButton.style.display = 'none';
 
     } else {
-        // console.error(`Elements not found for ticketID: ${ticketID}`);
+        console.error(`Elements not found for ticketID: ${ticketID}`);
     }
 }
 
@@ -408,7 +408,7 @@ function acceptClick(token) {
 
             if (data.error) {
                 loadingIndicator.style.display = 'none';
-                // console.error("Error in response:", data.error);
+                console.error("Error in response:", data.error);
             }
             else {
                 setTimeout(() => {
@@ -419,7 +419,7 @@ function acceptClick(token) {
         })
         .catch((error) => {
             loadingIndicator.style.display = 'none';
-            // console.error("Error in response:", data.error);
+            console.error("Error in response:", data.error);
         });
 
 }

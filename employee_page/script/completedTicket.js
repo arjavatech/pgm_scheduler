@@ -22,7 +22,7 @@ $(document).ready(function () {
             loadingIndicator.style.display = 'none'; // Hide loading after processing
         })
         .catch(error => {
-            // console.error('Error fetching tickets:', error);
+            console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading on error
         });
 
@@ -175,14 +175,14 @@ $(document).ready(function () {
             const data = await response.json();
             detailsRow.find('.assigned-employee').text(newEmployeeID);
         } catch (error) {
-            // console.error("Failed to reassign employee:", error.message);
+            console.error("Failed to reassign employee:", error.message);
         }
     });
 
 // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
-       //  // console.log(employee)
+       //  console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
