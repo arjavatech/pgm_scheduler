@@ -2,7 +2,7 @@
 $(document).ready(function () {
     let cid = localStorage.getItem("cid");
     document.getElementById("Clogo").src = localStorage.getItem("Clogo");
-   //  // console.log(cid)
+   //  console.log(cid)
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/invoice/${cid}`;
     let rowDetails = [];
     const CName = localStorage.getItem("CName")
@@ -14,10 +14,10 @@ $(document).ready(function () {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-           //  // console.log(data);
+           //  console.log(data);
             loadingIndicator.style.display = 'none';
             if (!(data.detail)) {
-               //  // console.log("yes")
+               //  console.log("yes")
                 data.forEach(ticket => {
                     rowDetails.push(ticket);
                     addTicket(ticket);
@@ -27,7 +27,7 @@ $(document).ready(function () {
             }
         })
         .catch(error => {
-            // console.error('Error fetching tickets:', error);
+            console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 
@@ -403,7 +403,7 @@ async function updateLink(url, id, ticketId, ticketToken) {
             alert('Error updating link.');
         }
     } catch (error) {
-        // console.error('Error updating link:', error);
+        console.error('Error updating link:', error);
         alert('Error updating link. Check console for details.');
     }
 }

@@ -37,7 +37,7 @@ async function loadProfileDataFromAPI() {
         populateProfileData(profileData);
         IsActive(profileData.available);
         EmpStatus(profileData.employee_status);
-       // //  // console.log("Ak")
+       // //  console.log("Ak")
         checkbox(profileData.specialization);
     } catch (error) {
         loadingIndicator.style.display = 'none';
@@ -49,7 +49,7 @@ async function loadProfileDataFromAPI() {
 // Function to populate profile data into the form fields
 function populateProfileData(data) {
 
-    // console.log(data)
+    console.log(data)
 
     // Company datas 
     document.getElementById('first_name').value = data.first_name || '';
@@ -106,7 +106,7 @@ function checkbox(value) {
         document.getElementById("ac").checked = true;
         document.getElementById("refrigerator").checked = true;
     }
-    document.getElementsByClassName('multi-select-input3').value = specialization
+    document.querySelector('.multi-select-input3').value = specialization
 
 }
 
@@ -116,7 +116,7 @@ function IsActive(isActive) {
 
 
 function EmpStatus(empStatus) {
-   // //  // console.log(empStatus)
+   // //  console.log(empStatus)
     document.getElementById(empStatus === "Active" ? "isAvailable" : "IsNotAvailable").checked = true;
 }
 
@@ -191,9 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Example of form submission (if needed)
     const submitButton = document.getElementById("submit-button");
     submitButton.addEventListener("click", (e) => {
-        //// //  // console.log(localStorage.getItem("specialization"))
+        //// //  console.log(localStorage.getItem("specialization"))
         const specialization = localStorage.getItem("specialization");
-       // //  // console.log(specialization)
+       // //  console.log(specialization)
 
         // Check if the value is a string and split it manually if needed
         let parsedSpecialization;
@@ -322,7 +322,7 @@ async function handleFileSelect(event) {
                 loadingIndicator.style.display = 'none';
             }
         } catch (error) {
-            // console.error("Error:", error);
+            console.error("Error:", error);
             loadingIndicator.style.display = 'none';
             // alert("An error occurred during the upload. Please try again.");
         }
@@ -358,7 +358,7 @@ async function updateLink(url) {
         }
     } catch (error) {
         loadingIndicator.style.display = 'none';
-        // console.error('Error updating link:', error);
+        console.error('Error updating link:', error);
         // alert('Error updating link. Check console for details.');
     }
 }

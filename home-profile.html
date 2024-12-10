@@ -513,7 +513,7 @@
             document.getElementById("Clogo").src = localStorage.getItem("Clogo");
             const cid = localStorage.getItem("cid"); // Retrieve the company ID from localStorage
             if (!cid) {
-                // console.error("Company ID not found in localStorage.");
+                console.error("Company ID not found in localStorage.");
                 // alert("Company ID is missing. Please try logging in again.");
                 return;
             }
@@ -531,7 +531,7 @@
                     return response.json();
                 })
                 .then(employeesData => {
-                   //  // console.log(employeesData)
+                   //  console.log(employeesData)
 
                     // Populate form fields with data
                     document.getElementById("logoPreview").src = employeesData.logo || "";
@@ -547,7 +547,7 @@
                     document.getElementById("address_line").value = employeesData.address_line || "";
                 })
                 .catch(error => {
-                    // console.error("Error fetching company data:", error);
+                    console.error("Error fetching company data:", error);
                     // alert("Failed to load company data. Please try again later.");
                 })
                 .finally(() => {
@@ -585,7 +585,7 @@
 
         async function handleFileSelect(event) {
             const file = event.target.files[0]; // Get the selected file
-           //  // console.log(file)
+           //  console.log(file)
             if (!file) {
                 // alert("No file selected.");
                 return;
@@ -619,7 +619,7 @@
                         // alert("Upload failed: " + data.detail);
                     }
                 } catch (error) {
-                    // console.error("Error:", error);
+                    console.error("Error:", error);
                     // alert("An error occurred during the upload. Please try again.");
                 }
             };
@@ -650,7 +650,7 @@
                     // alert('Error updating link.');
                 }
             } catch (error) {
-                // console.error('Error updating link:', error);
+                console.error('Error updating link:', error);
                 // alert('Error updating link. Check console for details.');
             }
         }
@@ -766,7 +766,7 @@
 
 
             } catch (error) {
-                // console.error("Failed to assign employee:", error.message);
+                console.error("Failed to assign employee:", error.message);
                 loadingIndicator.style.display = 'none';
             }
         }

@@ -21,7 +21,7 @@ $(document).ready(function () {
             });
         })
         .catch(error => {
-            // console.error('Error fetching tickets:', error);
+            console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
-       //  // console.log(rowData)
+       //  console.log(rowData)
         // const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
         const tickerRejectDate = new Date(rowData.rejected_date).toISOString().split('T')[0];
         return `
@@ -146,7 +146,7 @@ $(document).ready(function () {
     // Function to create and append the card for mobile view
     function addCard(employee) {
         
-       //  // console.log(employee)
+       //  console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
