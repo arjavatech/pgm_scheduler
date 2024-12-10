@@ -127,7 +127,7 @@
 .logo-img {
     width: 100%;
     height: 100%;
-     object-fit: cover; /* Ensures the image covers the circle without distortion */
+       /* Ensures the image covers the circle without distortion */
     object-position: center; /* Centers the image within the container */
 }
 

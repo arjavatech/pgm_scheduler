@@ -23,7 +23,7 @@ function viewcompanydetails() {
         })
         .catch(error => {
             
-            console.error('Fetch error:', error);
+            // console.error('Fetch error:', error);
             showalert('Failed to load company details.');
         });
 
@@ -133,7 +133,7 @@ function viewcompanydetails() {
         })
         .catch(error => {
             document.getElementById('l').style.display = 'none';
-            console.error('Fetch error:', error);
+            // console.error('Fetch error:', error);
             showalert('Failed to load company details.');
         });
 

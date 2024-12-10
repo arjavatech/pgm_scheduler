@@ -67,7 +67,11 @@ input[type="file"].d-none {
     border: 1px solid #004102;
 }
 
-
+.image-gallery {
+    display: flex;
+    gap: 0px !important;
+    align-items: center;
+}
 @media (max-width:450px) {
     #completed{
         background-color:#004102;

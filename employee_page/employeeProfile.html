@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../css/home_profile.css">
 
     <link rel="stylesheet" href="../css/image.css">
-    <script src="../script/employee_page/employeeProfile.js"></script>
+    <script src="script/employeeProfile.js"></script>
 </head>
 <style>
     .no-scroll {
@@ -446,16 +446,17 @@
                                             </div>
                                             <div class="multi-select-dropdown">
                                                 <label class="multi-select-option">
-                                                    <input type="checkbox" value="Active" id="isAvailable" />
+                                                    <input type="radio" name="status" value="Active" id="isAvailable" />
                                                     Active
                                                 </label>
                                                 <label class="multi-select-option">
-                                                    <input type="checkbox" value="InActive" id="IsNotAvailable" />
+                                                    <input type="radio" name="status" value="InActive"
+                                                        id="IsNotAvailable" />
                                                     InActive
                                                 </label>
-
                                             </div>
                                         </div>
+
                                     </div>
 
                                     <div class="col-sm-6">
@@ -469,15 +470,16 @@
                                             </div>
                                             <div class="multi-select-dropdown1">
                                                 <label class="multi-select-option1">
-                                                    <input type="checkbox" value="Yes" id="Yes" />
+                                                    <input type="radio" name="availability" value="Yes" id="Yes" />
                                                     Yes
                                                 </label>
                                                 <label class="multi-select-option1">
-                                                    <input type="checkbox" value="No" id="No" />
+                                                    <input type="radio" name="availability" value="No" id="No" />
                                                     No
                                                 </label>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -495,28 +497,27 @@
                                     <div class="col-sm-6">
                                         <div class="multi-select-container">
                                             <div class="material-textfield">
-                                                <input type="text" id="specialization" name="experience" placeholder=" "
-                                                    class="multi-select-input3 input-sty" readonly>
+                                                <input type="text" class="multi-select-input3 input-sty" readonly>
                                                 <label>Specialization</label>
                                             </div>
                                             <div class="multi-select-dropdown3">
                                                 <label class="multi-select-option3">
-                                                    <input type="checkbox" value="AC" id="acCheckbox" />
-                                                    AC
+                                                    <input type="checkbox" value="AC" id="ac"/> AC
                                                 </label>
                                                 <label class="multi-select-option3">
-                                                    <input type="checkbox" value="Refrigerator " id="nonAcCheckbox" />
-                                                    Refrigerator
+                                                    <input type="checkbox" value="Refrigerator" id="refrigerator"/> Refrigerator
                                                 </label>
                                             </div>
-                                            <!-- Error Message -->
-                                            <div class="error-text" id="specialization_error"
-                                                style="display: none; color: red;">
-                                                Please select at least one specialization.
-                                            </div>
+                                        </div>
+
+                                        <!-- Hidden field to store the API format -->
+                                        <input type="hidden" id="specialization-api-format" name="specialization" />
+                                        <!-- Error Message -->
+                                        <div class="error-text" id="specialization_error"
+                                            style="display: none; color: red;">
+                                            Please select at least one specialization.
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -541,8 +542,8 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn-green float-end"
-                                        onclick="handleSubmit();validateForm()">Update</button>
+                                    <button type="button" id="submit-button" class="btn-green float-end"
+                                        onclick="validateForm()">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -587,9 +588,6 @@
                 const errorId = input.id + '_error'; // Construct the error message ID dynamically
                 const errorText = document.getElementById(errorId); // Get the error message element by ID
                 errorText.style.display = 'none'; // Hide the error message
-
-
-
             });
         }
 
@@ -615,9 +613,9 @@
 
             if (isValid) {
                 // If the form is valid, you can proceed with your submit logic
-                console.log('Form is valid!');
+               //  // console.log('Form is valid!');
             } else {
-                console.log('Please fill out all required fields.');
+               //  // console.log('Please fill out all required fields.');
             }
         }
 
@@ -656,18 +654,52 @@
             }
         });
 
-        function updateSelection(className, inputSelector) {
-            const selectedCheckboxes = document.querySelectorAll(`${className} input[type='checkbox']:checked`);
-            const selectedValues = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
-            document.querySelector(inputSelector).value = selectedValues.join(", ") || "Select options";
+        function updateSelection(dropdownSelector, inputSelector) {
+            const checkboxes = document.querySelectorAll(`${dropdownSelector} input[type='checkbox']`);
+            const selectedValues = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value.trim());
+
+            // Update the input field with a comma-separated string of selected values
+            const inputField = document.querySelector(inputSelector);
+            inputField.value = selectedValues.join(', ');
         }
 
-        // General function to toggle dropdown visibility
-        function toggleDropdown(className) {
-            const dropdowns = document.querySelectorAll(className);
-            dropdowns.forEach(dropdown => {
-                dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-            });
+
+
+
+        function updateSelectionRadio(dropdownSelector, inputSelector) {
+            const radios = document.querySelectorAll(`${dropdownSelector} input[type='radio']`);
+            const selectedValue = Array.from(radios)
+                .filter(radio => radio.checked)
+                .map(radio => radio.value.trim())[0];  // Only one radio button will be checked
+
+            // Update the input field with the selected value
+            const inputField = document.querySelector(inputSelector);
+            inputField.value = selectedValue || '';  // Display selected value or an empty string if none is selected
+        }
+
+
+
+        let currentDropdown = null;
+
+        // Function to toggle a dropdown
+        function toggleDropdown(dropdownClass) {
+            const dropdown = document.querySelector(dropdownClass);
+
+            // Close the currently open dropdown if it's not the same as the one being toggled
+            if (currentDropdown && currentDropdown !== dropdown) {
+                currentDropdown.style.display = "none";
+            }
+
+            // Toggle the clicked dropdown
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+                currentDropdown = null; // Reset the current dropdown
+            } else {
+                dropdown.style.display = "block";
+                currentDropdown = dropdown; // Set the current dropdown
+            }
         }
 
         // Event listeners for dropdown toggles
@@ -675,17 +707,56 @@
         document.querySelector(".multi-select-input1").addEventListener('click', () => toggleDropdown(".multi-select-dropdown1"));
         document.querySelector(".multi-select-input3").addEventListener('click', () => toggleDropdown(".multi-select-dropdown3"));
 
+        // Automatically close dropdown when two options are selected
+        document.querySelectorAll(".multi-select-dropdown3 .specialization-checkbox").forEach(checkbox => {
+            checkbox.addEventListener("change", () => {
+                const dropdown = document.querySelector(".multi-select-dropdown3");
+                const inputField = document.querySelector(".multi-select-input3");
+                const hiddenInput = document.querySelector("#specialization-api-format");
+
+                // Get selected options
+                const selectedOptions = Array.from(
+                    document.querySelectorAll(".multi-select-dropdown3 .specialization-checkbox:checked")
+                ).map(cb => cb.value);
+
+                // Update the visible input and hidden field
+                inputField.value = selectedOptions.join(", ");
+                hiddenInput.value = JSON.stringify(selectedOptions);
+
+                // Automatically close the dropdown if two options are selected
+                if (selectedOptions.length === 2) {
+                    dropdown.style.display = "none";
+                    currentDropdown = null; // Reset the current dropdown
+                }
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+            const isClickInside = event.target.closest(".multi-select-input") ||
+                event.target.closest(".multi-select-input1") ||
+                event.target.closest(".multi-select-input3") ||
+                (currentDropdown && event.target.closest(currentDropdown.className));
+
+            if (!isClickInside) {
+                // Close the currently open dropdown
+                if (currentDropdown) {
+                    currentDropdown.style.display = "none";
+                    currentDropdown = null;
+                }
+            }
+        });
         // Event listeners for checkbox changes
         document.querySelectorAll(".multi-select-option input").forEach(checkbox => {
-            checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown", ".multi-select-input"));
+            checkbox.addEventListener('change', () => updateSelectionRadio(".multi-select-dropdown", ".multi-select-input"));
         });
-        document.querySelectorAll(".multi-select-option1 input").forEach(checkbox => {
-            checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown1", ".multi-select-input1"));
-        });
+
         document.querySelectorAll(".multi-select-option3 input").forEach(checkbox => {
             checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown3", ".multi-select-input3"));
         });
-
+        document.querySelectorAll(".multi-select-option1 input").forEach(radio => {
+            radio.addEventListener('change', () => updateSelectionRadio(".multi-select-dropdown1", ".multi-select-input1"));
+        });
 
 
         // Close the dropdown if clicked outside

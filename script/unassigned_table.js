@@ -19,7 +19,7 @@ $(document).ready(function () {
             emp_details_map = data;
 
         })
-        .catch(error => console.error('Error fetching employees:', error));
+        .catch(error => // console.error('Error fetching employees:', error));
 
     // Fetch tickets
     fetch(apiUrl)
@@ -33,7 +33,7 @@ $(document).ready(function () {
             });
         })
         .catch(error => {
-            console.error('Error fetching tickets:', error);
+            // console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none';
         });
 
@@ -212,7 +212,7 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
-        console.log(employee)
+        // console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
@@ -325,7 +325,7 @@ function reason(ticketID) {
         confirmButton.style.display = 'flex';
 
     } else {
-        console.error(`Elements not found for ticketID: ${ticketID}`);
+        // console.error(`Elements not found for ticketID: ${ticketID}`);
         reasonInput.style.display = 'block';
         acceptButton.style.display = 'none';
         confirmButton.style.display = 'flex';
@@ -340,9 +340,10 @@ function cancel(ticketID) {
         reasonInput.style.display = 'none';
         acceptButton.style.display = 'flex';
         confirmButton.style.display = 'none';
+        document.getElementById(`error-message-${ticketID}`).style.display='none';
 
     } else {
-        console.error(`Elements not found for ticketID: ${ticketID}`);
+        // console.error(`Elements not found for ticketID: ${ticketID}`);
     }
 }
 
@@ -374,7 +375,7 @@ async function assignedEmployee(cid, employee_id, ticket_id) {
         window.location.href = 'In-Progress.html';
 
     } catch (error) {
-        console.error("Failed to assign employee:", error.message);
+        // console.error("Failed to assign employee:", error.message);
         loadingIndicator.style.display = 'none';
     }
 }
@@ -398,7 +399,7 @@ function handleAssign(cid, ticketId) {
     // Ensure ticketId is a number, if not, convert it to a valid format
     const ticketIdInt = parseInt(ticketId, 10);
     if (isNaN(ticketIdInt)) {
-        console.error(`Invalid ticket ID: ${ticketId}`);
+        // console.error(`Invalid ticket ID: ${ticketId}`);
         return; // Prevent the function from proceeding
     }
 
@@ -455,13 +456,13 @@ async function handleReject(ticketid) {
 
 
     } catch (error) {
-        console.error("Failed to reject ticket:", error.message);
+        // console.error("Failed to reject ticket:", error.message);
         loadingIndicator.style.display = 'none';
     }
 }
 function employee_det_options_get(ticketType) {
     if (!emp_details_map || !emp_details_map[ticketType]) {
-        console.error(`Invalid ticketType: ${ticketType}`);
+        // console.error(`Invalid ticketType: ${ticketType}`);
         return `<option disabled>No employees available for ${ticketType}</option>`;
     }
 

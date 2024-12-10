@@ -22,7 +22,7 @@ $(document).ready(function () {
             loadingIndicator.style.display = 'none'; // Hide loading after processing
         })
         .catch(error => {
-            console.error('Error fetching tickets:', error);
+            // console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading on error
         });
 
@@ -92,8 +92,8 @@ $(document).ready(function () {
                                      ${rowData.photo_1 ? `
                                            <div class="col-5 col-sm-4 col-md-3">
                                             <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
-                                                style="object-fit: cover;" />
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                                style=" " />
                                             </div>
                                             </div>
                                         ` : `
@@ -104,8 +104,8 @@ $(document).ready(function () {
                                     ${rowData.photo_2 ? `
                                     <div class="col-5 col-sm-4 col-md-3">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image" class="w-100 h-100" 
-                                    style="object-fit: cover;" />
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                    style=" " />
                                     </div>
                                     </div>
                                 ` : `  `}
@@ -116,7 +116,7 @@ $(document).ready(function () {
                                     <div class="col-5 col-sm-4 col-md-3">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
                                     <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.photo_3}" 
-                                    alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
+                                    alt="Uploaded Image"  style="width:50px;heigth:50px " style=" "/>
                                     </div>
                                     </div>
                                 ` : ` `} 
@@ -175,14 +175,14 @@ $(document).ready(function () {
             const data = await response.json();
             detailsRow.find('.assigned-employee').text(newEmployeeID);
         } catch (error) {
-            console.error("Failed to reassign employee:", error.message);
+            // console.error("Failed to reassign employee:", error.message);
         }
     });
 
 // card part
     // Function to create and append the card for mobile view
     function addCard(employee) {
-        console.log(employee)
+       //  // console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">
