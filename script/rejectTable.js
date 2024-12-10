@@ -21,7 +21,7 @@ $(document).ready(function () {
             });
         })
         .catch(error => {
-            console.error('Error fetching tickets:', error);
+            // console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
-        console.log(rowData)
+       //  // console.log(rowData)
         // const workStartedTime = new Date(rowData.work_started_time).toISOString().split('T')[0];
         const tickerRejectDate = new Date(rowData.rejected_date).toISOString().split('T')[0];
         return `
@@ -90,8 +90,8 @@ $(document).ready(function () {
                                      ${rowData.ti_photo_1 ? `
                                            <div class="col-5 col-sm-4 col-md-3">
                                             <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
-                                                style="object-fit: cover;" />
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_1}"  alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                                style=" " />
                                             </div>
                                             </div>
                                         ` : `
@@ -102,8 +102,8 @@ $(document).ready(function () {
                                     ${rowData.ti_photo_2 ? `
                                     <div class="col-5 col-sm-4 col-md-3">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_2}" alt="Uploaded Image" class="w-100 h-100" 
-                                    style="object-fit: cover;" />
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_2}" alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                    style=" " />
                                     </div>
                                     </div>
                                 ` : `  `}
@@ -114,7 +114,7 @@ $(document).ready(function () {
                                     <div class="col-5 col-sm-4 col-md-3">
                                     <div class="uploads position-relative border" style="width: 100%; height: 100px;">
                                     <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.ti_photo_3}" 
-                                    alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
+                                    alt="Uploaded Image"  style="width:50px;heigth:50px " style=" "/>
                                     </div>
                                     </div>
                                 ` : ` `} 
@@ -146,7 +146,7 @@ $(document).ready(function () {
     // Function to create and append the card for mobile view
     function addCard(employee) {
         
-        console.log(employee)
+       //  // console.log(employee)
         const cardHtml = `
         <div class="card mb-3">
             <div class="card-body">

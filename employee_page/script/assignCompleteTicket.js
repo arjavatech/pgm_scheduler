@@ -22,13 +22,13 @@ $(document).ready(function () {
             });
         })
         .catch(error => {
-            console.error('Error fetching tickets:', error);
+            // console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 
     // Initialize DataTable
     const table = $('#ticketTable').DataTable({
-       
+
         paging: true,
         lengthChange: true,
         searching: true,
@@ -56,7 +56,7 @@ $(document).ready(function () {
 
     // Format the row details
     function format(rowData) {
-        console.log(rowData)
+        //  // console.log(rowData)
         return `
             <tr class="collapse-content details-row">
                 <td colspan="8">
@@ -78,9 +78,9 @@ $(document).ready(function () {
                             
                                      ${rowData.ti_photo_1 ? `
                                            <div class="col-5 col-sm-4 col-md-4">
-                                            <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
-                                                style="object-fit: cover;" />
+                                            <div class="uploads position-relative" style="width: 100%; height: 100px;">
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_1}"  alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                                style=" " />
                                             </div>
                                             </div>
                                         ` : `
@@ -90,9 +90,9 @@ $(document).ready(function () {
         
                                     ${rowData.ti_photo_2 ? `
                                     <div class="col-5 col-sm-4 col-md-4">
-                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_2}" alt="Uploaded Image" class="w-100 h-100" 
-                                    style="object-fit: cover;" />
+                                    <div class="uploads position-relative" style="width: 100%; height: 100px;">
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.ti_photo_2}" alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                    style=" " />
                                     </div>
                                     </div>
                                 ` : `  `}
@@ -101,9 +101,9 @@ $(document).ready(function () {
                         
                                     ${rowData.ti_photo_3 ? `
                                     <div class="col-5 col-sm-4 col-md-4">
-                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <div class="uploads position-relative" style="width: 100%; height: 100px;">
                                     <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.ti_photo_3}" 
-                                    alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
+                                    alt="Uploaded Image"  style="width:50px;heigth:50px " style=" "/>
                                     </div>
                                     </div>
                                 ` : ` `} 
@@ -118,6 +118,8 @@ $(document).ready(function () {
                         <div class="d-flex justify-content-center align-items-center">
                             <input type="text" placeholder="Reason" class="input-bottom-reason mt-3" id="reason-${rowData.ticket_id}" style="display:none;width:100%;border: none !important;background-color: transparent;outline: none;
         border-bottom: 1px solid #9e9e9e !important;">
+        <div class="error-text" id="error" style="display: none;color: red;">
+                                                Please fill the field</div>
                         </div>
                     </div>
                 <div class="row mt-2" id="acceptButton-${rowData.ticket_id}">
@@ -163,7 +165,7 @@ $(document).ready(function () {
 
     // Function to create and append the card for mobile view
     function addCard(employee) {
-        console.log(employee)
+        //  // console.log(employee)
         const cardHtml = `
         <div class="card mb-3" id="card-${employee.ticket_id}">
             <div class="card-body">
@@ -207,9 +209,9 @@ $(document).ready(function () {
                  <div class="image-gallery d-flex flex-row justify-content-center">
                         <div class="image-container d-flex flex-row justify-content-center">
 
-                         ${employee.ti_photo_1 ? ` <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px">`: ``}   
-                           ${employee.ti_photo_2 ? ` <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px">`: ``} 
-                           ${employee.ti_photo_3 ? ` <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px">`: ``} 
+                         ${employee.ti_photo_1 ? ` <img src="${employee.ti_photo_1}" alt="Image 1" class="p-2" width="100px">` : ``}   
+                           ${employee.ti_photo_2 ? ` <img src="${employee.ti_photo_2}" alt="Image 1" class="p-2" width="100px">` : ``} 
+                           ${employee.ti_photo_3 ? ` <img src="${employee.ti_photo_3}" alt="Image 1" class="p-2" width="100px">` : ``} 
                         </div>
                 </div>
                 <div class="row">
@@ -306,7 +308,7 @@ function reason(ticketID) {
         confirmButton.style.display = 'flex';
 
     } else {
-        console.error(`Elements not found for ticketID: ${ticketID}`);
+        // console.error(`Elements not found for ticketID: ${ticketID}`);
     }
 }
 function getUTCDateString() {
@@ -319,13 +321,14 @@ function getUTCDateString() {
 
 
 function rejectedTicket(cid, tic_id, eid) {
-    const loadingIndicator = document.getElementById('l'); 
+    const loadingIndicator = document.getElementById('l');
     loadingIndicator.style.display = 'flex'; // Show loading before fetch
     let rejected_reason = document.getElementById(`reason-${tic_id}`).value
-
+    document.getElementById("error").style.display = "none"
     if (!rejected_reason) {
         loadingIndicator.style.display = 'none';
-        return alert("Enter the reason");
+        
+        return document.getElementById("error").style.display = "block";
     }
 
     let data = {
@@ -354,7 +357,7 @@ function rejectedTicket(cid, tic_id, eid) {
 
             if (data.error) {
                 loadingIndicator.style.display = 'none';
-                console.error("Error in response:", data.error);
+                // console.error("Error in response:", data.error);
             }
             else {
                 setTimeout(() => {
@@ -365,7 +368,7 @@ function rejectedTicket(cid, tic_id, eid) {
         })
         .catch((error) => {
             loadingIndicator.style.display = 'none';
-            console.error("Error in response:", error);
+            // console.error("Error in response:", error);
         });
 }
 
@@ -380,7 +383,7 @@ function cancel(ticketID) {
         confirmButton.style.display = 'none';
 
     } else {
-        console.error(`Elements not found for ticketID: ${ticketID}`);
+        // console.error(`Elements not found for ticketID: ${ticketID}`);
     }
 }
 
@@ -405,7 +408,7 @@ function acceptClick(token) {
 
             if (data.error) {
                 loadingIndicator.style.display = 'none';
-                console.error("Error in response:", data.error);
+                // console.error("Error in response:", data.error);
             }
             else {
                 setTimeout(() => {
@@ -416,7 +419,7 @@ function acceptClick(token) {
         })
         .catch((error) => {
             loadingIndicator.style.display = 'none';
-            console.error("Error in response:", data.error);
+            // console.error("Error in response:", data.error);
         });
 
 }

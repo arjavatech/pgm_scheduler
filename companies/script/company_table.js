@@ -20,7 +20,7 @@ function viewcompanydetails() {
             loadingIndicator.style.display = 'none'; // Hide loading after response is received
             employeesData = data;
             tableBody.innerHTML = ''; // Clear any previous rows
-            console.log(data);
+           //  // console.log(data);
             // Populate the table
             employeesData.forEach(element => {
                 const newRow = document.createElement('tr');
@@ -133,7 +133,7 @@ function viewcompanydetails() {
                         })
                         .catch(error => {
                             loadingIndicator.style.display = 'none'; // Hide loading on error
-                            console.error('Error:', error);
+                            // console.error('Error:', error);
                         });
                 }
 
@@ -164,7 +164,7 @@ function viewcompanydetails() {
                                 rowToDelete.remove();
                             })
                             .catch(error => {
-                                console.error('Delete error:', error);
+                                // console.error('Delete error:', error);
                                 loadingIndicator.style.display = 'none';
                                 showalert('Failed to delete the company.');
                             });
@@ -174,7 +174,7 @@ function viewcompanydetails() {
         })
         .catch(error => {
             loadingIndicator.style.display = 'none'; // Hide loading on error
-            console.error('Fetch error:', error);
+            // console.error('Fetch error:', error);
             showalert('Failed to load company details.');
         });
 
@@ -187,7 +187,7 @@ function showConfirmModal(onConfirm) {
     const confirmNoBtn = document.getElementById('confirmNoBtn');
     const confirmCBtn = document.getElementById('confirmCBtn');
     if (!confirmModal || !confirmYesBtn || !confirmNoBtn) {
-        console.error('Confirm modal elements are not found in the DOM.');
+        // console.error('Confirm modal elements are not found in the DOM.');
         return;
     }
 

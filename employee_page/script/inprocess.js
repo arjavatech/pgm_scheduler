@@ -25,7 +25,7 @@ $(document).ready(function () {
             loadingIndicator.style.display = 'none'; // Hide loading after processing
         })
         .catch(error => {
-            console.error('Error fetching tickets:', error);
+            // console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading on error
         });
 
@@ -103,8 +103,8 @@ $(document).ready(function () {
                 id="image-preview1-${rowData.ticket_id}-${rowData.id}" 
                 src="${rowData.photo_1}" 
                 alt="Uploaded Image" 
-                class="w-100 h-100" 
-                style="object-fit: cover;" 
+                 style="width:50px;heigth:50px " 
+                style=" " 
             />
             ` : `
             <label 
@@ -132,8 +132,8 @@ $(document).ready(function () {
                 id="image-preview2-${rowData.ticket_id}-${rowData.id}" 
                 src="${rowData.photo_2}" 
                 alt="Uploaded Image" 
-                class="w-100 h-100" 
-                style="object-fit: cover;" 
+                 style="width:50px;heigth:50px " 
+                style=" " 
             />
             ` : `
             <label 
@@ -161,8 +161,8 @@ $(document).ready(function () {
                 id="image-preview3-${rowData.ticket_id}-${rowData.id}" 
                 src="${rowData.photo_3}" 
                 alt="Uploaded Image" 
-                class="w-100 h-100" 
-                style="object-fit: cover;" 
+                 style="width:50px;heigth:50px " 
+                style=" " 
             />
             ` : `
             <label 
@@ -233,10 +233,10 @@ $(document).ready(function () {
 
             if (!response.ok) throw new Error(`Error: ${response.status}`);
             const data = await response.json();
-            console.log("Employee assigned successfully:", data);
+           //  // console.log("Employee assigned successfully:", data);
             detailsRow.find('.assigned-employee').text(newEmployeeID);
         } catch (error) {
-            console.error("Failed to reassign employee:", error.message);
+            // console.error("Failed to reassign employee:", error.message);
         }
     });
 
@@ -258,7 +258,7 @@ $(document).ready(function () {
             work_ended_time: workEndedTime || null,
         };
 
-        console.log(requestBody)
+       //  // console.log(requestBody)
 
         try {
             const response = await fetch(`https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/ticket_status/save/${ticket_token}`, {
@@ -280,7 +280,7 @@ $(document).ready(function () {
             }
         } catch (error) {
             loadingIndicator.style.display = 'none';
-            console.error("Failed to mark ticket as completed:", error.message);
+            // console.error("Failed to mark ticket as completed:", error.message);
         }
     });
 
@@ -323,7 +323,7 @@ $(document).ready(function () {
             }
         } catch (error) {
             loadingIndicator.style.display = 'none';
-            console.error("Failed to mark ticket as completed:", error.message);
+            // console.error("Failed to mark ticket as completed:", error.message);
         }
     });
 
@@ -543,7 +543,7 @@ async function handleFileSelect1(event) {
                 loadingIndicator.style.display = 'none';
             }
         } catch (error) {
-            console.error("Error:", error);
+            // console.error("Error:", error);
             loadingIndicator.style.display = 'none';
         }
     };
@@ -609,7 +609,7 @@ async function handleFileSelect2(event) {
                 loadingIndicator.style.display = 'none';
             }
         } catch (error) {
-            console.error("Error:", error);
+            // console.error("Error:", error);
             loadingIndicator.style.display = 'none';
         }
     };
@@ -677,7 +677,7 @@ async function handleFileSelect3(event) {
                 loadingIndicator.style.display = 'none';
             }
         } catch (error) {
-            console.error("Error:", error);
+            // console.error("Error:", error);
             loadingIndicator.style.display = 'none';
         }
     };
@@ -723,7 +723,7 @@ async function updateLink(url, id, ticketId, ticketToken) {
             loadingIndicator.style.display = 'none';
         }
     } catch (error) {
-        console.error('Error updating link:', error);
+        // console.error('Error updating link:', error);
         loadingIndicator.style.display = 'none';
     }
 }

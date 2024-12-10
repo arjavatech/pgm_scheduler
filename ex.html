@@ -1,99 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AC / Non-AC Checkbox</title>
-    <style>
-        /* CSS for styling the checkboxes */
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-        }
+    <title>Specialization Selection</title>
 
-        label {
-            font-family: Arial, sans-serif;
-            font-size: 16px;
+    <link rel="stylesheet" href="">
+    <style>
+        .multi-select-container {
+            margin: 20px;
+        }
+        .multi-select-dropdown3 {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+        }
+        .multi-select-option3 {
+            margin: 5px 0;
+        }
+        .multi-select-input3 {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
             margin-bottom: 10px;
+        }
+        .material-textfield {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .material-textfield label {
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
-
 <body>
-    <h1>Select Room Type</h1>
 
-    <!-- AC Checkbox -->
-    <label>
-        <input type="checkbox" id="acCheckbox" />
-        AC
-    </label>
+    <div class="multi-select-container">
+        <div class="material-textfield">
+            <input type="text" class="multi-select-input3 input-sty" readonly>
+            <label>Specialization</label>
+        </div>
+        <div class="multi-select-dropdown3">
+            <label class="multi-select-option3">
+                <input type="checkbox" value="AC" /> AC
+            </label>
+            <label class="multi-select-option3">
+                <input type="checkbox" value="Refrigerator" /> Refrigerator
+            </label>
+        </div>
+    </div>
 
-    <!-- Non-AC Checkbox -->
-    <label>
-        <input type="checkbox" id="nonAcCheckbox" />
-        Non-AC
-    </label>
+    <!-- Hidden field to store the API format -->
+    <input type="hidden" id="specialization-api-format" name="specialization" />
 
-    <!-- Message Area -->
-    <p id="statusMessage" style="font-family: Arial, sans-serif; color: gray;"></p>
+    <!-- Form Elements -->
+    <input type="text" id="first_name" placeholder="First Name">
+    <input type="text" id="last_name" placeholder="Last Name">
+    <input type="email" id="email" placeholder="Email">
+    <button id="submit-button">Submit</button>
 
-    <!-- JavaScript -->
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const acCheckbox = document.getElementById("acCheckbox");
-            const nonAcCheckbox = document.getElementById("nonAcCheckbox");
-            const statusMessage = document.getElementById("statusMessage");
-            let Specialization;
-            // Fetch employee ID from localStorage
-            const eid = localStorage.getItem("eid");
-            console.log("Employee ID:", eid);
+        document.addEventListener("DOMContentLoaded", () => {
+            // Function to update the input field based on selected checkboxes
+            function updateSelection(dropdownSelector, inputSelector) {
+                const checkboxes = document.querySelectorAll(`${dropdownSelector} input[type='checkbox']`);
+                const selectedValues = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)  // Only include checked checkboxes
+                    .map(checkbox => checkbox.value.trim());  // Get the value of each checked checkbox
 
-            // Define the API URL using the employee ID
-            const url = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/employee/get/${eid}`;
+                // Update the input field with the display format: "AC, Refrigerator"
+                const inputField = document.querySelector(inputSelector);
+                inputField.value = selectedValues.join(', ');  // Comma-separated list for display
 
-            // Function to fetch room type from API
-            async function fetchRoomType() {
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch room type: ${response.statusText}`);
-                    }
-                    const data = await response.json();
-                    console.log("API Response:", data); // Log the response for debugging
-                    Specialization = data.employee_status
-                    console.log(Specialization)
-                    return data.roomType; // Assume API returns { roomType: 1 } or { roomType: 0 }
-                } catch (error) {
-                    console.error("Error fetching room type:", error);
-                    return null; // Handle error gracefully
-                }
+                // Set the hidden field or variable for API submission (escaped format)
+                const apiFormatField = document.querySelector("#specialization-api-format");
+                apiFormatField.value = JSON.stringify(selectedValues);  // Converts array to JSON string
             }
 
+            // Add event listeners to all checkboxes in the dropdown
+            document.querySelectorAll(".multi-select-option3 input").forEach(checkbox => {
+                checkbox.addEventListener('change', () => updateSelection(".multi-select-dropdown3", ".multi-select-input3"));
+            });
 
+            // Optional: call updateSelection initially in case some checkboxes are pre-checked
+            updateSelection(".multi-select-dropdown3", ".multi-select-input3");
 
-            // Fetch the room type from the API
-            const roomType = await fetchRoomType()
-            if (roomType !== null) {
-                console.log(Specialization)
-                // Automatically tick the corresponding checkbox based on 1 (AC) or 0 (Non-AC)
-                if (Specialization === "Active") {
-                    acCheckbox.checked = true;
-                    statusMessage.textContent = "AC room selected.";
-                } else if (Specialization === "Non Active") {
-                    nonAcCheckbox.checked = true;
-                    statusMessage.textContent = "Non-AC room selected.";
-                } else {
-                    statusMessage.textContent = "Unknown room type received.";
-                }
-            } else {
-                statusMessage.textContent = "Failed to load room type.";
-            }
+            // Example of form submission (if needed)
+            const submitButton = document.getElementById("submit-button");
+            submitButton.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                const specializationInput = document.querySelector(".multi-select-input3");
+                const specializationApiFormatInput = document.querySelector("#specialization-api-format");
+
+                const profileData = {
+                    first_name: document.getElementById("first_name").value,
+                    last_name: document.getElementById("last_name").value,
+                    email: document.getElementById("email").value,
+                    specialization: specializationApiFormatInput.value,  // This now holds the API format
+                };
+
+               //  // console.log("Profile Data:", profileData);
+
+                // Example API submission
+                // fetch("/api/submit-profile", {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify(profileData)
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     alert("Profile saved successfully!");
+                //    //  // console.log(data);
+                // })
+                // .catch(error => {
+                //     // console.error("Error saving profile:", error);
+                //     alert("Failed to save profile.");
+                // });
+            });
         });
     </script>
-</body>
 
+</body>
 </html>

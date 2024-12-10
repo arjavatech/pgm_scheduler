@@ -364,7 +364,7 @@
                         
                         if (!response.ok) {
                             document.getElementById('l').style.display = 'none'; 
-                            console.error(`Error: ${response.data}`);
+                            // console.error(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
@@ -386,7 +386,7 @@
                     })
                     .catch((error) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
-                        console.error('Error:', error);
+                        // console.error('Error:', error);
                     });
             } else {
                 // No invite ID found in URL, show error message
@@ -440,7 +440,7 @@
                     .then((response) => {
                         if (!response.ok) {
                             document.getElementById('l').style.display = 'none'; 
-                            console.error(`Error: ${response.data}`);
+                            // console.error(`Error: ${response.data}`);
                         }
                         return response.json();
                     })
@@ -460,7 +460,7 @@
                     })
                     .catch((error) => {
                         document.getElementById('l').style.display = 'none'; // Hide loading spinner
-                        console.error('Error:', error);
+                        // console.error('Error:', error);
                     });
             } else {
                 document.getElementById('l').style.display = 'none'; // Hide loading spinner

@@ -2,7 +2,7 @@
 $(document).ready(function () {
     let cid = localStorage.getItem("cid");
     document.getElementById("Clogo").src = localStorage.getItem("Clogo");
-    console.log(cid)
+   //  // console.log(cid)
     const apiUrl = `https://m4j8v747jb.execute-api.us-west-2.amazonaws.com/dev/tickets/invoice/${cid}`;
     let rowDetails = [];
     const CName = localStorage.getItem("CName")
@@ -14,10 +14,10 @@ $(document).ready(function () {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+           //  // console.log(data);
             loadingIndicator.style.display = 'none';
             if (!(data.detail)) {
-                console.log("yes")
+               //  // console.log("yes")
                 data.forEach(ticket => {
                     rowDetails.push(ticket);
                     addTicket(ticket);
@@ -27,7 +27,7 @@ $(document).ready(function () {
             }
         })
         .catch(error => {
-            console.error('Error fetching tickets:', error);
+            // console.error('Error fetching tickets:', error);
             loadingIndicator.style.display = 'none'; // Hide loading indicator in case of an error
         });
 
@@ -104,9 +104,9 @@ $(document).ready(function () {
                             
                                      ${rowData.photo_1 ? `
                                             <div class="col-5 col-sm-4 col-md-3">
-                                            <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image" class="w-100 h-100" 
-                                                style="object-fit: cover;" />
+                                            <div class="uploads position-relative" style="width: 100%; height: 100px;">
+                                            <img id="image-preview1-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_1}"  alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                                style=" " />
                                             </div>
                                             </div>
                                         ` : `
@@ -116,9 +116,9 @@ $(document).ready(function () {
         
                                     ${rowData.photo_2 ? `
                                    <div class="col-5 col-sm-4 col-md-3">
-                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
-                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image" class="w-100 h-100" 
-                                    style="object-fit: cover;" />
+                                    <div class="uploads position-relative" style="width: 100%; height: 100px;">
+                                    <img id="image-preview2-${rowData.ticket_id}-${rowData.id}" src="${rowData.photo_2}" alt="Uploaded Image"  style="width:50px;heigth:50px " 
+                                    style=" " />
                                     </div>
                                     </div>
                                 ` : `  `}
@@ -127,9 +127,9 @@ $(document).ready(function () {
                         
                                     ${rowData.photo_3 ? `
                                     <div class="col-5 col-sm-4 col-md-3">
-                                    <div class="uploads position-relative border" style="width: 100%; height: 100px;">
+                                    <div class="uploads position-relative" style="width: 100%; height: 100px;">
                                     <img id="image-preview3-${rowData.ticket_id}-${rowData.id}"src="${rowData.photo_3}" 
-                                    alt="Uploaded Image" class="w-100 h-100" style="object-fit: cover;"/>
+                                    alt="Uploaded Image"  style="width:50px;heigth:50px " style=" "/>
                                     </div>
                                     </div>
                                 ` : ` `} 
@@ -403,7 +403,7 @@ async function updateLink(url, id, ticketId, ticketToken) {
             alert('Error updating link.');
         }
     } catch (error) {
-        console.error('Error updating link:', error);
+        // console.error('Error updating link:', error);
         alert('Error updating link. Check console for details.');
     }
 }

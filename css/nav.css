@@ -1,5 +1,5 @@
- /* Custom styles for the sidebar */
- #left {
+/* Custom styles for the sidebar */
+#left {
     background-image: radial-gradient(#004102, #131313 50%);
     height: 100vh;
     position: fixed;
@@ -38,6 +38,15 @@ a {
 /* Hide navigation bar on larger screens */
 #nav {
     display: none;
+}
+
+#CName {
+    padding-right: 8px;
+}
+
+li {
+    overflow-wrap: anywhere;
+    text-align: justify;
 }
 
 .list-group-item {
@@ -85,11 +94,11 @@ a {
 }
 
 
-    #Clogo {
-        border-radius: 50%;
-        width: 40px !important;
-        height: 40px !important;
-    }
+#Clogo {
+    border-radius: 50%;
+    width: 40px !important;
+    height: 40px !important;
+}
 
 .loading {
     display: none;
@@ -113,9 +122,11 @@ a {
     animation: spin 1s linear infinite;
 
 }
+
 .modal.show .modal-dialog {
     justify-content: center !important;
 }
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -186,7 +197,7 @@ a {
         top: 0;
         z-index: 1000;
     }
-    
+
 
     #header_admin {
         display: none;
@@ -209,7 +220,7 @@ a {
         width: 30%;
         height: 100vh;
         z-index: 999;
-        
+
         transition: all 0.3s ease;
         margin-top: 6% !important;
         padding-top: 20px;
@@ -241,11 +252,13 @@ a {
     #ticketTable thead th {
         font-size: 10px !important;
     }
-    #logo{
+
+    #logo {
         width: 60%;
         font-weight: bold;
     }
-    #icon{
+
+    #icon {
         width: 13% !important;
     }
 }
@@ -255,14 +268,14 @@ a {
         width: 40% !important;
         margin-top: 7% !important;
     }
-    
+
     .sidebar-toggle {
         display: block;
         background-color: transparent;
         color: white;
         border: none;
         width: 15% !important;
-       
+
     }
 }
 
@@ -286,6 +299,7 @@ a {
         width: 46% !important;
         margin-top: 10% !important;
     }
+
     .sidebar-toggle {
         display: block;
         background-color: transparent;
@@ -293,8 +307,8 @@ a {
         border: none;
         width: 25% !important;
     }
-   
-    #logo{
+
+    #logo {
         width: 80%;
         font-weight: bold;
     }
@@ -313,18 +327,18 @@ a {
         color: white;
         border: none;
         width: 25% !important;
-    
+
     }
 
-    #icon{
+    #icon {
         width: 27% !important;
     }
 
-    .container-sty h2{
+    .container-sty h2 {
         font-size: 18px;
     }
 
-    
+
     .sidebar-toggle {
         display: block;
         background-color: transparent;
@@ -347,16 +361,20 @@ a {
     #fix {
         margin-top: 19% !important;
     }
-    .container-sty h1{
+
+    .container-sty h1 {
         font-size: 17px;
     }
-    p{
+
+    p {
         font-size: 11px;
     }
-    strong{
+
+    strong {
         font-size: 12px !important;
     }
-    .list-group-item{
+
+    .list-group-item {
         font-size: 10px !important;
     }
 }
@@ -365,36 +383,42 @@ a {
     #fix {
         margin-top: 25% !important;
     }
-    p{
+
+    p {
         font-size: 9px;
     }
-    label{
+
+    label {
         font-size: 10px !important;
     }
-    strong{
+
+    strong {
         font-size: 10px !important;
     }
-    .input-bottom-border{
+
+    .input-bottom-border {
         font-size: 9px;
 
     }
 }
 
 @media (max-width:290px) {
-    .list-group-item{
+    .list-group-item {
         font-size: 10px !important;
     }
-    #left{
+
+    #left {
         padding-top: 13% !important;
     }
 
-    p{
+    p {
         font-size: 8px;
     }
-    strong{
+
+    strong {
         font-size: 8px !important;
     }
-    
+
 }
 
 
