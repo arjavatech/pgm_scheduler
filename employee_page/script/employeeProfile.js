@@ -94,19 +94,23 @@ function checkbox(value) {
 
     if (specialization == "AC") {
         document.getElementById("ac").checked = true;
+        document.querySelector('.multi-select-input3').value = specialization;
     }
     if (specialization == "Refrigerator") {
         document.getElementById("refrigerator").checked = true;
+        document.querySelector('.multi-select-input3').value = specializationp;
     }
     else if (specialization == null) {
         document.getElementById("ac").checked = false;
         document.getElementById("refrigerator").checked = false;
+        document.querySelector('.multi-select-input3').value = specialization;
     }
     else {
         document.getElementById("ac").checked = true;
         document.getElementById("refrigerator").checked = true;
+        document.querySelector('.multi-select-input3').value = "AC,Refrigerator";
     }
-    document.querySelector('.multi-select-input3').value = specialization
+    
 
 }
 
