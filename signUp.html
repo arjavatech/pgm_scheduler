@@ -295,9 +295,10 @@
                 document.getElementById("txt").textContent = "Password must be at least 8 characters long.";
                 popupModal.style.display = 'block';
                 mainContent.classList.add('blur-background');
-                // closePopup.addEventListener('click', function () {
-                //     window.location.href = window.location.href;
-                // });
+                closePopup.addEventListener('click', function () {
+                    popupModal.style.display = 'none'; // Hide the modal
+                    mainContent.classList.remove('blur-background'); 
+                });
                 return false;
             }
 
@@ -307,9 +308,10 @@
                 document.getElementById("txt").textContent = "Passwords do not match.";
                 popupModal.style.display = 'block';
                 mainContent.classList.add('blur-background');
-                // closePopup.addEventListener('click', function () {
-                //     window.location.href = window.location.href;
-                // });
+                closePopup.addEventListener('click', function () {
+                    popupModal.style.display = 'none'; // Hide the modal
+                    mainContent.classList.remove('blur-background'); 
+                });
                 return false;
             }
 
